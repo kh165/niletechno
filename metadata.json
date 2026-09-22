@@ -1,0 +1,6 @@
+{
+  "name": "Nile Techno for Software",
+  "description": "Nile Techno is a leading software company specializing in ERP, POS systems, E-Invoicing solutions, and advanced mobile applications since 2010.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

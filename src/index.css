@@ -1,0 +1,443 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+:root {
+  --font-sans: "Plus Jakarta Sans", "Cairo", system-ui, -apple-system, sans-serif;
+  --font-cairo: "Cairo", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer utilities {
+  .rtl { direction: rtl; }
+  .ltr { direction: ltr; }
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #0f172a;
+  color: #f8fafc;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+
+/* ========================================
+   MOBILE NAVIGATION FIX
+   ======================================== */
+@media (max-width: 1023px) {
+  /* Force nav to stay compact on mobile */
+  nav .max-w-7xl > div {
+    height: 60px !important;
+  }
+}
+
+/* ========================================
+   LIGHT MODE GRAPHIC ELEMENTS
+   ======================================== */
+
+/* Professional Animated Background for Light Mode Hero */
+.light-hero-grid {
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(circle at 2px 2px, rgba(8, 145, 178, 0.07) 1px, transparent 0),
+    linear-gradient(to right, rgba(8, 145, 178, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(8, 145, 178, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px, 48px 48px, 48px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Sophisticated Tech-Mesh Overlay */
+.light-hero-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(800px circle at 50% 100px, rgba(6, 182, 212, 0.05), transparent),
+    radial-gradient(600px circle at 10% 20%, rgba(59, 130, 246, 0.03), transparent);
+  pointer-events: none;
+}
+
+/* Floating Abstract Tech Shapes */
+.light-tech-shape {
+  position: absolute;
+  opacity: 0.4;
+  filter: blur(1px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.shape-1 { top: 15%; left: 5%; width: 120px; height: 120px; border: 1px solid rgba(8, 145, 178, 0.1); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; animation: morphShape 20s linear infinite; }
+.shape-2 { bottom: 10%; right: 8%; width: 180px; height: 180px; border: 1px solid rgba(59, 130, 246, 0.1); border-radius: 50%; animation: floatSlow 15s ease-in-out infinite; }
+
+@keyframes morphShape {
+  0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: rotate(0deg); }
+  33% { border-radius: 70% 30% 50% 50% / 50% 50% 30% 70%; }
+  66% { border-radius: 50% 50% 20% 80% / 80% 20% 50% 50%; }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-20px, 30px) rotate(10deg); }
+}
+
+/* Enhanced Floating orb decorations for light mode */
+.light-orb-1 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 75%);
+  border-radius: 50%;
+  top: -100px;
+  right: -100px;
+  pointer-events: none;
+  animation: floatOrb 15s ease-in-out infinite;
+  z-index: 0;
+}
+.light-orb-2 {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 75%);
+  border-radius: 50%;
+  bottom: -50px;
+  left: -50px;
+  pointer-events: none;
+  animation: floatOrb 20s ease-in-out infinite reverse;
+  z-index: 0;
+}
+.light-orb-3 {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.07) 0%, transparent 75%);
+  border-radius: 50%;
+  top: 25%;
+  left: 15%;
+  pointer-events: none;
+  animation: floatOrb 18s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+/* Dot pattern for light mode sections */
+.light-dot-pattern {
+  background-image: radial-gradient(circle, rgba(8,145,178,0.15) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Decorative line accent */
+.light-line-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #0891b2, #06b6d4, #0891b2, transparent);
+  opacity: 0.6;
+}
+
+/* Glassmorphism card for light mode */
+.light-glass-card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(8,145,178,0.15);
+  box-shadow: 0 4px 24px rgba(8,145,178,0.08), 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Animated gradient border for feature cards in light mode */
+.light-feature-card {
+  position: relative;
+  background: white;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+.light-feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(8,145,178,0.3), rgba(99,102,241,0.2), rgba(8,145,178,0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.light-feature-card:hover::before { opacity: 1; }
+.light-feature-card:hover {
+  box-shadow: 0 8px 32px rgba(8,145,178,0.12);
+  transform: translateY(-2px);
+}
+
+/* SVG wave decoration */
+.light-wave-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Stats card shine effect in light mode */
+.light-stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdff 100%);
+  border: 1px solid rgba(8,145,178,0.2);
+  box-shadow: 0 2px 12px rgba(8,145,178,0.06);
+  transition: all 0.3s;
+}
+.light-stat-card:hover {
+  box-shadow: 0 8px 24px rgba(8,145,178,0.14);
+  border-color: rgba(8,145,178,0.4);
+}
+
+/* Hero badge fix - visible on both backgrounds */
+.hero-badge-light {
+  background: rgba(8,145,178,0.12);
+  border: 1px solid rgba(8,145,178,0.35);
+  color: #0369a1;
+  backdrop-filter: blur(8px);
+}
+.hero-badge-dark {
+  background: rgba(8,145,178,0.15);
+  border: 1px solid rgba(6,182,212,0.3);
+  color: #22d3ee;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE FIXES
+   ======================================== */
+
+/* Fix hero on mobile */
+@media (max-width: 640px) {
+  .hero-title { font-size: 2rem !important; line-height: 1.25 !important; }
+  .hero-subtitle { font-size: 0.875rem !important; }
+  .hero-btns { flex-direction: column !important; gap: 0.75rem !important; }
+  .hero-btns a, .hero-btns button { width: 100% !important; }
+  .metrics-grid { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+  .section-padding { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+  .section-title-text { font-size: 1.6rem !important; }
+}
+
+/* Nav logo size on mobile */
+@media (max-width: 640px) {
+  .nav-logo-img { height: 48px !important; }
+  .nav-brand-name { font-size: 1rem !important; }
+  .nav-brand-sub { font-size: 9px !important; }
+}
+
+/* Improve tap targets on mobile */
+@media (max-width: 768px) {
+  button, a { min-height: 40px; }
+  .mobile-menu-item { padding: 0.875rem 1rem !important; font-size: 0.9rem !important; }
+}
+
+/* Service cards horizontal scroll on mobile */
+@media (max-width: 767px) {
+  .services-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+  .service-card-mobile {
+    min-width: 280px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+}
+
+/* About section grid fix */
+@media (max-width: 1023px) {
+  .about-grid { grid-template-columns: 1fr !important; }
+  .einvoice-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Partner cards grid on mobile */
+@media (max-width: 640px) {
+  .partners-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .partner-card-item {
+    min-width: 260px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+}
+
+/* Branch buttons on mobile */
+@media (max-width: 640px) {
+  .branches-grid { grid-template-columns: 1fr !important; }
+  .map-container { height: 240px !important; }
+}
+
+/* Contact form on mobile */
+@media (max-width: 640px) {
+  .contact-form-grid { grid-template-columns: 1fr !important; }
+  .modules-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* Footer on mobile */
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* WhatsApp buttons on mobile - avoid overlap */
+@media (max-width: 640px) {
+  .whatsapp-container { 
+    flex-direction: row !important; 
+    gap: 0.5rem !important;
+    bottom: 1rem !important;
+  }
+  .whatsapp-btn-text { display: none !important; }
+}
+
+/* Fix video modal on mobile */
+@media (max-width: 640px) {
+  .video-size-controls { flex-wrap: wrap !important; }
+  .video-size-btn { font-size: 10px !important; padding: 0.3rem 0.5rem !important; }
+}
+
+/* Fix EInvoice demo grid on mobile */
+@media (max-width: 1279px) {
+  .einvoice-xl-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Prevent horizontal overflow everywhere */
+* { max-width: 100%; box-sizing: border-box; }
+img { max-width: 100%; }
+
+/* General section spacing mobile */
+@media (max-width: 640px) {
+  section { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .max-w-7xl { padding-left: 1rem !important; padding-right: 1rem !important; }
+}
+
+/* ========================================
+   CRITICAL MOBILE OVERFLOW FIXES
+   ======================================== */
+
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* Prevent any element from exceeding viewport */
+section, nav, footer, header, div {
+  max-width: 100%;
+}
+
+/* Fix nav on very small screens */
+@media (max-width: 380px) {
+  .nav-brand-name { font-size: 0.8rem !important; }
+  .nav-brand-sub { display: none !important; }
+}
+
+/* Hero section mobile fixes */
+@media (max-width: 640px) {
+  .hero-title { font-size: 1.6rem !important; line-height: 1.3 !important; }
+  .hero-subtitle { font-size: 0.8rem !important; }
+}
+
+/* Fix all section headings overflow on mobile */
+@media (max-width: 640px) {
+  h1, h2, h3 { word-break: break-word; overflow-wrap: break-word; }
+}
+
+/* Metrics grid fix on very small screens */
+@media (max-width: 480px) {
+  .metrics-grid { grid-template-columns: 1fr 1fr !important; gap: 0.5rem !important; }
+}
+
+/* Services horizontal scroll fix */
+@media (max-width: 767px) {
+  .overflow-x-auto { 
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* Partner cards on mobile — 2 columns */
+@media (max-width: 640px) {
+  .partners-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+}
+
+/* Fix video modal on small screens */
+@media (max-width: 640px) {
+  .modal-content { 
+    max-width: calc(100vw - 2rem) !important; 
+    margin: 0 1rem !important;
+  }
+}
+
+/* Fix any text going off screen */
+@media (max-width: 640px) {
+  p, span, li, a { max-width: 100% !important; }
+  .font-mono { word-break: break-all !important; }
+}
+.calc-sector-img-wrap { min-height: 220px; }
+.calc-sector-img      { min-height: 240px; max-height: 650px; }
+
+/* ========================================
+   LIGHT MODE — VIBRANT BACKGROUNDS
+   ======================================== */
+.light-about-bg   { background: linear-gradient(150deg,#ffffff 0%,#eff6ff 45%,#f0fdf4 80%,#fafafa 100%); }
+.light-einvoice-bg{ background: linear-gradient(150deg,#ecfdf5 0%,#f0fdff 35%,#eff6ff 70%,#fafafa 100%); }
+.light-services-bg{ background: linear-gradient(150deg,#fafafa 0%,#eff6ff 35%,#f5f3ff 65%,#f0f9ff 100%); }
+.light-mobile-bg  { background: linear-gradient(150deg,#f0f9ff 0%,#eff6ff 40%,#fdf4ff 75%,#fafafa 100%); }
+
+/* ZATCA/ETA compliance badge cards */
+.compliance-badge-zatca {
+  background: linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%);
+  border: 1.5px solid rgba(16,185,129,0.35);
+  box-shadow: 0 2px 12px rgba(16,185,129,0.10);
+}
+.compliance-badge-eta {
+  background: linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);
+  border: 1.5px solid rgba(59,130,246,0.35);
+  box-shadow: 0 2px 12px rgba(59,130,246,0.10);
+}
+.dark .compliance-badge-zatca {
+  background: linear-gradient(135deg,rgba(6,78,59,0.30) 0%,rgba(6,78,59,0.12) 100%);
+  border: 1.5px solid rgba(16,185,129,0.22);
+  box-shadow: none;
+}
+.dark .compliance-badge-eta {
+  background: linear-gradient(135deg,rgba(30,58,138,0.30) 0%,rgba(30,58,138,0.12) 100%);
+  border: 1.5px solid rgba(59,130,246,0.22);
+  box-shadow: none;
+}
+
+/* WhatsApp buttons independent hover behavior */
+.whatsapp-btn {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.whatsapp-btn:hover {
+  width: 18rem !important; /* 72 equivalent */
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3);
+}
+.whatsapp-btn:hover .whatsapp-text {
+  opacity: 1 !important;
+}
+.whatsapp-btn:hover .animate-ping {
+  opacity: 0 !important;
+}

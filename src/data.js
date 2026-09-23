@@ -425,8 +425,8 @@ export const BRANCHES_DATA = [
     areaEn: 'Al-Shifa - Badr District',
     addressAr: 'طريق أم عمارة، حي بدر، الشفا، الرياض، المملكة العربية السعودية',
     addressEn: 'Am Omara, Badr District, Al-Shifa, Riyadh, Saudi Arabia',
-    phone: '009660511351059',
-    whatsapp: '9660511351059',
+    phone: '00966511351059',
+    whatsapp: '966511351059',
     mapEmbedUrl: 'https://maps.google.com/maps?q=24.551130,46.611130&hl=ar&z=15&output=embed',
     googleMapsUrl: 'https://www.google.com/maps?q=24.551130,46.611130'
   },

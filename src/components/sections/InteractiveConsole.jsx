@@ -42,7 +42,7 @@ function InteractiveConsole({ lang, theme }) {
             {lang === 'ar' ? 'تحكم باللوحة التفاعلية واكتشف قوة النظام' : 'Take Control & Test Nile Techno Capabilities'}
           </h2>
           <p className={`text-xs sm:text-sm font-cairo max-w-2xl mx-auto ${
-            theme === 'light' ? 'text-slate-605' : 'text-slate-400'
+            theme === 'light' ? 'text-slate-600' : 'text-slate-400'
           }`}>
             {lang === 'ar' 
               ? 'تفاعل مع أزرار لوحة القيادة أدناه لتكتشف في ثوانٍ كيف تقوم برمجياتنا بربط مبيعات الفروع والمستودعات والتحقق الضريبي التلقائي بمرونة لا تضاهى.' 

@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronRight, Cloud, MessageSquare, Monitor, Smartphone, Sparkles } from 'lucide-react';
+import { 
+  ChevronRight, Cloud, MessageSquare, Monitor, Smartphone, 
+  Sparkles, ShieldCheck, CheckCircle2, Zap, ArrowLeft, ArrowRight
+} from 'lucide-react';
 import { SubtitleRotator } from '../site/BrandVisuals';
 
-function HeroSection({ 
+export function HeroSection({ 
   lang, 
   theme, 
   t, 
@@ -18,508 +21,398 @@ function HeroSection({
     visible: { 
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.1
+        staggerChildren: 0.08,
+        delayChildren: 0.05
       }
     }
   };
 
   const itemVariants = {
-    hidden: { y: 35, opacity: 0 },
+    hidden: { y: 20, opacity: 0 },
     visible: { 
       y: 0, 
       opacity: 1,
-      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
     }
   };
 
+  // Auto-cycle platform carousel when not hovered
   useEffect(() => {
-    const hero = document.getElementById('home');
-    if (!hero) return undefined;
-    const onScroll = () => {
-      const rect = hero.getBoundingClientRect();
-      if (rect.bottom < 120 || rect.top > window.innerHeight * 0.7) return;
-      const progress = Math.min(0.999, Math.max(0, (window.scrollY / Math.max(1, hero.offsetHeight)) * 1.5));
-      const next = Math.min(2, Math.floor(progress * 3));
-      if (next !== activePlatformIndex) setActivePlatformIndex(next);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [activePlatformIndex, setActivePlatformIndex]);
+    if (isHoveredPlatforms) return undefined;
+    const interval = setInterval(() => {
+      setActivePlatformIndex((prev) => (prev + 1) % 3);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isHoveredPlatforms, setActivePlatformIndex]);
+
+  const platforms = [
+    {
+      id: 0,
+      titleAr: 'برنامج المحاسبة السحابي',
+      titleEn: 'Cloud ERP Portal',
+      icon: Cloud,
+      badgeAr: 'سحابي بالكامل 100%',
+      badgeEn: '100% Cloud ERP',
+      headlineAr: 'برنامج المحاسبة السحابي المتكامل',
+      headlineEn: 'Nile Techno Cloud ERP',
+      descAr: 'أدر أعمالك، مبيعاتك، مخازنك، وفواتيرك الإلكترونية المتوافقة مع هيئة الزكاة والضريبة (ZATCA) وهيئة الضرائب المصرية (ETA) مباشرة عبر الويب. حماية عالية، نسخ احتياطي دوري، وسهولة تامة بالوصول من أي متصفح أو جوال.',
+      descEn: 'Manage sales, warehouses, and tax-compliant e-invoicing from any browser. High security, automated backups, and instant cross-device synchronization.',
+      actionTextAr: 'الدخول للخدمة السحابية ⚡',
+      actionTextEn: 'Launch Cloud Portal ⚡',
+      actionHref: 'https://www.niletechnoerp.com/#/login',
+      isExternal: true,
+      color: 'cyan',
+      stats: [
+        { labelAr: 'الوصول من أي مكان:', labelEn: 'Global access:', valAr: 'متاح 24/7', valEn: 'Available' },
+        { labelAr: 'تشفير البيانات:', labelEn: 'Security:', valAr: 'مشفر بالكامل SSL', valEn: 'Encrypted' },
+        { labelAr: 'الفاتورة الإلكترونية:', labelEn: 'E-Invoice:', valAr: 'معتمدة ZATCA/ETA', valEn: 'Compliant' },
+        { labelAr: 'النسخ الاحتياطي:', labelEn: 'Backups:', valAr: 'آلي سحابي', valEn: 'Automated' },
+      ]
+    },
+    {
+      id: 1,
+      titleAr: 'أنظمة الديسكتوب والشبكات',
+      titleEn: 'Desktop & LAN Systems',
+      icon: Monitor,
+      badgeAr: 'شبكات محلية واستقرار فائق',
+      badgeEn: 'Local Network ERP',
+      headlineAr: 'أنظمة سطح المكتب للمصانع والشركات',
+      headlineEn: 'High-Stability Desktop ERP',
+      descAr: 'الحل البرمجي الأمثل للمصانع والورش والأنشطة التي تحتاج استقراراً مطلقاً بدون انقطاع. يعمل بالكامل دون الحاجة لاتصال بالإنترنت، ويدعم الربط بين عشرات أجهزة الكاشير ونقاط البيع وقواعد البيانات الضخمة.',
+      descEn: 'Enterprise desktop software built for manufacturing, distribution, and heavy POS operations without internet dependency. Robust local database clustering.',
+      actionTextAr: 'تصفح باقات سطح المكتب 💻',
+      actionTextEn: 'Explore Desktop Packages 💻',
+      actionHref: '#services',
+      isExternal: false,
+      color: 'blue',
+      stats: [
+        { labelAr: 'العمل بدون إنترنت:', labelEn: 'Offline mode:', valAr: 'مستمر 100%', valEn: 'Uninterrupted' },
+        { labelAr: 'سرعة الاستجابة:', labelEn: 'Speed:', valAr: 'فورية (LAN)', valEn: 'Instant LAN' },
+        { labelAr: 'قواعد البيانات:', labelEn: 'Database:', valAr: 'SQL Server محلية', valEn: 'Local SQL' },
+        { labelAr: 'تعدد المستخدمين:', labelEn: 'Multi-User:', valAr: 'صلاحيات متقدمة', valEn: 'Advanced RBAC' },
+      ]
+    },
+    {
+      id: 2,
+      titleAr: 'تطبيق مبيعات المناديب',
+      titleEn: 'Mobile Field Sales',
+      icon: Smartphone,
+      badgeAr: 'أندرويد و GPS ميداني',
+      badgeEn: 'Android Field Companion',
+      headlineAr: 'تطبيق المندوب الذكي والتوزيع الميداني',
+      headlineEn: 'Mobile Sales Representative App',
+      descAr: 'تطبيق أندرويد متطور لمندوبي المبيعات وسيارات التوزيع. يتيح إصدار وطباعة الفواتير عبر طابعات البلوتوث المحمولة، تتبع خط سير المندوب بالـ GPS، ومزامنة حركة المبيعات والمخزن مع السيرفر الرئيسي لحظياً.',
+      descEn: 'Dedicated Android mobile app for field reps. Print thermal receipts on Bluetooth printers, track routes via GPS, and sync transactions in real time.',
+      actionTextAr: 'تحميل التطبيق من جوجل بلاي 📱',
+      actionTextEn: 'Download Android App 📱',
+      actionHref: 'https://play.google.com/store/apps/details?id=com.niletechno.salesperson_app',
+      isExternal: true,
+      color: 'emerald',
+      stats: [
+        { labelAr: 'طباعة الفواتير:', labelEn: 'Printing:', valAr: 'بلوتوث حراري', valEn: 'Thermal BT' },
+        { labelAr: 'تتبع خط السير:', labelEn: 'Route Tracking:', valAr: 'GPS مباشر', valEn: 'Live GPS' },
+        { labelAr: 'المزامنة:', labelEn: 'Sync:', valAr: 'تلقائية مع الـ ERP', valEn: 'Real-time' },
+        { labelAr: 'إدارة العهدة والديون:', labelEn: 'Settlements:', valAr: 'مباشرة من الميدان', valEn: 'Instant' },
+      ]
+    }
+  ];
+
+  const currentPlatform = platforms[activePlatformIndex] || platforms[0];
 
   return (
-    <section id="home" className={`hero-stage relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden transition-all duration-500 ${
-      theme === 'light'
-        ? 'bg-gradient-to-b from-cyan-50/30 via-slate-50 to-white text-slate-800 light-hero-grid'
-        : 'bg-gradient-to-b from-[#030712] via-[#040d24] to-[#02050c] text-white dark-hero-grid'
-    }`}>
-      {/* High-tech Blueprint Tech Grid & Glowing Matrix Graphics */}
+    <section 
+      id="home" 
+      className={`hero-stage relative pt-20 sm:pt-24 pb-12 sm:pb-16 flex items-center justify-center overflow-hidden transition-colors duration-300 ${
+        theme === 'light'
+          ? 'bg-gradient-to-b from-cyan-50/40 via-white to-slate-50 text-slate-800'
+          : 'bg-gradient-to-b from-[#030712] via-[#050c1f] to-[#02050c] text-white'
+      }`}
+    >
+      {/* Background High-Tech Mesh and Circuit Lines */}
       <div className={`absolute inset-0 pointer-events-none ${
         theme === 'light'
-          ? 'bg-[linear-gradient(to_right,#0891b208_1px,transparent_1px),linear-gradient(to_bottom,#0891b208_1px,transparent_1px)] bg-[size:40px_40px] bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-cyan-550/10 via-transparent to-transparent opacity-80'
-          : 'bg-[radial-gradient(#111827_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-45'
+          ? 'bg-[radial-gradient(#0891b212_1px,transparent_1px)] [background-size:24px_24px] opacity-70'
+          : 'bg-[radial-gradient(#06b6d418_1px,transparent_1px)] [background-size:28px_28px] opacity-50'
       }`}></div>
 
-      {/* Cyber Grid Lines overlay for that detailed architectural blueprint aesthetic */}
-      {theme === 'light' ? (
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(8,145,178,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(8,145,178,0.05)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none"></div>
-      ) : (
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(6,182,212,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(6,182,212,0.04)_1px,transparent_1px)] bg-[size:56px_56px] pointer-events-none"></div>
-      )}
-
-      {/* Ambient glass orbs and decorations in Light Mode for rich visual active effects */}
-      {theme === 'light' && (
-        <>
-          <div className="light-orb-1"></div>
-          <div className="light-orb-2"></div>
-          <div className="light-orb-3"></div>
-          {/* Tech Graphic Elements */}
-          <div className="light-tech-shape shape-1"></div>
-          <div className="light-tech-shape shape-2"></div>
-        </>
-      )}
-      
-      {/* Decorative vector meshes with floating keyframe class with beautiful bright accents - optimized for mobile performance by rendering only on desktop */}
-      <div className="hidden md:block absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-cyan-500/10 to-blue-500/5 rounded-full blur-[140px] pointer-events-none animate-glow-pulse"></div>
-      <div className="hidden md:block absolute bottom-1/4 left-1/4 w-[420px] h-[420px] bg-gradient-to-br from-indigo-500/5 to-cyan-550/5 rounded-full blur-[140px] pointer-events-none animate-float-slow" style={{ animationDelay: '2s' }}></div>
-
-      <div className="hero-cta-backdrop" aria-hidden="true">
-        <div className="hero-cta-glow hero-cta-glow-primary"></div>
-        <div className="hero-cta-glow hero-cta-glow-secondary"></div>
-        <div className="hero-cta-mesh"></div>
-        <div className="hero-cta-dither"></div>
-      </div>
+      {/* Ambient Moving Glow Spheres */}
+      <motion.div 
+        animate={{ 
+          x: [0, 25, 0], 
+          y: [0, -20, 0],
+          scale: [1, 1.08, 1] 
+        }} 
+        transition={{ repeat: Infinity, duration: 12, ease: 'easeInOut' }}
+        className="hidden md:block absolute top-12 left-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"
+      />
+      <motion.div 
+        animate={{ 
+          x: [0, -20, 0], 
+          y: [0, 25, 0],
+          scale: [1, 1.05, 1] 
+        }} 
+        transition={{ repeat: Infinity, duration: 14, ease: 'easeInOut', delay: 1 }}
+        className="hidden md:block absolute bottom-12 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[110px] pointer-events-none"
+      />
 
       <motion.div 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 text-center"
+        className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
       >
         
-        {/* Modern high-tech graphic panel around main headlines */}
-        <div className={`hero-main-panel hero-cta-panel relative max-w-6xl mx-auto min-h-[560px] flex items-center justify-center p-6 sm:p-10 md:p-14 rounded-[2.5rem] border backdrop-blur-md overflow-hidden transition-all duration-500 mb-16 ${
+        {/* Main Hero Card - Compact, balanced height that fits laptops comfortably */}
+        <div className={`relative w-full rounded-3xl border backdrop-blur-md overflow-hidden p-6 sm:p-8 md:p-10 mb-8 sm:mb-10 transition-all duration-300 ${
           theme === 'light'
-            ? 'bg-gradient-to-br from-cyan-50 via-sky-100 to-indigo-100 border-cyan-300/80 shadow-2xl shadow-cyan-200/50'
-            : 'bg-gradient-to-br from-[#040817]/99 via-[#030713]/95 to-[#02050e]/99 border-cyan-500/20 shadow-2xl shadow-cyan-950/40'
+            ? 'bg-white/80 border-cyan-200/70 shadow-xl shadow-cyan-100/40'
+            : 'bg-[#060b18]/80 border-cyan-500/20 shadow-2xl shadow-cyan-950/40'
         }`}>
-          {/* Scientific blueprint grids solely for coordinates framing */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.25] [background-size:16px_16px] bg-[radial-gradient(#22d3ee_1px,transparent_1px)]"></div>
+          
+          {/* Animated Laser Border Highlight */}
+          <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
 
-          {/* Futuristic corner widgets */}
-          <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-500/60 rounded-tl-2xl animate-pulse"></div>
-          <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-cyan-500/60 rounded-tr-2xl animate-pulse"></div>
-          <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-cyan-500/60 rounded-bl-2xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500/60 rounded-br-2xl animate-pulse"></div>
+          {/* Floating Technology Badge 1 (Left Desktop) */}
+          <motion.div 
+            animate={{ y: [0, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
+            className={`hidden xl:flex items-center gap-2 absolute top-8 left-8 px-3.5 py-1.5 rounded-full border text-[11px] font-bold font-cairo shadow-md backdrop-blur-md ${
+              theme === 'light'
+                ? 'bg-cyan-50/90 border-cyan-200 text-cyan-800'
+                : 'bg-cyan-950/40 border-cyan-850/60 text-cyan-300'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <span>{lang === 'ar' ? '⚡ سحابي & مكتبي متزامن' : '⚡ Cloud & Desktop Sync'}</span>
+          </motion.div>
 
-          {/* Electronic micro circuits visual graphic lines */}
-          <div className="absolute top-4 left-10 right-10 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent"></div>
-          <div className="absolute bottom-4 left-10 right-10 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent"></div>
+          {/* Floating Technology Badge 2 (Right Desktop) */}
+          <motion.div 
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut', delay: 0.5 }}
+            className={`hidden xl:flex items-center gap-2 absolute top-8 right-8 px-3.5 py-1.5 rounded-full border text-[11px] font-bold font-cairo shadow-md backdrop-blur-md ${
+              theme === 'light'
+                ? 'bg-emerald-50/90 border-emerald-200 text-emerald-800'
+                : 'bg-emerald-950/40 border-emerald-850/60 text-emerald-300'
+            }`}
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+            <span>{lang === 'ar' ? '🛡️ معتمد 100% ZATCA & ETA' : '🛡️ ZATCA & ETA Certified'}</span>
+          </motion.div>
 
-          {/* Circular radial graphics orbs inside the text compartment - optimized for mobile performance */}
-          <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-tr from-cyan-400/25 to-blue-500/15 rounded-full blur-[75px] pointer-events-none animate-pulse"></div>
+          {/* Main Top Tag */}
+          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold mb-4 font-cairo shadow-sm border ${
+            theme === 'light'
+              ? 'bg-cyan-500/10 border-cyan-400/40 text-cyan-800'
+              : 'bg-cyan-500/15 border-cyan-500/30 text-cyan-300'
+          }">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-500" />
+            <span>{lang === 'ar' ? 'منظومة إدارة الأعمال والمحاسبة الذكية ERP 🇸🇦 🇪🇬' : 'Next-Gen Enterprise ERP & Tax Compliance'}</span>
+          </motion.div>
 
-            <div className="relative z-10">
-            {/* Dynamic Sparkles Floating Badge */}
-            <motion.div 
-              variants={itemVariants}
-              className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold mb-8 font-cairo shadow-lg hover:scale-[1.02] transition-all duration-300 ${
-                theme === 'light'
-                  ? 'bg-cyan-500/10 border border-cyan-500/30 text-cyan-750 shadow-cyan-500/5'
-                  : 'bg-cyan-500/15 border border-cyan-500/35 text-cyan-400 shadow-cyan-950/20'
-              }`}
+          {/* Main Headline - Clean, perfectly sized Cairo typography */}
+          <motion.h1 
+            variants={itemVariants}
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-5.5xl font-black tracking-tight mb-3 sm:mb-4 leading-tight font-cairo"
+          >
+            <span className={theme === 'light' ? 'text-slate-900' : 'text-white'}>
+              {lang === 'ar' ? 'دعنا ندير أعمالك بنجاح مع' : 'Empower Your Business With'}
+            </span>
+            <span className="block mt-1 sm:mt-2 bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600 bg-clip-text text-transparent">
+              {lang === 'ar' ? 'نايل تكنو للبرمجيات' : 'Nile Techno Software'}
+            </span>
+          </motion.h1>
+
+          {/* Dynamic Subtitle Rotator */}
+          <motion.div variants={itemVariants} className="mb-4 sm:mb-5">
+            <SubtitleRotator lang={lang} theme={theme} />
+          </motion.div>
+
+          {/* Professional Paragraph */}
+          <motion.p 
+            variants={itemVariants}
+            className={`max-w-2xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed font-cairo font-medium mb-6 ${
+              theme === 'light' ? 'text-slate-600' : 'text-slate-300'
+            }`}
+          >
+            {lang === 'ar' 
+              ? 'حلول موحدة لإدارة الحسابات العامة، المخازن، نقاط البيع، وتطبيقات المناديب الذكية — مع ربط كامل ومباشر بالفاتورة الإلكترونية المعتمدة في مصر والمملكة العربية السعودية.'
+              : 'A unified software suite for financials, multi-branch warehouses, cloud POS, and field sales apps — fully integrated with official electronic invoicing.'}
+          </motion.p>
+
+          {/* Direct Call to Action Buttons */}
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="#services"
+              onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }}
+              className="px-6 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-cyan-500/25 transition-all hover:-translate-y-0.5 cursor-pointer font-cairo flex items-center gap-2"
             >
-              <Sparkles className={`w-3.5 h-3.5 animate-bounce ${theme === 'light' ? 'text-cyan-600' : 'text-cyan-400'}`} />
-              <span className={theme === 'light' ? 'text-cyan-805' : 'text-cyan-300'}>{lang === 'ar' ? 'التحول الرقمي الموثوق للشركات والمصانع والمنشآت الضريبية 🇸🇦 🇪🇬' : 'Complete Digital Transformation & Tax Compliance'}</span>
-            </motion.div>
-
-            {/* Clean, high-contrast, perfectly visible headlines in dark/light mode */}
-            <motion.h1 
-              variants={itemVariants}
-              className="hero-title text-4xl sm:text-6xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-[1.04] font-cairo"
-            >
-              <span className={theme === 'light' ? 'text-slate-950' : 'text-white'}>
-                {lang === 'ar' ? 'دعنا ندير أعمالك' : 'Let Us Manage Your business'}
-              </span>
-              <span className={`block mt-3 font-black ${
+              <span>{lang === 'ar' ? 'اكتشف الأنظمة والحلول' : 'Explore Solutions'}</span>
+              <ChevronRight className={`w-4 h-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
+            </a>
+            <a
+              href="#einvoicing"
+              onClick={(e) => { e.preventDefault(); document.getElementById('einvoicing')?.scrollIntoView({ behavior: 'smooth' }); }}
+              className={`px-5 py-2.5 sm:py-3 rounded-xl border text-xs sm:text-sm font-bold font-cairo transition-all hover:-translate-y-0.5 flex items-center gap-2 ${
                 theme === 'light' 
-                  ? 'text-cyan-600 drop-shadow-[0_1px_2px_rgba(8,145,178,0.1)]' 
-                  : 'text-cyan-400 drop-shadow-[0_2px_10px_rgba(34,211,238,0.15)] bg-gradient-to-r from-cyan-400 via-sky-305 to-cyan-400 bg-clip-text text-transparent'
-              }`}>
-                {lang === 'ar' ? 'نايل تكنو للبرمجيات' : 'Nile Techno Systems'}
-              </span>
-            </motion.h1>
-
-            {/* Dynamic automatic subtitle rotator directly underneath H1 */}
-            <motion.div variants={itemVariants} className="mb-8">
-              <SubtitleRotator lang={lang} theme={theme} />
-            </motion.div>
-
-            <motion.p 
-              variants={itemVariants}
-              className={`max-w-2xl mx-auto text-base sm:text-lg lg:text-xl leading-relaxed font-cairo text-center font-medium drop-shadow-sm ${
-                theme === 'light' ? 'text-slate-700' : 'text-slate-300'
+                  ? 'border-slate-200 bg-white text-slate-700 hover:border-cyan-400 hover:text-cyan-700 shadow-sm' 
+                  : 'border-slate-700 bg-slate-900/60 text-slate-200 hover:border-cyan-500 hover:text-cyan-300'
               }`}
             >
-              {lang === 'ar' 
-                ? 'مجموعة متكاملة من البرمجيات المالية وحلول الـ ERP المتكاملة، نقاط البيع، المستودعات، وتطبيقات الهاتف الذكي لتهيئة نشاطك لأساليب الإدارة الحديثة والربط الإلكتروني المباشر.'
-                : 'A unified ecosystem of financials, supply-chain, point-of-sale ERP modules, and dedicated hybrid tablet apps engineered to scale commercial ventures smoothly.'}
-            </motion.p>
+              <Zap className="w-4 h-4 text-cyan-500" />
+              <span>{lang === 'ar' ? 'محاكي الفاتورة الإلكترونية' : 'E-Invoice Simulator'}</span>
+            </a>
+            <a
+              href="#contact"
+              onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+              className={`px-5 py-2.5 sm:py-3 rounded-xl border text-xs sm:text-sm font-bold font-cairo transition-all hover:-translate-y-0.5 flex items-center gap-2 ${
+                theme === 'light' 
+                  ? 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100' 
+                  : 'border-slate-800 bg-slate-900/40 text-slate-300 hover:bg-slate-800'
+              }`}
+            >
+              <MessageSquare className="w-4 h-4 text-emerald-500" />
+              <span>{lang === 'ar' ? 'تحدث مع خبير' : 'Talk to Expert'}</span>
+            </a>
+          </motion.div>
 
-            <motion.div variants={itemVariants} className="hero-cta-row mt-7 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="#services"
-                onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className="hero-primary-cta inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 px-7 py-3.5 text-xs sm:text-sm font-extrabold text-white shadow-lg shadow-cyan-500/20 transition-all hover:-translate-y-0.5 hover:shadow-cyan-500/35"
-              >
-                {lang === 'ar' ? 'اكتشف حلولنا' : 'Explore our solutions'} <ChevronRight className="w-4 h-4" />
-              </a>
-              <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className={`hero-secondary-cta inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 ${theme === 'light' ? 'border-slate-300 bg-white/70 text-slate-700 hover:border-cyan-400 hover:text-cyan-700' : 'border-slate-700 bg-slate-900/60 text-slate-200 hover:border-cyan-500 hover:text-cyan-300'}`}
-              >
-                {lang === 'ar' ? 'تحدث مع خبير' : 'Talk to an expert'} <MessageSquare className="w-4 h-4" />
-              </a>
-            </motion.div>
-          </div>
         </div>
 
-        {/* Three Channels Platforms Carousel Slider - Expanded to full widescreen layout as requested */}
+        {/* Interactive Platform Previewer (Cloud / Desktop / Mobile) */}
         <div 
           onMouseEnter={() => setIsHoveredPlatforms(true)}
           onMouseLeave={() => setIsHoveredPlatforms(false)}
-          className="max-w-full px-4 sm:px-8 lg:px-16 mx-auto mb-6 text-right font-cairo"
+          className="w-full text-right font-cairo"
         >
-          {/* Tabs Navigation Selector */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6">
-            {[
-              { id: 0, titleAr: 'برنامج المحاسبة السحابي ⚡', titleEn: 'Cloud ERP Portal ⚡', activeColor: 'border-cyan-500 text-cyan-500 bg-cyan-500/5' },
-              { id: 1, titleAr: 'أنظمة الديسكتوب والشبكات 💻', titleEn: 'Desktop Solutions 💻', activeColor: 'border-blue-500 text-blue-500 bg-blue-500/5' },
-              { id: 2, titleAr: 'تطبيق مبيعات المناديب 📱', titleEn: 'Sales Representative App 📱', activeColor: 'border-emerald-500 text-emerald-500 bg-emerald-500/5' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActivePlatformIndex(tab.id)}
-                className={`px-5 py-3.5 rounded-2xl text-xs sm:text-sm font-extrabold border transition-all duration-300 flex items-center gap-2 cursor-pointer ${
-                  activePlatformIndex === tab.id
-                    ? tab.activeColor
-                    : theme === 'light'
-                      ? 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
-                      : 'border-slate-800 bg-[#060b18]/60 text-slate-400 hover:border-slate-700 hover:text-slate-200'
-                }`}
-              >
-                {/* Micro timing progress bar overlay on tabs */}
-                <div className="relative flex items-center gap-2">
-                  <span className={`w-2 h-2 rounded-full ${
-                    activePlatformIndex === tab.id ? 'bg-current animate-ping' : 'bg-slate-400/50'
-                  }`}></span>
+          {/* Platform Tab Navigation Buttons */}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-4">
+            {platforms.map((tab) => {
+              const TabIcon = tab.icon;
+              const isActive = activePlatformIndex === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActivePlatformIndex(tab.id)}
+                  className={`px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center gap-2 cursor-pointer font-cairo ${
+                    isActive
+                      ? 'bg-cyan-500 text-white border-cyan-400 shadow-md shadow-cyan-500/20'
+                      : theme === 'light'
+                        ? 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                        : 'bg-slate-900/70 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                  }`}
+                >
+                  <TabIcon className="w-3.5 h-3.5" />
                   <span>{lang === 'ar' ? tab.titleAr : tab.titleEn}</span>
-                </div>
-              </button>
-            ))}
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping ml-1"></span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Core Widescreen Display Container with beautiful animations */}
-          <div className="hero-visual-motion relative overflow-hidden min-h-[300px] md:min-h-[250px]">
-            <AnimatePresence mode="wait" initial={false}>
-            {/* Slide 1: Cloud */}
-            {activePlatformIndex === 0 && (
+          {/* Platform Active Slide View */}
+          <div className="relative overflow-hidden">
+            <AnimatePresence mode="wait">
               <motion.div
-                key="cloud-platform"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, x: -24, scale: 0.985 }}
-                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 sm:p-10 rounded-3xl border relative overflow-hidden items-center ${
+                key={currentPlatform.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+                className={`grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 sm:p-7 rounded-2xl border transition-all duration-300 items-center text-right ${
                   theme === 'light'
-                    ? 'bg-gradient-to-br from-white via-slate-50/80 to-cyan-50/20 border-slate-200/80 shadow-2xl shadow-cyan-100/35'
-                    : 'bg-slate-950/80 backdrop-blur-md border-cyan-950/60 shadow-2xl shadow-cyan-950/30'
+                    ? 'bg-white border-slate-200 shadow-md'
+                    : 'bg-[#080e1e] border-slate-800 shadow-xl'
                 }`}
               >
-                {/* Accent highlights */}
-                <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-cyan-400 to-blue-500"></div>
-                <div className="absolute -right-10 -bottom-10 w-44 h-44 bg-cyan-400/5 rounded-full blur-3xl"></div>
+                {/* Platform Description & CTA */}
+                <div className="lg:col-span-7 space-y-3">
+                  <div className="flex items-center gap-2 justify-start">
+                    <span className="inline-flex px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
+                      {lang === 'ar' ? currentPlatform.badgeAr : currentPlatform.badgeEn}
+                    </span>
+                  </div>
 
-                {/* Left/Right standard swapping layouts for Arab/Eng */}
-                <div className="lg:col-span-7 space-y-4">
-                  <span className={`inline-flex px-3 py-1 rounded-md text-xs font-black tracking-wider uppercase ${
-                    theme === 'light' ? 'bg-cyan-50 text-cyan-600' : 'bg-cyan-950/80 text-cyan-400'
-                  }`}>
-                    {lang === 'ar' ? 'سحابي بالكامل (كلاود)' : '100% Cloud ERP'}
-                  </span>
-                  
-                  <h3 className={`text-xl sm:text-2xl font-extrabold ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                    {lang === 'ar' ? 'برنامج المحاسبة السحابي المتكامل' : 'Nile Techno Integrated Cloud ERP'}
+                  <h3 className={`text-base sm:text-lg font-black ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                    {lang === 'ar' ? currentPlatform.headlineAr : currentPlatform.headlineEn}
                   </h3>
 
-                  <p className={`text-sm leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
-                    {lang === 'ar'
-                      ? 'أدر أعمالك التجارية، مبيعاتك، مخازنك، وفواتيرك الإلكترونية المتوافقة مع متمتطلبات هيئة الزكاة والضريبة والجمارك وهيئة الضرائب المصرية مباشرةً عبر الويب. لا يحتاج لتثبيت، آمن تماماً، ويسهل الوصول إليه عبر الجوال أو المتصفح من أي مكان بالعالم.'
-                      : 'Manage your commercial enterprise, sales, stores, and compliant e-invoicing instantly from any device. Secure server encryption, automatic daily backups, and unified APIs for ultimate multi-screen mobility.'}
+                  <p className={`text-xs sm:text-sm leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+                    {lang === 'ar' ? currentPlatform.descAr : currentPlatform.descEn}
                   </p>
 
-                  <div className="pt-4">
-                    <a 
-                      href="https://www.niletechnoerp.com/#/login"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-cyan-500/20 cursor-pointer transform active:scale-95"
+                  <div className="pt-2">
+                    <a
+                      href={currentPlatform.actionHref}
+                      target={currentPlatform.isExternal ? '_blank' : '_self'}
+                      rel={currentPlatform.isExternal ? 'noopener noreferrer' : undefined}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs transition-all shadow-md shadow-cyan-500/20 cursor-pointer font-cairo"
                     >
-                      <span>{lang === 'ar' ? 'الدخول للخدمة السحابية ⚡' : 'Sign in to Cloud Portal ⚡'}</span>
-                      <Cloud className="w-4 h-4" />
+                      <span>{lang === 'ar' ? currentPlatform.actionTextAr : currentPlatform.actionTextEn}</span>
+                      <currentPlatform.icon className="w-3.5 h-3.5" />
                     </a>
                   </div>
                 </div>
 
+                {/* Micro Live Status Panel */}
                 <div className="lg:col-span-5">
-                  {/* Micro Terminal Sync Visual Grid */}
-                  <div className={`p-5 rounded-2xl border text-left font-mono text-[10px] ${
-                    theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-[#040813] border-cyan-950/45 text-cyan-300'
+                  <div className={`p-4 rounded-xl border font-mono text-[11px] text-right ${
+                    theme === 'light' 
+                      ? 'bg-slate-50 border-slate-200 text-slate-700' 
+                      : 'bg-slate-950/80 border-slate-800 text-cyan-300'
                   }`}>
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-cyan-500/10">
-                      <span className="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+                    <div className="flex items-center justify-between pb-2 mb-3 border-b border-cyan-500/10">
+                      <span className="text-xs font-bold text-emerald-500 flex items-center gap-1.5 font-cairo">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                        {lang === 'ar' ? 'حسابك متصل وآمن' : 'Your account is connected'}
+                        {lang === 'ar' ? 'الحالة: نشط ومتصل' : 'Status: Live & Connected'}
                       </span>
-                      <span className="text-[10px] opacity-75">{lang === 'ar' ? 'يعمل الآن' : 'Live now'}</span>
+                      <span className="text-[10px] text-slate-400 font-mono">v2026.4</span>
                     </div>
-                    <div className="space-y-2 text-xs">
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'الوصول من أي مكان:' : 'Access anywhere:'}</span>
-                        <span className="text-emerald-500 font-extrabold">{lang === 'ar' ? 'متاح' : 'Available'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'حماية بياناتك:' : 'Your data security:'}</span>
-                        <span className="text-blue-400">{lang === 'ar' ? 'مشفرة بالكامل' : 'Fully encrypted'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'الفاتورة الإلكترونية:' : 'E-invoicing:'}</span>
-                        <span className="text-emerald-500">{lang === 'ar' ? 'مطابقة للمتطلبات' : 'Compliant'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'الربط الضريبي:' : 'Tax integration:'}</span>
-                        <span className="text-emerald-500 font-bold">{lang === 'ar' ? 'جاهز' : 'Ready'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'تحديث البيانات:' : 'Data updates:'}</span>
-                        <span className="text-yellow-500">{lang === 'ar' ? 'تلقائي لحظيًا' : 'Automatic & live'}</span>
-                      </div>
+
+                    <div className="space-y-1.5 font-cairo text-xs">
+                      {currentPlatform.stats.map((st, sIdx) => (
+                        <div key={sIdx} className="flex justify-between items-center py-0.5 border-b border-slate-200/40 dark:border-slate-800/40 last:border-none">
+                          <span className={theme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
+                            {lang === 'ar' ? st.labelAr : st.labelEn}
+                          </span>
+                          <span className="font-bold text-cyan-600 dark:text-cyan-400">
+                            {lang === 'ar' ? st.valAr : st.valEn}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
+
               </motion.div>
-            )}
-
-            {/* Slide 2: Desktop */}
-            {activePlatformIndex === 1 && (
-              <motion.div
-                key="desktop-platform"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, x: 24, scale: 0.985 }}
-                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 sm:p-10 rounded-3xl border relative overflow-hidden items-center ${
-                  theme === 'light'
-                    ? 'bg-gradient-to-br from-white via-slate-50/80 to-cyan-50/20 border-slate-200/80 shadow-2xl shadow-cyan-100/35'
-                    : 'bg-slate-950/80 backdrop-blur-md border-blue-950/60 shadow-2xl shadow-blue-950/30'
-                }`}
-              >
-                {/* Accent highlights */}
-                <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
-                <div className="absolute -right-10 -bottom-10 w-44 h-44 bg-blue-500/5 rounded-full blur-3xl"></div>
-
-                <div className="lg:col-span-7 space-y-4">
-                  <span className={`inline-flex px-3 py-1 rounded-md text-xs font-black tracking-wider uppercase ${
-                    theme === 'light' ? 'bg-blue-50 text-blue-600' : 'bg-blue-950/80 text-blue-400'
-                  }`}>
-                    {lang === 'ar' ? 'ديسكتوب وشبكات محلي' : 'Desktop & Local Networks'}
-                  </span>
-                  
-                  <h3 className={`text-xl sm:text-2xl font-extrabold ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                    {lang === 'ar' ? 'أنظمة المحاسبة والمخازن لسطح المكتب' : 'High-Stability Desktop ERP Systems'}
-                  </h3>
-
-                  <p className={`text-sm leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
-                    {lang === 'ar'
-                      ? 'الحل البرمجي المثالي للمصانع الكبرى، الورش والحلول التي تتطلب استقراراً فائقاً دون الحاجة للاتصال بالإنترنت. يدعم الشبكات الداخلية المترابطة، أنظمة الكاشير السريعة، نقاط البيع اللامحدودة بمثالية أمنية تامة وقواعد بيانات محلية مشفرة بالكامل.'
-                      : 'Robust, battle-tested administrative software built to run on local servers offline. High database durability utilizing local networks, custom modules for large warehouses, manufacturing formulas, and fast POS checkouts.'}
-                  </p>
-
-                  <div className="pt-4">
-                    <a 
-                      href="#services"
-                      className={`inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl border font-extrabold text-xs sm:text-sm transition-all shadow-sm cursor-pointer ${
-                        theme === 'light'
-                          ? 'bg-slate-100 hover:bg-slate-150 border-slate-200 text-slate-800'
-                          : 'bg-slate-900 border-slate-800 text-white hover:bg-slate-800'
-                      }`}
-                    >
-                      <span>{lang === 'ar' ? 'تصفح البرمجيات والأنظمة 💻' : 'Browse Desktop solutions 💻'}</span>
-                      <Monitor className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-5">
-                  {/* Micro LAN network topology dashboard */}
-                  <div className={`p-5 rounded-2xl border text-left font-mono text-[10px] ${
-                    theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-[#040813] border-blue-950/45 text-blue-300'
-                  }`}>
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-blue-500/10">
-                      <span className="text-xs font-bold text-blue-400 flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                        {lang === 'ar' ? 'يعمل داخل شركتك حتى بدون إنترنت' : 'Works inside your company offline'}
-                      </span>
-                      <span className="text-[10px] opacity-75">{lang === 'ar' ? 'شبكة داخلية' : 'Local network'}</span>
-                    </div>
-                    <div className="space-y-2 text-xs">
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'بيانات شركتك:' : 'Your business data:'}</span>
-                        <span className="text-emerald-500 font-extrabold">{lang === 'ar' ? 'محفوظة وآمنة' : 'Safe & available'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'أجهزة العمل:' : 'Workstations:'}</span>
-                        <span className="text-cyan-400">{lang === 'ar' ? 'متصلة معًا' : 'Connected together'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'النسخ الاحتياطي:' : 'Backups:'}</span>
-                        <span className="text-emerald-500 font-bold">{lang === 'ar' ? 'تلقائي' : 'Automatic'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'العمل دون إنترنت:' : 'Offline work:'}</span>
-                        <span className="text-yellow-550">{lang === 'ar' ? 'مستمر' : 'Always available'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>{lang === 'ar' ? 'سرعة الاستخدام:' : 'Everyday speed:'}</span>
-                        <span className="text-blue-400">{lang === 'ar' ? 'سريعة جدًا' : 'Instant response'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Slide 3: Mobile */}
-            {activePlatformIndex === 2 && (
-              <motion.div
-                key="mobile-platform"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, x: -24, scale: 0.985 }}
-                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 sm:p-10 rounded-3xl border relative overflow-hidden items-center ${
-                  theme === 'light'
-                    ? 'bg-gradient-to-br from-white via-slate-50/80 to-cyan-50/20 border-slate-200/80 shadow-2xl shadow-cyan-100/35'
-                    : 'bg-slate-950/80 backdrop-blur-md border-emerald-950/60 shadow-2xl shadow-emerald-950/30'
-                }`}
-              >
-                {/* Accent highlights */}
-                <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
-                <div className="absolute -right-10 -bottom-10 w-44 h-44 bg-emerald-500/5 rounded-full blur-3xl"></div>
-
-                <div className="lg:col-span-7 space-y-4">
-                  <span className={`inline-flex px-3 py-1 rounded-md text-xs font-black tracking-wider uppercase ${
-                    theme === 'light' ? 'bg-emerald-50 text-emerald-750' : 'bg-emerald-950/80 text-emerald-400'
-                  }`}>
-                    {lang === 'ar' ? 'تطبيق المبيعات للمناديب' : 'Mobile Sales Platform'}
-                  </span>
-                  
-                  <h3 className={`text-xl sm:text-2xl font-extrabold ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                    {lang === 'ar' ? 'تطبيق مندوب المبيعات المتكامل للاندرويد' : 'Mobile Representative Android & GPS App'}
-                  </h3>
-
-                  <p className={`text-sm leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
-                    {lang === 'ar'
-                      ? 'تطبيق التابلت والاندرويد المتطور المصمم خصيصاً لمندوبي المبيعات والتوزيع الميداني. يدعم إصدار الفواتير وطباعتها لحظياً عبر طابعات البلوتوث وتتبع مسار المندوب بالـ GPS ومزامنة المبيعات والمخزون مع السيرفر الرئيسي لحظة بلحظة.'
-                      : 'Robust Field Sales mobile client. Instantly issue sales, invoices, handle routes, and print physical thermal receipts on the move via Bluetooth pocket printers, automatically synced back with your central ERP server.'}
-                  </p>
-
-                  <div className="pt-4">
-                    <a 
-                      href="https://play.google.com/store/apps/details?id=com.niletechno.salesperson_app"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-emerald-500/20 cursor-pointer transform active:scale-95"
-                    >
-                      <span>{lang === 'ar' ? 'تحميل تطبيق الاندرويد 📱' : 'Download Sales Android App 📱'}</span>
-                      <Smartphone className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-5">
-                  {/* Micro GPS/Rep tracking dashboard */}
-                  <div className={`p-5 rounded-2xl border text-left font-mono text-[10px] ${
-                    theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-[#040813] border-emerald-950/45 text-emerald-350'
-                  }`}>
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-emerald-500/10">
-                      <span className="text-xs font-bold text-emerald-450 flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-emerald-550 animate-pulse"></span>
-                        {lang === 'ar' ? 'المندوب شغال من الموبايل' : 'Your sales team is mobile'}
-                      </span>
-                      <span className="text-[10px] opacity-75">{lang === 'ar' ? 'متصل الآن' : 'Connected now'}</span>
-                    </div>
-                    <div className="space-y-2 text-xs">
-                      <div className="flex justify-between items-center">
-                        <span>{lang === 'ar' ? 'خط سير المندوب:' : 'Sales route:'}</span>
-                        <span className={`truncate max-w-[150px] font-black ${
-                          theme === 'light' ? 'text-[#0a192f] text-[13px]' : 'text-slate-200'
-                        }`}>{lang === 'ar' ? 'المنطقة الوسطى - الرياض' : 'Central Area - Riyadh'}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>{lang === 'ar' ? 'تسجيل الطلبات:' : 'Orders:'}</span>
-                        <span className={`font-bold ${theme === 'light' ? 'text-cyan-800' : 'text-cyan-400'}`}>{lang === 'ar' ? 'من أي مكان' : 'From anywhere'}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>{lang === 'ar' ? 'طباعة الفاتورة:' : 'Invoice printing:'}</span>
-                        <span className={`font-bold ${theme === 'light' ? 'text-amber-800' : 'text-yellow-400'}`}>{lang === 'ar' ? 'من الموبايل' : 'From mobile'}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>{lang === 'ar' ? 'تحديث المخزون:' : 'Inventory:'}</span>
-                        <span className={`font-bold ${theme === 'light' ? 'text-emerald-700' : 'text-emerald-400'}`}>{lang === 'ar' ? 'لحظيًا' : 'Live updates'}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>{lang === 'ar' ? 'متابعة المبيعات:' : 'Sales tracking:'}</span>
-                        <span className={`font-bold ${theme === 'light' ? 'text-indigo-900' : 'text-emerald-550'}`}>{lang === 'ar' ? 'واضحة أولًا بأول' : 'Always visible'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
             </AnimatePresence>
           </div>
         </div>
 
-        {/* Quick Metrics Labels Grid (Highly designed margins) */}
+        {/* Compact Quick Metrics Bar */}
         <motion.div 
           variants={itemVariants}
-          className={`grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-4 pt-4 border-t ${
-            theme === 'light' ? 'border-slate-100' : 'border-slate-800/60'
+          className={`grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto mt-6 pt-6 border-t ${
+            theme === 'light' ? 'border-slate-200' : 'border-slate-800/80'
           }`}
         >
           {[
-            { val: '2010', labelAr: 'بداية التأسيس والابتكار الأصيل', labelEn: 'Inception date' },
-            { val: '+10,000', labelAr: 'مستثمر وتاجر يثقون في نايل تكنو', labelEn: 'Active deployment runs' },
-            { val: '12+', labelAr: 'أنظمة محاسبية ذكية متكاملة ببعضها', labelEn: 'Stand-alone modules' },
-            { val: '24/7', labelAr: 'دعم فني هندسي متواصل لحل الأعطال', labelEn: 'Customer support SLA' }
+            { val: '2010', labelAr: 'تأسيس وخبرة ممتدة', labelEn: 'Established' },
+            { val: '+1,500', labelAr: 'مؤسسة وشركة معتمدة', labelEn: 'Active Clients' },
+            { val: '12 +', labelAr: 'حلول وبرمجيات متكاملة', labelEn: 'Software Systems' },
+            { val: '24/7', labelAr: 'دعم فني واستجابة فورية', labelEn: 'Technical Support' }
           ].map((metric, idx) => (
             <div 
               key={idx} 
-              className={`p-4 rounded-xl border transition-all duration-300 hover:-translate-y-1 ${
-                theme === 'light' ? 'bg-white border-slate-200 shadow-sm hover:shadow-md' : 'bg-slate-900/40 border-slate-800 hover:bg-slate-900/70 hover:border-cyan-500/30'
+              className={`p-3 rounded-xl border transition-all duration-200 ${
+                theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-900/40 border-slate-800/80'
               }`}
             >
-              <div className={`text-xl sm:text-2xl font-extrabold font-mono mb-1 ${
-                theme === 'light' ? 'text-cyan-600' : 'text-cyan-400'
-              }`}>
+              <div className="text-lg sm:text-xl font-black font-mono text-cyan-500 mb-0.5">
                 {metric.val}
               </div>
-              <div className={`text-xs font-cairo ${
-                theme === 'light' ? 'text-slate-600' : 'text-slate-400'
-              }`}>
+              <div className={`text-[11px] font-bold font-cairo ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
                 {lang === 'ar' ? metric.labelAr : metric.labelEn}
               </div>
             </div>
@@ -530,5 +423,3 @@ function HeroSection({
     </section>
   );
 }
-
-export { HeroSection };

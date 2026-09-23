@@ -754,18 +754,23 @@ nav.fixed .nav-link-premium:focus-visible {
   animation: heroVisualSettle 7s ease-in-out infinite;
 }
 .partners-marquee-track {
+  display: flex;
   width: max-content;
   min-width: max-content;
   will-change: transform;
-  animation: partnersMarquee 34s linear infinite;
+  animation: partnersMarquee 50s linear infinite;
 }
-.partners-marquee-viewport { width: 100%; overflow: hidden; }
+.partners-marquee-viewport { 
+  width: 100%; 
+  overflow: hidden; 
+  direction: ltr;
+}
 .partners-marquee-viewport:hover .partners-marquee-track,
 .partners-marquee-track:hover { animation-play-state: paused; }
 .partners-marquee-track > div { transition: transform 240ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, box-shadow 240ms ease; }
 @keyframes partnersMarquee {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 @keyframes heroVisualSettle {
   0%, 100% { transform: translate3d(0, 0, 0); }
@@ -922,5 +927,20 @@ nav.fixed .nav-link-premium:focus-visible {
   .hero-visual-motion p { font-size: .78rem; line-height: 1.7; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-cta-mesh { animation: none; }
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-cta-mesh,
+  .partners-marquee-track,
+  .animate-pulse,
+  .animate-ping,
+  .animate-bounce {
+    animation: none !important;
+  }
 }
+

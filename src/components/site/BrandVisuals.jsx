@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Calculator, Warehouse, TrendingUp, Cpu, Users, ShoppingBag, Gem, Utensils, Truck, Wrench,
-  CalendarClock, Car, Smartphone, Tablet, ChefHat, HeartPulse, Building2, Globe2,
-  UtensilsCrossed, Wheat, House, Handshake, CarFront, Pill, Leaf, Factory
+  CalendarClock, Car, Smartphone, Tablet, ChefHat, HeartPulse, Building2, CircleHelp
 } from 'lucide-react';
 import { SUCCESS_PARTNERS } from '../../data';
 import companyLogo from '../../assets/images/logo.webp';
@@ -29,15 +28,9 @@ const IconComponent = ({ name, className }) => {
     ChefHat,
     HeartPulse
   };
-  const SelectedIcon = icons[name] || HelpCircle;
+  const SelectedIcon = icons[name] || CircleHelp;
   return <SelectedIcon aria-hidden="true" strokeWidth={1.8} className={className || "w-5 h-5"} />;
 };
-
-const HelpCircle = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
 
 // Helper to render beautiful category-based customer logos (representing dynamic brands)
 const getPartnerLogo = (partner) => {
@@ -228,14 +221,14 @@ const PartnerLogo = ({ partner, theme }) => {
 };
 
 // Premium image-based logo for Nile Techno with dynamic fallback sequence
-const NileTechnoLogo = ({ theme, lang }) => {
+const NileTechnoLogo = ({ theme, lang, className }) => {
   return (
     <div className="flex items-center select-none hover:opacity-95 transition-opacity">
       <img
         src={companyLogo}
         alt="Nile Techno Logo"
         decoding="async"
-        className="h-18 sm:h-22 md:h-24 lg:h-26 max-h-26 w-auto object-contain transition-transform duration-300 hover:scale-[1.05]"
+        className={className || "h-9 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-[1.03]"}
         onError={(e) => {
           e.target.src = logoTransparentWebp;
         }}

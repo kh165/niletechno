@@ -154,7 +154,7 @@ export default function EInvoiceDemo({ lang, theme }) {
           type="button"
           onClick={() => setShowExplanation(!showExplanation)}
           aria-expanded={showExplanation}
-          className="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-bold font-cairo transition-colors cursor-pointer bg-slate-900 hover:bg-slate-800 border-slate-700 text-cyan-300 shadow-sm"
+          className="min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-bold font-cairo transition-colors cursor-pointer bg-slate-900 hover:bg-slate-800 border-slate-700 text-cyan-300 shadow-sm"
         >
           <HelpCircle className="w-4 h-4 text-cyan-400" />
           <span>{lang === 'ar' ? 'عن هذا المحاكي التعليمي' : 'About This Simulator'}</span>
@@ -173,15 +173,21 @@ export default function EInvoiceDemo({ lang, theme }) {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-right">
               <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="text-xs font-bold text-cyan-400 font-cairo">🔒 خصوصية وأمان كامل:</span>
+                <span className="text-xs font-bold text-cyan-400 font-cairo flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>{lang === 'ar' ? 'خصوصية وأمان تام:' : 'Complete Security & Privacy:'}</span>
+                </span>
                 <p className="text-[11px] mt-1 font-cairo leading-relaxed text-slate-300">
-                  {lang === 'ar' ? 'البيانات تُعالج محلياً ولا يتم حفظها أو نقلها خارج جهازك.' : 'All data is computed in-memory locally.'}
+                  {lang === 'ar' ? 'البيانات تُعالج محلياً في المتصفح ولا يتم حفظها أو نقلها لخوادم خارجية.' : 'All data is computed in-memory locally in your browser.'}
                 </p>
               </div>
               <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="text-xs font-bold text-cyan-400 font-cairo">⏱️ طابع زمني ثابت:</span>
+                <span className="text-xs font-bold text-cyan-400 font-cairo flex items-center gap-1.5">
+                  <Calendar className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>{lang === 'ar' ? 'طابع زمني تلقائي فوري:' : 'Automatic Live Timestamp:'}</span>
+                </span>
                 <p className="text-[11px] mt-1 font-cairo leading-relaxed text-slate-300">
-                  {lang === 'ar' ? 'وقت الفاتورة ثابت ولا يتغير كل ثانية لتجنب إعادة توليد الرمز بلا داعٍ.' : 'Timestamp is locked to invoice creation time.'}
+                  {lang === 'ar' ? 'يتم ضبط وتحديث وقت وتاريخ الفاتورة تلقائياً لحظة بلحظة دون أي تدخل يدوي.' : 'Timestamp is automatically synchronized live in real-time.'}
                 </p>
               </div>
             </div>
@@ -216,7 +222,7 @@ export default function EInvoiceDemo({ lang, theme }) {
                   type="text"
                   value={sellerName}
                   onChange={(e) => setSellerName(e.target.value)}
-                  className={`w-full text-xs px-4 py-3 rounded-xl transition-all outline-none font-medium font-cairo border ${
+                  className={`w-full min-h-[44px] text-xs px-4 py-2.5 rounded-xl transition-all outline-none font-medium font-cairo border ${
                     theme === 'light'
                       ? 'bg-slate-50 border-slate-200 text-slate-900 focus:bg-white focus:border-cyan-500'
                       : 'bg-slate-950 border-slate-800 text-white focus:border-cyan-500'
@@ -236,7 +242,7 @@ export default function EInvoiceDemo({ lang, theme }) {
                   maxLength={15}
                   value={vatNumber}
                   onChange={(e) => setVatNumber(e.target.value.replace(/[^0-9]/g, ''))}
-                  className={`w-full text-xs px-4 py-3 rounded-xl transition-all outline-none font-medium font-mono border ${
+                  className={`w-full min-h-[44px] text-xs px-4 py-2.5 rounded-xl transition-all outline-none font-medium font-mono border ${
                     theme === 'light'
                       ? 'bg-slate-50 border-slate-200 text-slate-900 focus:bg-white focus:border-cyan-500'
                       : 'bg-slate-950 border-slate-800 text-cyan-400 focus:border-cyan-500'
@@ -265,7 +271,7 @@ export default function EInvoiceDemo({ lang, theme }) {
                     type="text"
                     value={invoiceTimestamp}
                     readOnly
-                    className={`w-full text-xs px-4 py-3 rounded-xl transition-all outline-none font-medium font-mono border ${
+                    className={`w-full min-h-[44px] text-xs px-4 py-2.5 rounded-xl transition-all outline-none font-medium font-mono border ${
                       theme === 'light'
                         ? 'bg-slate-50 border-slate-200 text-slate-900'
                         : 'bg-slate-950 border-slate-800 text-emerald-400'
@@ -294,7 +300,7 @@ export default function EInvoiceDemo({ lang, theme }) {
                   type="text"
                   value={totalPrice}
                   onChange={(e) => setTotalPrice(e.target.value.replace(/[^0-9.]/g, ''))}
-                  className={`w-full text-xs px-4 py-3 rounded-xl transition-all outline-none font-bold font-mono border ${
+                  className={`w-full min-h-[44px] text-xs px-4 py-2.5 rounded-xl transition-all outline-none font-bold font-mono border ${
                     theme === 'light'
                       ? 'bg-slate-50 border-slate-200 text-emerald-600 focus:bg-white focus:border-cyan-500'
                       : 'bg-slate-950 border-slate-800 text-emerald-400 focus:border-cyan-500'
@@ -312,7 +318,7 @@ export default function EInvoiceDemo({ lang, theme }) {
                   id="sim-vat-rate"
                   value={vatRate}
                   onChange={(e) => setVatRate(parseInt(e.target.value, 10))}
-                  className={`w-full text-xs px-4 py-3 rounded-xl transition-all cursor-pointer outline-none font-medium font-cairo border ${
+                  className={`w-full min-h-[44px] text-xs px-4 py-2.5 rounded-xl transition-all cursor-pointer outline-none font-medium font-cairo border ${
                     theme === 'light'
                       ? 'bg-slate-50 border-slate-200 text-slate-900 focus:bg-white focus:border-cyan-500'
                       : 'bg-slate-950 border-slate-800 text-slate-200 focus:border-cyan-500'
@@ -436,11 +442,11 @@ export default function EInvoiceDemo({ lang, theme }) {
           <button
             type="button"
             onClick={copyToClipboard}
-            className="absolute left-2 top-2 p-1.5 border rounded-lg bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200 transition-colors cursor-pointer"
+            className="absolute left-2 top-2 min-w-[44px] min-h-[44px] flex items-center justify-center p-2 border rounded-xl bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200 transition-colors cursor-pointer"
             title="Copy payload"
             aria-label="Copy payload"
           >
-            <ClipboardCopy className="w-3.5 h-3.5" />
+            <ClipboardCopy className="w-4 h-4" />
           </button>
         </div>
       </div>

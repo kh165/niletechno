@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Calculator, Warehouse, TrendingUp, Cpu, Users, ShoppingBag, Gem, Utensils, Truck, Wrench,
-  CalendarClock, Car, Smartphone, Tablet, ChefHat, HeartPulse, Building2, CircleHelp
+  CalendarClock, Car, Smartphone, Tablet, ChefHat, HeartPulse, Building2, CircleHelp,
+  Globe2, UtensilsCrossed, Wheat, House, Handshake, CarFront, Pill, Leaf, Factory
 } from 'lucide-react';
 import { SUCCESS_PARTNERS } from '../../data';
 import companyLogo from '../../assets/images/logo.webp';
@@ -34,6 +35,7 @@ const IconComponent = ({ name, className }) => {
 
 // Helper to render beautiful category-based customer logos (representing dynamic brands)
 const getPartnerLogo = (partner) => {
+  if (!partner) return null;
   const categoryIcons = {
     ksa: Building2,
     import_export: Globe2,
@@ -48,11 +50,12 @@ const getPartnerLogo = (partner) => {
     herbs_spices: Leaf,
     factories: Factory
   };
-  const CategoryIcon = categoryIcons[partner.category] || Building2;
+  const categoryKey = (partner && partner.category) ? partner.category : 'ksa';
+  const CategoryIcon = categoryIcons[categoryKey] || Building2;
   return (
     <CategoryIcon
       aria-hidden="true"
-      className="w-8 h-8 opacity-80 transition-transform duration-300 group-hover:scale-105"
+      className="w-7 h-7 sm:w-8 sm:h-8 opacity-80 transition-transform duration-300 group-hover:scale-105"
       strokeWidth={1.8}
     />
   );
@@ -148,22 +151,25 @@ const categoryFolders = {
   factories: 'factory'
 };
 
-// Intelligent, non-lagging client logo renderer with exact manifest matching and 1-hit loading
+// Intelligent, non-lagging client logo renderer with exact manifest matching and safe fallbacks
 const PartnerLogo = ({ partner, theme }) => {
+  if (!partner) return null;
+
   const pCat = partner.category || 'ksa';
   const folder = categoryFolders[pCat] || 'KSA';
   const manifest = LOGO_MANIFEST[pCat] || LOGO_MANIFEST.ksa;
   
-  // Find index of partner in its specific category pool
-  const catPool = SUCCESS_PARTNERS.filter(p => p.category === pCat);
-  const indexInCat = catPool.findIndex(p => p.id === partner.id);
+  // Find index of partner in its specific category pool safely
+  const partnerIdStr = String(partner.id || '');
+  const catPool = Array.isArray(SUCCESS_PARTNERS) ? SUCCESS_PARTNERS.filter(p => p && p.category === pCat) : [];
+  const indexInCat = catPool.findIndex(p => p && String(p.id) === partnerIdStr);
   const catIdx = indexInCat !== -1 ? indexInCat : 0;
   
   // Resolve using exact scanned indices or direct image url
   let imageUrl = '';
   if (partner.imageUrl) {
     imageUrl = partner.imageUrl;
-  } else {
+  } else if (manifest && manifest.length > 0) {
     const mItem = manifest[catIdx % manifest.length] || { idx: 1, ext: 'jpg' };
     const fileIdx = mItem.idx;
     const ext = mItem.ext;
@@ -171,8 +177,9 @@ const PartnerLogo = ({ partner, theme }) => {
   }
 
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
-  // Generate gorgeous, high-contrast local decorative gradient cards
+  // Generate gorgeous, high-contrast local decorative gradient cards safely
   const gradients = [
     'from-cyan-500/20 to-blue-600/10 text-cyan-600 dark:text-cyan-400',
     'from-blue-600/20 to-indigo-600/10 text-blue-600 dark:text-blue-400',
@@ -181,18 +188,21 @@ const PartnerLogo = ({ partner, theme }) => {
     'from-slate-700/20 to-slate-900/10 text-slate-700 dark:text-slate-400',
     'from-amber-500/20 to-orange-600/10 text-amber-600 dark:text-amber-400'
   ];
-  const hash = partner.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const selectedGrad = gradients[hash % gradients.length];
+  const hash = partnerIdStr ? partnerIdStr.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : 0;
+  const selectedGrad = gradients[Math.abs(hash) % gradients.length];
   
-  // Extract clean initials
-  const initials = partner.nameAr.split(' ').filter(w => w.length > 2).slice(0, 2).map(w => w[0]).join(' ') || partner.logoText || 'NT';
+  // Extract clean initials safely
+  const rawName = String(partner.nameAr || partner.nameEn || '');
+  const initials = rawName
+    ? rawName.split(' ').filter(w => w.length > 2).slice(0, 2).map(w => w[0]).join(' ') || partner.logoText || 'NT'
+    : (partner.logoText || 'NT');
 
   return (
     <div className="w-full h-full relative rounded-xl flex items-center justify-center overflow-hidden p-1 select-none">
       
       {/* 1. Instant Premium Placeholder Layer - Loads in 0ms, beautiful brand typography & matching category SVG */}
       <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${selectedGrad} flex flex-col items-center justify-center p-2 text-center transition-all duration-350 ${
-        imageLoaded ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
+        imageLoaded && !imageError ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
       }`}>
         <div className="absolute inset-0 bg-white/5 dark:bg-black/5 backdrop-blur-[0.5px]"></div>
         <div className="relative z-10 flex flex-col items-center justify-center">
@@ -206,16 +216,22 @@ const PartnerLogo = ({ partner, theme }) => {
       </div>
 
       {/* 2. Asynchronous Real Logo Image Layer - Smoothly fades in only when fully loaded */}
-      <img
-        src={imageUrl}
-        alt={partner.nameAr}
-        onLoad={() => setImageLoaded(true)}
-        className={`w-full h-full object-contain select-none transition-all duration-500 ease-out p-1 bg-white rounded-lg ${
-          imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90 absolute pointer-events-none'
-        }`}
-        referrerPolicy="no-referrer"
-        loading="lazy"
-      />
+      {imageUrl && !imageError && (
+        <img
+          src={imageUrl}
+          alt={rawName || "Partner"}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => {
+            setImageError(true);
+            setImageLoaded(false);
+          }}
+          className={`w-full h-full object-contain select-none transition-all duration-500 ease-out p-1 bg-white rounded-lg ${
+            imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90 absolute pointer-events-none'
+          }`}
+          referrerPolicy="no-referrer"
+          loading="lazy"
+        />
+      )}
     </div>
   );
 };
@@ -228,7 +244,7 @@ const NileTechnoLogo = ({ theme, lang, className }) => {
         src={companyLogo}
         alt="Nile Techno Logo"
         decoding="async"
-        className={className || "h-9 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-[1.03]"}
+        className={className || "h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 hover:scale-[1.02]"}
         onError={(e) => {
           e.target.src = logoTransparentWebp;
         }}
@@ -237,53 +253,71 @@ const NileTechnoLogo = ({ theme, lang, className }) => {
   );
 };
 
-// Subtitle Rotator for the Hero Header Section (Innovation Feature)
+// Subtitle Rotator for the Hero Header Section (Enterprise Feature)
 const SubtitleRotator = ({ lang, theme }) => {
-  const subtitlesAr = [
-    'برنامج الحسابات العامة المتكامل وحلول الـ ERP الفعالة 📊',
-    'منظومة الفاتورة الضريبية والمبيعات المعتمدة 100% من هيئة الزكاة 🇸🇦',
-    'إدارة مستودعات ومخازن ذكية بباركود للأصناف المتعددة 📦',
-    'تطبيقات الهاتف الذكية لربط مناديب المبيعات والتوكيلات الفان 📱',
-    'أسرع استجابة دعم فني ميداني وسحابي مع تحديثات سنوية دورية ⚡'
+  const subtitles = [
+    {
+      icon: Calculator,
+      ar: 'برنامج الحسابات العامة المتكامل وحلول الـ ERP الفعالة',
+      en: 'Complete Integrated ERP Software & Financial Ecosystems',
+      color: 'text-cyan-500'
+    },
+    {
+      icon: Building2,
+      ar: 'منظومة الفاتورة الضريبية والمبيعات المعتمدة من هيئة الزكاة والضرائب',
+      en: 'ZATCA & ETA Certified Digital Invoicing & Instant POS Solutions',
+      color: 'text-emerald-500'
+    },
+    {
+      icon: Warehouse,
+      ar: 'إدارة مستودعات ومخازن ذكية بنظام الباركود متعدد الفروع',
+      en: 'Intelligent Warehouse Tracking & Multi-Store Barcode Management',
+      color: 'text-blue-500'
+    },
+    {
+      icon: Smartphone,
+      ar: 'تطبيقات الهاتف الذكية لربط مناديب المبيعات والطباعة الحرارية',
+      en: 'Advanced Mobile Companion Apps for Salesmen & Thermal Printing',
+      color: 'text-indigo-500'
+    },
+    {
+      icon: Cpu,
+      ar: 'أسرع استجابة دعم فني ميداني وسحابي مع تحديثات دورية',
+      en: 'High-Speed SLA Technical Support with Automated Updates',
+      color: 'text-amber-500'
+    }
   ];
-  const subtitlesEn = [
-    'Complete Integrated ERP Software & Financial ecosystems 📊',
-    'ZATCA/ETA Certified Digital Invoicing & Instant POS solutions 🇸🇦',
-    'Intelligent Warehouse Tracking & Multi-Store Barcode structures 📦',
-    'Advanced Companion Mobile app arrays for salesman routing 📱',
-    'High-Speed SLA technical support with free annual system rollouts ⚡'
-  ];
-  const list = lang === 'ar' ? subtitlesAr : subtitlesEn;
+
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((p) => (p + 1) % list.length);
-    }, 4000);
+      setIndex((p) => (p + 1) % subtitles.length);
+    }, 4500);
     return () => clearInterval(interval);
-  }, [list]);
+  }, [subtitles.length]);
+
+  const current = subtitles[index];
+  const CurrentIcon = current.icon;
 
   return (
-    <div className="h-12 overflow-hidden flex items-center justify-center font-cairo select-none">
+    <div className="h-9 overflow-hidden flex items-center justify-center lg:justify-start font-cairo select-none">
       <AnimatePresence mode="wait">
-        <motion.span 
+        <motion.div 
           key={index} 
-          initial={{ y: 25, opacity: 0, scale: 0.95 }}
-          animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: -25, opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
-          className={`text-xs sm:text-sm font-extrabold tracking-wide flex items-center gap-2 px-5 py-2 rounded-full border shadow-md select-none text-center transition-all duration-300 ${
+          initial={{ y: 12, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -12, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className={`text-xs font-bold tracking-wide flex items-center gap-2 px-3.5 py-1.5 rounded-full border shadow-sm select-none transition-all duration-300 ${
             theme === 'light'
-              ? 'text-blue-900 bg-blue-50/85 border-blue-200/90 shadow-blue-100/45'
-              : 'text-cyan-400 bg-cyan-950/40 border-cyan-850/40 shadow-cyan-950/20'
+              ? 'text-slate-800 bg-white border-slate-200 shadow-sm'
+              : 'text-slate-200 bg-slate-900/80 border-slate-800'
           }`}
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span>{list[index]}</span>
-        </motion.span>
+          <CurrentIcon className={`w-3.5 h-3.5 shrink-0 ${current.color}`} />
+          <span className="truncate">{lang === 'ar' ? current.ar : current.en}</span>
+        </motion.div>
       </AnimatePresence>
     </div>
   );

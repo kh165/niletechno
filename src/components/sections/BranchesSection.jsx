@@ -109,7 +109,7 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
               <div className="flex items-center gap-2">
                 <a
                   href={`tel:${selectedBranch.id === 'riyadh' ? COMPANY_CONFIG.contact.ksa.phoneRaw : COMPANY_CONFIG.contact.egypt.phoneRaw}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-bold font-cairo transition-colors bg-cyan-500/10 border-cyan-500/30 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/20"
+                  className="inline-flex items-center justify-center min-h-[44px] gap-2 px-3.5 py-2 rounded-xl border text-xs font-bold font-cairo transition-colors bg-cyan-500/10 border-cyan-500/30 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/20"
                 >
                   <PhoneCall className="w-3.5 h-3.5" />
                   <span dir="ltr">{selectedBranch.id === 'riyadh' ? COMPANY_CONFIG.contact.ksa.phoneDisplay : COMPANY_CONFIG.contact.egypt.phoneDisplay}</span>
@@ -119,7 +119,7 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
                   href={selectedBranch.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-bold font-cairo transition-colors bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-cyan-500"
+                  className="inline-flex items-center justify-center min-h-[44px] gap-2 px-3.5 py-2 rounded-xl border text-xs font-bold font-cairo transition-colors bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-cyan-500"
                 >
                   <Navigation className="w-3.5 h-3.5" />
                   <span>{lang === 'ar' ? 'الاتجاهات' : 'Directions'}</span>

@@ -122,7 +122,7 @@ export default function LeadCalculator({ lang, theme }) {
                   { id: 'egy', flag: 'eg', ar: 'جمهورية مصر العربية', en: 'Egypt' },
                 ].map(c => (
                   <button key={c.id} type="button" onClick={() => setCountry(c.id)}
-                    className={`py-3 px-4 rounded-xl border text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 font-cairo cursor-pointer ${
+                    className={`min-h-[44px] py-3 px-4 rounded-xl border text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 font-cairo cursor-pointer ${
                       country === c.id
                         ? 'bg-gradient-to-r from-emerald-600/20 to-teal-500/15 border-emerald-500 text-emerald-600 dark:text-emerald-300 shadow-md ring-1 ring-emerald-500/25'
                         : theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700/80 hover:text-white'
@@ -147,7 +147,7 @@ export default function LeadCalculator({ lang, theme }) {
                   { id: 'specialized', ar: 'حلول تخصصية', en: 'Special Tech' },
                 ].map(sec => (
                   <button key={sec.id} type="button" onClick={() => handleSectorChange(sec.id)}
-                    className={`p-3 rounded-xl border text-xs font-bold text-center transition-all duration-300 font-cairo cursor-pointer ${
+                    className={`min-h-[44px] p-2.5 rounded-xl border text-xs font-bold text-center flex items-center justify-center transition-all duration-300 font-cairo cursor-pointer ${
                       sector === sec.id
                         ? theme === 'light' ? 'bg-cyan-50 border-cyan-400 text-cyan-700 shadow-sm' : 'bg-cyan-500/10 border-cyan-500 text-cyan-300 shadow-sm'
                         : theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100' : 'bg-slate-800/60 border-slate-800 text-slate-400 hover:bg-slate-800 hover:text-white'
@@ -170,7 +170,7 @@ export default function LeadCalculator({ lang, theme }) {
                   { id: 'large', ar: 'مجمعات ومصانع', en: 'Large Enterprise' },
                 ].map(scl => (
                   <button key={scl.id} type="button" onClick={() => setScale(scl.id)}
-                    className={`py-2.5 px-2 rounded-xl border text-[11px] sm:text-xs font-bold text-center transition-all duration-300 font-cairo cursor-pointer ${
+                    className={`min-h-[44px] py-2 px-2 rounded-xl border text-[11px] sm:text-xs font-bold text-center flex items-center justify-center transition-all duration-300 font-cairo cursor-pointer ${
                       scale === scl.id
                         ? theme === 'light' ? 'bg-white border-cyan-500 text-cyan-600 shadow-sm ring-1 ring-cyan-500/25' : 'bg-slate-800 border-cyan-500 text-cyan-400'
                         : theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100' : 'bg-slate-800/60 border-slate-800 text-slate-400 hover:bg-slate-800 hover:text-white'
@@ -187,7 +187,7 @@ export default function LeadCalculator({ lang, theme }) {
                 { state: needMobile, setState: setNeedMobile, ar: 'تضمين تطبيقات الموبايل للمناديب', en: 'Mobile Sales Representative App', subAr: 'توصيل النظام بأندرويد و iOS', subEn: 'Connect to Android/iOS tablets' },
                 { state: needEInvoicing, setState: setNeedEInvoicing, ar: 'تفعيل مديول الفاتورة الإلكترونية', en: 'E-Invoicing integration module', subAr: 'تشفير QR والربط المرفق الفوري', subEn: 'Automated QR codes & secure compliance' },
               ].map((item, i) => (
-                <label key={i} className={`flex items-center gap-3 p-3 rounded-xl border transition-colors duration-200 select-none cursor-pointer ${
+                <label key={i} className={`min-h-[44px] flex items-center gap-3 p-3 rounded-xl border transition-colors duration-200 select-none cursor-pointer ${
                   theme === 'light' ? 'bg-slate-50 border-slate-200 hover:bg-slate-100' : 'bg-slate-800/40 border-slate-800 hover:bg-slate-800/60'
                 }`}>
                   <input
@@ -315,7 +315,7 @@ export default function LeadCalculator({ lang, theme }) {
             <button 
               type="button"
               onClick={handleWhatsAppInquiry}
-              className="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 active:scale-95 cursor-pointer font-cairo"
+              className="w-full min-h-[44px] bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 active:scale-95 cursor-pointer font-cairo"
             >
               <MessageSquare className="w-5 h-5 shrink-0" />
               <span>{lang === 'ar' ? 'تجهيز وإرسال الطلب عبر واتساب' : 'Prepare & Send Inquiry on WhatsApp'}</span>

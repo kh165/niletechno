@@ -10,17 +10,20 @@ const loadLeadCalculator = () => import('./components/LeadCalculator.jsx');
 const loadEInvoiceDemo = () => import('./components/EInvoiceDemo.jsx');
 const LeadCalculator = lazy(loadLeadCalculator);
 const EInvoiceDemo = lazy(loadEInvoiceDemo);
-import { DeferredSection, ScrollExperience } from './components/site/ScrollExperience';
 import { IconComponent, NileTechnoLogo } from './components/site/BrandVisuals';
+import { SectionSeparator } from './components/site/SectionSeparator';
+import { ThemeToggle } from './components/site/ThemeToggle';
 import { InteractiveConsole } from './components/sections/InteractiveConsole';
 import { HeroSection } from './components/sections/HeroSection';
+import { ModernSystemsShowcase } from './components/sections/ModernSystemsShowcase';
+import { ModernMobileShowcase } from './components/sections/ModernMobileShowcase';
 import { PartnersSection } from './components/sections/PartnersSection';
 import { BranchesSection } from './components/sections/BranchesSection';
 import PartnersDirectoryModal from './components/modals/PartnersDirectoryModal';
 const VideoModal = lazy(() => import('./components/VideoModal.jsx'));
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
-  Award, CheckCircle2, ChevronLeft, ChevronRight, Facebook, Globe, Linkedin, Mail,
+  Award, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Facebook, Globe, Linkedin, Mail,
   Menu, MessageSquare, Phone, Play, Search, Send, ShieldCheck, Smartphone, Sparkles, Users,
   X, Youtube, Sun, Moon, AlertTriangle
 } from 'lucide-react';
@@ -131,19 +134,13 @@ export default function App() {
   }, []);
 
   const handleNavClick = (e, href) => {
-    if (href === '#customers') {
-      e.preventDefault();
-      setShowPartnersModal(true);
-      return;
-    }
-    
     if (href.startsWith('#')) {
       e.preventDefault();
       const targetId = href.substring(1);
       const element = document.getElementById(targetId);
       if (element) {
         // Precise offset to align beautifully under the fixed header with ample margin
-        const headerOffset = scrolled ? 70 : 86;
+        const headerOffset = scrolled ? 68 : 80;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -154,6 +151,7 @@ export default function App() {
         
         window.history.pushState(null, '', href);
       }
+      if (mobileMenuOpen) setMobileMenuOpen(false);
     }
   };
 
@@ -184,6 +182,16 @@ export default function App() {
     interestedModules: []
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(true);
+
+  const handleSelectAppForQuote = (appId) => {
+    setFormData(prev => ({
+      ...prev,
+      interestedModules: prev.interestedModules.includes(appId)
+        ? prev.interestedModules
+        : [...prev.interestedModules, appId]
+    }));
+  };
 
   const t = TRANSLATIONS[lang];
 
@@ -242,18 +250,15 @@ export default function App() {
     window.history.replaceState(null, '', newUrl);
   }, [activeTab, searchQuery]);
 
-  // Prevent background scrolling and double scroll when a modal is open
+  // Prevent background scrolling cleanly when a modal is open without locking html documentElement
   useEffect(() => {
     if (showPartnersModal || videoModal.isOpen) {
       document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
     };
   }, [showPartnersModal, videoModal.isOpen]);
 
@@ -343,30 +348,6 @@ export default function App() {
     return BRANCHES_DATA.find(b => b.id === selectedBranchId) || BRANCHES_DATA[0];
   }, [selectedBranchId]);
 
-  // Filter success partners dynamically based on Category & Search Queries
-  const filteredPartners = useMemo(() => {
-    return SUCCESS_PARTNERS.filter(partner => {
-      // Category match
-      let categoryMatch = true;
-      if (partnerActiveTab !== 'all') {
-        categoryMatch = partner.category === partnerActiveTab;
-      }
-
-      // Search query match
-      let searchMatch = true;
-      if (partnerSearchQuery.trim()) {
-        const query = partnerSearchQuery.trim().toLowerCase();
-        const nameAr = partner.nameAr.toLowerCase();
-        const nameEn = partner.nameEn.toLowerCase();
-        const indAr = partner.industryAr.toLowerCase();
-        const indEn = partner.industryEn.toLowerCase();
-        searchMatch = nameAr.includes(query) || nameEn.includes(query) || indAr.includes(query) || indEn.includes(query);
-      }
-
-      return categoryMatch && searchMatch;
-    });
-  }, [partnerActiveTab, partnerSearchQuery]);
-
   // Handle simple submit callback
   // Toggle module interest in contact form checkboxes
   const toggleModuleInterest = (moduleId) => {
@@ -446,8 +427,6 @@ export default function App() {
           : 'bg-[#0a0f1d] text-slate-100'
       } selection:bg-cyan-500 selection:text-slate-900 transition-colors duration-300`}
     >
-      <ScrollExperience />
-
       {/* 1. Header & Navigation Panel */}
       <nav className={`fixed top-0 inset-x-0 z-50 ${
         theme === 'light' 
@@ -455,7 +434,7 @@ export default function App() {
           : (scrolled ? 'bg-[#050914]/65 border-slate-900/60 text-white shadow-lg' : 'bg-[#050914]/90 border-slate-900 text-white')
       } backdrop-blur-md border-b transition-all duration-300`}>
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center flex-row-reverse lg:flex-row transition-all duration-300 ${scrolled ? 'h-14 lg:h-16' : 'h-18 lg:h-20'}`}>
+          <div className={`flex justify-between items-center flex-row-reverse lg:flex-row transition-all duration-300 ${scrolled ? 'h-14 lg:h-16' : 'h-16 lg:h-18'}`}>
             
             {/* Corporate Logo Emblem using high-performance vector component */}
             <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="cursor-pointer">
@@ -463,7 +442,7 @@ export default function App() {
             </a>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-5 xl:gap-6">
               {[
                 { label: t.navHome, href: '#home' },
                 { label: t.navAbout, href: '#about' },
@@ -491,34 +470,20 @@ export default function App() {
             </div>
 
             {/* Theme Toggle, Language Switcher and Drawer Trigger */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               
-              {/* Premium Light/Dark Theme Switcher */}
-              <button 
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className={`flex items-center justify-center p-2 rounded-full border transition-all cursor-pointer order-3 lg:order-1 ${
-                  theme === 'light'
-                    ? 'border-slate-300 bg-slate-100 text-amber-500 hover:bg-slate-200'
-                    : 'border-slate-800 bg-slate-900/60 text-indigo-400 hover:border-cyan-500 hover:text-cyan-400'
-                }`}
-                title={lang === 'ar' ? 'تغيير المظهر' : 'Toggle theme'}
-                aria-label={lang === 'ar' ? 'تغيير مظهر لوحة العرض بين الفاتحة والمظلمة' : 'Toggle between light and dark display mode'}
-              >
-                {theme === 'dark' ? (
-                  <svg className="w-4 h-4 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m12.728 12.728A9 9 0 115.636 5.636 9 9 0 0117.657 17.657z" />
-                  </svg>
-                ) : (
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                  </svg>
-                )}
-              </button>
+              {/* Persistent Theme Toggle Component */}
+              <ThemeToggle 
+                theme={theme} 
+                setTheme={setTheme} 
+                lang={lang} 
+                className="order-3 lg:order-1" 
+              />
 
               {/* Language Switch button */}
               <button 
                 onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
-                className={`flex items-center gap-1 px-3.5 py-1.5 rounded-full border text-xs font-bold transition-all cursor-pointer order-2 lg:order-2 ${
+                className={`min-h-[44px] flex items-center justify-center gap-1.5 px-4 py-2 rounded-full border text-xs font-bold transition-all cursor-pointer order-2 lg:order-2 ${
                   theme === 'light'
                     ? 'border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200'
                     : 'border-slate-700/80 bg-[#0d1527] text-slate-300 hover:border-cyan-500 hover:text-cyan-400'
@@ -532,7 +497,7 @@ export default function App() {
               {/* Hamburger Mobile Menu Indicator */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`lg:hidden p-2 rounded-lg border transition-colors cursor-pointer order-1 lg:order-3 ${
+                className={`lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-xl border transition-colors cursor-pointer order-1 lg:order-3 ${
                   theme === 'light'
                     ? 'bg-slate-100 border-slate-300 text-slate-600 hover:text-slate-900'
                     : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
@@ -569,7 +534,7 @@ export default function App() {
                   setMobileMenuOpen(false);
                   handleNavClick(e, link.href);
                 }}
-                className={`nav-link-premium block text-sm font-bold py-2.5 px-3 rounded-lg transition-colors ${
+                className={`nav-link-premium min-h-[44px] flex items-center text-sm font-bold py-2.5 px-3 rounded-lg transition-colors ${
                   theme === 'light'
                     ? 'text-slate-700 hover:bg-slate-100 hover:text-cyan-600'
                     : 'text-slate-300 hover:bg-slate-900 hover:text-cyan-400'
@@ -596,6 +561,9 @@ export default function App() {
         isHoveredPlatforms={isHoveredPlatforms}
         setIsHoveredPlatforms={setIsHoveredPlatforms}
       />
+
+      {/* Decorative Separator: Hero -> About */}
+      <SectionSeparator theme={theme} />
 
       {/* 3. Who We Are Section */}
       <section id="about" className={`py-8 sm:py-10 relative transition-all duration-500 border-t ${
@@ -673,7 +641,7 @@ export default function App() {
               }`}>
                 <button
                   onClick={() => setAboutActivePanel('vision')}
-                  className={`py-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
+                  className={`min-h-[44px] flex items-center justify-center py-2.5 px-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
                     aboutActivePanel === 'vision'
                       ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
                       : (theme === 'light' ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white')
@@ -683,7 +651,7 @@ export default function App() {
                 </button>
                 <button
                   onClick={() => setAboutActivePanel('mission')}
-                  className={`py-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
+                  className={`min-h-[44px] flex items-center justify-center py-2.5 px-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
                     aboutActivePanel === 'mission'
                       ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
                       : (theme === 'light' ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white')
@@ -736,6 +704,9 @@ export default function App() {
 
         </div>
       </section>
+
+      {/* Decorative Separator: About -> E-Invoice */}
+      <SectionSeparator theme={theme} />
 
       {/* 4. Complete E-Invoicing Section */}
       <section id="einvoicing" className={`pt-12 pb-1 relative transition-all duration-500 border-t border-b ${
@@ -870,7 +841,9 @@ export default function App() {
 
             {/* Right: Embedded Interactive simulator demo - "متقربش خالص من محاكي ومولد الفاتورة الإلكترونية الذكي" */}
             <div className="lg:col-span-7">
-              <DeferredSection minHeight={420} preload={loadEInvoiceDemo}><Suspense fallback={<div className="min-h-[420px] rounded-3xl bg-white/60" />}><EInvoiceDemo lang={lang} theme={theme} /></Suspense></DeferredSection>
+              <Suspense fallback={<div className="min-h-[420px] rounded-3xl bg-slate-100/50 dark:bg-slate-900/50 animate-pulse" />}>
+                <EInvoiceDemo lang={lang} theme={theme} />
+              </Suspense>
             </div>
 
           </div>
@@ -878,8 +851,11 @@ export default function App() {
         </div>
       </section>
 
+      {/* Decorative Separator: E-Invoice -> Services */}
+      <SectionSeparator theme={theme} />
+
       {/* 5. Software Systems Grid Showcase */}
-      <section id="services" className={`pt-3 pb-16 relative border-t transition-all duration-500 ${
+      <section id="services" className={`pt-4 pb-16 relative border-t transition-all duration-500 ${
         theme === 'light' 
           ? 'bg-gradient-to-b from-white via-slate-50/60 to-white border-slate-150' 
           : 'bg-gradient-to-b from-[#050917] via-[#091122] to-[#040814] border-slate-900'
@@ -888,8 +864,7 @@ export default function App() {
         <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-blue-500/5 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="text-center max-w-3xl mx-auto mb-10">
             <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-4 uppercase tracking-wider font-cairo ${
               theme === 'light' ? 'bg-cyan-50 text-cyan-700' : 'bg-cyan-950 text-cyan-400'
             }`}>
@@ -907,170 +882,36 @@ export default function App() {
             </p>
           </div>
 
-          {/* Interactive Search Bar & Categories Tabs panel */}
-          <div className="max-w-4xl mx-auto mb-10 space-y-4">
-            
-            {/* Search Input */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder={lang === 'ar' ? 'ابحث عن حلول (سيارات، كاشير، حسابات، مجوهرات...)' : 'Search systems (GL, POS, Inventory, Gold, Car...)'}
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                className={`w-full pl-10 pr-10 py-3.5 rounded-2xl border text-sm transition-all focus:border-cyan-500 font-cairo ${
-                  theme === 'light'
-                    ? 'bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400'
-                    : 'bg-slate-900 border-slate-800 placeholder:text-slate-500 text-white'
-                }`}
-              />
-              <Search className={`absolute ${lang === 'ar' ? 'left-4' : 'right-4'} top-3.5 w-5 h-5 text-slate-400`} />
-            </div>
-
-            {/* Nav Tabs */}
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {[
-                { id: 'all', label: t.filterAll },
-                { id: 'erp', label: t.filterErp },
-                { id: 'retail', label: t.filterRetail },
-                { id: 'logistics', label: t.filterLogistics },
-                { id: 'specialized', label: t.filterSpecialized }
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer font-cairo ${
-                    activeTab === tab.id
-                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
-                      : (theme === 'light' ? 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700 hover:text-slate-950' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800/80 hover:bg-slate-800')
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-          </div>
-
-          {/* Sizable Services Grid */}
-          <div className="min-h-[460px] sm:min-h-[500px] md:min-h-[620px] lg:min-h-[720px] transition-all duration-300">
-            {filteredModules.length === 0 ? (
-              <div className={`text-center py-16 rounded-2xl border max-w-xl mx-auto ${
-                theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-800 shadow-sm' : 'bg-slate-900/30 border-slate-800'
-              }`}>
-                <span className="block text-slate-400 text-sm mb-2 font-cairo">
-                  {lang === 'ar' ? 'عذراً، لم نجد نتائج مطابقة لمصطلح البحث' : 'No matching results found.'}
-                </span>
-                <button 
-                  onClick={() => { setSearchQuery(''); setActiveTab('all'); }}
-                  className="text-xs text-cyan-400 underline font-semibold font-cairo cursor-pointer"
-                >
-                  {lang === 'ar' ? 'عرض جميع البرامج' : 'Reset filters'}
-                </button>
-              </div>
-            ) : (
-              <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6 pb-6 pt-2 snap-x snap-mandatory scrollbar-none overscroll-x-contain" style={{ overscrollBehaviorX: 'contain' }}>
-                {filteredModules.map((sys) => (
-                  <div 
-                    key={sys.id} 
-                    className={`service-card-premium w-[82vw] sm:w-[60vw] md:w-auto shrink-0 snap-start group relative rounded-3xl p-5 sm:p-6 flex flex-col justify-between border hover:border-cyan-500/60 dark:hover:border-cyan-400/50 transition-all duration-500 transform hover:-translate-y-1.5 ${
-                      theme === 'light' 
-                        ? 'bg-white border-slate-200/90 shadow-[0_4px_22px_-6px_rgba(148,163,184,0.15)] hover:shadow-[0_12px_32px_-8px_rgba(6,182,212,0.22)] hover:bg-gradient-to-br hover:from-white hover:to-cyan-50/30 border-t-4 border-t-cyan-500' 
-                        : 'bg-[#0f172a] border-slate-800 shadow-md hover:shadow-cyan-950/40 hover:bg-slate-900/40'
-                    }`}
-                  >
-                    {/* Accent border highlight */}
-                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r opacity-50 rounded-t-2xl group-hover:opacity-100 transition-opacity"></div>
-                    
-                    <div>
-                      {/* Header: Icon Component & Title */}
-                      <div className="flex items-center justify-between mb-4">
-                        <div className={`p-3 rounded-xl bg-gradient-to-r ${sys.accentColor} text-white shadow-md shadow-slate-950/30`}>
-                          <IconComponent name={sys.iconName} className="w-6 h-6 text-white" />
-                        </div>
-                        <span className={`px-2.5 py-0.5 rounded text-[10px] font-bold border uppercase tracking-widest font-mono ${
-                          theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-600' : 'bg-slate-900 border border-slate-800 text-slate-400'
-                        }`}>
-                          {sys.category}
-                        </span>
-                      </div>
-
-                      <h3 className={`text-base sm:text-lg font-bold group-hover:text-cyan-500 transition-colors mb-2 font-cairo ${
-                        theme === 'light' ? 'text-slate-900' : 'text-white'
-                      }`}>
-                        {lang === 'ar' ? sys.titleAr : sys.titleEn}
-                      </h3>
-
-                      <p className={`text-xs line-clamp-3 mb-6 leading-relaxed font-cairo ${
-                        theme === 'light' ? 'text-slate-600' : 'text-slate-400'
-                      }`}>
-                        {lang === 'ar' ? sys.descriptionAr : sys.descriptionEn}
-                      </p>
-
-                      {/* Features list */}
-                      <div className="space-y-2 mb-6">
-                        {(lang === 'ar' ? sys.featuresAr : sys.featuresEn).slice(0, 4).map((feat, idx) => (
-                          <div key={idx} className={`flex gap-2 items-start text-xs font-cairo ${
-                            theme === 'light' ? 'text-slate-700' : 'text-slate-300'
-                          }`}>
-                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                            <span className="leading-tight">{feat}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                    </div>
-
-                    {/* Watch Video Demo direct action */}
-                    <div className={`pt-4 border-t flex items-center justify-between mt-auto ${
-                      theme === 'light' ? 'border-slate-100' : 'border-slate-800'
-                    }`}>
-                      <button
-                        onClick={() => handleOpenVideo(sys.youtubeUrl, lang === 'ar' ? sys.titleAr : sys.titleEn)}
-                        className="text-xs font-bold text-cyan-500 hover:text-cyan-600 flex items-center gap-1.5 transition-colors cursor-pointer group-hover:underline font-cairo"
-                      >
-                        <Play className="w-3.5 h-3.5 rounded-full bg-cyan-950 text-cyan-400 p-0.5 fill-current" />
-                        <span>{t.showDemo}</span>
-                      </button>
-
-                      <a 
-                        href="#contact"
-                        onClick={() => {
-                          setFormData(prev => ({
-                            ...prev,
-                            interestedModules: prev.interestedModules.includes(sys.id) 
-                               ? prev.interestedModules 
-                               : [...prev.interestedModules, sys.id]
-                          }));
-                        }}
-                        className={`text-[10px] uppercase font-bold font-cairo ${
-                          theme === 'light' ? 'text-slate-600 hover:text-slate-900 font-bold' : 'text-slate-400 hover:text-white'
-                        }`}
-                      >
-                        {lang === 'ar' ? 'طلب تسعيرة' : 'Get Quote'}
-                      </a>
-                    </div>
-
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
+          <ModernSystemsShowcase
+            lang={lang}
+            theme={theme}
+            t={t}
+            modules={SERVICE_MODULES}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            handleOpenVideo={handleOpenVideo}
+            formData={formData}
+            setFormData={setFormData}
+          />
         </div>
       </section>
 
-      {/* 6. Mobile Applications Bento Section */}
-      <section id="mobile-apps" className={`py-8 sm:py-10 relative transition-all duration-500 border-t border-b ${
+      {/* Decorative Separator: Services -> Mobile Apps */}
+      <SectionSeparator theme={theme} />
+
+      {/* 6. Modern Mobile Applications Studio Section */}
+      <section id="mobile-apps" className={`py-12 sm:py-16 relative transition-all duration-500 border-t border-b ${
         theme === 'light' 
           ? 'bg-gradient-to-b from-white via-cyan-50/15 to-slate-50 border-slate-150' 
           : 'bg-gradient-to-b from-[#040814] to-[#080e1b] border-slate-900'
       }`}>
-        <div className="absolute inset-0 bg-[radial-gradient(#0891b203_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(#0891b205_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none"></div>
         <div className="absolute top-1/2 left-10 w-80 h-80 bg-blue-500/5 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-8">
+          <div className="text-center max-w-3xl mx-auto mb-10">
             <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-4 uppercase tracking-wider font-cairo ${
               theme === 'light' ? 'bg-indigo-50 text-indigo-700' : 'bg-indigo-950 text-indigo-400'
             }`}>
@@ -1088,98 +929,18 @@ export default function App() {
             </p>
           </div>
 
-          <div className="flex overflow-x-auto lg:grid lg:grid-cols-2 gap-6 items-stretch font-cairo pb-6 snap-x snap-mandatory scrollbar-none overscroll-x-contain" style={{ overscrollBehaviorX: 'contain' }}>
-            {MOBILE_APPS.map((app) => (
-              <div 
-                key={app.id}
-                className={`w-[82vw] sm:w-[65vw] lg:w-auto shrink-0 snap-start p-5 sm:p-6 flex flex-col md:flex-row gap-6 items-stretch justify-between border transition-all ${
-                  theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-900/60 border-slate-800'
-                }`}
-              >
-                {/* Details side */}
-                <div className="flex-1 flex flex-col justify-between space-y-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">
-                        <IconComponent name={app.iconName} className="w-5 h-5" />
-                      </span>
-                      <h3 className={`text-base sm:text-lg font-bold ${
-                        theme === 'light' ? 'text-slate-900' : 'text-white'
-                      }`}>
-                        {lang === 'ar' ? app.titleAr : app.titleEn}
-                      </h3>
-                    </div>
-                    <p className={`text-xs leading-relaxed text-justify mb-4 ${
-                      theme === 'light' ? 'text-slate-600' : 'text-slate-400'
-                    }`}>
-                      {lang === 'ar' ? app.descriptionAr : app.descriptionEn}
-                    </p>
-
-                    <div className="space-y-2">
-                      {(lang === 'ar' ? app.featuresAr : app.featuresEn).map((feat, idx) => (
-                        <div key={idx} className={`flex gap-2 items-start text-xs ${
-                          theme === 'light' ? 'text-slate-700' : 'text-slate-300'
-                        }`}>
-                          <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400 shrink-0 mt-0.5" />
-                          <span>{feat}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className={`pt-4 border-t flex items-center justify-between ${
-                    theme === 'light' ? 'border-slate-100' : 'border-slate-800'
-                  }`}>
-                    <span className="text-[10px] uppercase font-mono tracking-widest text-[#06b6d4]">Android - iOS Support</span>
-                    <a 
-                      href="#contact"
-                      className={`text-xs font-bold ${
-                        theme === 'light' ? 'text-slate-900 hover:text-cyan-600' : 'text-white hover:text-cyan-400'
-                      }`}
-                    >
-                      {lang === 'ar' ? 'طلب نسخة تجريبية' : 'Request Mobile Demo'}
-                    </a>
-                  </div>
-                </div>
-
-                {/* Minimal responsive device illustration on right */}
-                <div className={`w-full md:w-36 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow-inner relative overflow-hidden group border transition-colors ${
-                  theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-800' : 'bg-[#0a0f1d] border border-slate-800 text-white'
-                }`}>
-                  <div className="absolute top-0 right-0 w-12 h-12 bg-indigo-500/10 rounded-full blur-xl"></div>
-                  
-                  <div className="w-full flex justify-between items-center text-[8px] text-slate-500 font-mono mb-2">
-                    <span>GPS ACTIVE</span>
-                    <span>100%</span>
-                  </div>
-
-                  {/* Representation of Mobile app Screen */}
-                  <div className="flex-1 flex flex-col justify-center items-center py-4 space-y-2">
-                    <Smartphone className="w-10 h-10 text-[#06b6d4] animate-bounce shrink-0" />
-                    <span className={`text-[10px] font-bold ${
-                      theme === 'light' ? 'text-slate-900' : 'text-slate-200'
-                    }`}>
-                      {lang === 'ar' ? 'متصل بالنظام' : 'Ready Node'}
-                    </span>
-                    <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider scale-90 ${
-                      theme === 'light' ? 'bg-indigo-100 text-indigo-705' : 'bg-indigo-950 text-indigo-300'
-                    }`}>
-                      Offline Cache
-                    </span>
-                  </div>
-
-                  <span className="text-[8px] text-slate-500 mt-2 font-mono">NILE TECHNO ENGINE RESILIENT</span>
-                </div>
-
-              </div>
-            ))}
-          </div>
-
+          <ModernMobileShowcase
+            lang={lang}
+            theme={theme}
+            mobileApps={MOBILE_APPS}
+            onSelectAppForQuote={handleSelectAppForQuote}
+            formData={formData}
+          />
         </div>
       </section>
 
-      {/* 7. Consultation Lead Calculator Section */}
-      <section id="consulting" className={`py-8 sm:py-10 relative transition-all duration-500 border-t border-b ${
+      {/* 7. Consultation Lead Calculator Section (Collapsible & Expandable) */}
+      <section id="consulting" className={`py-10 sm:py-14 relative transition-all duration-500 border-t border-b ${
         theme === 'light' 
           ? 'bg-gradient-to-b from-slate-50 via-white to-slate-100/30 border-slate-200' 
           : 'bg-gradient-to-b from-[#080e1b] to-[#060c18] border-slate-900'
@@ -1193,21 +954,91 @@ export default function App() {
             }`}>
               {lang === 'ar' ? 'استشارة برمجية سريعة' : 'Instant ERP Advisory'}
             </span>
-            <h2 className={`text-3xl sm:text-4.5xl font-extrabold font-cairo mb-4 uppercase tracking-wide ${
+            <h2 className={`text-2xl sm:text-3.5xl font-extrabold font-cairo mb-3 uppercase tracking-wide ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
             }`}>
               {lang === 'ar' ? 'هل أنت محتار؟ اختر النظام الملائم الآن' : 'Unsure of What Fits Your Business Scale?'}
             </h2>
-            <p className={`text-xs sm:text-sm font-cairo ${
+            <p className={`text-xs sm:text-sm font-cairo mb-5 ${
               theme === 'light' ? 'text-slate-600' : 'text-slate-400'
             }`}>
               {lang === 'ar' ? 'استخدم حاسبتنا الذكية لتقدير النطاق والأنظمة المتكاملة المطلوبة لقطاع نشاطك فوراً وبخطوة واحدة!' : 'Enter your parameters to see recommended packages tailored specifically for your operational target.'}
             </p>
+
+            {/* Collapsible Section Toggle Button */}
+            <div className="flex justify-center">
+              <button
+                onClick={() => setIsCalculatorOpen(prev => !prev)}
+                className={`min-h-[44px] px-6 py-2.5 rounded-2xl font-bold text-xs sm:text-sm font-cairo flex items-center gap-2.5 cursor-pointer shadow-md transition-all duration-300 ${
+                  isCalculatorOpen
+                    ? (theme === 'light' ? 'bg-slate-200/90 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 hover:bg-slate-700 text-slate-200')
+                    : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-cyan-500/25 ring-2 ring-cyan-400/40 animate-pulse'
+                }`}
+              >
+                <Sparkles className="w-4 h-4 text-cyan-400" />
+                <span>
+                  {isCalculatorOpen 
+                    ? (lang === 'ar' ? 'طي وإخفاء الحاسبة التفاعلية' : 'Collapse Calculator') 
+                    : (lang === 'ar' ? 'فتح واستخدام الحاسبة التفاعلية' : 'Expand Interactive Calculator')}
+                </span>
+                {isCalculatorOpen ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </button>
+            </div>
           </div>
 
-          <div className="max-w-5xl mx-auto">
-            <DeferredSection minHeight={520} preload={loadLeadCalculator}><Suspense fallback={<div className="min-h-[520px] rounded-3xl bg-white/60" />}><LeadCalculator lang={lang} theme={theme} /></Suspense></DeferredSection>
-          </div>
+          {/* Expandable / Collapsible Drawer with AnimatePresence */}
+          <AnimatePresence initial={false}>
+            {isCalculatorOpen ? (
+              <motion.div
+                key="calculator-content"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                className="max-w-5xl mx-auto overflow-hidden"
+              >
+                <Suspense fallback={<div className="min-h-[520px] rounded-3xl bg-slate-100/50 dark:bg-slate-900/50 animate-pulse" />}>
+                  <LeadCalculator lang={lang} theme={theme} />
+                </Suspense>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="calculator-collapsed-banner"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.25 }}
+                className="max-w-3xl mx-auto"
+              >
+                <div 
+                  onClick={() => setIsCalculatorOpen(true)}
+                  className={`p-6 rounded-3xl border text-center cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
+                    theme === 'light' 
+                      ? 'bg-white border-cyan-200/80 hover:border-cyan-400 shadow-md hover:shadow-cyan-100/40' 
+                      : 'bg-[#091224] border-cyan-900/60 hover:border-cyan-500/50 shadow-xl'
+                  }`}
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 flex items-center justify-center mx-auto mb-3">
+                    <Sparkles className="w-6 h-6 animate-spin" style={{ animationDuration: '8s' }} />
+                  </div>
+                  <h4 className={`text-base font-extrabold font-cairo mb-1.5 ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                    {lang === 'ar' ? 'الحاسبة الذكية جاهزة لتقدير نطاق أعمالك' : 'Interactive Scope & Pricing Estimator Ready'}
+                  </h4>
+                  <p className={`text-xs font-cairo max-w-md mx-auto mb-4 ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+                    {lang === 'ar' ? 'اختر مجالك (تجاري، تصنيع، خدمات، مطاعم) وعدد الفروع للحصول على توصية الباقة الفورية وإرسالها عبر واتساب.' : 'Click to quickly configure your industry, branches, and server preferences for an instant proposal.'}
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-xs font-black text-cyan-500 hover:underline font-cairo">
+                    <span>{lang === 'ar' ? 'اضغط هنا لفتح الحاسبة وتحديد الخيارات' : 'Click here to expand and begin'}</span>
+                    <ChevronDown className="w-4 h-4" />
+                  </span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </div>
       </section>
@@ -1283,7 +1114,7 @@ export default function App() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder={lang === 'ar' ? 'خالد ' : 'khalid'}
-                      className={`w-full text-xs px-4 py-3 rounded-xl border focus:border-cyan-500 font-cairo transition-all ${
+                      className={`w-full min-h-[44px] text-xs px-4 py-3 rounded-xl border focus:border-cyan-500 font-cairo transition-all ${
                         theme === 'light' ? 'bg-white border-slate-300 text-slate-800 placeholder:text-slate-400 shadow-inner' : 'bg-slate-950 border border-slate-800 text-white'
                       }`}
                     />
@@ -1303,7 +1134,7 @@ export default function App() {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder={lang === 'ar' ? '01000082722' : '01000082722'}
-                      className={`w-full text-xs px-4 py-3 rounded-xl border focus:border-cyan-500 font-mono transition-all ${
+                      className={`w-full min-h-[44px] text-xs px-4 py-3 rounded-xl border focus:border-cyan-500 font-mono transition-all ${
                         theme === 'light' ? 'bg-white border-slate-300 text-slate-800 placeholder:text-slate-400 shadow-inner' : 'bg-slate-950 border border-slate-800 text-white'
                       }`}
                     />
@@ -1324,7 +1155,7 @@ export default function App() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="info@niletechno.com"
-                      className={`w-full text-xs px-4 py-3 rounded-xl border focus:border-cyan-500 font-mono transition-all ${
+                      className={`w-full min-h-[44px] text-xs px-4 py-3 rounded-xl border focus:border-cyan-500 font-mono transition-all ${
                         theme === 'light' ? 'bg-white border-slate-300 text-slate-800 placeholder:text-slate-400 shadow-inner' : 'bg-slate-950 border border-slate-800 text-white'
                       }`}
                     />
@@ -1343,7 +1174,7 @@ export default function App() {
                       value={formData.companyName}
                       onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                       placeholder={lang === 'ar' ? 'شركة النيل ' : 'NileTechno Co.'}
-                      className={`w-full text-xs px-4 py-3 rounded-xl border focus:border-cyan-500 font-cairo transition-all ${
+                      className={`w-full min-h-[44px] text-xs px-4 py-3 rounded-xl border focus:border-cyan-500 font-cairo transition-all ${
                         theme === 'light' ? 'bg-white border-slate-300 text-slate-800 placeholder:text-slate-400 shadow-inner' : 'bg-slate-950 border border-slate-800 text-white'
                       }`}
                     />
@@ -1365,7 +1196,7 @@ export default function App() {
                           key={module.id}
                           type="button"
                           onClick={() => toggleModuleInterest(module.id)}
-                          className={`flex items-center gap-2 p-2.5 rounded-xl border text-right transition-all cursor-pointer font-cairo ${
+                          className={`min-h-[44px] flex items-center gap-2 p-2.5 rounded-xl border text-right transition-all cursor-pointer font-cairo ${
                             isChecked
                               ? (theme === 'light' ? 'bg-cyan-50 border-cyan-500 text-cyan-700 font-bold' : 'bg-cyan-500/10 border-cyan-500 text-cyan-300')
                               : (theme === 'light' ? 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50' : 'bg-slate-950 border-slate-800 text-slate-400 hover:bg-slate-900 hover:text-white')
@@ -1416,7 +1247,7 @@ export default function App() {
                   <button
                     type="submit"
                     aria-label={lang === 'ar' ? 'إرسال الطلب عبر واتساب' : 'Send via WhatsApp'}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 cursor-pointer font-cairo"
+                    className="w-full sm:w-auto min-h-[44px] px-8 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 cursor-pointer font-cairo"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span>{lang === 'ar' ? 'إرسال الطلب عبر واتساب' : 'Send Inquiry via WhatsApp'}</span>
@@ -1703,7 +1534,7 @@ export default function App() {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.96 }}
-          className={`group flex items-center justify-between w-[130px] sm:w-[140px] h-[35px] sm:h-[39px] px-2.5 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
+          className={`group flex items-center justify-between w-[136px] sm:w-[144px] min-h-[44px] h-[44px] px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
             theme === 'light'
               ? 'bg-white/95 border-emerald-100 shadow-emerald-500/5 hover:border-emerald-400 text-slate-800'
               : 'bg-slate-950/90 border-slate-900 shadow-black/80 hover:border-emerald-500/30 text-white'
@@ -1742,7 +1573,7 @@ export default function App() {
           transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.96 }}
-          className={`group flex items-center justify-between w-[130px] sm:w-[140px] h-[35px] sm:h-[39px] px-2.5 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
+          className={`group flex items-center justify-between w-[136px] sm:w-[144px] min-h-[44px] h-[44px] px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
             theme === 'light'
               ? 'bg-white/95 border-emerald-100 shadow-emerald-500/5 hover:border-emerald-400 text-slate-800'
               : 'bg-slate-950/90 border-slate-900 shadow-black/80 hover:border-emerald-500/30 text-white'

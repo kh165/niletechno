@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ChevronRight, Cloud, MessageSquare, Monitor, Smartphone, 
-  Sparkles, ShieldCheck, CheckCircle2, Zap, ArrowLeft, ArrowRight
+  Sparkles, ShieldCheck, Zap
 } from 'lucide-react';
 import { SubtitleRotator } from '../site/BrandVisuals';
 
@@ -10,7 +10,6 @@ export function HeroSection({
   lang, 
   theme, 
   t, 
-  handleOpenVideo,
   activePlatformIndex,
   setActivePlatformIndex,
   isHoveredPlatforms,
@@ -28,11 +27,11 @@ export function HeroSection({
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 15, opacity: 0 },
     visible: { 
       y: 0, 
       opacity: 1,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+      transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] }
     }
   };
 
@@ -57,11 +56,10 @@ export function HeroSection({
       headlineEn: 'Nile Techno Cloud ERP',
       descAr: 'أدر أعمالك، مبيعاتك، مخازنك، وفواتيرك الإلكترونية المتوافقة مع هيئة الزكاة والضريبة (ZATCA) وهيئة الضرائب المصرية (ETA) مباشرة عبر الويب. حماية عالية، نسخ احتياطي دوري، وسهولة تامة بالوصول من أي متصفح أو جوال.',
       descEn: 'Manage sales, warehouses, and tax-compliant e-invoicing from any browser. High security, automated backups, and instant cross-device synchronization.',
-      actionTextAr: 'الدخول للخدمة السحابية ⚡',
-      actionTextEn: 'Launch Cloud Portal ⚡',
+      actionTextAr: 'الدخول للخدمة السحابية',
+      actionTextEn: 'Launch Cloud Portal',
       actionHref: 'https://www.niletechnoerp.com/#/login',
       isExternal: true,
-      color: 'cyan',
       stats: [
         { labelAr: 'الوصول من أي مكان:', labelEn: 'Global access:', valAr: 'متاح 24/7', valEn: 'Available' },
         { labelAr: 'تشفير البيانات:', labelEn: 'Security:', valAr: 'مشفر بالكامل SSL', valEn: 'Encrypted' },
@@ -80,11 +78,10 @@ export function HeroSection({
       headlineEn: 'High-Stability Desktop ERP',
       descAr: 'الحل البرمجي الأمثل للمصانع والورش والأنشطة التي تحتاج استقراراً مطلقاً بدون انقطاع. يعمل بالكامل دون الحاجة لاتصال بالإنترنت، ويدعم الربط بين عشرات أجهزة الكاشير ونقاط البيع وقواعد البيانات الضخمة.',
       descEn: 'Enterprise desktop software built for manufacturing, distribution, and heavy POS operations without internet dependency. Robust local database clustering.',
-      actionTextAr: 'تصفح باقات سطح المكتب 💻',
-      actionTextEn: 'Explore Desktop Packages 💻',
+      actionTextAr: 'تصفح باقات سطح المكتب',
+      actionTextEn: 'Explore Desktop Packages',
       actionHref: '#services',
       isExternal: false,
-      color: 'blue',
       stats: [
         { labelAr: 'العمل بدون إنترنت:', labelEn: 'Offline mode:', valAr: 'مستمر 100%', valEn: 'Uninterrupted' },
         { labelAr: 'سرعة الاستجابة:', labelEn: 'Speed:', valAr: 'فورية (LAN)', valEn: 'Instant LAN' },
@@ -103,11 +100,10 @@ export function HeroSection({
       headlineEn: 'Mobile Sales Representative App',
       descAr: 'تطبيق أندرويد متطور لمندوبي المبيعات وسيارات التوزيع. يتيح إصدار وطباعة الفواتير عبر طابعات البلوتوث المحمولة، تتبع خط سير المندوب بالـ GPS، ومزامنة حركة المبيعات والمخزن مع السيرفر الرئيسي لحظياً.',
       descEn: 'Dedicated Android mobile app for field reps. Print thermal receipts on Bluetooth printers, track routes via GPS, and sync transactions in real time.',
-      actionTextAr: 'تحميل التطبيق من جوجل بلاي 📱',
-      actionTextEn: 'Download Android App 📱',
+      actionTextAr: 'تحميل التطبيق من جوجل بلاي',
+      actionTextEn: 'Download Android App',
       actionHref: 'https://play.google.com/store/apps/details?id=com.niletechno.salesperson_app',
       isExternal: true,
-      color: 'emerald',
       stats: [
         { labelAr: 'طباعة الفواتير:', labelEn: 'Printing:', valAr: 'بلوتوث حراري', valEn: 'Thermal BT' },
         { labelAr: 'تتبع خط السير:', labelEn: 'Route Tracking:', valAr: 'GPS مباشر', valEn: 'Live GPS' },
@@ -122,116 +118,154 @@ export function HeroSection({
   return (
     <section 
       id="home" 
-      className={`hero-stage relative pt-20 sm:pt-24 pb-12 sm:pb-16 flex items-center justify-center overflow-hidden transition-colors duration-300 ${
+      className={`relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 overflow-hidden transition-colors duration-500 ${
         theme === 'light'
-          ? 'bg-gradient-to-b from-cyan-50/40 via-white to-slate-50 text-slate-800'
-          : 'bg-gradient-to-b from-[#030712] via-[#050c1f] to-[#02050c] text-white'
+          ? 'bg-gradient-to-b from-sky-50/70 via-white to-slate-50 text-slate-800'
+          : 'bg-gradient-to-b from-[#020612] via-[#050c20] to-[#02040b] text-white'
       }`}
     >
-      {/* Background High-Tech Mesh and Circuit Lines */}
+      {/* Dynamic Animated Background Grid & Cyber Mesh */}
       <div className={`absolute inset-0 pointer-events-none ${
         theme === 'light'
-          ? 'bg-[radial-gradient(#0891b212_1px,transparent_1px)] [background-size:24px_24px] opacity-70'
-          : 'bg-[radial-gradient(#06b6d418_1px,transparent_1px)] [background-size:28px_28px] opacity-50'
-      }`}></div>
+          ? 'bg-[radial-gradient(#0284c718_1px,transparent_1px)] [background-size:28px_28px] opacity-80'
+          : 'bg-[radial-gradient(#38bdf822_1px,transparent_1px)] [background-size:32px_32px] opacity-50'
+      }`} />
 
-      {/* Ambient Moving Glow Spheres */}
+      {/* Cyber Laser Horizon Scanning Beam */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div
+          animate={{
+            y: ['-10%', '110%']
+          }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: 'linear'
+          }}
+          className={`w-full h-24 opacity-15 sm:opacity-20 blur-2xl ${
+            theme === 'light'
+              ? 'bg-gradient-to-b from-transparent via-cyan-400 to-transparent'
+              : 'bg-gradient-to-b from-transparent via-cyan-500 to-transparent'
+          }`}
+        />
+      </div>
+
+      {/* Multi-Layered Floating Glowing Orbs with Smooth Easing */}
       <motion.div 
         animate={{ 
-          x: [0, 25, 0], 
-          y: [0, -20, 0],
-          scale: [1, 1.08, 1] 
+          x: [0, 35, -20, 0], 
+          y: [0, -30, 20, 0],
+          scale: [1, 1.15, 0.95, 1],
+          opacity: [0.35, 0.6, 0.4, 0.35]
         }} 
-        transition={{ repeat: Infinity, duration: 12, ease: 'easeInOut' }}
-        className="hidden md:block absolute top-12 left-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"
+        transition={{ repeat: Infinity, duration: 14, ease: 'easeInOut' }}
+        className="absolute top-10 left-10 md:left-1/4 w-80 sm:w-96 h-80 sm:h-96 bg-cyan-500/20 rounded-full blur-[110px] pointer-events-none"
       />
       <motion.div 
         animate={{ 
-          x: [0, -20, 0], 
-          y: [0, 25, 0],
-          scale: [1, 1.05, 1] 
+          x: [0, -40, 25, 0], 
+          y: [0, 35, -25, 0],
+          scale: [1, 1.2, 0.9, 1],
+          opacity: [0.3, 0.55, 0.35, 0.3]
         }} 
-        transition={{ repeat: Infinity, duration: 14, ease: 'easeInOut', delay: 1 }}
-        className="hidden md:block absolute bottom-12 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[110px] pointer-events-none"
+        transition={{ repeat: Infinity, duration: 18, ease: 'easeInOut', delay: 1 }}
+        className="absolute bottom-10 right-10 md:right-1/4 w-96 sm:w-[420px] h-96 sm:h-[420px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"
       />
+      <motion.div 
+        animate={{ 
+          x: [0, 25, -30, 0], 
+          y: [0, 20, -20, 0],
+          scale: [0.9, 1.1, 1, 0.9],
+          opacity: [0.2, 0.45, 0.25, 0.2]
+        }} 
+        transition={{ repeat: Infinity, duration: 16, ease: 'easeInOut', delay: 2.5 }}
+        className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-indigo-500/10 rounded-full blur-[130px] pointer-events-none"
+      />
+
+      {/* Floating Animated Geometric Tech Particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+        {[
+          { top: '18%', left: '12%', size: 'w-2 h-2', delay: 0 },
+          { top: '28%', right: '14%', size: 'w-3 h-3', delay: 1.2 },
+          { top: '65%', left: '8%', size: 'w-2.5 h-2.5', delay: 2.4 },
+          { top: '78%', right: '12%', size: 'w-2 h-2', delay: 0.8 },
+          { top: '45%', right: '6%', size: 'w-1.5 h-1.5', delay: 3.1 },
+        ].map((node, nIdx) => (
+          <motion.div
+            key={nIdx}
+            style={{ top: node.top, left: node.left, right: node.right }}
+            animate={{
+              y: [0, -18, 0],
+              opacity: [0.2, 0.8, 0.2],
+              scale: [1, 1.25, 1]
+            }}
+            transition={{
+              duration: 4 + nIdx,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: node.delay
+            }}
+            className={`absolute ${node.size} rounded-full ${
+              theme === 'light' ? 'bg-cyan-500/60 shadow-[0_0_8px_#06b6d4]' : 'bg-cyan-400 shadow-[0_0_12px_#22d3ee]'
+            }`}
+          />
+        ))}
+      </div>
 
       <motion.div 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+        className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
       >
-        
-        {/* Main Hero Card - Compact, balanced height that fits laptops comfortably */}
-        <div className={`relative w-full rounded-3xl border backdrop-blur-md overflow-hidden p-6 sm:p-8 md:p-10 mb-8 sm:mb-10 transition-all duration-300 ${
+        {/* Main Hero Card - Spacious, comfortable for the eyes */}
+        <div className={`relative w-full rounded-3xl border backdrop-blur-xl overflow-hidden p-6 sm:p-10 md:p-12 mb-8 sm:mb-10 transition-all duration-300 ${
           theme === 'light'
-            ? 'bg-white/80 border-cyan-200/70 shadow-xl shadow-cyan-100/40'
-            : 'bg-[#060b18]/80 border-cyan-500/20 shadow-2xl shadow-cyan-950/40'
+            ? 'bg-white/90 border-cyan-200/70 shadow-2xl shadow-cyan-100/40'
+            : 'bg-[#060b18]/90 border-cyan-500/25 shadow-2xl shadow-cyan-950/60'
         }`}>
-          
-          {/* Animated Laser Border Highlight */}
-          <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
+          {/* Subtle Top Accent */}
+          <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
 
-          {/* Floating Technology Badge 1 (Left Desktop) */}
+          {/* Official Tag */}
           <motion.div 
-            animate={{ y: [0, -6, 0] }}
-            transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
-            className={`hidden xl:flex items-center gap-2 absolute top-8 left-8 px-3.5 py-1.5 rounded-full border text-[11px] font-bold font-cairo shadow-md backdrop-blur-md ${
+            variants={itemVariants} 
+            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4 font-cairo shadow-sm border ${
               theme === 'light'
-                ? 'bg-cyan-50/90 border-cyan-200 text-cyan-800'
-                : 'bg-cyan-950/40 border-cyan-850/60 text-cyan-300'
+                ? 'bg-cyan-50 border-cyan-200 text-cyan-800'
+                : 'bg-cyan-950/50 border-cyan-800/60 text-cyan-300'
             }`}
           >
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-            <span>{lang === 'ar' ? '⚡ سحابي & مكتبي متزامن' : '⚡ Cloud & Desktop Sync'}</span>
+            <Sparkles className="w-3.5 h-3.5 text-cyan-500 animate-pulse" />
+            <span>
+              {lang === 'ar' 
+                ? 'منظومة إدارة الأعمال والمحاسبة الذكية ERP | مصر & السعودية' 
+                : 'Enterprise ERP & Certified E-Invoicing | EG & KSA'}
+            </span>
           </motion.div>
 
-          {/* Floating Technology Badge 2 (Right Desktop) */}
-          <motion.div 
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut', delay: 0.5 }}
-            className={`hidden xl:flex items-center gap-2 absolute top-8 right-8 px-3.5 py-1.5 rounded-full border text-[11px] font-bold font-cairo shadow-md backdrop-blur-md ${
-              theme === 'light'
-                ? 'bg-emerald-50/90 border-emerald-200 text-emerald-800'
-                : 'bg-emerald-950/40 border-emerald-850/60 text-emerald-300'
-            }`}
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-            <span>{lang === 'ar' ? '🛡️ معتمد 100% ZATCA & ETA' : '🛡️ ZATCA & ETA Certified'}</span>
-          </motion.div>
-
-          {/* Main Top Tag */}
-          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold mb-4 font-cairo shadow-sm border ${
-            theme === 'light'
-              ? 'bg-cyan-500/10 border-cyan-400/40 text-cyan-800'
-              : 'bg-cyan-500/15 border-cyan-500/30 text-cyan-300'
-          }">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-500" />
-            <span>{lang === 'ar' ? 'منظومة إدارة الأعمال والمحاسبة الذكية ERP 🇸🇦 🇪🇬' : 'Next-Gen Enterprise ERP & Tax Compliance'}</span>
-          </motion.div>
-
-          {/* Main Headline - Clean, perfectly sized Cairo typography */}
+          {/* Main Headline - Calm, bold, comfortable to read */}
           <motion.h1 
             variants={itemVariants}
-            className="text-2xl sm:text-4xl md:text-5xl lg:text-5.5xl font-black tracking-tight mb-3 sm:mb-4 leading-tight font-cairo"
+            className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 leading-snug sm:leading-tight font-cairo"
           >
             <span className={theme === 'light' ? 'text-slate-900' : 'text-white'}>
               {lang === 'ar' ? 'دعنا ندير أعمالك بنجاح مع' : 'Empower Your Business With'}
             </span>
-            <span className="block mt-1 sm:mt-2 bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600 bg-clip-text text-transparent">
+            <span className="block mt-2 bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600 bg-clip-text text-transparent">
               {lang === 'ar' ? 'نايل تكنو للبرمجيات' : 'Nile Techno Software'}
             </span>
           </motion.h1>
 
           {/* Dynamic Subtitle Rotator */}
-          <motion.div variants={itemVariants} className="mb-4 sm:mb-5">
+          <motion.div variants={itemVariants} className="mb-5 flex justify-center">
             <SubtitleRotator lang={lang} theme={theme} />
           </motion.div>
 
-          {/* Professional Paragraph */}
+          {/* Professional Reassuring Paragraph */}
           <motion.p 
             variants={itemVariants}
-            className={`max-w-2xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed font-cairo font-medium mb-6 ${
+            className={`max-w-2xl mx-auto text-xs sm:text-sm md:text-[15px] leading-relaxed font-cairo font-medium ${
               theme === 'light' ? 'text-slate-600' : 'text-slate-300'
             }`}
           >
@@ -239,46 +273,9 @@ export function HeroSection({
               ? 'حلول موحدة لإدارة الحسابات العامة، المخازن، نقاط البيع، وتطبيقات المناديب الذكية — مع ربط كامل ومباشر بالفاتورة الإلكترونية المعتمدة في مصر والمملكة العربية السعودية.'
               : 'A unified software suite for financials, multi-branch warehouses, cloud POS, and field sales apps — fully integrated with official electronic invoicing.'}
           </motion.p>
-
-          {/* Direct Call to Action Buttons */}
-          <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="#services"
-              onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }}
-              className="px-6 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-cyan-500/25 transition-all hover:-translate-y-0.5 cursor-pointer font-cairo flex items-center gap-2"
-            >
-              <span>{lang === 'ar' ? 'اكتشف الأنظمة والحلول' : 'Explore Solutions'}</span>
-              <ChevronRight className={`w-4 h-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
-            </a>
-            <a
-              href="#einvoicing"
-              onClick={(e) => { e.preventDefault(); document.getElementById('einvoicing')?.scrollIntoView({ behavior: 'smooth' }); }}
-              className={`px-5 py-2.5 sm:py-3 rounded-xl border text-xs sm:text-sm font-bold font-cairo transition-all hover:-translate-y-0.5 flex items-center gap-2 ${
-                theme === 'light' 
-                  ? 'border-slate-200 bg-white text-slate-700 hover:border-cyan-400 hover:text-cyan-700 shadow-sm' 
-                  : 'border-slate-700 bg-slate-900/60 text-slate-200 hover:border-cyan-500 hover:text-cyan-300'
-              }`}
-            >
-              <Zap className="w-4 h-4 text-cyan-500" />
-              <span>{lang === 'ar' ? 'محاكي الفاتورة الإلكترونية' : 'E-Invoice Simulator'}</span>
-            </a>
-            <a
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-              className={`px-5 py-2.5 sm:py-3 rounded-xl border text-xs sm:text-sm font-bold font-cairo transition-all hover:-translate-y-0.5 flex items-center gap-2 ${
-                theme === 'light' 
-                  ? 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100' 
-                  : 'border-slate-800 bg-slate-900/40 text-slate-300 hover:bg-slate-800'
-              }`}
-            >
-              <MessageSquare className="w-4 h-4 text-emerald-500" />
-              <span>{lang === 'ar' ? 'تحدث مع خبير' : 'Talk to Expert'}</span>
-            </a>
-          </motion.div>
-
         </div>
 
-        {/* Interactive Platform Previewer (Cloud / Desktop / Mobile) */}
+        {/* Interactive Platform Previewer (Cloud / Desktop / Mobile) - Clean & Wide */}
         <div 
           onMouseEnter={() => setIsHoveredPlatforms(true)}
           onMouseLeave={() => setIsHoveredPlatforms(false)}
@@ -293,7 +290,7 @@ export function HeroSection({
                 <button
                   key={tab.id}
                   onClick={() => setActivePlatformIndex(tab.id)}
-                  className={`px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center gap-2 cursor-pointer font-cairo ${
+                  className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer font-cairo ${
                     isActive
                       ? 'bg-cyan-500 text-white border-cyan-400 shadow-md shadow-cyan-500/20'
                       : theme === 'light'
@@ -303,9 +300,6 @@ export function HeroSection({
                 >
                   <TabIcon className="w-3.5 h-3.5" />
                   <span>{lang === 'ar' ? tab.titleAr : tab.titleEn}</span>
-                  {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping ml-1"></span>
-                  )}
                 </button>
               );
             })}
@@ -316,14 +310,14 @@ export function HeroSection({
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentPlatform.id}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.25 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22 }}
                 className={`grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 sm:p-7 rounded-2xl border transition-all duration-300 items-center text-right ${
                   theme === 'light'
-                    ? 'bg-white border-slate-200 shadow-md'
-                    : 'bg-[#080e1e] border-slate-800 shadow-xl'
+                    ? 'bg-white/95 border-slate-200 shadow-md'
+                    : 'bg-[#080e1e]/90 border-slate-800 shadow-xl'
                 }`}
               >
                 {/* Platform Description & CTA */}
@@ -347,7 +341,7 @@ export function HeroSection({
                       href={currentPlatform.actionHref}
                       target={currentPlatform.isExternal ? '_blank' : '_self'}
                       rel={currentPlatform.isExternal ? 'noopener noreferrer' : undefined}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs transition-all shadow-md shadow-cyan-500/20 cursor-pointer font-cairo"
+                      className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs transition-all shadow-md shadow-cyan-500/20 cursor-pointer font-cairo"
                     >
                       <span>{lang === 'ar' ? currentPlatform.actionTextAr : currentPlatform.actionTextEn}</span>
                       <currentPlatform.icon className="w-3.5 h-3.5" />
@@ -357,15 +351,15 @@ export function HeroSection({
 
                 {/* Micro Live Status Panel */}
                 <div className="lg:col-span-5">
-                  <div className={`p-4 rounded-xl border font-mono text-[11px] text-right ${
+                  <div className={`p-4 rounded-xl border text-xs text-right ${
                     theme === 'light' 
                       ? 'bg-slate-50 border-slate-200 text-slate-700' 
                       : 'bg-slate-950/80 border-slate-800 text-cyan-300'
                   }`}>
                     <div className="flex items-center justify-between pb-2 mb-3 border-b border-cyan-500/10">
                       <span className="text-xs font-bold text-emerald-500 flex items-center gap-1.5 font-cairo">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                        {lang === 'ar' ? 'الحالة: نشط ومتصل' : 'Status: Live & Connected'}
+                        <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        {lang === 'ar' ? 'الحالة: نشط ومتوافق' : 'Status: Active & Certified'}
                       </span>
                       <span className="text-[10px] text-slate-400 font-mono">v2026.4</span>
                     </div>
@@ -384,13 +378,12 @@ export function HeroSection({
                     </div>
                   </div>
                 </div>
-
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
 
-        {/* Compact Quick Metrics Bar */}
+        {/* Compact Clean Metrics Bar */}
         <motion.div 
           variants={itemVariants}
           className={`grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto mt-6 pt-6 border-t ${
@@ -418,7 +411,6 @@ export function HeroSection({
             </div>
           ))}
         </motion.div>
-
       </motion.div>
     </section>
   );

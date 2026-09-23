@@ -418,6 +418,19 @@ export const MOBILE_APPS = [
 
 export const BRANCHES_DATA = [
   {
+    id: 'riyadh',
+    cityAr: 'الرياض، المملكة العربية السعودية',
+    cityEn: 'Riyadh, Saudi Arabia',
+    areaAr: 'الشفا - حي بدر',
+    areaEn: 'Al-Shifa - Badr District',
+    addressAr: 'طريق أم عمارة، حي بدر، الشفا، الرياض، المملكة العربية السعودية',
+    addressEn: 'Am Omara, Badr District, Al-Shifa, Riyadh, Saudi Arabia',
+    phone: '00966511351059',
+    whatsapp: '966511351059',
+    mapEmbedUrl: 'https://maps.google.com/maps?q=24.551130,46.611130&hl=ar&z=15&output=embed',
+    googleMapsUrl: 'https://www.google.com/maps?q=24.551130,46.611130'
+  },
+  {
     id: 'cairo',
     cityAr: 'القاهرة، جمهورية مصر العربية',
     cityEn: 'Cairo, Egypt',
@@ -442,53 +455,10 @@ export const BRANCHES_DATA = [
     whatsapp: '201000082722',
     mapEmbedUrl: 'https://maps.google.com/maps?q=%D9%86%D8%A7%D9%8A%D9%84%20%D8%AA%D9%83%D9%86%D9%88%20%D9%84%D9%84%D8%A8%D8%B1%D9%85%D8%AC%D9%8A%D8%A7%D8%AA%20%D9%88%D9%83%D8%A7%D9%85%D9%8A%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D9%82%D8%A8%D9%87%D8%8C%20%D8%B7%D8%B1%D9%8A%D9%82%20%D9%85%D8%B5%D8%B1%20%D8%A7%D9%84%D8%A5%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B2%D8%B1%D8%A7%D8%B9%D9%8A%D8%8C%20%D8%B7%D9%86%D8%B7%D8%A7&hl=ar&z=16&output=embed',
     googleMapsUrl: 'https://maps.app.goo.gl/YmgfNNj8b53JRgvZA'
-  },
-  {
-    id: 'riyadh',
-    cityAr: 'الرياض، المملكة العربية السعودية',
-    cityEn: 'Riyadh, Saudi Arabia',
-    areaAr: 'الشفا - حي بدر',
-    areaEn: 'Al-Shifa - Badr District',
-    addressAr: 'طريق أم عمارة، حي بدر، الشفا، الرياض، المملكة العربية السعودية',
-    addressEn: 'Am Omara, Badr District, Al-Shifa, Riyadh, Saudi Arabia',
-    phone: '+966535653688',
-    whatsapp: '966535653688',
-    mapEmbedUrl: 'https://maps.google.com/maps?q=24.551130,46.611130&hl=ar&z=15&output=embed',
-    googleMapsUrl: 'https://www.google.com/maps?q=24.551130,46.611130'
   }
 ];
 
 export const SUCCESS_PARTNERS = [
-  {
-    id: 'sp_yg_agencies',
-    category: 'agencies_wholesale',
-    nameAr: 'شركة واي جي للتوكيلات التجارية',
-    nameEn: 'YG for Trading Agencies',
-    industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
-    industryEn: 'Commercial Agencies & Distribution',
-    logoText: 'YG',
-    imageUrl: '/yg_trading_agencies_logo.png'
-  },
-  {
-    id: 'sp_malizia',
-    category: 'agencies_wholesale',
-    nameAr: 'الشركة المصرية الماليزية ش.م.م',
-    nameEn: 'Egyptian Malaysian Co. S.A.E',
-    industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
-    industryEn: 'Commercial Agencies & Distribution',
-    logoText: 'EM',
-    imageUrl: '/el_malizia_logo.png'
-  },
-  {
-    id: 'sp_skyhold',
-    category: 'contracting',
-    nameAr: 'شركة سكاي هولد لخدمات السقالات والمقاولات',
-    nameEn: 'Sky Hold Scaffolding Service',
-    industryAr: 'المقاولات العامة وأنظمة السقالات المعدنية',
-    industryEn: 'Scaffolding Systems & Contracting',
-    logoText: 'SH',
-    imageUrl: '/sky_hold_logo.svg'
-  },
   // ================= 1. المملكة العربية السعودية (ksa) =================
   { id: 'ksa1', category: 'ksa', nameAr: 'شركة اسدام الفنية للزجاج', nameEn: 'Asdam Technical Glass Company', industryAr: 'الزجاج والمقاولات المتخصصة', industryEn: 'Glass & Special Contracting', logoText: 'AS' },
   { id: 'ksa2', category: 'ksa', nameAr: 'شركة هيكسا باور للأنظمة المتقدمة', nameEn: 'Hexa Power Advanced Systems', industryAr: 'أنظمة الطاقة والمقاولات الكهربائية', industryEn: 'Power & Electrical Systems', logoText: 'HP' },
@@ -546,6 +516,7 @@ export const SUCCESS_PARTNERS = [
   { id: 'mf8', category: 'mills_feed', nameAr: 'مصنع النخبة لإنتاج أعلاف مزارع التسمين', nameEn: 'Elite Feed & Feedmill Technologies', industryAr: 'تصنيع أعلاف الماشية والدواجن بمواصفات قياسية', industryEn: 'Broad-Spectrum Feedmill Engineering', logoText: 'EF' },
 
   // ================= 6. شركات المقاولات (contracting) =================
+  { id: 'con-skyhold', category: 'contracting', nameAr: 'شركة سكاي هولد لخدمات السقالات والمقاولات (ISI)', nameEn: 'Sky Hold Scaffolding Service (ISI)', industryAr: 'خدمات السقالات الإنشائية والمقاولات المتخصصة والحلول الهندسية', industryEn: 'Scaffolding Systems, Civil Works & Contracting', imageUrl: '/logos/sky-hold.svg', logoText: 'SH' },
   { id: 'con1', category: 'contracting', nameAr: 'شركة الإيمان للمقاولات العامة والتوريدات الصناعية', nameEn: 'Al-Eman Contracting & Trading', industryAr: 'المقاولات العامة، الحفر، وأعمال الأساسات', industryEn: 'Civil Works & Substructure Contracting', logoText: 'EM' },
   { id: 'con2', category: 'contracting', nameAr: 'مؤسسة الصفوة للمقاولات العامة والإنشاء', nameEn: 'Al-Safwa general Construction & Trading', industryAr: 'بناء الأبراج السكنية والمرافق الإدارية والمول', industryEn: 'High-rise & Administrative Facilities', logoText: 'SO' },
   { id: 'con3', category: 'contracting', nameAr: 'شركة المروة الدولية للهندسة والتشغيل واللاندسكيب', nameEn: 'Al-Marwa Engineering & Systems', industryAr: 'مستشارون هندسيون وإدارة المشروعات الإنشائية', industryEn: 'Structural Designs & Field Supervision', logoText: 'MW' },
@@ -566,6 +537,7 @@ export const SUCCESS_PARTNERS = [
   { id: 'jew8', category: 'jewelry', nameAr: 'الياقوت للمجوهرات الكريمة واللؤلؤ الطبيعي', nameEn: 'Al-Yaqout Precious Stones & Pearls', industryAr: 'عقود اللؤلؤ الطبيعي والأحجار الكريمة النادرة', industryEn: 'Natural Pearls Sourcing & Luxury Goldsmith', logoText: 'YQ' },
 
   // ================= 8. التوكيلات التجارية والجمله (agencies_wholesale) =================
+  { id: 'aw-malizia', category: 'agencies_wholesale', nameAr: 'الشركة المصرية الماليزية ش.م.م', nameEn: 'Egyptian Malaysian Company', industryAr: 'التوكيلات التجارية وتوريدات السلع والمنتجات والاستيراد والتوزيع', industryEn: 'Commercial Agencies, Wholesale Distribution & FMCG', imageUrl: '/logos/el-malizia.svg', logoText: 'EM' },
   { id: 'aw1', category: 'agencies_wholesale', nameAr: 'أسواق مكة للمواد الغذائية والسلع الاستهلاكية بالكامل', nameEn: 'Makkah FMCG Wholesale & Retail Co.', industryAr: 'توزيع وتخزين مبيعات الجملة للماركت والموردين', industryEn: 'FMCG Bulk Distribution & Warehouse ERP', logoText: 'MK' },
   { id: 'aw2', category: 'agencies_wholesale', nameAr: 'شركة الجميل لقطع غيار ومستلزمات السيارات وجملتها', nameEn: 'Al-Jameel Auto Spares Wholesale Networks', industryAr: 'قطع غيار سيارات أصلية وتوكيد قطع الغيار المعتمدة', industryEn: 'Automotive Spares Serializing & Wholesale', logoText: 'JM' },
   { id: 'aw3', category: 'agencies_wholesale', nameAr: 'التيسير للتوكيلات التجارية والتوريدات العامة الكبرى', nameEn: 'Al-Taysir Commercial Agencies & Supplies', industryAr: 'حيازة توكيلات الأغذية والأدوات المستوردة بالجملة', industryEn: 'Import Franchise Oversight & Bulk Sales', logoText: 'TS' },
@@ -631,39 +603,39 @@ export const TRANSLATIONS = {
     navCustomers: 'شركاء النجاح',
     navContact: 'تواصل معنا',
     aboutHeadline: 'من نحن',
-    aboutSub: 'شريكك في التحول الرقمي وتطوير الحلول البرمجية منذ عام 2010.',
+    aboutSub: 'شريكك الاستراتيجي في التحول الرقمي وصناعة البرمجيات المتطورة منذ عام 2010.',
     aboutCompanyTitle: 'نايل تكنو للبرمجيات',
-    aboutCompanyDesc1: 'تأسست شركة نايل تكنو في أغسطس 2010، لتقديم حلول برمجية عملية تدعم مسيرة التحول الرقمي وتطوير الأعمال في الوطن العربي.',
-    aboutCompanyDesc2: 'على مدار أكثر من 16 عاماً، قمنا بتطوير برامج محاسبية وإدارية ونقاط بيع وتطبيقات هاتف تخدم العديد من الشركات في مصر والمملكة العربية السعودية والخليج العربي.',
-    visionTab: 'رؤيتنا',
-    missionTab: 'رسالتنا',
-    visionContent: 'تقديم برمجيات إدارية ومالية سهلة وعملية، تساعد أصحاب الأعمال على متابعة أنشطتهم بدقة وبتكلفة مناسبة.',
-    missionContent: 'بناء وتطوير حلول برمجية تسهل إدارة المخازن والمبيعات والحسابات، مع تقديم دعم فني مستمر وخدمات ما بعد البيع الموثوقة.',
+    aboutCompanyDesc1: 'تأسست شركة نايل تكنو في أغسطس 2010، مستهدفةً صناعة الحلول البرمجية عالية الجودة تزامناً مع الثورة الهائلة للتحول الرقمي في الوطن العربي.',
+    aboutCompanyDesc2: 'على مدار أكثر من عقد ونصف، نجحنا في تطوير حلول مالية وإدارية ونقاط بيع وتطبيقات موبايل تخدم آلاف الأعمال في مصر، المملكة العربية السعودية، وسائر دول الخليج العربي.',
+    visionTab: 'رؤيتنا المستدامة',
+    missionTab: 'رسالتنا للأعمال',
+    visionContent: 'نسعى لنكون أحد أكبر المراجع الخدمية والرائدة لتقديم حلول التحول برمجياً وإلكترونياً في الوطن العربي، عبر إرساء أرقى معايير السهولة والعملية في البرامج الإدارية والمالية مع تكلفة اقتصادية تناسب الجميع.',
+    missionContent: 'ابتكار وبناء حلول تبرمج واقع الأنشطة التجارية والصناعية برؤية واضحة تجعل إدارة مخازنك، موظفيك، وسياراتك غاية في العملية، مدعومةً بأفضل خدمات الدعم الفني وخدمات ما بعد البيع في الأسواق.',
     einvoiceHeadline: 'دعم كامل للفاتورة الإلكترونية',
-    einvoiceSub: 'حلول متوافقة مع منظومة الفاتورة والإيصال الإلكتروني لمصلحة الضرائب المصرية (ETA) وهيئة الزكاة والضريبة والجمارك (ZATCA).',
-    einvoiceDesc: 'تحتوي جميع أنظمتنا على مديول الفاتورة الإلكترونية والربط المباشر لحفظ وإصدار الفواتير الضريبية المشفرة مع توليد فوري لرموز الاستجابة السريعة (QR Code) المشفرة والداعمة لمتطلبات الربط الفني.',
-    einvoiceListTitle: 'مواصفات الفاتورة الإلكترونية في أنظمتنا:',
-    einvoiceItem1: 'توليد رمز QR مشفر يقرأ البيانات الرئيسية (البائع، الرقم الضريبي، التاريخ، الإجمالي، قيمة الضريبة).',
-    einvoiceItem2: 'إمكانية إصدار الفواتير دون توقف حتى في حال انقطاع الاتصال بالسيرفر.',
-    einvoiceItem3: 'ربط مباشر مع واجهات الـ API المعتمدة ومزامنة الفواتير ببصمة إلكترونية مشفرة.',
+    einvoiceSub: 'حلول ذكية مطابقة لتعليمات هيئة الزكاة والضريبة والجمارك (ZATCA) في السعودية ومصلحة الضرائب المصرية (ETA).',
+    einvoiceDesc: 'تحتوي جميع أنظمتنا على مديول الفاتورة الإلكترونية والربط المباشر لحفظ وإصدار الفواتير الضريبية المشفرة مع توليد فوري لرموز الاستجابة السريعة (QR Code) المشفرة والداعمة لمتطلبات المرحلة الأولى والمرحلة الثانية للربط الفني.',
+    einvoiceListTitle: 'مواصفات الفاتورة الإلكترونية المعتمدة لدينا:',
+    einvoiceItem1: 'توليد وتلقيم رمز الـ QR مشفر تماماً يقرأ البيانات الرئيسية (البائع، الرقم الضريبي، التاريخ، الإجمالي، قيمة الضريبة).',
+    einvoiceItem2: 'إتاحة إصدار الفواتير دون انقطاع حتى في حالات ضعف أو تباطؤ الاتصال السيرفر الرئيسي.',
+    einvoiceItem3: 'ربط مباشر مع واجهات الـ API المعتمدة من الهيئة ومزامنة الفواتير بسلاسة كاملة وبصمة إلكترونية مشفرة.',
     calculatorHeadline: 'الحاسبة التفاعلية واقتراح النظام الأمثل',
-    calculatorSub: 'حدد نشاطك وحجم عملك، وسنقترح عليك الأنظمة الأنسب مع تقدير مبدئي لاحتياجاتك.',
+    calculatorSub: 'أجب عن بضعة تفاصيل حول نشاطك، وسوف تتأكد من اختيار البرنامج وحزمة الخدمات والتقدير السعري الأمثل لعملك فوراً!',
     calcTypeSelection: 'ما هو قطاع ونوع عملك الرئيسي؟',
     calcSizeSelection: 'حجم الشركة التقريبي (عدد الموظفين أو المنافذ):',
     calcSystemTitle: 'الأنظمة المقترحة لشركتك:',
-    calcSystemRequest: 'طلب عرض سعر رسمي لهذه الأنظمة',
-    whatsappSend: 'تواصل عبر واتساب لمناقشة التفاصيل',
-    contactHeadline: 'تواصل معنا',
+    calcSystemRequest: 'أريد استلام عرض سعر مالي رسمي لمؤسستي لهذه الأنظمة',
+    whatsappSend: 'تواصل وتأكيد الطلب عبر واتساب الكادر المختص',
+    contactHeadline: 'تواصل مع فريق خبراء نايل تكنو',
     contactSub: 'نحن هنا لمساعدتك على إدارة أعمالك بكفاءة. تفضل بزيارة أحد فروعنا أو تواصل معنا مباشرة.',
-    formName: 'الاسم',
+    formName: 'الاسم الكريم',
     formEmail: 'البريد الإلكتروني',
     formPhone: 'رقم الهاتف / الجوال',
-    formCompany: 'اسم الشركة أو النشاط',
-    formMessage: 'تفاصيل استفسارك',
-    formSubmit: 'إرسال الرسالة',
-    formSuccess: 'تم استلام رسالتك بنجاح، وسنتواصل معك في أقرب وقت.',
-    branchesHeadline: 'فروعنا وتواجدنا المباشر',
-    whatsAppSupport: 'تواصل عبر واتساب',
+    formCompany: 'اسم المؤسسة والشركة',
+    formMessage: 'تفاصيل استفسارك أو نشاطك الموقر',
+    formSubmit: 'إرسال الرسالة وحفظ طلبك المالي',
+    formSuccess: 'نشكر تواصلك معنا، تم حفظ طلبك وسوف يتواصل فني المبيعات معك سريعاً عبر الهاتف أو البريد!',
+    branchesHeadline: 'فروعنا وتواجدنا الجغرافي المباشر',
+    whatsAppSupport: 'الدعم السريع عبر الوتساب',
     clientPdfDownload: 'تحميل ملف سابقة أعمال نايل تكنو (PDF)',
     allRightsReserved: 'جميع الحقوق محفوظة لصالح شركة نايل تكنو للبرمجيات',
     showDemo: 'شاهد الشرح بالفيديو',
@@ -672,15 +644,15 @@ export const TRANSLATIONS = {
     filterRetail: 'البيع بالتجزئة ونقاط البيع',
     filterLogistics: 'لوجستيات ومخازن ونقل',
     filterSpecialized: 'أنظمة وخدمات تخصصية',
-    validatorTitle: 'محاكي الفاتورة الإلكترونية',
-    validatorDesc: 'أدخل بيانات الفاتورة لمعاينة هيكل الفاتورة المشفرة ونموذج الـ QR الضريبي المعتمد في مصر والسعودية:',
+    validatorTitle: 'محاكي ومولد الفاتورة الإلكترونية الذكي',
+    validatorDesc: 'أدخل بيانات الفاتورة لرؤية هيكل الفاتورة المشفرة ونموذج الـ QR الضريبي المعتمد من هيئة الزكاة والضرائب والجمارك السعودية ومصر:',
     sellerNameLabel: 'اسم البائع / المنشأة',
     vatNoLabel: 'الرقم الضريبي للمنشأة',
     totalAmountLabel: 'إجمالي الفاتورة (شامل الضريبة)',
-    vatAmountLabel: 'قيمة الضريبة المضافة (14% لمصر أو 15% للسعودية)',
-    invoiceDateLabel: 'تاريخ وتوقيت الفاتورة',
+    vatAmountLabel: 'قيمة الضريبة المضافة (15% أو 14%)',
+    invoiceDateLabel: 'تاريخ الفاتورة والتوقيت',
     generatedQRText: 'الرمز مشفر ومتوافق مع متطلبات الأنظمة الضريبية',
-    simulateVerify: 'معاينة توليد الفاتورة المشفرة',
+    simulateVerify: 'محاكاة توليد الفاتورة المشفرة',
     invoiceCodePreview: 'مخطط البيانات الضريبية المستخرجة (TLVs Hex):'
   },
   en: {
@@ -751,28 +723,22 @@ export const TRANSLATIONS = {
 
 export const HOMEPAGE_SLIDER_PARTNERS = [
   {
-    id: 'hp_yg_agencies',
-    nameAr: 'شركة واي جي للتوكيلات التجارية',
-    nameEn: 'YG for Trading Agencies',
-    industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
-    industryEn: 'Commercial Agencies & Distribution',
-    imageUrl: '/yg_trading_agencies_logo.png'
+    id: 'hp-skyhold',
+    nameAr: 'شركة سكاي هولد لخدمات السقالات والمقاولات (ISI)',
+    nameEn: 'Sky Hold Scaffolding Service (ISI)',
+    industryAr: 'خدمات السقالات والمقاولات المتخصصة والحلول الهندسية',
+    industryEn: 'Scaffolding Systems, Civil Works & Contracting',
+    imageUrl: '/logos/sky-hold.svg',
+    category: 'contracting'
   },
   {
-    id: 'hp_malizia',
+    id: 'hp-malizia',
     nameAr: 'الشركة المصرية الماليزية ش.م.م',
-    nameEn: 'Egyptian Malaysian Co. S.A.E',
-    industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
-    industryEn: 'Commercial Agencies & Distribution',
-    imageUrl: '/el_malizia_logo.png'
-  },
-  {
-    id: 'hp_skyhold',
-    nameAr: 'شركة سكاي هولد لخدمات السقالات والمقاولات',
-    nameEn: 'Sky Hold Scaffolding Service',
-    industryAr: 'المقاولات العامة وأنظمة السقالات المعدنية',
-    industryEn: 'Scaffolding Systems & Contracting',
-    imageUrl: '/sky_hold_logo.svg'
+    nameEn: 'Egyptian Malaysian Company',
+    industryAr: 'التوكيلات التجارية وتوريدات السلع والمنتجات والاستيراد',
+    industryEn: 'Commercial Agencies, Wholesale & FMCG Distribution',
+    imageUrl: '/logos/el-malizia.svg',
+    category: 'agencies_wholesale'
   },
   {
     id: 'hp1',
@@ -780,7 +746,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Majd Group for Automotive & Heavy Fleet',
     industryAr: 'أساطيل نقل لوجستيات شاحنات ومعارض سيارات',
     industryEn: 'Auto Dealership networks & Fleet Maintenance',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/2.png'
+    imageUrl: '/clients/imp_2.png'
   },
   {
     id: 'hp2',
@@ -788,7 +754,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Cooperative Consumer Services Society',
     industryAr: 'إدارة الباركود ومبيعات السوبرماركت والمخازن',
     industryEn: 'Supermarket Fast POS & Scan Nodes',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/0.jpg'
+    imageUrl: '/clients/imp_0.jpg'
   },
   {
     id: 'hp3',
@@ -796,7 +762,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Asdam Technical Glass Company',
     industryAr: 'الزجاج والمقاولات المتخصصة وعمليات التصنيع',
     industryEn: 'Glass & Special Contracting',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/1.jpg'
+    imageUrl: '/clients/imp_1.jpg'
   },
   {
     id: 'hp4',
@@ -804,7 +770,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Aboud Development Group',
     industryAr: 'التطوير العقاري والمقاولات العامة والإنشاء',
     industryEn: 'Real Estate & General contracting',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/5.jpg'
+    imageUrl: '/clients/imp_5.jpg'
   },
   {
     id: 'hp5',
@@ -812,7 +778,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Hexa Power Advanced Systems',
     industryAr: 'أنظمة الطاقة والمقاولات الكهربائية وتوليد الطاقة',
     industryEn: 'Power & Electrical Systems',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/6.jpg'
+    imageUrl: '/clients/imp_6.jpg'
   },
   {
     id: 'hp6',
@@ -820,7 +786,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Khafaji Bakery & Supermarket',
     industryAr: 'السوبرماركت ونقاط المبيعات الغذائية والحسابات',
     industryEn: 'Supermarket & Food POS Retail',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/7.jpg'
+    imageUrl: '/clients/imp_7.jpg'
   },
   {
     id: 'hp7',
@@ -828,7 +794,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Hexa Nano Coating & Paints',
     industryAr: 'المواد الكيميائية وحماية الأسطح وتوريد المواد',
     industryEn: 'Chemicals & Surface Protection',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/8.png'
+    imageUrl: '/clients/imp_8.png'
   },
   {
     id: 'hp8',
@@ -836,7 +802,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Mareen Healthy Water Bottling Plants',
     industryAr: 'تعبئة مياه الشرب وإنتاج الأغذية والمشروبات التلقائية',
     industryEn: 'Water Bottling & Food processing',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/9.jpeg'
+    imageUrl: '/clients/imp_9.jpeg'
   },
   {
     id: 'hp9',
@@ -844,7 +810,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Areej Al-Khaleej Car Rental',
     industryAr: 'تأجير السيارات والنقل السياحي واليومي وأساطيل المركبات',
     industryEn: 'Car Rental & Passenger Transport',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/10.jpeg'
+    imageUrl: '/clients/imp_10.jpeg'
   },
   {
     id: 'hp10',
@@ -852,7 +818,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Majal Specialist Medical Group',
     industryAr: 'مجموعة عيادات طب الأسنان والجلدية وعلاقات المرضى',
     industryEn: 'Clinical Booking & Pharmacy POS',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/11.jpg'
+    imageUrl: '/clients/imp_11.jpg'
   },
   {
     id: 'hp11',
@@ -860,7 +826,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'National Plastic & Packaging Factories',
     industryAr: 'تصنيع البلاستيك عالي الكثافة والكرتون المقوى',
     industryEn: 'Plastic & Carton Manufacturing',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/12.jpeg'
+    imageUrl: '/clients/imp_12.jpeg'
   },
   {
     id: 'hp12',
@@ -868,7 +834,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Food Land General Foodstuff Trading',
     industryAr: 'سلاسل بيع وتوزيع وتخزين السلع الغذائية الفعالة',
     industryEn: 'FMCG Sales & Cold Chain Logistics',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/13.jpeg'
+    imageUrl: '/clients/imp_13.jpeg'
   },
   {
     id: 'hp13',
@@ -876,7 +842,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Madarat Al-Khaleej Telecom & IT',
     industryAr: 'شبكات الاتصالات وحلول تقنية المعلومات والربط الفني',
     industryEn: 'Telecom Infrastructure & Solution',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/14.jpg'
+    imageUrl: '/clients/imp_14.jpg'
   },
   {
     id: 'hp14',
@@ -884,7 +850,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Huda Flour Mills Corporation',
     industryAr: 'تكرير وتعبئة الدقيق المخصص للمخابز وإدارة الصوامع',
     industryEn: 'Flour Refineries & Wholesale Distribution',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/16.jpg'
+    imageUrl: '/clients/imp_16.jpg'
   },
   {
     id: 'hp15',
@@ -892,6 +858,6 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Baraka Poultry & Automated Farming Complexes',
     industryAr: 'الإنتاج الحيواني ومسالخ الدواجن وبطارية التفريخ الآلية',
     industryEn: 'Poultry Farms Integration & Feed Distribution IoT',
-    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/18.png'
+    imageUrl: '/clients/imp_18.png'
   }
 ];

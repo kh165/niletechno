@@ -3,8 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, Play, Check, CheckCircle2, ChevronDown, ChevronUp, 
   Layers, Server, Cloud, ShieldCheck, X, FileText, ArrowLeft, ArrowRight,
-  Sparkles, Monitor, Store, Truck, Cpu, Database,
-  LayoutGrid, Landmark, ShoppingBag, PackageCheck, Factory, ArrowDown
+  Sparkles, Monitor, Store, Truck, Cpu, Database
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
 
@@ -19,16 +18,12 @@ export function ModernSystemsShowcase({
   setSearchInput, 
   handleOpenVideo, 
   formData, 
-  setFormData,
-  onSelectSystemForQuote
+  setFormData 
 }) {
   const [expandedSystemId, setExpandedSystemId] = useState(null);
 
-  const safeModules = Array.isArray(modules) ? modules : [];
-
   // Category filtering
-  const filteredModules = safeModules.filter(m => {
-    if (!m) return false;
+  const filteredModules = modules.filter(m => {
     const matchesTab = activeTab === 'all' || m.category === activeTab;
     const term = (searchInput || '').toLowerCase().trim();
     if (!term) return matchesTab;
@@ -40,33 +35,19 @@ export function ModernSystemsShowcase({
     return matchesTab && matchSearch;
   });
 
-  const flagshipModule = safeModules.find(m => m && m.id === 'accounts') || safeModules[0] || { id: 'accounts' };
+  const flagshipModule = modules.find(m => m.id === 'accounts') || modules[0];
 
-  const handleRequestQuote = (e, sysId) => {
+  const handleToggleInterest = (e, sysId) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
-    if (onSelectSystemForQuote) {
-      onSelectSystemForQuote(sysId);
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        interestedModules: Array.isArray(prev?.interestedModules)
-          ? (prev.interestedModules.includes(sysId)
-            ? prev.interestedModules
-            : [...prev.interestedModules, sysId])
-          : [sysId]
-      }));
-      const quoteEl = document.getElementById('quote-selection-group') || document.getElementById('contact');
-      if (quoteEl) {
-        quoteEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-  };
-
-  const handleToggleInterest = (e, sysId) => {
-    handleRequestQuote(e, sysId);
+    setFormData(prev => ({
+      ...prev,
+      interestedModules: prev.interestedModules.includes(sysId)
+        ? prev.interestedModules.filter(id => id !== sysId)
+        : [...prev.interestedModules, sysId]
+    }));
   };
 
   const toggleExpand = (e, sysId) => {
@@ -77,82 +58,23 @@ export function ModernSystemsShowcase({
     setExpandedSystemId(prev => (prev === sysId ? null : sysId));
   };
 
-  const isFlagshipInterested = (flagshipModule?.id && formData?.interestedModules) 
-    ? formData.interestedModules.includes(flagshipModule.id) 
-    : false;
+  const isFlagshipInterested = formData.interestedModules.includes(flagshipModule.id);
 
   // Category stats
   const categoryCounts = {
-    all: safeModules.length,
-    erp: safeModules.filter(m => m && m.category === 'erp').length,
-    retail: safeModules.filter(m => m && m.category === 'retail').length,
-    logistics: safeModules.filter(m => m && m.category === 'logistics').length,
-    specialized: safeModules.filter(m => m && m.category === 'specialized').length
+    all: modules.length,
+    erp: modules.filter(m => m.category === 'erp').length,
+    retail: modules.filter(m => m.category === 'retail').length,
+    logistics: modules.filter(m => m.category === 'logistics').length,
+    specialized: modules.filter(m => m.category === 'specialized').length
   };
 
   const categoryIcons = {
-    all: LayoutGrid,
-    erp: Landmark,
-    retail: ShoppingBag,
-    logistics: PackageCheck,
-    specialized: Factory
-  };
-
-  // Uniform brand blue styling across all category tabs for a clean, calm and elegant experience
-  const categoryColorStyles = {
-    all: {
-      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
-      activeBadge: 'bg-white/20 text-white',
-      activeIcon: 'text-white',
-      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
-    },
-    erp: {
-      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
-      activeBadge: 'bg-white/20 text-white',
-      activeIcon: 'text-white',
-      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
-    },
-    retail: {
-      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
-      activeBadge: 'bg-white/20 text-white',
-      activeIcon: 'text-white',
-      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
-    },
-    logistics: {
-      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
-      activeBadge: 'bg-white/20 text-white',
-      activeIcon: 'text-white',
-      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
-    },
-    specialized: {
-      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
-      activeBadge: 'bg-white/20 text-white',
-      activeIcon: 'text-white',
-      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
-    }
-  };
-
-  // Strictly preserve page scroll position on tab switch to prevent unwanted page jumping
-  const handleTabSelect = (e, tabId) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (e.currentTarget && typeof e.currentTarget.blur === 'function') {
-        e.currentTarget.blur();
-      }
-    }
-    
-    const savedY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
-    setActiveTab(tabId);
-
-    // Lock position across synchronous tick, animation frame, and timeout
-    window.scrollTo({ top: savedY, behavior: 'instant' });
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: savedY, behavior: 'instant' });
-      setTimeout(() => {
-        window.scrollTo({ top: savedY, behavior: 'instant' });
-      }, 15);
-    });
+    all: Layers,
+    erp: Database,
+    retail: Store,
+    logistics: Truck,
+    specialized: Cpu
   };
 
   return (
@@ -240,17 +162,26 @@ export function ModernSystemsShowcase({
 
             <button
               type="button"
-              onClick={(e) => handleRequestQuote(e, flagshipModule.id)}
+              onClick={(e) => handleToggleInterest(e, flagshipModule.id)}
               className={`min-h-[46px] px-6 py-3 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 ${
                 isFlagshipInterested
-                  ? 'bg-blue-50 dark:bg-blue-950/40 border-[#0b72c9] text-[#0b72c9] dark:text-[#299df7]'
+                  ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400'
                   : (theme === 'light' 
                       ? 'bg-white border-slate-300 text-slate-800 hover:border-[#0b72c9] hover:bg-slate-50' 
                       : 'bg-slate-900/90 border-slate-700 text-slate-200 hover:border-[#0b72c9] hover:bg-slate-800')
               }`}
             >
-              <ArrowDown className="w-4 h-4 text-[#0b72c9]" />
-              <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة بالأسفل ⬇️' : 'Request Official Quote Below ⬇️'}</span>
+              {isFlagshipInterested ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-500" />
+                  <span>{lang === 'ar' ? 'مضاف إلى قائمة التسعير' : 'Added to Quote List'}</span>
+                </>
+              ) : (
+                <>
+                  <FileText className="w-4 h-4 text-slate-400" />
+                  <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة' : 'Request Official Quote'}</span>
+                </>
+              )}
             </button>
           </div>
 
@@ -290,8 +221,8 @@ export function ModernSystemsShowcase({
         </div>
 
         {/* Clean Pill Segmented Tabs with Category Icons & Counts */}
-        <div className={`p-1.5 sm:p-2 rounded-2xl border flex flex-wrap items-center justify-center gap-2 ${
-          theme === 'light' ? 'bg-slate-100/90 border-slate-200/90 shadow-inner' : 'bg-slate-900/95 border-slate-800 shadow-inner'
+        <div className={`p-1.5 rounded-2xl border flex flex-wrap items-center justify-center gap-1.5 ${
+          theme === 'light' ? 'bg-slate-100/80 border-slate-200/90' : 'bg-slate-900/90 border-slate-800'
         }`}>
           {[
             { id: 'all', label: t.filterAll },
@@ -301,31 +232,33 @@ export function ModernSystemsShowcase({
             { id: 'specialized', label: t.filterSpecialized }
           ].map((tab) => {
             const isActive = activeTab === tab.id;
-            const CatIcon = categoryIcons[tab.id] || LayoutGrid;
+            const CatIcon = categoryIcons[tab.id] || Layers;
             const count = categoryCounts[tab.id] || 0;
-            const colorStyle = categoryColorStyles[tab.id] || categoryColorStyles.all;
 
             return (
               <button
                 type="button"
                 key={tab.id}
-                onClick={(e) => handleTabSelect(e, tab.id)}
-                className={`min-h-[42px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer font-cairo flex items-center gap-2.5 active:scale-95 ${
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab(tab.id);
+                }}
+                className={`min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer font-cairo flex items-center gap-2 ${
                   isActive
-                    ? `${colorStyle.activeBg} font-extrabold`
+                    ? (theme === 'light' 
+                        ? 'bg-white text-[#0b72c9] shadow-md border border-slate-200/60' 
+                        : 'bg-slate-800 text-[#299df7] shadow-md border border-slate-700/80')
                     : (theme === 'light' 
-                        ? 'text-slate-700 hover:text-slate-950 hover:bg-white/80 border border-transparent hover:border-slate-200' 
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800/70 border border-transparent hover:border-slate-700/60')
+                        ? 'text-slate-600 hover:text-slate-900 hover:bg-white/60' 
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800/50')
                 }`}
               >
-                <div className={`p-1 rounded-lg ${isActive ? 'bg-white/15' : 'bg-slate-200/60 dark:bg-slate-800/80'}`}>
-                  <CatIcon className={`w-4 h-4 ${isActive ? colorStyle.activeIcon : colorStyle.inactiveIcon}`} />
-                </div>
+                <CatIcon className={`w-3.5 h-3.5 ${isActive ? 'text-[#0b72c9] dark:text-[#299df7]' : 'text-slate-400'}`} />
                 <span>{tab.label}</span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono ${
                   isActive 
-                    ? colorStyle.activeBadge 
-                    : (theme === 'light' ? 'bg-slate-200/80 text-slate-600' : 'bg-slate-800 text-slate-400')
+                    ? 'bg-[#0b72c9]/10 text-[#0b72c9] dark:text-[#299df7] font-bold' 
+                    : 'bg-slate-200/60 dark:bg-slate-800 text-slate-500'
                 }`}>
                   {count}
                 </span>
@@ -337,7 +270,7 @@ export function ModernSystemsShowcase({
       </div>
 
       {/* 3. Systems Grid - Refined Card Elevation & Smooth Drawer */}
-      <div className="min-h-[580px]" style={{ overflowAnchor: 'none' }}>
+      <div className="min-h-[380px]">
         {filteredModules.length === 0 ? (
           <div className={`text-center py-14 rounded-3xl border max-w-lg mx-auto ${
             theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-slate-900/40 border-slate-800 text-slate-400'
@@ -484,17 +417,18 @@ export function ModernSystemsShowcase({
 
                       <button
                         type="button"
-                        onClick={(e) => handleRequestQuote(e, sys.id)}
-                        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 flex items-center gap-1.5 ${
+                        onClick={(e) => handleToggleInterest(e, sys.id)}
+                        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 ${
                           isInterested
-                            ? 'bg-blue-50 dark:bg-blue-950/40 border-[#0b72c9] text-[#0b72c9] dark:text-[#299df7] shadow-xs'
+                            ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400 shadow-xs'
                             : (theme === 'light' 
                                 ? 'bg-slate-50 hover:bg-[#0b72c9] hover:text-white hover:border-[#0b72c9] border-slate-300 text-slate-800 shadow-2xs hover:shadow-md hover:shadow-[#0b72c9]/20' 
                                 : 'bg-slate-900 hover:bg-[#0b72c9] hover:text-white hover:border-[#0b72c9] border-slate-700 text-slate-200 hover:shadow-lg hover:shadow-[#0b72c9]/30')
                         }`}
                       >
-                        <ArrowDown className="w-3.5 h-3.5" />
-                        <span>{lang === 'ar' ? 'طلب عرض سعر' : 'Get Quote'}</span>
+                        {isInterested 
+                          ? (lang === 'ar' ? 'تمت الإضافة' : 'Added') 
+                          : (lang === 'ar' ? 'طلب تسعيرة' : 'Get Quote')}
                       </button>
                     </div>
                   </div>

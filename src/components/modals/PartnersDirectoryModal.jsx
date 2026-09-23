@@ -3,10 +3,8 @@ import { Award, X, ChevronLeft, ChevronRight, Search, MessageSquare } from 'luci
 import { SUCCESS_PARTNERS } from '../../data';
 import { PartnerLogo } from '../site/BrandVisuals';
 import { createWhatsAppUrl } from '../../constants/config';
-import companyLogo from '../../assets/images/logo.png';
 
-export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', theme = 'dark' }) {
-  const isRtl = lang === 'ar';
+export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' }) {
   const [partnerActiveTab, setPartnerActiveTab] = useState('all');
   const [partnerSearchInput, setPartnerSearchInput] = useState('');
   const [partnerSearchQuery, setPartnerSearchQuery] = useState('');
@@ -32,34 +30,29 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Categories matching the official Nile Techno portal
+  // Categories matching the official Nile Techno portal and image.png
   const categories = useMemo(() => [
-    { id: 'all', label: lang === 'ar' ? '📌 الكل' : '📌 All' },
-    { id: 'egypt', label: lang === 'ar' ? '🇪🇬 مصر' : '🇪🇬 Egypt' },
-    { id: 'ksa', label: lang === 'ar' ? '🇸🇦 السعودية' : '🇸🇦 Saudi Arabia' },
-    { id: 'import_export', label: lang === 'ar' ? '📦 الاستيراد والتصدير' : '📦 Import & Export' },
-    { id: 'hospitality', label: lang === 'ar' ? '☕ الكافيهات والمطاعم' : '☕ Cafes & Restaurants' },
-    { id: 'malls_houseware', label: lang === 'ar' ? '🛍️ المولات والأدوات المنزلية' : '🛍️ Malls & Retail' },
-    { id: 'mills_feed', label: lang === 'ar' ? '🌾 مصانع الأعلاف والمطاحن' : '🌾 Mills & Feed' },
-    { id: 'contracting', label: lang === 'ar' ? '🏗️ شركات المقاولات' : '🏗️ Contracting' },
-    { id: 'jewelry', label: lang === 'ar' ? '💎 محلات المجوهرات' : '💎 Jewelry' },
-    { id: 'agencies_wholesale', label: lang === 'ar' ? '🤝 التوكيلات والجملة' : '🤝 Agencies & Wholesale' },
-    { id: 'car_showrooms', label: lang === 'ar' ? '🚗 معارض السيارات' : '🚗 Auto Showrooms' },
-    { id: 'pharma', label: lang === 'ar' ? '💊 شركات الأدوية' : '💊 Pharma & Medical' },
-    { id: 'herbs_spices', label: lang === 'ar' ? '🌿 شركات العطارة' : '🌿 Spices & Herbs' },
-    { id: 'factories', label: lang === 'ar' ? '🏭 المصانع والإنتاج الكبرى' : '🏭 Major Factories' }
-  ], [lang]);
+    { id: 'all', label: '📌 الكل' },
+    { id: 'ksa', label: 'SA السعودية' },
+    { id: 'import_export', label: '📦 الاستيراد والتصدير' },
+    { id: 'hospitality', label: '☕ الكافيهات والمطاعم' },
+    { id: 'malls_houseware', label: '🛍️ المولات والأدوات المنزلية' },
+    { id: 'mills_feed', label: '🌾 مصانع الأعلاف والمطاحن' },
+    { id: 'contracting', label: '🏗️ شركات المقاولات' },
+    { id: 'jewelry', label: '💎 محلات المجوهرات' },
+    { id: 'agencies_wholesale', label: '🤝 التوكيلات والجملة' },
+    { id: 'car_showrooms', label: '🚗 معارض السيارات' },
+    { id: 'pharma', label: '💊 شركات الأدوية' },
+    { id: 'herbs_spices', label: '🌿 شركات العطارة' },
+    { id: 'factories', label: '🏭 المصانع والإنتاج الكبرى' }
+  ], []);
 
   // Filter partners by category & search term
   const filteredPartners = useMemo(() => {
     if (!Array.isArray(SUCCESS_PARTNERS)) return [];
     return SUCCESS_PARTNERS.filter((partner) => {
       if (!partner) return false;
-      const categoryMatch = partnerActiveTab === 'all' 
-        ? true 
-        : partnerActiveTab === 'egypt' 
-        ? partner.category !== 'ksa' 
-        : partner.category === partnerActiveTab;
+      const categoryMatch = partnerActiveTab === 'all' || partner.category === partnerActiveTab;
       if (!categoryMatch) return false;
 
       if (!partnerSearchQuery.trim()) return true;
@@ -75,34 +68,15 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
 
   // Scroll tabs horizontally
   const scrollTabs = useCallback((direction) => {
-    const el = tabsScrollRef.current;
-    if (!el) return;
-    const step = 260;
-    // In RTL, leftward scrolling is negative scrollLeft in modern browsers
-    if (isRtl) {
-      const delta = direction === 'left' ? -step : step;
-      el.scrollBy({ left: delta, behavior: 'smooth' });
-    } else {
-      const delta = direction === 'right' ? step : -step;
-      el.scrollBy({ left: delta, behavior: 'smooth' });
-    }
-  }, [isRtl]);
-
-  const handlePartnerClick = (partner) => {
-    if (!partner) return;
-    const partnerName = lang === 'ar' ? partner.nameAr : (partner.nameEn || partner.nameAr);
-    const partnerInd = lang === 'ar' ? (partner.industryAr || '') : (partner.industryEn || partner.industryAr || '');
-    const msg = lang === 'ar'
-      ? `السلام عليكم ورحمة الله وبركاته،\n\nأود الاستفسار والاطلاع على سابقة أعمال وحلول شركة نايل تكنو للبرمجيات المنفذة لدى (${partnerName})${partnerInd ? ` في قطاع (${partnerInd})` : ''}.\n\nأرجو تزويدنا بالمزيد من التفاصيل والأنظمة المقترحة لنشاطنا المشابه.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
-      : `Hello Nile Techno Sales Team,\n\nI would like to inquire about your software solutions and case studies implemented for (${partnerName})${partnerInd ? ` in the (${partnerInd}) sector` : ''}.\n\nPlease provide more details on suitable ERP and mobile systems for our similar business.\n\nThank you for your assistance.`;
-    window.open(`https://wa.me/201000082722?text=${encodeURIComponent(msg)}`, '_blank');
-  };
+    if (!tabsScrollRef.current) return;
+    const amount = 200;
+    const factor = direction === 'next' ? -1 : 1;
+    tabsScrollRef.current.scrollBy({ left: factor * amount, behavior: 'smooth' });
+  }, []);
 
   if (!isOpen) return null;
 
-  const waSalesText = isRtl
-    ? `السلام عليكم ورحمة الله وبركاته،\n\nأود الاستفسار والاطلاع على سابقة أعمال شركة نايل تكنو للبرمجيات والمشاريع المنفذة في مجال نشاطنا والتوكيلات التجارية.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
-    : `Hello Nile Techno Sales Team,\n\nI would like to inquire about Nile Techno software implementations, client case studies, and enterprise agency portfolio.\n\nThank you for your assistance.`;
+  const waSalesText = 'السلام عليكم ورحمة الله، أرغب في الاستفسار عن سابقة أعمال وحلول شركة نايل تكنو للبرمجيات.';
 
   return (
     <div 
@@ -110,7 +84,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      dir={isRtl ? 'rtl' : 'ltr'}
+      dir="rtl"
     >
       <div 
         className="relative w-full max-w-6xl bg-white text-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-2xl overflow-hidden flex flex-col max-h-[94dvh] sm:max-h-[90vh]"
@@ -119,109 +93,93 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
         
         {/* 1. Modal Header (Compact & sleek) */}
         <div className="px-4 sm:px-6 py-2.5 sm:py-3 border-b border-slate-100 flex items-center justify-between gap-3 shrink-0 bg-white">
-          {/* Brand & Title */}
+          {/* Right side: Icon + Titles */}
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-            <div className="h-9 sm:h-10 px-2 py-1 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-center shrink-0 shadow-2xs">
-              <img 
-                src={companyLogo} 
-                alt="Nile Techno" 
-                className="h-6 sm:h-7 w-auto object-contain select-none" 
-              />
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-cyan-50 border border-cyan-100 flex items-center justify-center shrink-0">
+              <Award className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#00a3c4]" />
             </div>
             <div className="min-w-0">
               <h3 className="text-xs sm:text-sm md:text-base font-black font-cairo text-slate-900 leading-tight truncate">
-                {isRtl ? 'دليل شركاء النجاح وسابقة الأعمال الكاملة' : 'Success Partners & Client Portfolio Directory'}
+                دليل شركاء النجاح وسابقة الأعمال الكاملة
               </h3>
               <p className="text-[10px] sm:text-xs font-bold text-[#00a3c4] font-cairo line-clamp-1">
-                {isRtl 
-                  ? 'تصفح تفاعلي لقائمة عملائنا البالغ عددهم 1,500+ في مختلف القطاعات التجارية والمؤسسية'
-                  : 'Interactive showcase of 1,500+ corporate clients across commercial and industrial sectors'}
+                تصفح تفاعلي لقائمة عملائنا البالغ عددهم 1,500+ في مختلف القطاعات التجارية والمؤسسية
               </p>
             </div>
           </div>
 
-          {/* Close Button */}
+          {/* Left side: Close Button */}
           <button
             type="button"
             onClick={onClose}
             className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
-            aria-label={isRtl ? 'إغلاق' : 'Close'}
+            aria-label="إغلاق"
           >
             <X className="w-4.5 h-4.5" />
           </button>
         </div>
 
-        {/* 2. Modal Body */}
+        {/* 2. Modal Body (Scrollable container, logos visible right away) */}
         <div className="flex-1 overflow-y-auto px-3 sm:px-5 py-2.5 sm:py-3 space-y-2.5 sm:space-y-3 overscroll-contain">
           
-          {/* Metrics Strip */}
+          {/* Compact Slim Metrics Strip (Takes minimal height so logos are prominent) */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1.5 sm:p-2 bg-slate-50/90 rounded-xl border border-slate-200/80 text-center shrink-0 shadow-2xs">
             <div className="flex items-center justify-center gap-1.5 py-0.5">
               <span className="text-sm sm:text-base font-black text-[#00a3c4] font-mono">+1,500</span>
-              <span className="text-[10px] sm:text-xs font-bold text-slate-700 font-cairo">
-                {isRtl ? 'مؤسسة مفعلة' : 'Active Enterprises'}
-              </span>
+              <span className="text-[10px] sm:text-xs font-bold text-slate-700 font-cairo">مؤسسة مفعلة</span>
             </div>
-            <div className={`flex items-center justify-center gap-1.5 py-0.5 sm:border-slate-200 ${isRtl ? 'sm:border-r' : 'sm:border-l'}`}>
+            <div className="flex items-center justify-center gap-1.5 py-0.5 sm:border-r sm:border-slate-200">
               <span className="text-sm sm:text-base font-black text-[#00a3c4] font-mono">+15</span>
-              <span className="text-[10px] sm:text-xs font-bold text-slate-700 font-cairo">
-                {isRtl ? 'عام من النجاح' : 'Years of Trust'}
-              </span>
+              <span className="text-[10px] sm:text-xs font-bold text-slate-700 font-cairo">عام من النجاح</span>
             </div>
-            <div className={`flex items-center justify-center gap-1.5 py-0.5 border-t sm:border-t-0 border-slate-200 ${isRtl ? 'sm:border-r' : 'sm:border-l'}`}>
+            <div className="flex items-center justify-center gap-1.5 py-0.5 border-t sm:border-t-0 sm:border-r border-slate-200">
               <span className="text-sm sm:text-base font-black text-[#00a3c4] font-mono">+36</span>
-              <span className="text-[10px] sm:text-xs font-bold text-slate-700 font-cairo">
-                {isRtl ? 'عميل معتمد' : 'Enterprise Certified'}
-              </span>
+              <span className="text-[10px] sm:text-xs font-bold text-slate-700 font-cairo">عميل معتمد</span>
             </div>
-            <div className={`flex items-center justify-center gap-1.5 py-0.5 border-t sm:border-t-0 border-slate-200 ${isRtl ? 'sm:border-r' : 'sm:border-l'}`}>
+            <div className="flex items-center justify-center gap-1.5 py-0.5 border-t sm:border-t-0 sm:border-r border-slate-200">
               <span className="text-sm sm:text-base font-black text-[#00a3c4] font-mono">99.4%</span>
-              <span className="text-[10px] sm:text-xs font-bold text-slate-700 font-cairo">
-                {isRtl ? 'نسبة الرضا' : 'Satisfaction Rate'}
-              </span>
+              <span className="text-[10px] sm:text-xs font-bold text-slate-700 font-cairo">نسبة الرضا</span>
             </div>
           </div>
 
-          {/* 3. Filter Tabs & Search Bar */}
+          {/* 3. Filter Tabs & Search Bar Container (Compact) */}
           <div className="rounded-xl border border-slate-200/80 p-1.5 sm:p-2 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 bg-white shadow-2xs">
             
-            {/* Search Input */}
-            <div className="relative w-full md:w-56 shrink-0">
+            {/* Search Input (Left in RTL layout) */}
+            <div className="relative w-full md:w-52 shrink-0 order-2 md:order-1">
               <input
                 type="text"
                 value={partnerSearchInput}
                 onChange={(e) => setPartnerSearchInput(e.target.value)}
-                placeholder={isRtl ? '...البحث السريع' : 'Search clients...'}
-                className={`w-full py-1.5 text-xs font-cairo text-slate-800 placeholder-slate-400 outline-none focus:border-[#00a3c4] transition-colors rounded-lg border border-slate-200 ${
-                  isRtl ? 'px-3 pr-3.5 pl-8' : 'px-3 pl-8 pr-3.5'
-                }`}
+                placeholder="...البحث السريع"
+                className="w-full py-1.5 px-3 pr-3.5 pl-8 rounded-lg border border-slate-200 text-xs font-cairo text-slate-800 placeholder-slate-400 outline-none focus:border-[#00a3c4] transition-colors"
               />
-              <Search className={`absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none ${isRtl ? 'left-2.5' : 'left-2.5'}`} />
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
               {partnerSearchInput && (
                 <button
                   type="button"
                   onClick={() => setPartnerSearchInput('')}
-                  className={`absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 hover:text-slate-600 rounded-full flex items-center justify-center cursor-pointer ${isRtl ? 'left-6' : 'right-2.5'}`}
+                  className="absolute left-6 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 hover:text-slate-600 rounded-full flex items-center justify-center cursor-pointer"
                 >
                   <X className="w-3 h-3" />
                 </button>
               )}
             </div>
 
-            {/* Categories Carousel */}
-            <div className="flex-1 min-w-0 flex items-center gap-1.5" dir={isRtl ? 'rtl' : 'ltr'}>
+            {/* Categories Carousel (Right in RTL layout) */}
+            <div className="flex-1 min-w-0 flex items-center gap-1 order-1 md:order-2">
               <button
                 type="button"
-                onClick={() => scrollTabs(isRtl ? 'right' : 'left')}
-                className="w-8 h-8 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 hover:bg-[#00a3c4] hover:text-white hover:border-[#00a3c4] active:bg-[#008ba8] hover:scale-110 active:scale-90 transition-all duration-200 shadow-xs shrink-0 cursor-pointer"
-                aria-label={isRtl ? 'السابق' : 'Previous'}
+                onClick={() => scrollTabs('next')}
+                className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors shrink-0 cursor-pointer"
+                aria-label="Next categories"
               >
-                {isRtl ? <ChevronRight className="w-4 h-4 stroke-[2.5]" /> : <ChevronLeft className="w-4 h-4 stroke-[2.5]" />}
+                <ChevronRight className="w-3.5 h-3.5" />
               </button>
 
               <div 
                 ref={tabsScrollRef}
-                className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1 scroll-smooth"
+                className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5 scroll-smooth"
               >
                 {categories.map((cat) => {
                   const isActive = partnerActiveTab === cat.id;
@@ -230,7 +188,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
                       key={cat.id}
                       type="button"
                       onClick={() => setPartnerActiveTab(cat.id)}
-                      className={`min-h-[32px] sm:min-h-[34px] px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap cursor-pointer transition-all font-cairo flex items-center justify-center shrink-0 ${
+                      className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap cursor-pointer transition-all font-cairo flex items-center justify-center shrink-0 ${
                         isActive
                           ? 'bg-[#00a3c4] text-white shadow-xs font-black'
                           : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
@@ -244,29 +202,30 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
 
               <button
                 type="button"
-                onClick={() => scrollTabs(isRtl ? 'left' : 'right')}
-                className="w-8 h-8 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 hover:bg-[#00a3c4] hover:text-white hover:border-[#00a3c4] active:bg-[#008ba8] hover:scale-110 active:scale-90 transition-all duration-200 shadow-xs shrink-0 cursor-pointer"
-                aria-label={isRtl ? 'التالي' : 'Next'}
+                onClick={() => scrollTabs('prev')}
+                className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors shrink-0 cursor-pointer"
+                aria-label="Previous categories"
               >
-                {isRtl ? <ChevronLeft className="w-4 h-4 stroke-[2.5]" /> : <ChevronRight className="w-4 h-4 stroke-[2.5]" />}
+                <ChevronLeft className="w-3.5 h-3.5" />
               </button>
             </div>
 
           </div>
 
-          {/* 4. The Partner Logo Grid */}
-          <div className="pt-2">
+          {/* 4. The Partner Logo Grid (Denser, compact size to show more logos at once) */}
+          <div className="pt-0.5">
             {filteredPartners.length > 0 ? (
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 justify-items-center">
+              <div className="grid grid-cols-4 xs:grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-1.5 sm:gap-2 justify-items-center">
                 {filteredPartners.map((partner) => {
+                  const title = `${partner.nameAr} - ${partner.industryAr || ''}`;
                   return (
                     <div 
                       key={partner.id}
-                      onClick={() => handlePartnerClick(partner)}
-                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-slate-200 hover:border-[#00a3c4]/70 bg-white shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex items-center justify-center p-2 sm:p-2.5 relative overflow-hidden group cursor-pointer"
+                      title={title}
+                      className="w-full max-w-[58px] xs:max-w-[66px] sm:max-w-[74px] md:max-w-[80px] aspect-square rounded-lg sm:rounded-xl border border-slate-200/80 bg-white shadow-2xs hover:shadow-md hover:border-[#00a3c4] transition-all duration-150 flex items-center justify-center p-1 group cursor-pointer hover:-translate-y-0.5"
                     >
-                      <div className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                        <PartnerLogo partner={partner} theme={theme} />
+                      <div className="w-full h-full flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
+                        <PartnerLogo partner={partner} theme="light" />
                       </div>
                     </div>
                   );
@@ -275,14 +234,14 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
             ) : (
               <div className="py-8 text-center space-y-2 font-cairo">
                 <p className="text-xs font-bold text-slate-400">
-                  {isRtl ? 'لم يتم العثور على نتائج تطابق بحثك' : 'No results found matching your search'}
+                  لم يتم العثور على نتائج تطابق بحثك
                 </p>
                 <button
                   type="button"
                   onClick={() => { setPartnerSearchInput(''); setPartnerActiveTab('all'); }}
-                  className="px-3 py-1.5 rounded-lg bg-[#00a3c4] text-white text-xs font-bold cursor-pointer hover:bg-[#008ba8] transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-[#00a3c4] text-white text-xs font-bold cursor-pointer"
                 >
-                  {isRtl ? 'إعادة ضبط البحث' : 'Reset Search'}
+                  إعادة ضبط البحث
                 </button>
               </div>
             )}
@@ -290,14 +249,14 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
 
         </div>
 
-        {/* 5. Modal Footer */}
+        {/* 5. Modal Footer (Compact and fluid) */}
         <div className="px-4 sm:px-6 py-2.5 sm:py-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2.5 shrink-0 bg-white">
+          {/* Note on right */}
           <span className="text-[10px] sm:text-xs text-slate-500 font-cairo text-center sm:text-right">
-            {isRtl 
-              ? '* اضغط على أي شريك للاستفسار المباشر عن حلولنا المنفذة لديه، أو تواصل مع المبيعات'
-              : '* Click any partner to inquire about deployed software systems, or contact sales'}
+            * لمزيد من دراسات الحالة المفصلة، تواصل بشكل مباشر مع شريك الدعم الفني والمبيعات
           </span>
 
+          {/* Action buttons on left */}
           <div className="flex items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
             {/* WhatsApp Button */}
             <a
@@ -311,7 +270,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
               </span>
               <MessageSquare className="w-3.5 h-3.5 shrink-0" />
-              <span>{isRtl ? 'واتساب مبيعات' : 'Sales WhatsApp'}</span>
+              <span>واتساب مبيعات</span>
             </a>
 
             {/* Close Button */}
@@ -320,7 +279,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
               onClick={onClose}
               className="min-h-[38px] px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs cursor-pointer font-cairo transition-colors flex-1 sm:flex-initial"
             >
-              {isRtl ? 'إغلاق الدليل' : 'Close'}
+              إغلاق الدليل
             </button>
           </div>
         </div>

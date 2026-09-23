@@ -19,6 +19,16 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+}
+
+section:not(#home) {
+  content-visibility: auto;
+  contain-intrinsic-size: 720px;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0f172a; }
@@ -440,4 +450,477 @@ section, nav, footer, header, div {
 }
 .whatsapp-btn:hover .animate-ping {
   opacity: 0 !important;
+}
+
+
+.video-lightbox {
+  background: rgba(3, 12, 23, .72);
+  backdrop-filter: blur(17px) saturate(.72);
+  animation: videoLightboxIn 220ms cubic-bezier(.23, 1, .32, 1) both;
+}
+.video-dialog {
+  animation: videoDialogIn 260ms cubic-bezier(.23, 1, .32, 1) both;
+  will-change: transform, opacity;
+}
+.video-dialog-landscape::after {
+  content: '';
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: -5px;
+  height: 7px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(250, 204, 21, .95), transparent);
+  box-shadow: 0 0 22px rgba(250, 204, 21, .55);
+  pointer-events: none;
+}
+.video-dialog-landscape .video-viewport {
+  min-height: 0;
+}
+.video-close {
+  will-change: transform;
+}
+.section-deferred-placeholder {
+  min-height: inherit;
+  border-radius: 1.5rem;
+  background: transparent;
+  animation: none;
+}
+@keyframes deferredShimmer { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
+@keyframes videoLightboxIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes videoDialogIn { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 640px) {
+  .video-dialog-landscape { width: min(94vw, 820px); border-radius: 1rem; }
+  .video-close { right: .4rem; top: -3.6rem; transform: none; height: 2.5rem; width: 2.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .video-lightbox, .video-dialog, .section-deferred-placeholder { animation: none; }
+}
+
+
+/* Premium scroll choreography: transform/opacity only for compositor-friendly 60fps motion. */
+:root {
+  --scroll-progress: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.scroll-stagger-item {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+  transition: opacity 360ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(min(var(--stagger-index, 0), 4) * 20ms);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible .scroll-stagger-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.scroll-parallax {
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+  transition: transform 180ms linear;
+  will-change: transform;
+}
+
+@media (max-width: 640px) {
+  .scroll-reveal {
+    transform: translate3d(0, 10px, 0);
+    transition-duration: 360ms;
+  }
+
+  .scroll-stagger-item {
+    transform: translate3d(0, 6px, 0);
+    transition-duration: 320ms;
+    transition-delay: calc(min(var(--stagger-index, 0), 3) * 16ms);
+  }
+
+  .scroll-parallax {
+    transition-duration: 240ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .scroll-reveal,
+  .scroll-stagger-item,
+  .scroll-parallax {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}
+
+/* Refined navigation affordance: a small lift and underline make hover obvious without redesigning the bar. */
+.nav-link-premium {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  transition: color 220ms cubic-bezier(0.22, 1, 0.36, 1), transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link-premium::after {
+  content: '';
+  position: absolute;
+  left: 0.35rem;
+  right: 0.35rem;
+  bottom: -0.35rem;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  opacity: 0;
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
+}
+
+.nav-link-premium:hover,
+.nav-link-premium:focus-visible {
+  transform: translateY(-2px);
+}
+
+.nav-link-premium:hover::after,
+.nav-link-premium:focus-visible::after {
+  transform: scaleX(1);
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link-premium,
+  .nav-link-premium::after { transition: none; }
+}
+
+
+/* ========================================
+   IN-PLACE UX ENHANCEMENTS
+   Keeps the original layout, palette and components intact.
+   ======================================== */
+.hero-main-panel {
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -8px), 0);
+  transition: transform 180ms linear, box-shadow 320ms cubic-bezier(.22,1,.36,1), border-color 320ms ease;
+  will-change: transform;
+}
+.hero-main-panel:hover {
+  border-color: rgba(8, 145, 178, .52);
+  box-shadow: 0 24px 60px rgba(8, 145, 178, .14);
+}
+.hero-main-panel h1 { text-wrap: balance; }
+.hero-main-panel a,
+.hero-main-panel button { transition: transform 180ms cubic-bezier(.22,1,.36,1), box-shadow 180ms ease, filter 180ms ease; }
+.hero-main-panel a:hover,
+.hero-main-panel button:hover { transform: translateY(-2px); filter: saturate(1.08); }
+
+/* Platform/Solutions tabs: clearer active state while retaining the existing carousel. */
+#home [class*="gap-2"][class*="justify-center"] > button {
+  position: relative;
+  overflow: hidden;
+}
+#home [class*="gap-2"][class*="justify-center"] > button::after {
+  content: '';
+  position: absolute;
+  left: 18%; right: 18%; bottom: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: scaleX(0);
+  opacity: .55;
+  transition: transform 220ms cubic-bezier(.22,1,.36,1);
+}
+#home [class*="gap-2"][class*="justify-center"] > button:hover::after { transform: scaleX(1); }
+
+/* Service cards remain the same cards, but feel lighter and more responsive. */
+.service-card-premium {
+  isolation: isolate;
+  transition: transform 260ms cubic-bezier(.22,1,.36,1), box-shadow 260ms ease, border-color 220ms ease, background-color 220ms ease;
+}
+.service-card-premium::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(260px circle at 100% 0%, rgba(6,182,212,.09), transparent 65%);
+  opacity: 0;
+  transition: opacity 240ms ease;
+  z-index: -1;
+}
+.service-card-premium:hover::after { opacity: 1; }
+.service-card-premium:hover h3 { transform: translateX(-2px); }
+.service-card-premium h3 { transition: transform 220ms cubic-bezier(.22,1,.36,1), color 220ms ease; }
+.service-card-premium button,
+.service-card-premium a { transition: transform 180ms ease, color 180ms ease; }
+.service-card-premium button:hover,
+.service-card-premium a:hover { transform: translateY(-1px); }
+
+/* Existing floating/scrolled navbar: slightly clearer separation without changing its layout. */
+nav.fixed {
+  box-shadow: 0 1px 0 rgba(15, 23, 42, .04), 0 8px 24px rgba(15, 23, 42, .04);
+}
+nav.fixed .nav-link-premium:focus-visible {
+  outline: 2px solid rgba(6, 182, 212, .55);
+  outline-offset: 5px;
+  border-radius: 6px;
+}
+
+@media (max-width: 640px) {
+  .hero-main-panel { transform: translate3d(0, calc(var(--scroll-progress, 0) * -4px), 0); }
+  .service-card-premium:hover { transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-main-panel,
+  .service-card-premium,
+  .service-card-premium h3 { transition: none; transform: none; }
+}
+
+
+/* Visible in-place polish: stronger CTA, active navigation and richer service hover. */
+.hero-cta-row { position: relative; z-index: 2; }
+.hero-primary-cta { box-shadow: 0 10px 26px rgba(6, 182, 212, .18); }
+.hero-primary-cta:hover { box-shadow: 0 14px 34px rgba(6, 182, 212, .28); }
+.hero-secondary-cta { backdrop-filter: blur(8px); }
+
+.nav-link-active { color: #0891b2 !important; }
+.nav-link-active::after { transform: scaleX(1); opacity: .9; }
+.dark .nav-link-active { color: #22d3ee !important; }
+
+.service-card-premium { overflow: hidden; }
+.service-card-premium::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(8,145,178,.09), transparent 38%, rgba(59,130,246,.06));
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+.service-card-premium:hover::before { opacity: 1; }
+.service-card-premium:hover .p-3 { transform: translateY(-2px) rotate(-2deg); }
+.service-card-premium .p-3 { transition: transform 260ms cubic-bezier(.22,1,.36,1); }
+.service-card-premium .space-y-2 > div { transition: opacity 220ms ease, transform 220ms ease; }
+.service-card-premium:hover .space-y-2 > div { transform: translateX(-2px); }
+
+@media (max-width: 640px) {
+  .hero-cta-row { margin-top: 1.25rem; }
+  .hero-primary-cta, .hero-secondary-cta { min-height: 44px; }
+}
+
+
+/* Scoped polishing for the requested Hero and partner marquee only. */
+.hero-title {
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+.hero-main-panel {
+  isolation: isolate;
+  box-shadow: 0 22px 70px rgba(8, 145, 178, .12);
+}
+.hero-main-panel::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,.18), transparent 35%, rgba(34,211,238,.06));
+  opacity: .65;
+}
+.hero-visual-motion {
+  perspective: 1200px;
+}
+.hero-visual-motion > * {
+  will-change: transform, opacity;
+  animation: heroVisualSettle 7s ease-in-out infinite;
+}
+.partners-marquee-track {
+  width: max-content;
+  min-width: max-content;
+  will-change: transform;
+  animation: partnersMarquee 34s linear infinite;
+}
+.partners-marquee-viewport { width: 100%; overflow: hidden; }
+.partners-marquee-viewport:hover .partners-marquee-track,
+.partners-marquee-track:hover { animation-play-state: paused; }
+.partners-marquee-track > div { transition: transform 240ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, box-shadow 240ms ease; }
+@keyframes partnersMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes heroVisualSettle {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -4px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual-motion > * { animation: none; }
+  .partners-marquee-track { animation: none; transform: none; }
+}
+
+
+/* CTA-03-inspired Hero polish: scoped to the existing Hero only. */
+.hero-stage {
+  isolation: isolate;
+}
+.hero-cta-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: .72;
+  z-index: 0;
+}
+.hero-cta-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(90px);
+  animation: heroCtaDrift 12s ease-in-out infinite alternate;
+}
+.hero-cta-glow-primary {
+  width: min(58vw, 760px);
+  height: min(58vw, 760px);
+  top: -22%;
+  left: 18%;
+  background: rgba(34, 211, 238, .14);
+}
+.hero-cta-glow-secondary {
+  width: min(42vw, 560px);
+  height: min(42vw, 560px);
+  right: -10%;
+  bottom: -24%;
+  background: rgba(59, 130, 246, .12);
+  animation-delay: -4s;
+}
+.hero-cta-dither {
+  position: absolute;
+  inset: 0;
+  opacity: .28;
+  background-image: radial-gradient(rgba(8, 145, 178, .28) .8px, transparent .8px);
+  background-size: 18px 18px;
+  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+}
+.hero-cta-panel {
+  box-shadow: 0 28px 90px rgba(8, 145, 178, .14);
+}
+.hero-cta-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,.18), transparent 34%, rgba(34,211,238,.06));
+  opacity: .75;
+}
+.dark .hero-cta-backdrop { opacity: .56; }
+.dark .hero-cta-dither { opacity: .18; }
+.dark .hero-cta-panel { box-shadow: 0 28px 90px rgba(8, 145, 178, .2); }
+@keyframes heroCtaDrift {
+  0% { transform: translate3d(-2%, -1%, 0) scale(1); }
+  100% { transform: translate3d(3%, 2%, 0) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-glow { animation: none; }
+}
+@media (max-width: 640px) {
+  .hero-cta-panel { min-height: 500px; }
+  .hero-cta-glow-primary { width: 100vw; height: 100vw; left: -10%; }
+}
+
+
+/* Kinetic particle-fabric motion and compact mobile Hero layout. */
+.hero-cta-mesh {
+  position: absolute;
+  inset: -12%;
+  opacity: .22;
+  background-image:
+    radial-gradient(circle at 12% 24%, rgba(8,145,178,.65) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 74% 36%, rgba(59,130,246,.6) 0 1px, transparent 1.8px),
+    linear-gradient(28deg, transparent 48%, rgba(8,145,178,.16) 49%, transparent 50%),
+    linear-gradient(152deg, transparent 48%, rgba(59,130,246,.13) 49%, transparent 50%);
+  background-size: 92px 92px, 124px 124px, 108px 108px, 132px 132px;
+  animation: heroKineticFabric 18s linear infinite;
+  transform-origin: center;
+}
+.dark .hero-cta-mesh { opacity: .3; }
+@keyframes heroKineticFabric {
+  0% { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  50% { transform: translate3d(1%, 1.5%, 0) scale(1.035); }
+  100% { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+}
+@media (max-width: 640px) {
+  .hero-stage {
+    min-height: auto !important;
+    padding-top: 6.75rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+  .hero-stage > .relative.z-10 {
+    width: 100%;
+    padding-left: .75rem;
+    padding-right: .75rem;
+  }
+  .hero-main-panel.hero-cta-panel {
+    min-height: 0;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem .9rem 1.5rem;
+    border-radius: 1.5rem;
+  }
+  .hero-main-panel .hero-title {
+    font-size: clamp(2rem, 10vw, 2.65rem) !important;
+    line-height: 1.18 !important;
+    margin-bottom: 1rem;
+  }
+  .hero-main-panel .inline-flex.items-center.gap-1\.5 {
+    margin-bottom: 1rem;
+    padding: .4rem .75rem;
+    font-size: .68rem;
+  }
+  .hero-main-panel .mb-8 { margin-bottom: 1rem; }
+  .hero-main-panel p {
+    font-size: .88rem;
+    line-height: 1.8;
+  }
+  .hero-cta-row { margin-top: 1.25rem; }
+  .hero-primary-cta, .hero-secondary-cta {
+    min-height: 42px;
+    padding: .7rem 1rem;
+    font-size: .72rem;
+  }
+  .hero-stage > .relative.z-10 > div:last-child {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .hero-stage > .relative.z-10 > div:last-child > div:first-child {
+    gap: .45rem;
+    margin-bottom: .85rem;
+  }
+  .hero-stage > .relative.z-10 > div:last-child > div:first-child button {
+    padding: .65rem .7rem;
+    border-radius: .85rem;
+    font-size: .68rem;
+  }
+  .hero-visual-motion { min-height: 0 !important; }
+  .hero-visual-motion > * { padding: 1.1rem !important; }
+  .hero-visual-motion h3 { font-size: 1.05rem; line-height: 1.45; }
+  .hero-visual-motion p { font-size: .78rem; line-height: 1.7; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-mesh { animation: none; }
 }

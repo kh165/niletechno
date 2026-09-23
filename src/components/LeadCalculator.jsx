@@ -4,7 +4,7 @@ import { Calculator, CheckCircle2, MessageSquare, Award } from 'lucide-react';
 
 /* صور القطاعات — Unsplash (لا تحتاج ملفات محلية) */
 /* صور السكشنات — تتغير بالضغط على أي زر قطاع */ 
-import retailImg from '../assets/images/photo3.png'; 
+import retailImg from '../assets/images/photo3.webp';
 import erpImg from '../assets/images/photo2.webp'; 
 import logisticsImg from '../assets/images/photo.webp'; 
 import specializedImg from '../assets/images/photo1.webp';
@@ -44,9 +44,17 @@ export default function LeadCalculator({ lang, theme }) {
     const scaleLabel = lang === 'ar'
       ? { small: 'منشأة صغيرة (موقع واحد)', medium: 'متوسطة (2-5 فروع)', large: 'شركة كبرى / مصنع' }[scale]
       : { small: 'Small Business (1 Location)', medium: 'Medium Sized (2-5 branches)', large: 'Enterprise level' }[scale];
-    const messageText = lang === 'ar'
-      ? `مرحباً نايل تكنو للبرمجيات، أريد استشارة حول نظام: [ ${selectedSystems} ]\nنوع النشاط: ${sectorLabel}\nحجم العمل: ${scaleLabel}\nالبلد المستهدف: ${country === 'ksa' ? 'المملكة العربية السعودية' : 'جمهورية مصر العربية'}\nطلب تطبيقات الهاتف: ${needMobile ? 'نعم' : 'لا'}\nدعم الفاتورة الإلكترونية: ${needEInvoicing ? 'نعم' : 'لا'}`
-      : `Hello Nile Techno Software, estimate/demo for: [ ${selectedSystems} ]\nBusiness Type: ${sectorLabel}\nScale: ${scaleLabel}\nTarget Country: ${country === 'ksa' ? 'Saudi Arabia' : 'Egypt'}\nMobile Apps: ${needMobile ? 'Yes' : 'No'}\nE-Invoicing: ${needEInvoicing ? 'Yes' : 'No'}`;
+    const messageText = `رسالة واردة من حاسبة الأسعار في الموقع الرسمي لشركة نايل تكنو للبرمجيات.
+
+السلام عليكم ورحمة الله وبركاته،
+
+أرغب في الحصول على استشارة بشأن النظام البرمجي المناسب لنشاطي.
+
+الأنظمة المقترحة: ${selectedSystems}
+نوع النشاط: ${sectorLabel}
+حجم المنشأة: ${scaleLabel}
+تطبيقات الهاتف: ${needMobile ? 'مطلوبة' : 'غير مطلوبة'}
+دعم الفاتورة الإلكترونية: ${needEInvoicing ? 'مطلوب' : 'غير مطلوب'}`;
     window.open(`https://wa.me/${country === 'ksa' ? '9660511351059' : '201000082722'}?text=${encodeURIComponent(messageText)}`, '_blank');
   };
 
@@ -88,6 +96,8 @@ export default function LeadCalculator({ lang, theme }) {
                 <img
                   src={SECTOR_IMAGES[sector]}
                   alt={sector}
+                  loading="lazy"
+                  decoding="async"
                   style={{ opacity: imgVisible ? 1 : 0, transition: 'opacity 200ms ease' }}
                   className="calc-sector-img w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
@@ -114,7 +124,7 @@ export default function LeadCalculator({ lang, theme }) {
                         ? 'bg-gradient-to-r from-emerald-600/20 to-teal-500/15 border-emerald-500 text-emerald-600 dark:text-emerald-300 shadow-md ring-1 ring-emerald-500/25'
                         : theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700/80 hover:text-white'
                     }`}>
-                    <img src={`https://flagcdn.com/w40/${c.flag}.png`} alt={c.id} className="w-5 h-3.5 object-cover rounded-sm" referrerPolicy="no-referrer" />
+                    <img loading="lazy" decoding="async" src={`https://flagcdn.com/w40/${c.flag}.png`} alt={c.id} className="w-5 h-3.5 object-cover rounded-sm" referrerPolicy="no-referrer" />
                     {lang === 'ar' ? c.ar : c.en}
                   </button>
                 ))}

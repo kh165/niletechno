@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
 import fs from 'fs';
-import { viteSingleFile } from 'vite-plugin-singlefile';
 
 // Run automated creation of client-provided assets if not present
 const imagesDir = path.resolve(import.meta.dirname || path.dirname(new URL(import.meta.url).pathname), './src/assets/images');
@@ -49,31 +48,31 @@ export default defineConfig(() => {
     plugins: [
       react(),
       tailwindcss(),
-      viteSingleFile({ removeViteModuleLoader: true }),
       {
-        name: 'remove-module-attributes',
+        name: 'copy-built-html',
         closeBundle() {
           const distIndex = path.resolve(import.meta.dirname || path.dirname(new URL(import.meta.url).pathname), 'dist/index.html');
+          const rootAppPath = path.resolve(import.meta.dirname || path.dirname(new URL(import.meta.url).pathname), 'NileTechno.html');
           if (fs.existsSync(distIndex)) {
-            let html = fs.readFileSync(distIndex, 'utf-8');
-            html = html
-              .replace(/<script\s+type="module"\s+crossorigin\s*>/g, '<script>')
-              .replace(/<script\s+crossorigin\s+type="module"\s*>/g, '<script>')
-              .replace(/<script\s+type="module"\s*>/g, '<script>')
-              .replace(/<script\s+crossorigin\s*>/g, '<script>');
-            fs.writeFileSync(distIndex, html, 'utf-8');
-            console.log('Successfully stripped module type and crossorigin tags from build!');
-
-            // Also save a copy to the root of the project as "NileTechno.html" for super easy access from outside/above the dist directory!
-            const rootAppPath = path.resolve(import.meta.dirname || path.dirname(new URL(import.meta.url).pathname), 'NileTechno.html');
-            fs.writeFileSync(rootAppPath, html, 'utf-8');
-            console.log('Successfully copied the single-file built HTML to NileTechno.html at the project root!');
+            // Preserve Vite's module script and preload tags so dynamic imports remain split and executable.
+            fs.copyFileSync(distIndex, rootAppPath);
           }
         }
       }
     ],
     build: {
-      assetsInlineLimit: 100000000, // Inline all media/images as base64 data URIs!
+      // Keep assets as cacheable files; inlining them increases the critical HTML/JS payload.
+      assetsInlineLimit: 0,
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom'],
+            motion: ['motion/react'],
+            icons: ['lucide-react']
+          }
+        }
+      }
     },
     resolve: {
       alias: {
@@ -81,6 +80,7 @@ export default defineConfig(() => {
       },
     },
     server: {
+      allowedHosts: true,
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',

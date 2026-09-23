@@ -1,6 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
+@theme {
+  --color-cyan-50: #f0f7ff;
+  --color-cyan-100: #e0f0fe;
+  --color-cyan-200: #bae0fd;
+  --color-cyan-300: #74c1fb;
+  --color-cyan-400: #299df7;
+  --color-cyan-500: #0b72c9;
+  --color-cyan-600: #025cb0;
+  --color-cyan-700: #024a8f;
+  --color-cyan-800: #063f75;
+  --color-cyan-900: #0a3662;
+  --color-cyan-950: #072242;
+}
+
 :root {
   --font-sans: "Plus Jakarta Sans", "Cairo", system-ui, -apple-system, sans-serif;
   --font-cairo: "Cairo", sans-serif;
@@ -33,7 +47,7 @@ section:not(#home) {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0f172a; }
 ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+::-webkit-scrollbar-thumb:hover { background: #0b72c9; }
 
 /* ========================================
    MOBILE NAVIGATION FIX
@@ -152,7 +166,7 @@ section:not(#home) {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #0891b2, #06b6d4, #0891b2, transparent);
+  background: linear-gradient(90deg, transparent, #025cb0, #0b72c9, #025cb0, transparent);
   opacity: 0.6;
 }
 
@@ -218,9 +232,9 @@ section:not(#home) {
   backdrop-filter: blur(8px);
 }
 .hero-badge-dark {
-  background: rgba(8,145,178,0.15);
-  border: 1px solid rgba(6,182,212,0.3);
-  color: #22d3ee;
+  background: rgba(11,114,201,0.15);
+  border: 1px solid rgba(11,114,201,0.35);
+  color: #299df7;
 }
 
 /* ========================================
@@ -240,7 +254,7 @@ section:not(#home) {
 
 /* Nav logo size on mobile */
 @media (max-width: 640px) {
-  .nav-logo-img { height: 48px !important; }
+  .nav-logo-img { height: 52px !important; }
   .nav-brand-name { font-size: 1rem !important; }
   .nav-brand-sub { font-size: 9px !important; }
 }
@@ -651,9 +665,9 @@ nav.fixed .nav-link-premium:focus-visible {
 .hero-primary-cta:hover { box-shadow: 0 14px 34px rgba(6, 182, 212, .28); }
 .hero-secondary-cta { backdrop-filter: blur(8px); }
 
-.nav-link-active { color: #0891b2 !important; }
+.nav-link-active { color: #0b72c9 !important; }
 .nav-link-active::after { transform: scaleX(1); opacity: .9; }
-.dark .nav-link-active { color: #22d3ee !important; }
+.dark .nav-link-active { color: #299df7 !important; }
 
 .service-card-premium { overflow: hidden; }
 .service-card-premium::before {

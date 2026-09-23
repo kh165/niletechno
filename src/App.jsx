@@ -24,7 +24,7 @@ const VideoModal = lazy(() => import('./components/VideoModal.jsx'));
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Award, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Facebook, Globe, Linkedin, Mail,
-  Menu, MessageSquare, Phone, Play, Search, Send, ShieldCheck, Smartphone, Sparkles, Users,
+  Menu, MessageSquare, Phone, Play, Search, Send, ShieldCheck, Smartphone, Target, Calculator, SlidersHorizontal, Users,
   X, Youtube, Sun, Moon, AlertTriangle
 } from 'lucide-react';
 import companyLogo from './assets/images/logo.webp';
@@ -134,6 +134,12 @@ export default function App() {
   }, []);
 
   const handleNavClick = (e, href) => {
+    if (href === '#customers') {
+      e.preventDefault();
+      setShowPartnersModal(true);
+      if (mobileMenuOpen) setMobileMenuOpen(false);
+      return;
+    }
     if (href.startsWith('#')) {
       e.preventDefault();
       const targetId = href.substring(1);
@@ -434,15 +440,19 @@ export default function App() {
           : (scrolled ? 'bg-[#050914]/65 border-slate-900/60 text-white shadow-lg' : 'bg-[#050914]/90 border-slate-900 text-white')
       } backdrop-blur-md border-b transition-all duration-300`}>
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center flex-row-reverse lg:flex-row transition-all duration-300 ${scrolled ? 'h-14 lg:h-16' : 'h-16 lg:h-18'}`}>
+          <div className={`flex justify-between items-center flex-row-reverse lg:flex-row transition-all duration-300 ${scrolled ? 'h-13 sm:h-14' : 'h-14 sm:h-15'}`}>
             
             {/* Corporate Logo Emblem using high-performance vector component */}
             <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="cursor-pointer">
-              <NileTechnoLogo theme={theme} lang={lang} />
+              <NileTechnoLogo 
+                theme={theme} 
+                lang={lang} 
+                className={scrolled ? "h-8 sm:h-8.5 md:h-9 w-auto object-contain transition-all duration-300" : "h-8.5 sm:h-9 md:h-10 w-auto object-contain transition-all duration-300"}
+              />
             </a>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center gap-5 xl:gap-6">
+            <div className="hidden lg:flex items-center gap-4 xl:gap-5">
               {[
                 { label: t.navHome, href: '#home' },
                 { label: t.navAbout, href: '#about' },
@@ -456,7 +466,7 @@ export default function App() {
                   key={idx} 
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`nav-link-premium text-xs font-bold font-cairo transition-colors duration-200 uppercase tracking-wide ${
+                  className={`nav-link-premium text-[11px] sm:text-xs font-bold font-cairo py-1 px-1.5 transition-colors duration-200 uppercase tracking-wide ${
                     activeSection === link.href.slice(1) ? 'nav-link-active' : ''
                   } ${
                     theme === 'light' 
@@ -470,7 +480,7 @@ export default function App() {
             </div>
 
             {/* Theme Toggle, Language Switcher and Drawer Trigger */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               
               {/* Persistent Theme Toggle Component */}
               <ThemeToggle 
@@ -483,7 +493,7 @@ export default function App() {
               {/* Language Switch button */}
               <button 
                 onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
-                className={`min-h-[44px] flex items-center justify-center gap-1.5 px-4 py-2 rounded-full border text-xs font-bold transition-all cursor-pointer order-2 lg:order-2 ${
+                className={`min-h-[36px] flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all cursor-pointer order-2 lg:order-2 ${
                   theme === 'light'
                     ? 'border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200'
                     : 'border-slate-700/80 bg-[#0d1527] text-slate-300 hover:border-cyan-500 hover:text-cyan-400'
@@ -497,14 +507,14 @@ export default function App() {
               {/* Hamburger Mobile Menu Indicator */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-xl border transition-colors cursor-pointer order-1 lg:order-3 ${
+                className={`lg:hidden min-w-[38px] min-h-[38px] flex items-center justify-center p-2 rounded-xl border transition-colors cursor-pointer order-1 lg:order-3 ${
                   theme === 'light'
                     ? 'bg-slate-100 border-slate-300 text-slate-600 hover:text-slate-900'
                     : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
                 }`}
                 aria-label={lang === 'ar' ? 'عرض القائمة المنسدلة للأجهزة الذكية' : 'Toggle mobile drawer menu options'}
               >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {mobileMenuOpen ? <X className="w-4.5 h-4.5" /> : <Menu className="w-4.5 h-4.5" />}
               </button>
             </div>
 
@@ -666,8 +676,8 @@ export default function App() {
                 theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-900/40 rounded-2xl border border-slate-800'
               }`}>
                 <div className="space-y-4">
-                  <span className="inline-flex p-2.5 rounded-lg bg-cyan-500/5 text-cyan-400 mb-2">
-                    <Sparkles className="w-6 h-6" />
+                  <span className="inline-flex p-2.5 rounded-lg bg-cyan-500/10 text-cyan-500 mb-2">
+                    <Target className="w-6 h-6" />
                   </span>
                   <p className={`text-sm sm:text-base leading-relaxed font-cairo text-justify ${
                     theme === 'light' ? 'text-slate-700' : 'text-slate-330'
@@ -714,7 +724,7 @@ export default function App() {
           ? 'bg-gradient-to-b from-slate-100/30 via-cyan-50/15 to-white border-slate-150' 
           : 'bg-gradient-to-b from-[#070d1e] to-[#050917] border-slate-900'
       }`}>
-        <div className="absolute inset-0 bg-[radial-gradient(#0891b206_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(#0b72c908_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
         <div className="absolute bottom-10 left-10 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
 
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -907,16 +917,15 @@ export default function App() {
           ? 'bg-gradient-to-b from-white via-cyan-50/15 to-slate-50 border-slate-150' 
           : 'bg-gradient-to-b from-[#040814] to-[#080e1b] border-slate-900'
       }`}>
-        <div className="absolute inset-0 bg-[radial-gradient(#0891b205_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(#0b72c908_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none"></div>
         <div className="absolute top-1/2 left-10 w-80 h-80 bg-blue-500/5 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-10">
-            <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-4 uppercase tracking-wider font-cairo ${
-              theme === 'light' ? 'bg-indigo-50 text-indigo-700' : 'bg-indigo-950 text-indigo-400'
-            }`}>
-              {lang === 'ar' ? 'حلول الهواتف الذكية وتطبيقات أندرويد و iOS' : 'Hybrid Mobile Companion Apps'}
-            </span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold mb-4 font-cairo border border-cyan-500/20 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
+              <Smartphone className="w-3.5 h-3.5 shrink-0" />
+              <span>{lang === 'ar' ? 'حلول الهواتف الذكية وتطبيقات أندرويد و iOS' : 'Hybrid Mobile Companion Apps'}</span>
+            </div>
             <h2 className={`text-3xl sm:text-4.5xl font-extrabold font-cairo mb-4 uppercase tracking-wide ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
             }`}>
@@ -940,7 +949,7 @@ export default function App() {
       </section>
 
       {/* 7. Consultation Lead Calculator Section (Collapsible & Expandable) */}
-      <section id="consulting" className={`py-10 sm:py-14 relative transition-all duration-500 border-t border-b ${
+      <section id="consulting" className={`py-12 sm:py-16 relative transition-all duration-500 border-t border-b ${
         theme === 'light' 
           ? 'bg-gradient-to-b from-slate-50 via-white to-slate-100/30 border-slate-200' 
           : 'bg-gradient-to-b from-[#080e1b] to-[#060c18] border-slate-900'
@@ -949,96 +958,147 @@ export default function App() {
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-8">
-            <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-4 uppercase tracking-wider font-cairo ${
-              theme === 'light' ? 'bg-cyan-50 text-cyan-700' : 'bg-cyan-950 text-cyan-400'
-            }`}>
-              {lang === 'ar' ? 'استشارة برمجية سريعة' : 'Instant ERP Advisory'}
-            </span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold mb-4 font-cairo border border-cyan-500/20 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
+              <Calculator className="w-3.5 h-3.5 shrink-0" />
+              <span>{lang === 'ar' ? 'استشارة برمجية سريعة' : 'Instant ERP Advisory'}</span>
+            </div>
             <h2 className={`text-2xl sm:text-3.5xl font-extrabold font-cairo mb-3 uppercase tracking-wide ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
             }`}>
               {lang === 'ar' ? 'هل أنت محتار؟ اختر النظام الملائم الآن' : 'Unsure of What Fits Your Business Scale?'}
             </h2>
-            <p className={`text-xs sm:text-sm font-cairo mb-5 ${
+            <p className={`text-xs sm:text-sm font-cairo max-w-2xl mx-auto ${
               theme === 'light' ? 'text-slate-600' : 'text-slate-400'
             }`}>
               {lang === 'ar' ? 'استخدم حاسبتنا الذكية لتقدير النطاق والأنظمة المتكاملة المطلوبة لقطاع نشاطك فوراً وبخطوة واحدة!' : 'Enter your parameters to see recommended packages tailored specifically for your operational target.'}
             </p>
-
-            {/* Collapsible Section Toggle Button */}
-            <div className="flex justify-center">
-              <button
-                onClick={() => setIsCalculatorOpen(prev => !prev)}
-                className={`min-h-[44px] px-6 py-2.5 rounded-2xl font-bold text-xs sm:text-sm font-cairo flex items-center gap-2.5 cursor-pointer shadow-md transition-all duration-300 ${
-                  isCalculatorOpen
-                    ? (theme === 'light' ? 'bg-slate-200/90 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 hover:bg-slate-700 text-slate-200')
-                    : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-cyan-500/25 ring-2 ring-cyan-400/40 animate-pulse'
-                }`}
-              >
-                <Sparkles className="w-4 h-4 text-cyan-400" />
-                <span>
-                  {isCalculatorOpen 
-                    ? (lang === 'ar' ? 'طي وإخفاء الحاسبة التفاعلية' : 'Collapse Calculator') 
-                    : (lang === 'ar' ? 'فتح واستخدام الحاسبة التفاعلية' : 'Expand Interactive Calculator')}
-                </span>
-                {isCalculatorOpen ? (
-                  <ChevronUp className="w-4 h-4" />
-                ) : (
-                  <ChevronDown className="w-4 h-4" />
-                )}
-              </button>
-            </div>
           </div>
 
-          {/* Expandable / Collapsible Drawer with AnimatePresence */}
-          <AnimatePresence initial={false}>
-            {isCalculatorOpen ? (
-              <motion.div
-                key="calculator-content"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.35, ease: 'easeInOut' }}
-                className="max-w-5xl mx-auto overflow-hidden"
-              >
-                <Suspense fallback={<div className="min-h-[520px] rounded-3xl bg-slate-100/50 dark:bg-slate-900/50 animate-pulse" />}>
-                  <LeadCalculator lang={lang} theme={theme} />
-                </Suspense>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="calculator-collapsed-banner"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.25 }}
-                className="max-w-3xl mx-auto"
-              >
-                <div 
-                  onClick={() => setIsCalculatorOpen(true)}
-                  className={`p-6 rounded-3xl border text-center cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
+          {/* Unified Elegant Collapsible Container */}
+          <div className="max-w-5xl mx-auto">
+            <AnimatePresence mode="wait" initial={false}>
+              {isCalculatorOpen ? (
+                <motion.div
+                  key="calculator-open-view"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="space-y-4"
+                >
+                  {/* Top Active Bar with Close Control */}
+                  <div className={`p-4 sm:p-5 rounded-2xl border flex items-center justify-between gap-4 transition-colors ${
                     theme === 'light' 
-                      ? 'bg-white border-cyan-200/80 hover:border-cyan-400 shadow-md hover:shadow-cyan-100/40' 
-                      : 'bg-[#091224] border-cyan-900/60 hover:border-cyan-500/50 shadow-xl'
+                      ? 'bg-white border-slate-200 shadow-sm' 
+                      : 'bg-slate-900/90 border-slate-800 shadow-md'
+                  }`}>
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <Calculator className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className={`text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                            {lang === 'ar' ? 'مستشار اختيار وتخصيص النظام المناسب' : 'Smart Solution & Package Finder'}
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span>{lang === 'ar' ? 'نشط الآن' : 'Active'}</span>
+                          </span>
+                        </div>
+                        <p className={`text-[11px] font-cairo mt-0.5 ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
+                          {lang === 'ar' ? 'قم بتحديد بيانات نشاطك بالأسفل ثم انقر زر الاستشارة عبر واتساب' : 'Select your sector and scale to reveal instant package recommendations'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setIsCalculatorOpen(false)}
+                      className={`min-h-[42px] px-4 py-2 rounded-xl text-xs font-bold font-cairo flex items-center gap-2 cursor-pointer transition-all shrink-0 ${
+                        theme === 'light' 
+                          ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200' 
+                          : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+                      }`}
+                    >
+                      <span>{lang === 'ar' ? 'طي وإخفاء الحاسبة' : 'Collapse Calculator'}</span>
+                      <ChevronUp className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Calculator Body */}
+                  <Suspense fallback={<div className="min-h-[520px] rounded-3xl bg-slate-100/50 dark:bg-slate-900/50 animate-pulse" />}>
+                    <LeadCalculator lang={lang} theme={theme} />
+                  </Suspense>
+
+                  {/* Bottom Collapse Button for effortless UX */}
+                  <div className="pt-2 flex justify-center">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsCalculatorOpen(false);
+                        const el = document.getElementById('consulting');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className={`min-h-[44px] px-6 py-2.5 rounded-xl text-xs font-bold font-cairo flex items-center gap-2 cursor-pointer transition-all shadow-sm ${
+                        theme === 'light' 
+                          ? 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200' 
+                          : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
+                      }`}
+                    >
+                      <ChevronUp className="w-4 h-4" />
+                      <span>{lang === 'ar' ? 'طي وإخفاء الحاسبة التفاعلية' : 'Collapse Calculator'}</span>
+                    </button>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="calculator-closed-view"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  onClick={() => setIsCalculatorOpen(true)}
+                  className={`group p-6 sm:p-8 rounded-3xl border cursor-pointer transition-all duration-300 shadow-md hover:shadow-xl hover:scale-[1.006] ${
+                    theme === 'light' 
+                      ? 'bg-white border-slate-200 hover:border-cyan-400 shadow-slate-200/50' 
+                      : 'bg-gradient-to-br from-[#091224] to-[#0c1830] border-slate-800 hover:border-cyan-500/60 shadow-slate-950/60'
                   }`}
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 flex items-center justify-center mx-auto mb-3">
-                    <Sparkles className="w-6 h-6 animate-spin" style={{ animationDuration: '8s' }} />
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="flex items-center gap-4 text-right">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300">
+                        <Calculator className="w-7 h-7" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                          <h3 className={`text-lg sm:text-xl font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                            {lang === 'ar' ? 'مستشار اختيار وتخصيص النظام المناسب' : 'Interactive Scope & Pricing Estimator'}
+                          </h3>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
+                            <SlidersHorizontal className="w-3 h-3" />
+                            <span>{lang === 'ar' ? 'أداة تفاعلية سريعة' : 'Instant Tool'}</span>
+                          </span>
+                        </div>
+                        <p className={`text-xs sm:text-sm font-cairo leading-relaxed max-w-xl ${theme === 'light' ? 'text-slate-600' : 'text-slate-300'}`}>
+                          {lang === 'ar' 
+                            ? 'حدد نشاطك وحجم فروعك لاكتشاف النظام المقترح مع تفاصيل الموديولات وإمكانية طلب عرض السعر فوراً عبر واتساب.' 
+                            : 'Select your sector and operational scale to view suggested modules and receive a dedicated advisory plan via WhatsApp.'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="w-full md:w-auto shrink-0 flex items-center justify-end">
+                      <div className="w-full md:w-auto px-6 py-3 rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-md shadow-cyan-500/20 transition-all duration-200 group-hover:scale-[1.02]">
+                        <span>{lang === 'ar' ? 'فتح واستخدام الحاسبة التفاعلية' : 'Expand Interactive Calculator'}</span>
+                        <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-200" />
+                      </div>
+                    </div>
                   </div>
-                  <h4 className={`text-base font-extrabold font-cairo mb-1.5 ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                    {lang === 'ar' ? 'الحاسبة الذكية جاهزة لتقدير نطاق أعمالك' : 'Interactive Scope & Pricing Estimator Ready'}
-                  </h4>
-                  <p className={`text-xs font-cairo max-w-md mx-auto mb-4 ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
-                    {lang === 'ar' ? 'اختر مجالك (تجاري، تصنيع، خدمات، مطاعم) وعدد الفروع للحصول على توصية الباقة الفورية وإرسالها عبر واتساب.' : 'Click to quickly configure your industry, branches, and server preferences for an instant proposal.'}
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-xs font-black text-cyan-500 hover:underline font-cairo">
-                    <span>{lang === 'ar' ? 'اضغط هنا لفتح الحاسبة وتحديد الخيارات' : 'Click here to expand and begin'}</span>
-                    <ChevronDown className="w-4 h-4" />
-                  </span>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
         </div>
       </section>
@@ -1303,7 +1363,7 @@ export default function App() {
 
             {/* Complex systems group tagline */}
             <div className="flex items-center justify-center gap-2 mb-4 px-4 max-w-4xl flex-wrap">
-              <Sparkles className="w-5 h-5 text-[#00c272] animate-pulse shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-[#00c272] shrink-0" />
               <h3 className={`text-base sm:text-lg md:text-[20px] font-black tracking-wide leading-relaxed text-center ${
                 theme === 'light' ? 'text-slate-800 font-cairo' : 'text-white font-cairo'
               }`}>
@@ -1311,7 +1371,7 @@ export default function App() {
                 <span className="mx-2 text-[#00c272]">•</span>
                 <span>{lang === 'ar' ? 'مجموعة نايل تكنو للأنظمة البرمجية المتكاملة' : 'Integrated Enterprise Software Group'}</span>
               </h3>
-              <Sparkles className="w-5 h-5 text-[#00c272] animate-pulse shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-[#00c272] shrink-0" />
             </div>
 
             {/* Certified tax/zakat partner description */}

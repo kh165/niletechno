@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 380" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Teko:wght@700&amp;family=Montserrat:wght@800;900&amp;display=swap');
+      .sky-title {
+        font-family: 'Montserrat', 'Impact', 'Arial Black', sans-serif;
+        font-weight: 900;
+        letter-spacing: 4px;
+        fill: #0a0a0a;
+      }
+      .sub-title {
+        font-family: 'Montserrat', 'Arial', sans-serif;
+        font-weight: 900;
+        letter-spacing: 5px;
+        fill: #0a0a0a;
+      }
+    </style>
+  </defs>
+
+  <!-- Background transparent -->
+  <rect width="420" height="380" fill="transparent" />
+
+  <g transform="translate(10, 10)">
+    <!-- 1. Top Right Orange Badge with ISI -->
+    <rect x="305" y="10" width="85" height="115" fill="#f95700" rx="2" />
+    <text 
+      x="347" 
+      y="98" 
+      font-family="'Impact', 'Arial Black', sans-serif" 
+      font-size="64" 
+      font-weight="900" 
+      fill="#ffffff" 
+      text-anchor="middle"
+      letter-spacing="2"
+    >
+      ISI
+    </text>
+
+    <!-- 2. Collegiate Block Varsity Paths for "SKY" -->
+    <!-- S -->
+    <g transform="translate(15, 40)">
+      <!-- S -->
+      <path d="M 65 10 L 25 10 L 10 25 L 10 48 L 22 58 L 65 65 L 75 75 L 75 95 L 60 110 L 20 110 L 10 100 L 10 82 L 28 82 L 28 92 L 56 92 L 58 80 L 50 72 L 20 66 L 10 54 L 10 25 L 25 10 Z" fill="#0a0a0a" />
+      
+      <!-- K -->
+      <path d="M 90 10 L 114 10 L 114 50 L 138 10 L 165 10 L 132 58 L 168 110 L 140 110 L 114 68 L 114 110 L 90 110 Z" fill="#0a0a0a" />
+
+      <!-- Y -->
+      <path d="M 180 10 L 206 10 L 225 56 L 244 10 L 270 10 L 238 72 L 238 110 L 212 110 L 212 72 Z" fill="#0a0a0a" />
+    </g>
+
+    <!-- 3. Collegiate Block Varsity Paths for "HOLD" -->
+    <g transform="translate(15, 175)">
+      <!-- H -->
+      <path d="M 15 10 L 40 10 L 40 50 L 62 50 L 62 10 L 87 10 L 87 110 L 62 110 L 62 70 L 40 70 L 40 110 L 15 110 Z" fill="#0a0a0a" />
+
+      <!-- O -->
+      <path d="M 115 10 L 165 10 L 180 25 L 180 95 L 165 110 L 115 110 L 100 95 L 100 25 Z M 125 30 L 125 90 L 155 90 L 155 30 Z" fill="#0a0a0a" fill-rule="evenodd" />
+
+      <!-- L -->
+      <path d="M 195 10 L 220 10 L 220 90 L 265 90 L 265 110 L 195 110 Z" fill="#0a0a0a" />
+
+      <!-- D -->
+      <path d="M 275 10 L 325 10 L 355 38 L 355 82 L 325 110 L 275 110 Z M 300 30 L 300 90 L 320 90 L 332 75 L 332 45 L 320 30 Z" fill="#0a0a0a" fill-rule="evenodd" />
+    </g>
+
+    <!-- 4. Subtitle: "SCAFFOLDING SERIVCE" -->
+    <text 
+      x="200" 
+      y="335" 
+      class="sub-title"
+      font-size="21.5" 
+      text-anchor="middle"
+    >
+      SCAFFOLDING SERIVCE
+    </text>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BarChart3, Network, LockKeyhole, Sparkles } from 'lucide-react';
+import { BarChart3, Network, LockKeyhole, TrendingUp } from 'lucide-react';
 function InteractiveConsole({ lang, theme }) {
   const [activeTab, setActiveTab] = useState('sales');
   const [salesData, setSalesData] = useState([45, 52, 49, 60, 55, 68, 74]);
@@ -140,7 +140,7 @@ function InteractiveConsole({ lang, theme }) {
                           onClick={handleAddSale}
                           className="px-3.5 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white text-[11px] font-bold rounded-xl font-cairo cursor-pointer flex items-center gap-1.5 shadow-md shadow-emerald-500/10 active:scale-95 transition-all outline-none"
                         >
-                          <Sparkles className="w-3.5 h-3.5 animate-spin" />
+                          <TrendingUp className="w-3.5 h-3.5" />
                           <span>{lang === 'ar' ? 'أضف حركة بيع (لايف)' : 'Post Sale Transaction'}</span>
                         </button>
                       </div>
@@ -166,15 +166,15 @@ function InteractiveConsole({ lang, theme }) {
                       <svg className="absolute inset-x-0 bottom-2 h-32 w-full overflow-visible" preserveAspectRatio="none">
                         <defs>
                           <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.4" />
-                            <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.0" />
+                            <stop offset="0%" stopColor="#0b72c9" stopOpacity="0.4" />
+                            <stop offset="100%" stopColor="#0b72c9" stopOpacity="0.0" />
                           </linearGradient>
                         </defs>
                         {/* Dynamic Path compilation based on state */}
                         <path
                           d={`M ${salesData.map((val, idx) => `${(idx / (salesData.length - 1)) * 100}%,${100 - (val / 100) * 100}`).join(' L ')}`}
                           fill="none"
-                          stroke="#22d3ee"
+                          stroke="#0b72c9"
                           strokeWidth="3.5"
                           strokeLinecap="round"
                           className="transition-all duration-500 ease-out"
@@ -267,15 +267,15 @@ function InteractiveConsole({ lang, theme }) {
                         {/* Connection beams layout */}
                         <div className="absolute inset-0 overflow-hidden pointer-events-none">
                           <svg className="w-full h-full" viewBox="0 0 200 120">
-                            <line x1="40" y1="30" x2="160" y2="40" stroke="#0891b2" strokeWidth="1" strokeDasharray="3,3" className="animate-pulse" />
-                            <line x1="40" y1="30" x2="60" y2="90" stroke="#0891b2" strokeWidth="1" strokeDasharray="3,3" />
-                            <line x1="160" y1="40" x2="60" y2="90" stroke="#0891b2" strokeWidth="1.5" strokeDasharray="4,4" />
-                            <line x1="160" y1="40" x2="140" y2="95" stroke="#0891b2" strokeWidth="1" strokeDasharray="4,4" />
+                            <line x1="40" y1="30" x2="160" y2="40" stroke="#0b72c9" strokeWidth="1" strokeDasharray="3,3" className="animate-pulse" />
+                            <line x1="40" y1="30" x2="60" y2="90" stroke="#0b72c9" strokeWidth="1" strokeDasharray="3,3" />
+                            <line x1="160" y1="40" x2="60" y2="90" stroke="#0b72c9" strokeWidth="1.5" strokeDasharray="4,4" />
+                            <line x1="160" y1="40" x2="140" y2="95" stroke="#0b72c9" strokeWidth="1" strokeDasharray="4,4" />
                             {/* Sync packets animating */}
-                            <circle r="2.5" fill="#22d3ee" className="animate-bounce">
+                            <circle r="2.5" fill="#299df7" className="animate-bounce">
                               <animateMotion path="M 40,30 Q 100,20 160,40" dur="2s" repeatCount="indefinite" />
                             </circle>
-                            <circle r="2.5" fill="#38bdf8" className="animate-ping">
+                            <circle r="2.5" fill="#0b72c9" className="animate-ping">
                               <animateMotion path="M 160,40 Q 110,65 60,90" dur="1.5s" repeatCount="indefinite" />
                             </circle>
                           </svg>

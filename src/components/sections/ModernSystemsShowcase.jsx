@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, Play, Check, CheckCircle2, ChevronDown, ChevronUp, 
-  Layers, Server, Cloud, ShieldCheck, X, FileText, ArrowLeft, ArrowRight
+  Layers, Server, Cloud, ShieldCheck, X, FileText, ArrowLeft, ArrowRight,
+  Sparkles, Monitor, Store, Truck, Cpu, Database
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
 
@@ -59,59 +60,92 @@ export function ModernSystemsShowcase({
 
   const isFlagshipInterested = formData.interestedModules.includes(flagshipModule.id);
 
+  // Category stats
+  const categoryCounts = {
+    all: modules.length,
+    erp: modules.filter(m => m.category === 'erp').length,
+    retail: modules.filter(m => m.category === 'retail').length,
+    logistics: modules.filter(m => m.category === 'logistics').length,
+    specialized: modules.filter(m => m.category === 'specialized').length
+  };
+
+  const categoryIcons = {
+    all: Layers,
+    erp: Database,
+    retail: Store,
+    logistics: Truck,
+    specialized: Cpu
+  };
+
   return (
     <div className="w-full font-cairo">
-      {/* 1. Flagship Core ERP Suite Showcase - Architectural & High-Contrast */}
-      <div className={`rounded-2xl border p-6 sm:p-8 mb-10 transition-colors ${
+      
+      {/* 1. Flagship Core ERP Suite Showcase - Premium Executive Presentation */}
+      <div className={`relative rounded-3xl border p-6 sm:p-8 md:p-9 mb-10 transition-all duration-300 overflow-hidden hover:border-[#0b72c9]/50 group ${
         theme === 'light'
-          ? 'bg-slate-50/70 border-slate-200/90 shadow-sm'
-          : 'bg-[#070e20] border-slate-800 shadow-md'
+          ? 'bg-gradient-to-br from-white via-slate-50 to-[#0b72c9]/5 border-slate-200/90 shadow-lg shadow-slate-200/60 hover:shadow-xl hover:shadow-[#0b72c9]/10'
+          : 'bg-gradient-to-br from-[#070e22] via-[#09132e] to-[#0a1838] border-slate-800 shadow-xl shadow-black/40 hover:shadow-2xl hover:shadow-[#0b72c9]/20'
       }`}>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* Subtle decorative accent glow */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#0b72c9]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           <div className="lg:col-span-8 space-y-4">
-            {/* Zero-Pill Typography Metadata */}
-            <div className="flex items-center gap-2 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-              <span className="flex items-center gap-1.5">
+            
+            {/* Metadata Badges */}
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold">
                 <ShieldCheck className="w-4 h-4 text-emerald-500" />
                 <span>{lang === 'ar' ? 'معتمد رسمياً للفاتورة الإلكترونية ZATCA & ETA' : 'Certified E-Invoicing (ZATCA & ETA)'}</span>
               </span>
-              <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
-              <span>{lang === 'ar' ? 'منظومة ERP مركزية' : 'Central Enterprise ERP'}</span>
-              <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
-              <span>{lang === 'ar' ? 'سحابي أو محلي' : 'Cloud & LAN'}</span>
+              <span className="hidden sm:inline text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#0b72c9]/10 text-[#0b72c9] dark:text-[#299df7] font-bold">
+                <Database className="w-3.5 h-3.5" />
+                <span>{lang === 'ar' ? 'المنظومة المركزية الشاملة' : 'Flagship Central ERP'}</span>
+              </span>
+              <span className="hidden sm:inline text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
+              <span className="text-slate-500 dark:text-slate-400">
+                {lang === 'ar' ? 'سحابي عبر السيرفر أو محلي LAN' : 'Cloud Server & On-Premise LAN'}
+              </span>
             </div>
 
-            <h3 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+            {/* Main Headline */}
+            <h3 className={`text-2xl sm:text-3xl md:text-3.5xl font-black tracking-tight leading-snug ${
+              theme === 'light' ? 'text-slate-950 font-cairo' : 'text-white font-cairo'
+            }`}>
               {lang === 'ar' ? 'منظومة الحسابات العامة وإدارة المخازن المتكاملة' : 'General Ledger & Integrated Inventory ERP Suite'}
             </h3>
 
-            <p className={`text-xs sm:text-sm leading-relaxed max-w-3xl ${theme === 'light' ? 'text-slate-600' : 'text-slate-300'}`}>
+            {/* Value Proposition Description */}
+            <p className={`text-xs sm:text-sm leading-relaxed max-w-3xl ${
+              theme === 'light' ? 'text-slate-600 font-medium' : 'text-slate-300'
+            }`}>
               {lang === 'ar' 
                 ? 'الحل المحاسبي الشامل لكافة الأنشطة التجارية والصناعية؛ شجرة حسابات مرنة متعددة المستويات، مراكز تكلفة دقيقة، تسوية مخزنية آلية، وإصدار الفواتير الإلكترونية المشفرة لحظياً بدون وسيط.'
                 : 'The comprehensive accounting foundation for commercial and industrial businesses; multi-level chart of accounts, cost centers, automated inventory reconciliation, and direct certified e-invoicing.'}
             </p>
 
-            {/* Quiet architectural capability labels - No generic candy badges */}
-            <div className="flex flex-wrap items-center gap-y-2 gap-x-4 pt-1 text-xs text-slate-500 dark:text-slate-400">
-              <div className="flex items-center gap-1.5">
-                <Cloud className="w-4 h-4 text-cyan-500" />
-                <span>{lang === 'ar' ? 'سحابي عبر خوادم آمنة' : 'Cloud Hosted'}</span>
+            {/* Architecture capability highlights */}
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-5 pt-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
+              <div className="flex items-center gap-2">
+                <Cloud className="w-4 h-4 text-[#0b72c9]" />
+                <span>{lang === 'ar' ? 'سحابي مع تشفير كامل' : 'Cloud Hosted with Encryption'}</span>
               </div>
               <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
-              <div className="flex items-center gap-1.5">
-                <Server className="w-4 h-4 text-cyan-500" />
-                <span>{lang === 'ar' ? 'محلي بقواعد بيانات SQL Server' : 'On-Premise LAN'}</span>
+              <div className="flex items-center gap-2">
+                <Server className="w-4 h-4 text-[#0b72c9]" />
+                <span>{lang === 'ar' ? 'قواعد بيانات SQL Server المعتمدة' : 'Enterprise SQL Server DB'}</span>
               </div>
               <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
-              <div className="flex items-center gap-1.5">
-                <Layers className="w-4 h-4 text-cyan-500" />
+              <div className="flex items-center gap-2">
+                <Layers className="w-4 h-4 text-[#0b72c9]" />
                 <span>{lang === 'ar' ? 'ربط متعدد الفروع والمخازن' : 'Multi-Branch & Warehouses'}</span>
               </div>
             </div>
           </div>
 
-          {/* Direct Flagship Actions */}
+          {/* Action CTAs */}
           <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
             <button
               type="button"
@@ -120,19 +154,21 @@ export function ModernSystemsShowcase({
                 e.stopPropagation();
                 handleOpenVideo(flagshipModule.youtubeUrl, lang === 'ar' ? flagshipModule.titleAr : flagshipModule.titleEn);
               }}
-              className="min-h-[44px] px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-colors shadow-sm"
+              className="min-h-[46px] px-6 py-3 rounded-xl bg-gradient-to-r from-[#0b72c9] to-blue-700 hover:from-[#0a66b4] hover:to-blue-800 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#0b72c9]/25 hover:shadow-lg active:scale-98"
             >
               <Play className="w-4 h-4 fill-current" />
-              <span>{lang === 'ar' ? 'مشاهدة العرض التوضيحي' : 'Watch System Demo'}</span>
+              <span>{lang === 'ar' ? 'مشاهدة فيديو المنظومة' : 'Watch System Demo'}</span>
             </button>
 
             <button
               type="button"
               onClick={(e) => handleToggleInterest(e, flagshipModule.id)}
-              className={`min-h-[44px] px-5 py-3 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-colors ${
+              className={`min-h-[46px] px-6 py-3 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 ${
                 isFlagshipInterested
                   ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400'
-                  : (theme === 'light' ? 'bg-white border-slate-300 text-slate-800 hover:border-slate-400' : 'bg-slate-900 border-slate-700 text-slate-200 hover:border-slate-600')
+                  : (theme === 'light' 
+                      ? 'bg-white border-slate-300 text-slate-800 hover:border-[#0b72c9] hover:bg-slate-50' 
+                      : 'bg-slate-900/90 border-slate-700 text-slate-200 hover:border-[#0b72c9] hover:bg-slate-800')
               }`}
             >
               {isFlagshipInterested ? (
@@ -143,7 +179,7 @@ export function ModernSystemsShowcase({
               ) : (
                 <>
                   <FileText className="w-4 h-4 text-slate-400" />
-                  <span>{lang === 'ar' ? 'إضافة إلى طلب التسعير' : 'Add to Quote Request'}</span>
+                  <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة' : 'Request Official Quote'}</span>
                 </>
               )}
             </button>
@@ -152,23 +188,23 @@ export function ModernSystemsShowcase({
         </div>
       </div>
 
-      {/* 2. Search & Segmented Filter Bar - Restrained & Clean */}
-      <div className="max-w-4xl mx-auto mb-8 space-y-4">
+      {/* 2. Search & Refined Category Navigation */}
+      <div className="max-w-4xl mx-auto mb-9 space-y-4">
         
-        {/* Search Field */}
+        {/* Search Bar */}
         <div className="relative">
           <input
             type="text"
-            placeholder={lang === 'ar' ? 'ابحث باسم النظام أو النشاط (حسابات، نقاط بيع، كاشير، تصنيع، مجوهرات...)' : 'Search by software system or sector...'}
+            placeholder={lang === 'ar' ? 'ابحث باسم النظام أو النشاط (حسابات، نقاط بيع، كاشير، تصنيع، مجوهرات، عيادات...)' : 'Search by software system or industry...'}
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className={`w-full min-h-[46px] pl-11 pr-11 py-2.5 rounded-xl border text-xs sm:text-sm transition-all focus:outline-none focus:border-cyan-500 font-cairo ${
+            className={`w-full min-h-[48px] pl-12 pr-12 py-3 rounded-2xl border text-xs sm:text-sm transition-all focus:outline-none focus:border-[#0b72c9] focus:ring-2 focus:ring-[#0b72c9]/20 font-cairo ${
               theme === 'light'
-                ? 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400'
-                : 'bg-slate-900 border-slate-800 placeholder:text-slate-500 text-white'
+                ? 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400 shadow-xs'
+                : 'bg-slate-900/80 border-slate-800 placeholder:text-slate-500 text-white shadow-inner'
             }`}
           />
-          <Search className={`absolute ${lang === 'ar' ? 'right-4' : 'left-4'} top-3.5 w-4 h-4 text-slate-400`} />
+          <Search className={`absolute ${lang === 'ar' ? 'right-4' : 'left-4'} top-4 w-4 h-4 text-slate-400`} />
           {searchInput && (
             <button
               type="button"
@@ -176,7 +212,7 @@ export function ModernSystemsShowcase({
                 e.preventDefault();
                 setSearchInput('');
               }}
-              className={`absolute ${lang === 'ar' ? 'left-4' : 'right-4'} top-3.5 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1`}
+              className={`absolute ${lang === 'ar' ? 'left-4' : 'right-4'} top-4 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1`}
               aria-label="مسح البحث"
             >
               <X className="w-4 h-4" />
@@ -184,9 +220,9 @@ export function ModernSystemsShowcase({
           )}
         </div>
 
-        {/* Clean Segmented Tab Control */}
-        <div className={`p-1 rounded-xl border flex flex-wrap items-center justify-center gap-1 ${
-          theme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-slate-900 border-slate-800'
+        {/* Clean Pill Segmented Tabs with Category Icons & Counts */}
+        <div className={`p-1.5 rounded-2xl border flex flex-wrap items-center justify-center gap-1.5 ${
+          theme === 'light' ? 'bg-slate-100/80 border-slate-200/90' : 'bg-slate-900/90 border-slate-800'
         }`}>
           {[
             { id: 'all', label: t.filterAll },
@@ -196,6 +232,9 @@ export function ModernSystemsShowcase({
             { id: 'specialized', label: t.filterSpecialized }
           ].map((tab) => {
             const isActive = activeTab === tab.id;
+            const CatIcon = categoryIcons[tab.id] || Layers;
+            const count = categoryCounts[tab.id] || 0;
+
             return (
               <button
                 type="button"
@@ -204,13 +243,25 @@ export function ModernSystemsShowcase({
                   e.preventDefault();
                   setActiveTab(tab.id);
                 }}
-                className={`min-h-[40px] px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer font-cairo ${
+                className={`min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer font-cairo flex items-center gap-2 ${
                   isActive
-                    ? (theme === 'light' ? 'bg-white text-slate-900 shadow-sm' : 'bg-slate-800 text-white shadow-sm')
-                    : (theme === 'light' ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white')
+                    ? (theme === 'light' 
+                        ? 'bg-white text-[#0b72c9] shadow-md border border-slate-200/60' 
+                        : 'bg-slate-800 text-[#299df7] shadow-md border border-slate-700/80')
+                    : (theme === 'light' 
+                        ? 'text-slate-600 hover:text-slate-900 hover:bg-white/60' 
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800/50')
                 }`}
               >
-                {tab.label}
+                <CatIcon className={`w-3.5 h-3.5 ${isActive ? 'text-[#0b72c9] dark:text-[#299df7]' : 'text-slate-400'}`} />
+                <span>{tab.label}</span>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono ${
+                  isActive 
+                    ? 'bg-[#0b72c9]/10 text-[#0b72c9] dark:text-[#299df7] font-bold' 
+                    : 'bg-slate-200/60 dark:bg-slate-800 text-slate-500'
+                }`}>
+                  {count}
+                </span>
               </button>
             );
           })}
@@ -218,10 +269,10 @@ export function ModernSystemsShowcase({
 
       </div>
 
-      {/* 3. Systems Grid - Anti-Jumping In-Place Expansion */}
+      {/* 3. Systems Grid - Refined Card Elevation & Smooth Drawer */}
       <div className="min-h-[380px]">
         {filteredModules.length === 0 ? (
-          <div className={`text-center py-14 rounded-2xl border max-w-lg mx-auto ${
+          <div className={`text-center py-14 rounded-3xl border max-w-lg mx-auto ${
             theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-slate-900/40 border-slate-800 text-slate-400'
           }`}>
             <p className="text-sm font-semibold mb-3">
@@ -234,49 +285,63 @@ export function ModernSystemsShowcase({
                 setSearchInput('');
                 setActiveTab('all');
               }}
-              className="text-xs text-cyan-600 dark:text-cyan-400 font-bold hover:underline cursor-pointer"
+              className="text-xs text-[#0b72c9] dark:text-[#299df7] font-bold hover:underline cursor-pointer"
             >
               {lang === 'ar' ? 'إعادة عرض كافة الأنظمة' : 'Reset filters and view all'}
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-stretch">
             {filteredModules.map((sys) => {
               const isInterested = formData.interestedModules.includes(sys.id);
               const isExpanded = expandedSystemId === sys.id;
 
               return (
-                <div 
+                <motion.div 
                   key={sys.id}
-                  className={`rounded-2xl border p-5 flex flex-col justify-between transition-colors ${
+                  whileHover={{ y: -7, transition: { duration: 0.22, ease: 'easeOut' } }}
+                  whileTap={{ scale: 0.99 }}
+                  className={`group rounded-2xl border p-5 flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-default ${
                     theme === 'light'
-                      ? 'bg-white border-slate-200/90 hover:border-slate-300 shadow-sm'
-                      : 'bg-[#080e1e] border-slate-800/90 hover:border-slate-700 shadow-md'
+                      ? 'bg-gradient-to-b from-white via-white to-slate-50/80 border-slate-200/90 hover:border-[#0b72c9]/50 shadow-sm hover:shadow-xl hover:shadow-[#0b72c9]/10'
+                      : 'bg-gradient-to-b from-[#091124] via-[#091124] to-[#070d1d] border-slate-800 hover:border-[#0b72c9]/60 shadow-md hover:shadow-2xl hover:shadow-[#0b72c9]/20'
                   }`}
                 >
-                  <div>
-                    {/* Top Row: System Icon & Unboxed Category */}
+                  {/* Subtle top animated neon glow line on hover */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#0b72c9] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                  {/* Gentle hover ambient illumination */}
+                  <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#0b72c9]/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                  <div className="relative z-10">
+                    {/* Top Row: Icon Container & Category Tag */}
                     <div className="flex items-center justify-between mb-4">
-                      <div className={`p-2.5 rounded-xl ${
-                        theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-800 text-cyan-400'
+                      <div className={`p-2.5 rounded-xl transition-all duration-300 transform group-hover:scale-110 group-hover:-rotate-3 ${
+                        theme === 'light' 
+                          ? 'bg-[#0b72c9]/10 text-[#0b72c9] group-hover:bg-[#0b72c9] group-hover:text-white group-hover:shadow-md group-hover:shadow-[#0b72c9]/30' 
+                          : 'bg-slate-800/80 text-[#299df7] group-hover:bg-[#0b72c9] group-hover:text-white group-hover:shadow-lg group-hover:shadow-[#0b72c9]/40'
                       }`}>
-                        <IconComponent name={sys.iconName} className="w-5 h-5" />
+                        <IconComponent name={sys.iconName} className="w-5 h-5 transition-transform duration-300" />
                       </div>
-                      <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider font-mono">
-                        {sys.category}
+                      <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-md border font-mono tracking-wider transition-colors duration-300 ${
+                        theme === 'light'
+                          ? 'bg-slate-100 border-slate-200 text-slate-600 group-hover:border-[#0b72c9]/30 group-hover:text-[#0b72c9]'
+                          : 'bg-slate-800/60 border-slate-700 text-slate-400 group-hover:border-[#0b72c9]/40 group-hover:text-[#299df7]'
+                      }`}>
+                        {sys.category.toUpperCase()}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h4 className={`text-base font-bold font-cairo mb-2 leading-snug ${
+                    <h4 className={`text-[15px] sm:text-base font-bold font-cairo mb-2 leading-snug group-hover:text-[#0b72c9] dark:group-hover:text-[#299df7] transition-colors duration-200 ${
                       theme === 'light' ? 'text-slate-900' : 'text-white'
                     }`}>
                       {lang === 'ar' ? sys.titleAr : sys.titleEn}
                     </h4>
 
                     {/* Description */}
-                    <p className={`text-xs leading-relaxed mb-4 line-clamp-2 ${
-                      theme === 'light' ? 'text-slate-600' : 'text-slate-400'
+                    <p className={`text-xs leading-relaxed mb-4 line-clamp-2 transition-colors ${
+                      theme === 'light' ? 'text-slate-600 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'
                     }`}>
                       {lang === 'ar' ? sys.descriptionAr : sys.descriptionEn}
                     </p>
@@ -284,8 +349,8 @@ export function ModernSystemsShowcase({
                     {/* Features Preview */}
                     <div className="space-y-1.5 mb-4">
                       {(lang === 'ar' ? sys.featuresAr : sys.featuresEn).slice(0, 3).map((feat, fIdx) => (
-                        <div key={fIdx} className="flex items-start gap-2 text-xs">
-                          <Check className="w-3.5 h-3.5 text-cyan-500 shrink-0 mt-0.5" />
+                        <div key={fIdx} className="flex items-start gap-2 text-xs transition-transform duration-200 group-hover:translate-x-0.5">
+                          <Check className="w-3.5 h-3.5 text-[#0b72c9] shrink-0 mt-0.5 transition-transform duration-200 group-hover:scale-110" />
                           <span className={`line-clamp-1 ${theme === 'light' ? 'text-slate-700' : 'text-slate-300'}`}>
                             {feat}
                           </span>
@@ -309,7 +374,7 @@ export function ModernSystemsShowcase({
                           </div>
                           {(lang === 'ar' ? sys.featuresAr : sys.featuresEn).map((feat, idx) => (
                             <div key={idx} className="flex items-start gap-2 text-[11px] text-slate-600 dark:text-slate-400">
-                              <span className="text-cyan-500 font-bold">·</span>
+                              <span className="text-[#0b72c9] font-bold">·</span>
                               <span>{feat}</span>
                             </div>
                           ))}
@@ -321,7 +386,7 @@ export function ModernSystemsShowcase({
                     <button
                       type="button"
                       onClick={(e) => toggleExpand(e, sys.id)}
-                      className="text-[11px] font-semibold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 mb-4 cursor-pointer"
+                      className="text-[11px] font-bold text-[#0b72c9] dark:text-[#299df7] hover:underline flex items-center gap-1 mb-4 cursor-pointer transition-transform duration-150 hover:translate-x-0.5"
                     >
                       <span>
                         {isExpanded 
@@ -333,10 +398,10 @@ export function ModernSystemsShowcase({
                   </div>
 
                   {/* Actions Footer */}
-                  <div className={`pt-3 border-t flex flex-col gap-2 ${
+                  <div className={`pt-3.5 border-t flex flex-col gap-2 mt-auto relative z-10 ${
                     theme === 'light' ? 'border-slate-100' : 'border-slate-800'
                   }`}>
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-2">
                       <button
                         type="button"
                         onClick={(e) => {
@@ -344,21 +409,21 @@ export function ModernSystemsShowcase({
                           e.stopPropagation();
                           handleOpenVideo(sys.youtubeUrl, lang === 'ar' ? sys.titleAr : sys.titleEn);
                         }}
-                        className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 flex items-center gap-1.5 transition-colors cursor-pointer"
+                        className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-[#0b72c9] dark:hover:text-[#299df7] flex items-center gap-1.5 transition-all duration-200 cursor-pointer py-1 group/btn hover:scale-105"
                       >
-                        <Play className="w-3.5 h-3.5 text-cyan-500 fill-current" />
+                        <Play className="w-3.5 h-3.5 text-[#0b72c9] fill-current group-hover/btn:scale-110 transition-transform" />
                         <span>{t.showDemo}</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={(e) => handleToggleInterest(e, sys.id)}
-                        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-colors cursor-pointer ${
+                        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 ${
                           isInterested
-                            ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400'
+                            ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400 shadow-xs'
                             : (theme === 'light' 
-                                ? 'bg-slate-50 hover:bg-slate-100 border-slate-300 text-slate-800' 
-                                : 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-slate-200')
+                                ? 'bg-slate-50 hover:bg-[#0b72c9] hover:text-white hover:border-[#0b72c9] border-slate-300 text-slate-800 shadow-2xs hover:shadow-md hover:shadow-[#0b72c9]/20' 
+                                : 'bg-slate-900 hover:bg-[#0b72c9] hover:text-white hover:border-[#0b72c9] border-slate-700 text-slate-200 hover:shadow-lg hover:shadow-[#0b72c9]/30')
                         }`}
                       >
                         {isInterested 
@@ -368,7 +433,7 @@ export function ModernSystemsShowcase({
                     </div>
                   </div>
 
-                </div>
+                </motion.div>
               );
             })}
           </div>

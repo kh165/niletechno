@@ -78,7 +78,7 @@ export default function LeadCalculator({ lang, theme }) {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <span className="p-2 rounded-lg bg-cyan-500/10 text-cyan-500 shrink-0">
-                  <Calculator className="w-6 h-6 animate-pulse" />
+                  <Calculator className="w-6 h-6" />
                 </span>
                 <h3 className={`text-xl md:text-2xl font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
                   {lang === 'ar' ? 'مستشار اختيار وتخصيص النظام المناسب' : 'Smart Solution & Package Finder'}
@@ -217,7 +217,7 @@ export default function LeadCalculator({ lang, theme }) {
         }`}>
           <div className="h-full flex flex-col">
             <div className="flex items-center gap-1.5 text-xs text-cyan-600 dark:text-cyan-400 font-bold tracking-wider mb-4 font-cairo">
-              <Award className="w-4 h-4 animate-bounce" />
+              <Award className="w-4 h-4" />
               <span>{lang === 'ar' ? 'الحل المقترح من مستشاري نايل تكنو' : 'Nile Techno Recommended Solution'}</span>
             </div>
 

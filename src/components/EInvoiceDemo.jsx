@@ -6,7 +6,9 @@ import {
   Calendar, 
   QrCode, 
   ClipboardCopy, 
-  Sparkles, 
+  ShieldCheck,
+  FileText,
+  Code2,
   HelpCircle, 
   ChevronDown, 
   ChevronUp, 
@@ -174,7 +176,7 @@ export default function EInvoiceDemo({ lang, theme }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-right">
               <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
                 <span className="text-xs font-bold text-cyan-400 font-cairo flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
                   <span>{lang === 'ar' ? 'خصوصية وأمان تام:' : 'Complete Security & Privacy:'}</span>
                 </span>
                 <p className="text-[11px] mt-1 font-cairo leading-relaxed text-slate-300">
@@ -206,7 +208,7 @@ export default function EInvoiceDemo({ lang, theme }) {
             <h4 className={`text-xs font-bold font-cairo mb-3 uppercase tracking-wider flex items-center gap-1.5 ${
               theme === 'light' ? 'text-slate-600' : 'text-slate-400'
             }`}>
-              <Sparkles className="w-3.5 h-3.5 text-cyan-500" />
+              <FileText className="w-3.5 h-3.5 text-cyan-500" />
               {lang === 'ar' ? 'بيانات الفاتورة الافتراضية' : 'Invoice Simulation Data'}
             </h4>
             
@@ -271,7 +273,8 @@ export default function EInvoiceDemo({ lang, theme }) {
                     type="text"
                     value={invoiceTimestamp}
                     readOnly
-                    className={`w-full min-h-[44px] text-xs px-4 py-2.5 rounded-xl transition-all outline-none font-medium font-mono border ${
+                    dir="ltr"
+                    className={`w-full min-h-[44px] text-xs pl-4 pr-12 py-2.5 rounded-xl transition-all outline-none font-medium font-mono border text-left ${
                       theme === 'light'
                         ? 'bg-slate-50 border-slate-200 text-slate-900'
                         : 'bg-slate-950 border-slate-800 text-emerald-400'
@@ -422,7 +425,7 @@ export default function EInvoiceDemo({ lang, theme }) {
       }`}>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
           <h4 className="text-xs font-bold font-cairo text-cyan-500 flex items-center gap-1.5">
-            <Sparkles className="w-4 h-4" />
+            <Code2 className="w-4 h-4" />
             {lang === 'ar' ? 'سلسلة الترميز الناتجة (Base64 Payload):' : 'Generated Base64 Payload String:'}
           </h4>
           {copySuccess && (

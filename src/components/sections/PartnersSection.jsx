@@ -28,6 +28,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
             ? 'bg-gradient-to-br from-white via-slate-50/50 to-cyan-50/20 border-slate-200 shadow-xs hover:shadow-md'
             : 'bg-gradient-to-br from-[#0f172a] to-[#070e1e] border-slate-800 hover:bg-slate-900/60'
         }`}
+        onClick={() => setShowPartnersModal?.(true)}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
         <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
@@ -100,14 +101,10 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
           <button 
             type="button"
             onClick={() => setShowPartnersModal?.(true)}
-            className={`w-full sm:w-auto min-h-[44px] px-6 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer font-cairo shadow-md ${
-              theme === 'light'
-                ? 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-cyan-600/20'
-                : 'bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700'
-            }`}
+            className="w-full sm:w-auto min-h-[46px] px-7 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-3 transition-all duration-300 cursor-pointer font-cairo shadow-lg shadow-[#0b72c9]/25 hover:shadow-[#0b72c9]/40 hover:-translate-y-0.5 active:scale-95 bg-[#0b72c9] hover:bg-[#095ea8] text-white"
           >
-            <Award className="w-4 h-4 text-cyan-400 shrink-0" />
             <span>{isRtl ? 'تصفح دليل شركاء النجاح وسابقة الأعمال' : 'Open Complete Client Directory'}</span>
+            <Award className="w-4 h-4 text-white shrink-0" />
           </button>
  
           <a 

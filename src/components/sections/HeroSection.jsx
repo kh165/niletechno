@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ChevronRight, Cloud, MessageSquare, Monitor, Smartphone, 
-  Sparkles, ShieldCheck, Zap
+  ShieldCheck, Zap
 } from 'lucide-react';
 import { SubtitleRotator } from '../site/BrandVisuals';
 
@@ -118,7 +118,7 @@ export function HeroSection({
   return (
     <section 
       id="home" 
-      className={`relative pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 overflow-hidden transition-colors duration-500 ${
+      className={`relative pt-16 sm:pt-18 md:pt-20 pb-12 sm:pb-16 overflow-hidden transition-colors duration-500 ${
         theme === 'light'
           ? 'bg-gradient-to-b from-sky-50/70 via-white to-slate-50 text-slate-800'
           : 'bg-gradient-to-b from-[#020612] via-[#050c20] to-[#02040b] text-white'
@@ -206,7 +206,7 @@ export function HeroSection({
               delay: node.delay
             }}
             className={`absolute ${node.size} rounded-full ${
-              theme === 'light' ? 'bg-cyan-500/60 shadow-[0_0_8px_#06b6d4]' : 'bg-cyan-400 shadow-[0_0_12px_#22d3ee]'
+              theme === 'light' ? 'bg-[#0b72c9]/60 shadow-[0_0_8px_#0b72c9]' : 'bg-[#299df7] shadow-[0_0_12px_#0b72c9]'
             }`}
           />
         ))}
@@ -236,7 +236,7 @@ export function HeroSection({
                 : 'bg-cyan-950/50 border-cyan-800/60 text-cyan-300'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-cyan-500 animate-pulse" />
+            <ShieldCheck className="w-4 h-4 text-cyan-500 shrink-0" />
             <span>
               {lang === 'ar' 
                 ? 'منظومة إدارة الأعمال والمحاسبة الذكية ERP | مصر & السعودية' 

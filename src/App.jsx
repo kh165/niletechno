@@ -27,7 +27,7 @@ import {
   Menu, MessageSquare, Phone, Play, Search, Send, ShieldCheck, Smartphone, Target, Calculator, SlidersHorizontal, Users,
   X, Youtube, Sun, Moon, AlertTriangle
 } from 'lucide-react';
-import companyLogo from './assets/images/logo.webp';
+import companyLogo from './assets/images/logo.png';
 
 const logoTransparentWebp = companyLogo;
 

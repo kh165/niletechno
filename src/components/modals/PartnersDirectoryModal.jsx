@@ -3,6 +3,7 @@ import { Award, X, ChevronLeft, ChevronRight, Search, MessageSquare } from 'luci
 import { SUCCESS_PARTNERS } from '../../data';
 import { PartnerLogo } from '../site/BrandVisuals';
 import { createWhatsAppUrl } from '../../constants/config';
+import companyLogo from '../../assets/images/logo.png';
 
 export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' }) {
   const [partnerActiveTab, setPartnerActiveTab] = useState('all');
@@ -30,10 +31,10 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' })
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Categories matching the official Nile Techno portal and image.png
+  // Categories matching the official Nile Techno portal
   const categories = useMemo(() => [
     { id: 'all', label: '📌 الكل' },
-    { id: 'ksa', label: 'SA السعودية' },
+    { id: 'ksa', label: '🇸🇦 السعودية' },
     { id: 'import_export', label: '📦 الاستيراد والتصدير' },
     { id: 'hospitality', label: '☕ الكافيهات والمطاعم' },
     { id: 'malls_houseware', label: '🛍️ المولات والأدوات المنزلية' },
@@ -68,10 +69,13 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' })
 
   // Scroll tabs horizontally
   const scrollTabs = useCallback((direction) => {
-    if (!tabsScrollRef.current) return;
-    const amount = 200;
-    const factor = direction === 'next' ? -1 : 1;
-    tabsScrollRef.current.scrollBy({ left: factor * amount, behavior: 'smooth' });
+    const el = tabsScrollRef.current;
+    if (!el) return;
+    const step = 220;
+    // In RTL, ChevronRight (pointing right) scrolls right (positive delta)
+    // ChevronLeft (pointing left) scrolls left (negative delta)
+    const delta = direction === 'right' ? step : -step;
+    el.scrollBy({ left: delta, behavior: 'smooth' });
   }, []);
 
   if (!isOpen) return null;
@@ -93,10 +97,14 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' })
         
         {/* 1. Modal Header (Compact & sleek) */}
         <div className="px-4 sm:px-6 py-2.5 sm:py-3 border-b border-slate-100 flex items-center justify-between gap-3 shrink-0 bg-white">
-          {/* Right side: Icon + Titles */}
+          {/* Right side: Nile Techno Modal Logo + Titles */}
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-cyan-50 border border-cyan-100 flex items-center justify-center shrink-0">
-              <Award className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#00a3c4]" />
+            <div className="h-9 sm:h-10 px-2 py-1 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-center shrink-0 shadow-2xs">
+              <img 
+                src={companyLogo} 
+                alt="Nile Techno" 
+                className="h-6 sm:h-7 w-auto object-contain select-none" 
+              />
             </div>
             <div className="min-w-0">
               <h3 className="text-xs sm:text-sm md:text-base font-black font-cairo text-slate-900 leading-tight truncate">
@@ -167,19 +175,21 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' })
             </div>
 
             {/* Categories Carousel (Right in RTL layout) */}
-            <div className="flex-1 min-w-0 flex items-center gap-1 order-1 md:order-2">
+            <div className="flex-1 min-w-0 flex items-center gap-2 order-1 md:order-2">
+              {/* Right Arrow (Visual Right in RTL: first child) */}
               <button
                 type="button"
-                onClick={() => scrollTabs('next')}
-                className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors shrink-0 cursor-pointer"
-                aria-label="Next categories"
+                onClick={() => scrollTabs('right')}
+                className="w-8 h-8 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 hover:bg-[#00a3c4] hover:text-white hover:border-[#00a3c4] active:bg-[#008ba8] hover:scale-110 active:scale-90 transition-all duration-200 shadow-xs hover:shadow-md hover:shadow-[#00a3c4]/30 shrink-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00a3c4]/40"
+                aria-label="التمرير لليمين"
+                title="التمرير لليمين"
               >
-                <ChevronRight className="w-3.5 h-3.5" />
+                <ChevronRight className="w-4 h-4 stroke-[2.5]" />
               </button>
 
               <div 
                 ref={tabsScrollRef}
-                className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5 scroll-smooth"
+                className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1 scroll-smooth"
               >
                 {categories.map((cat) => {
                   const isActive = partnerActiveTab === cat.id;
@@ -188,7 +198,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' })
                       key={cat.id}
                       type="button"
                       onClick={() => setPartnerActiveTab(cat.id)}
-                      className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap cursor-pointer transition-all font-cairo flex items-center justify-center shrink-0 ${
+                      className={`min-h-[32px] sm:min-h-[34px] px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap cursor-pointer transition-all font-cairo flex items-center justify-center shrink-0 ${
                         isActive
                           ? 'bg-[#00a3c4] text-white shadow-xs font-black'
                           : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
@@ -200,31 +210,33 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' })
                 })}
               </div>
 
+              {/* Left Arrow (Visual Left in RTL: last child) */}
               <button
                 type="button"
-                onClick={() => scrollTabs('prev')}
-                className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors shrink-0 cursor-pointer"
-                aria-label="Previous categories"
+                onClick={() => scrollTabs('left')}
+                className="w-8 h-8 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 hover:bg-[#00a3c4] hover:text-white hover:border-[#00a3c4] active:bg-[#008ba8] hover:scale-110 active:scale-90 transition-all duration-200 shadow-xs hover:shadow-md hover:shadow-[#00a3c4]/30 shrink-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00a3c4]/40"
+                aria-label="التمرير لليسار"
+                title="التمرير لليسار"
               >
-                <ChevronLeft className="w-3.5 h-3.5" />
+                <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
               </button>
             </div>
 
           </div>
 
-          {/* 4. The Partner Logo Grid (Denser, compact size to show more logos at once) */}
-          <div className="pt-0.5">
+          {/* 4. The Partner Logo Grid (Authentic spacious cards matching niletechno.com) */}
+          <div className="pt-2">
             {filteredPartners.length > 0 ? (
-              <div className="grid grid-cols-4 xs:grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-1.5 sm:gap-2 justify-items-center">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 justify-items-center">
                 {filteredPartners.map((partner) => {
                   const title = `${partner.nameAr} - ${partner.industryAr || ''}`;
                   return (
                     <div 
                       key={partner.id}
                       title={title}
-                      className="w-full max-w-[58px] xs:max-w-[66px] sm:max-w-[74px] md:max-w-[80px] aspect-square rounded-lg sm:rounded-xl border border-slate-200/80 bg-white shadow-2xs hover:shadow-md hover:border-[#00a3c4] transition-all duration-150 flex items-center justify-center p-1 group cursor-pointer hover:-translate-y-0.5"
+                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-slate-200 hover:border-[#00a3c4]/60 bg-white shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex items-center justify-center p-2 sm:p-2.5 relative overflow-hidden group cursor-pointer"
                     >
-                      <div className="w-full h-full flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                         <PartnerLogo partner={partner} theme="light" />
                       </div>
                     </div>
@@ -239,7 +251,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' })
                 <button
                   type="button"
                   onClick={() => { setPartnerSearchInput(''); setPartnerActiveTab('all'); }}
-                  className="px-3 py-1.5 rounded-lg bg-[#00a3c4] text-white text-xs font-bold cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-[#00a3c4] text-white text-xs font-bold cursor-pointer hover:bg-[#008ba8] transition-colors"
                 >
                   إعادة ضبط البحث
                 </button>

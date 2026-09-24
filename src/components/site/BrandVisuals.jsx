@@ -6,7 +6,7 @@ import {
   Globe2, UtensilsCrossed, Wheat, House, Handshake, CarFront, Pill, Leaf, Factory
 } from 'lucide-react';
 import { SUCCESS_PARTNERS } from '../../data';
-import companyLogo from '../../assets/images/logo.webp';
+import companyLogo from '../../assets/images/logo.png';
 
 const logoTransparentWebp = companyLogo;
 
@@ -136,165 +136,84 @@ const LOGO_MANIFEST = {
   ]
 };
 
-// Verified, locally cached partner logo manifests (100% Guaranteed 200 OK)
-const VERIFIED_CATEGORY_LOGOS = {
-  contracting: [
-    '/logos/sky-hold.svg',
-    '/clients/contracting/1.jpeg',
-    '/clients/contracting/3.jpeg',
-    '/clients/contracting/4.jpeg',
-    '/clients/contracting/5.jpeg',
-    '/clients/imp_5.jpg',
-    '/clients/imp_15.jpg',
-    '/clients/imp_16.jpg'
-  ],
-  agencies_wholesale: [
-    '/logos/el-malizia.svg',
-    '/clients/import/1.jpeg',
-    '/clients/import/4.jpeg',
-    '/clients/imp_11.jpg',
-    '/clients/imp_18.png',
-    '/clients/imp_12.jpeg'
-  ],
-  ksa: [
-    '/clients/KSA/1.jpeg',
-    '/clients/KSA/2.jpeg',
-    '/clients/KSA/3.jpeg',
-    '/clients/KSA/4.jpeg',
-    '/clients/KSA/5.jpeg',
-    '/clients/KSA/7.jpeg',
-    '/clients/KSA/8.jpeg',
-    '/clients/imp_2.png',
-    '/clients/imp_5.jpg'
-  ],
-  import_export: [
-    '/clients/import/1.jpeg',
-    '/clients/import/4.jpeg',
-    '/clients/imp_1.jpg',
-    '/clients/imp_12.jpeg',
-    '/clients/imp_17.jpg'
-  ],
-  hospitality: [
-    '/clients/rest/1.jpeg',
-    '/clients/rest/2.jpeg',
-    '/clients/rest/3.jpeg',
-    '/clients/rest/4.jpeg',
-    '/clients/rest/5.jpeg',
-    '/clients/imp_0.jpg',
-    '/clients/imp_7.jpg'
-  ],
-  malls_houseware: [
-    '/clients/home_furntire/1.jpeg',
-    '/clients/home_furntire/2.jpeg',
-    '/clients/home_furntire/4.jpeg',
-    '/clients/imp_6.jpg',
-    '/clients/imp_13.jpeg'
-  ],
-  mills_feed: [
-    '/clients/a3laf/1.jpg',
-    '/clients/a3laf/4.jpg',
-    '/clients/a3laf/5.jpg',
-    '/clients/imp_9.jpeg',
-    '/clients/imp_10.jpeg'
-  ],
-  jewelry: [
-    '/clients/jewelry/1.jpeg',
-    '/clients/jewelry/2.jpeg',
-    '/clients/jewelry/4.jpeg',
-    '/clients/imp_8.png',
-    '/clients/imp_14.jpg'
-  ],
-  car_showrooms: [
-    '/clients/KSA/1.jpeg',
-    '/clients/KSA/3.jpeg',
-    '/clients/KSA/7.jpeg',
-    '/clients/imp_2.png',
-    '/clients/imp_17.jpg'
-  ],
-  pharma: [
-    '/clients/medical/1.jpg',
-    '/clients/medical/2.jpg',
-    '/clients/medical/3.jpg',
-    '/clients/imp_10.jpeg',
-    '/clients/imp_13.jpeg'
-  ],
-  herbs_spices: [
-    '/clients/a3laf/1.jpg',
-    '/clients/a3laf/5.jpg',
-    '/clients/imp_9.jpeg',
-    '/clients/imp_0.jpg'
-  ],
-  factories: [
-    '/clients/contracting/3.jpeg',
-    '/clients/contracting/4.jpeg',
-    '/clients/imp_6.jpg',
-    '/clients/imp_14.jpg',
-    '/clients/imp_15.jpg'
-  ]
+const CLIENT_CATEGORY_DIRECTORIES = {
+  ksa: "KSA",
+  import_export: "import",
+  hospitality: "rest",
+  malls_houseware: "home_furntire",
+  mills_feed: "a3laf",
+  contracting: "contracting",
+  jewelry: "jewelry",
+  agencies_wholesale: "tawkilat",
+  car_showrooms: "Cars",
+  pharma: "medical",
+  herbs_spices: "3tara",
+  factories: "factory"
 };
 
-// Intelligent, lightning-fast client logo renderer with instant display & zero missing logos
+// Exact authentic client logo renderer from niletechno.com with high-res images and graceful fallbacks
 const PartnerLogo = ({ partner, theme }) => {
   if (!partner) return null;
 
-  const [hasError, setHasError] = useState(false);
-  const pCat = partner.category || 'ksa';
-  const categoryLogos = VERIFIED_CATEGORY_LOGOS[pCat] || VERIFIED_CATEGORY_LOGOS.ksa;
-  
-  // Find index of partner in its specific category pool safely
-  const partnerIdStr = String(partner.id || '');
-  const catPool = Array.isArray(SUCCESS_PARTNERS) ? SUCCESS_PARTNERS.filter(p => p && p.category === pCat) : [];
-  const indexInCat = catPool.findIndex(p => p && String(p.id) === partnerIdStr);
-  const catIdx = indexInCat !== -1 ? indexInCat : 0;
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [triedRemote, setTriedRemote] = useState(false);
 
-  // Reset error when partner changes
-  useEffect(() => {
-    setHasError(false);
-  }, [partner?.id, partner?.imageUrl]);
-  
-  // Resolve image URL (Prioritize explicit partner imageUrl, then category verified asset)
-  let imageUrl = partner.imageUrl;
-  if (!imageUrl && categoryLogos && categoryLogos.length > 0) {
-    imageUrl = categoryLogos[catIdx % categoryLogos.length];
-  }
+  const cat = partner.category || 'ksa';
+  const dir = CLIENT_CATEGORY_DIRECTORIES[cat] || 'KSA';
+  const manifest = CLIENT_LOGOS_BY_CATEGORY[cat] || CLIENT_LOGOS_BY_CATEGORY.ksa;
+  const pool = Array.isArray(SUCCESS_PARTNERS) ? SUCCESS_PARTNERS.filter(p => p && p.category === cat) : [];
+  const idxInPool = pool.findIndex(p => p && String(p.id) === String(partner.id));
+  const safeIdx = idxInPool !== -1 ? idxInPool : 0;
+  const entry = manifest[safeIdx % manifest.length] || { idx: 1, ext: 'jpg' };
 
-  // Fallback image if custom image errors
-  const fallbackUrl = categoryLogos && categoryLogos.length > 0
-    ? categoryLogos[(catIdx + 1) % categoryLogos.length]
-    : '/clients/imp_0.jpg';
+  const localUrl = partner.imageUrl || `/Clients/Clients/${dir}/${entry.idx}.${entry.ext}`;
+  const remoteUrl = partner.imageUrl || `https://www.niletechno.com/Clients/Clients/${dir}/${entry.idx}.${entry.ext}`;
 
-  // Extract clean initials safely
+  const currentSrc = triedRemote ? remoteUrl : localUrl;
+
+  const gradients = [
+    "from-cyan-500/20 to-blue-600/10 text-cyan-600 dark:text-cyan-400",
+    "from-blue-600/20 to-indigo-600/10 text-blue-600 dark:text-blue-400",
+    "from-emerald-500/20 to-teal-600/10 text-emerald-600 dark:text-emerald-400",
+    "from-purple-600/20 to-pink-500/10 text-purple-600 dark:text-purple-400",
+    "from-slate-700/20 to-slate-900/10 text-slate-700 dark:text-slate-400",
+    "from-amber-500/20 to-orange-600/10 text-amber-600 dark:text-amber-400"
+  ];
+  const charSum = String(partner.id || '').split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const gradient = gradients[charSum % gradients.length];
   const rawName = String(partner.nameAr || partner.nameEn || '');
-  const initials = rawName
-    ? rawName.split(' ').filter(w => w.length > 2).slice(0, 2).map(w => w[0]).join(' ') || partner.logoText || 'NT'
-    : (partner.logoText || 'NT');
+  const monogram = rawName
+    ? rawName.split(" ").filter(w => w.length > 2).slice(0, 2).map(w => w[0]).join(" ") || partner.logoText || "NT"
+    : (partner.logoText || "NT");
 
   return (
-    <div className="w-full h-full relative rounded-lg flex items-center justify-center overflow-hidden p-0.5 select-none bg-white">
-      {!hasError ? (
-        <img
-          src={imageUrl || fallbackUrl}
-          alt={rawName || "Partner"}
-          onError={(e) => {
-            if (e.target.src !== fallbackUrl) {
-              e.target.src = fallbackUrl;
-            } else {
-              setHasError(true);
-            }
-          }}
-          className="w-full h-full object-contain select-none p-0.5 transition-transform duration-200"
-          loading="eager"
-        />
-      ) : (
-        <div className="w-full h-full rounded-md bg-gradient-to-br from-slate-50 to-cyan-50/50 border border-slate-200/60 flex flex-col items-center justify-center p-0.5 text-center">
-          <div className="text-[#00a3c4] opacity-85 scale-75">
-            {getPartnerLogo(partner, 'light')}
+    <div className="w-full h-full relative rounded-xl flex items-center justify-center overflow-hidden p-1 select-none">
+      <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${gradient} flex flex-col items-center justify-center p-2 text-center transition-all duration-350 ${imageLoaded ? "opacity-0 scale-95 pointer-events-none" : "opacity-100 scale-100"}`}>
+        <div className="absolute inset-0 bg-white/5 dark:bg-black/5 backdrop-blur-[0.5px]"></div>
+        <div className="relative z-10 flex flex-col items-center justify-center">
+          <div className="mb-1 opacity-70 group-hover:scale-110 transition-transform duration-300">
+            {getPartnerLogo(partner)}
           </div>
-          <span className="text-[9px] font-black text-slate-700 tracking-tight leading-none font-cairo select-none truncate max-w-full px-0.5">
-            {initials}
+          <span className="text-[10px] font-black tracking-wide leading-none font-cairo drop-shadow-sm select-none">
+            {monogram}
           </span>
         </div>
-      )}
+      </div>
+      <img
+        src={currentSrc}
+        alt={rawName || "Partner"}
+        onLoad={() => setImageLoaded(true)}
+        onError={() => {
+          if (!triedRemote && localUrl !== remoteUrl) {
+            setTriedRemote(true);
+          } else {
+            setImageLoaded(false);
+          }
+        }}
+        className={`w-full h-full object-contain select-none transition-all duration-500 ease-out p-1 bg-white rounded-lg ${imageLoaded ? "opacity-100 scale-100" : "opacity-0 scale-90 absolute pointer-events-none"}`}
+        referrerPolicy="no-referrer"
+        loading="lazy"
+      />
     </div>
   );
 };

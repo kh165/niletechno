@@ -425,8 +425,8 @@ export const BRANCHES_DATA = [
     areaEn: 'Al-Shifa - Badr District',
     addressAr: 'طريق أم عمارة، حي بدر، الشفا، الرياض، المملكة العربية السعودية',
     addressEn: 'Am Omara, Badr District, Al-Shifa, Riyadh, Saudi Arabia',
-    phone: '00966511351059',
-    whatsapp: '966511351059',
+    phone: '009660511351059',
+    whatsapp: '9660511351059',
     mapEmbedUrl: 'https://maps.google.com/maps?q=24.551130,46.611130&hl=ar&z=15&output=embed',
     googleMapsUrl: 'https://www.google.com/maps?q=24.551130,46.611130'
   },
@@ -516,7 +516,6 @@ export const SUCCESS_PARTNERS = [
   { id: 'mf8', category: 'mills_feed', nameAr: 'مصنع النخبة لإنتاج أعلاف مزارع التسمين', nameEn: 'Elite Feed & Feedmill Technologies', industryAr: 'تصنيع أعلاف الماشية والدواجن بمواصفات قياسية', industryEn: 'Broad-Spectrum Feedmill Engineering', logoText: 'EF' },
 
   // ================= 6. شركات المقاولات (contracting) =================
-  { id: 'con-skyhold', category: 'contracting', nameAr: 'شركة سكاي هولد لخدمات السقالات والمقاولات (ISI)', nameEn: 'Sky Hold Scaffolding Service (ISI)', industryAr: 'خدمات السقالات الإنشائية والمقاولات المتخصصة والحلول الهندسية', industryEn: 'Scaffolding Systems, Civil Works & Contracting', imageUrl: '/logos/sky-hold.svg', logoText: 'SH' },
   { id: 'con1', category: 'contracting', nameAr: 'شركة الإيمان للمقاولات العامة والتوريدات الصناعية', nameEn: 'Al-Eman Contracting & Trading', industryAr: 'المقاولات العامة، الحفر، وأعمال الأساسات', industryEn: 'Civil Works & Substructure Contracting', logoText: 'EM' },
   { id: 'con2', category: 'contracting', nameAr: 'مؤسسة الصفوة للمقاولات العامة والإنشاء', nameEn: 'Al-Safwa general Construction & Trading', industryAr: 'بناء الأبراج السكنية والمرافق الإدارية والمول', industryEn: 'High-rise & Administrative Facilities', logoText: 'SO' },
   { id: 'con3', category: 'contracting', nameAr: 'شركة المروة الدولية للهندسة والتشغيل واللاندسكيب', nameEn: 'Al-Marwa Engineering & Systems', industryAr: 'مستشارون هندسيون وإدارة المشروعات الإنشائية', industryEn: 'Structural Designs & Field Supervision', logoText: 'MW' },
@@ -537,7 +536,6 @@ export const SUCCESS_PARTNERS = [
   { id: 'jew8', category: 'jewelry', nameAr: 'الياقوت للمجوهرات الكريمة واللؤلؤ الطبيعي', nameEn: 'Al-Yaqout Precious Stones & Pearls', industryAr: 'عقود اللؤلؤ الطبيعي والأحجار الكريمة النادرة', industryEn: 'Natural Pearls Sourcing & Luxury Goldsmith', logoText: 'YQ' },
 
   // ================= 8. التوكيلات التجارية والجمله (agencies_wholesale) =================
-  { id: 'aw-malizia', category: 'agencies_wholesale', nameAr: 'الشركة المصرية الماليزية ش.م.م', nameEn: 'Egyptian Malaysian Company', industryAr: 'التوكيلات التجارية وتوريدات السلع والمنتجات والاستيراد والتوزيع', industryEn: 'Commercial Agencies, Wholesale Distribution & FMCG', imageUrl: '/logos/el-malizia.svg', logoText: 'EM' },
   { id: 'aw1', category: 'agencies_wholesale', nameAr: 'أسواق مكة للمواد الغذائية والسلع الاستهلاكية بالكامل', nameEn: 'Makkah FMCG Wholesale & Retail Co.', industryAr: 'توزيع وتخزين مبيعات الجملة للماركت والموردين', industryEn: 'FMCG Bulk Distribution & Warehouse ERP', logoText: 'MK' },
   { id: 'aw2', category: 'agencies_wholesale', nameAr: 'شركة الجميل لقطع غيار ومستلزمات السيارات وجملتها', nameEn: 'Al-Jameel Auto Spares Wholesale Networks', industryAr: 'قطع غيار سيارات أصلية وتوكيد قطع الغيار المعتمدة', industryEn: 'Automotive Spares Serializing & Wholesale', logoText: 'JM' },
   { id: 'aw3', category: 'agencies_wholesale', nameAr: 'التيسير للتوكيلات التجارية والتوريدات العامة الكبرى', nameEn: 'Al-Taysir Commercial Agencies & Supplies', industryAr: 'حيازة توكيلات الأغذية والأدوات المستوردة بالجملة', industryEn: 'Import Franchise Oversight & Bulk Sales', logoText: 'TS' },
@@ -723,30 +721,12 @@ export const TRANSLATIONS = {
 
 export const HOMEPAGE_SLIDER_PARTNERS = [
   {
-    id: 'hp-skyhold',
-    nameAr: 'شركة سكاي هولد لخدمات السقالات والمقاولات (ISI)',
-    nameEn: 'Sky Hold Scaffolding Service (ISI)',
-    industryAr: 'خدمات السقالات والمقاولات المتخصصة والحلول الهندسية',
-    industryEn: 'Scaffolding Systems, Civil Works & Contracting',
-    imageUrl: '/logos/sky-hold.svg',
-    category: 'contracting'
-  },
-  {
-    id: 'hp-malizia',
-    nameAr: 'الشركة المصرية الماليزية ش.م.م',
-    nameEn: 'Egyptian Malaysian Company',
-    industryAr: 'التوكيلات التجارية وتوريدات السلع والمنتجات والاستيراد',
-    industryEn: 'Commercial Agencies, Wholesale & FMCG Distribution',
-    imageUrl: '/logos/el-malizia.svg',
-    category: 'agencies_wholesale'
-  },
-  {
     id: 'hp1',
     nameAr: 'مجموعة المجد للسيارات والمقاولات والنقل',
     nameEn: 'Al-Majd Group for Automotive & Heavy Fleet',
     industryAr: 'أساطيل نقل لوجستيات شاحنات ومعارض سيارات',
     industryEn: 'Auto Dealership networks & Fleet Maintenance',
-    imageUrl: '/clients/imp_2.png'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/2.png'
   },
   {
     id: 'hp2',
@@ -754,7 +734,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Cooperative Consumer Services Society',
     industryAr: 'إدارة الباركود ومبيعات السوبرماركت والمخازن',
     industryEn: 'Supermarket Fast POS & Scan Nodes',
-    imageUrl: '/clients/imp_0.jpg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/0.jpg'
   },
   {
     id: 'hp3',
@@ -762,7 +742,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Asdam Technical Glass Company',
     industryAr: 'الزجاج والمقاولات المتخصصة وعمليات التصنيع',
     industryEn: 'Glass & Special Contracting',
-    imageUrl: '/clients/imp_1.jpg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/1.jpg'
   },
   {
     id: 'hp4',
@@ -770,7 +750,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Aboud Development Group',
     industryAr: 'التطوير العقاري والمقاولات العامة والإنشاء',
     industryEn: 'Real Estate & General contracting',
-    imageUrl: '/clients/imp_5.jpg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/5.jpg'
   },
   {
     id: 'hp5',
@@ -778,7 +758,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Hexa Power Advanced Systems',
     industryAr: 'أنظمة الطاقة والمقاولات الكهربائية وتوليد الطاقة',
     industryEn: 'Power & Electrical Systems',
-    imageUrl: '/clients/imp_6.jpg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/6.jpg'
   },
   {
     id: 'hp6',
@@ -786,7 +766,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Khafaji Bakery & Supermarket',
     industryAr: 'السوبرماركت ونقاط المبيعات الغذائية والحسابات',
     industryEn: 'Supermarket & Food POS Retail',
-    imageUrl: '/clients/imp_7.jpg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/7.jpg'
   },
   {
     id: 'hp7',
@@ -794,7 +774,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Hexa Nano Coating & Paints',
     industryAr: 'المواد الكيميائية وحماية الأسطح وتوريد المواد',
     industryEn: 'Chemicals & Surface Protection',
-    imageUrl: '/clients/imp_8.png'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/8.png'
   },
   {
     id: 'hp8',
@@ -802,7 +782,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Mareen Healthy Water Bottling Plants',
     industryAr: 'تعبئة مياه الشرب وإنتاج الأغذية والمشروبات التلقائية',
     industryEn: 'Water Bottling & Food processing',
-    imageUrl: '/clients/imp_9.jpeg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/9.jpeg'
   },
   {
     id: 'hp9',
@@ -810,7 +790,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Areej Al-Khaleej Car Rental',
     industryAr: 'تأجير السيارات والنقل السياحي واليومي وأساطيل المركبات',
     industryEn: 'Car Rental & Passenger Transport',
-    imageUrl: '/clients/imp_10.jpeg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/10.jpeg'
   },
   {
     id: 'hp10',
@@ -818,7 +798,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Majal Specialist Medical Group',
     industryAr: 'مجموعة عيادات طب الأسنان والجلدية وعلاقات المرضى',
     industryEn: 'Clinical Booking & Pharmacy POS',
-    imageUrl: '/clients/imp_11.jpg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/11.jpg'
   },
   {
     id: 'hp11',
@@ -826,7 +806,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'National Plastic & Packaging Factories',
     industryAr: 'تصنيع البلاستيك عالي الكثافة والكرتون المقوى',
     industryEn: 'Plastic & Carton Manufacturing',
-    imageUrl: '/clients/imp_12.jpeg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/12.jpeg'
   },
   {
     id: 'hp12',
@@ -834,7 +814,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Food Land General Foodstuff Trading',
     industryAr: 'سلاسل بيع وتوزيع وتخزين السلع الغذائية الفعالة',
     industryEn: 'FMCG Sales & Cold Chain Logistics',
-    imageUrl: '/clients/imp_13.jpeg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/13.jpeg'
   },
   {
     id: 'hp13',
@@ -842,7 +822,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Madarat Al-Khaleej Telecom & IT',
     industryAr: 'شبكات الاتصالات وحلول تقنية المعلومات والربط الفني',
     industryEn: 'Telecom Infrastructure & Solution',
-    imageUrl: '/clients/imp_14.jpg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/14.jpg'
   },
   {
     id: 'hp14',
@@ -850,7 +830,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Huda Flour Mills Corporation',
     industryAr: 'تكرير وتعبئة الدقيق المخصص للمخابز وإدارة الصوامع',
     industryEn: 'Flour Refineries & Wholesale Distribution',
-    imageUrl: '/clients/imp_16.jpg'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/16.jpg'
   },
   {
     id: 'hp15',
@@ -858,6 +838,6 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Al-Baraka Poultry & Automated Farming Complexes',
     industryAr: 'الإنتاج الحيواني ومسالخ الدواجن وبطارية التفريخ الآلية',
     industryEn: 'Poultry Farms Integration & Feed Distribution IoT',
-    imageUrl: '/clients/imp_18.png'
+    imageUrl: 'https://www.niletechno.com/assets/img/important%2012/18.png'
   }
 ];

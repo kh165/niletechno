@@ -5,7 +5,6 @@ import {
   Receipt, ArrowUpRight, ShieldCheck, CheckCheck, Layers, ShoppingBag
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
-import companyLogo from '../../assets/images/logo.webp';
 
 export function ModernMobileShowcase({
   lang,
@@ -161,52 +160,48 @@ export function ModernMobileShowcase({
       
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Side: Smartphone Handheld Device Mockup with Nile Techno Logo inside */}
-        <div className="lg:col-span-5 flex justify-center order-2 lg:order-1 w-full">
-          <div className="relative w-full max-w-[300px] sm:max-w-[325px] rounded-[40px] sm:rounded-[44px] p-2.5 sm:p-3 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 border border-slate-700/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6)] select-none">
+        {/* Left Side: Smartphone Handheld Device Mockup (Responsive & compact on mobile) */}
+        <div className="lg:col-span-5 flex justify-center order-2 lg:order-1 w-full px-2 sm:px-0">
+          <div className="relative w-full max-w-[250px] xs:max-w-[270px] sm:max-w-[295px] lg:max-w-[315px] rounded-[34px] sm:rounded-[42px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 border border-slate-700/80 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.5)] select-none transition-all duration-300">
             
             {/* Speaker & Punch-hole Camera */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-slate-950 border border-slate-800/80 flex items-center justify-center">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#0b72c9]/50"></div>
+            <div className="absolute top-3 sm:top-3.5 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 sm:gap-2">
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-950 border border-slate-800/80 flex items-center justify-center">
+                <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#0b72c9]/60"></div>
               </div>
-              <div className="w-10 h-1 bg-slate-800 rounded-full"></div>
+              <div className="w-8 sm:w-10 h-1 bg-slate-800 rounded-full"></div>
             </div>
 
             {/* OLED Screen Surface */}
-            <div className="w-full rounded-[36px] bg-[#070b14] text-white overflow-hidden flex flex-col justify-between p-4 pt-7 text-right border border-slate-800/50 shadow-inner">
+            <div className="w-full rounded-[28px] sm:rounded-[34px] bg-[#070b14] text-white overflow-hidden flex flex-col justify-between p-2.5 sm:p-3.5 pt-4 sm:pt-6 text-right border border-slate-800/50 shadow-inner">
               
               {/* Screen Top Status Bar */}
-              <div className="flex items-center justify-between text-[11px] text-slate-400 pb-2 border-b border-slate-800/80 mb-2">
+              <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 pb-1.5 border-b border-slate-800/80 mb-2">
                 <span className="font-mono font-bold text-slate-200">09:41</span>
-                <div className="flex items-center gap-2 font-mono text-[10px]">
-                  <span className="text-emerald-400 font-bold text-[9px] px-1 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/40">5G</span>
-                  <Wifi className="w-3.5 h-3.5 text-[#299df7]" />
-                  <Battery className="w-4 h-4 text-slate-300" />
+                <div className="flex items-center gap-1.5 font-mono text-[9px] sm:text-[10px]">
+                  <span className="text-emerald-400 font-bold text-[8px] sm:text-[9px] px-1 py-0.2 rounded bg-emerald-950/60 border border-emerald-800/40">5G</span>
+                  <Wifi className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#299df7]" />
+                  <Battery className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-300" />
                 </div>
               </div>
 
-              {/* In-App Nile Techno Header with Real Logo */}
-              <div className="flex items-center justify-between gap-2 p-2 rounded-xl bg-slate-900/90 border border-slate-800/80 mb-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="h-8 w-8 rounded-lg bg-white/95 p-1 flex items-center justify-center shrink-0 shadow-xs">
-                    <img 
-                      src={companyLogo} 
-                      alt="Nile Techno Logo" 
-                      className="w-full h-full object-contain"
-                    />
+              {/* In-App Enterprise System Header */}
+              <div className="flex items-center justify-between gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-xl bg-slate-900/90 border border-slate-800/80 mb-2 sm:mb-2.5">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-lg bg-gradient-to-tr from-[#0b72c9] to-cyan-500 flex items-center justify-center shrink-0 shadow-xs text-white">
+                    <Smartphone className="w-3.5 h-3.5" />
                   </div>
-                  <div className="text-right">
-                    <div className="text-[11px] font-bold text-white leading-tight">
+                  <div className="text-right min-w-0">
+                    <div className="text-[10px] sm:text-[11px] font-bold text-white leading-tight truncate">
                       {headerTitle}
                     </div>
-                    <div className="text-[9px] text-emerald-400 font-medium flex items-center gap-1">
+                    <div className="text-[8px] sm:text-[9px] text-emerald-400 font-medium flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                       <span>{headerStatus}</span>
                     </div>
                   </div>
                 </div>
-                <span className="text-[10px] font-bold text-[#299df7] bg-[#0b72c9]/15 px-2 py-0.5 rounded-md border border-[#0b72c9]/40 font-mono">
+                <span className="text-[9px] sm:text-[10px] font-bold text-[#299df7] bg-[#0b72c9]/15 px-1.5 sm:px-2 py-0.5 rounded-md border border-[#0b72c9]/40 font-mono shrink-0">
                   {headerBadge}
                 </span>
               </div>
@@ -215,48 +210,48 @@ export function ModernMobileShowcase({
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeAppId}
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                  className="space-y-3"
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                  className="space-y-1.5 sm:space-y-2.5"
                 >
                   {/* App Title & Customer Banner */}
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 space-y-1">
-                    <div className="flex justify-between items-center text-[10px]">
+                  <div className="p-2 sm:p-2.5 rounded-xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 space-y-0.5 sm:space-y-1">
+                    <div className="flex justify-between items-center text-[9px] sm:text-[10px]">
                       <span className="text-[#299df7] font-bold">
                         {activeScreen.screenTitleAr}
                       </span>
-                      <span className="text-slate-400 font-mono text-[9px]">
+                      <span className="text-slate-400 font-mono text-[8px] sm:text-[9px]">
                         {activeScreen.invNum}
                       </span>
                     </div>
-                    <div className="text-xs font-bold text-white leading-tight">
+                    <div className="text-[11px] sm:text-xs font-bold text-white leading-tight truncate">
                       {activeScreen.clientAr}
                     </div>
-                    <div className="text-[10px] text-slate-400">
+                    <div className="text-[9px] sm:text-[10px] text-slate-400 truncate">
                       {activeScreen.clientSubAr}
                     </div>
-                    <div className="flex items-center justify-between text-[10px] text-slate-300 pt-1.5 border-t border-slate-800/60">
-                      <span className="text-slate-400 text-[9px]">{activeScreen.paymentAr}</span>
-                      <span className="inline-flex items-center gap-1 text-[9px] text-emerald-400 font-bold">
-                        <CheckCheck className="w-3 h-3" />
+                    <div className="flex items-center justify-between text-[9px] sm:text-[10px] text-slate-300 pt-1 border-t border-slate-800/60">
+                      <span className="text-slate-400 text-[8px] sm:text-[9px]">{activeScreen.paymentAr}</span>
+                      <span className="inline-flex items-center gap-1 text-[8px] sm:text-[9px] text-emerald-400 font-bold">
+                        <CheckCheck className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                         <span>{activeScreen.statusAr}</span>
                       </span>
                     </div>
                   </div>
 
                   {/* Line Items Table */}
-                  <div className="bg-slate-900/80 rounded-xl p-2.5 border border-slate-800/80 space-y-2 text-xs">
-                    <div className="text-[10px] text-slate-400 font-bold border-b border-slate-800 pb-1 flex justify-between">
+                  <div className="bg-slate-900/80 rounded-xl p-1.5 sm:p-2 border border-slate-800/80 space-y-1 text-xs">
+                    <div className="text-[9px] sm:text-[10px] text-slate-400 font-bold border-b border-slate-800 pb-0.5 flex justify-between">
                       <span>البند / البيان</span>
                       <span>القيمة</span>
                     </div>
                     {activeScreen.items.map((item, idx) => (
-                      <div key={idx} className="flex justify-between items-start text-[11px] py-0.5">
-                        <div className="leading-snug pr-1">
-                          <span className="text-slate-200 font-medium block text-[11px]">{item.nameAr}</span>
-                          <span className="text-[10px] text-slate-400">الكمية: {item.qty}</span>
+                      <div key={idx} className="flex justify-between items-start text-[10px] sm:text-[11px] py-0.5">
+                        <div className="leading-snug pr-1 truncate">
+                          <span className="text-slate-200 font-medium block text-[10px] sm:text-[11px] truncate">{item.nameAr}</span>
+                          <span className="text-[8px] sm:text-[9px] text-slate-400">الكمية: {item.qty}</span>
                         </div>
                         <span className="font-mono text-[#74c1fb] font-bold shrink-0">{item.price}</span>
                       </div>
@@ -264,17 +259,17 @@ export function ModernMobileShowcase({
                   </div>
 
                   {/* Total Summary */}
-                  <div className="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800 flex justify-between items-center text-xs">
+                  <div className="bg-slate-900/90 rounded-xl p-1.5 sm:p-2 border border-slate-800 flex justify-between items-center text-xs">
                     <div>
-                      <span className="text-slate-300 font-bold text-[11px] block">الإجمالي:</span>
-                      <span className="text-[9px] text-slate-400">{activeScreen.vatAr}</span>
+                      <span className="text-slate-300 font-bold text-[10px] sm:text-[11px] block">الإجمالي:</span>
+                      <span className="text-[8px] sm:text-[9px] text-slate-400">{activeScreen.vatAr}</span>
                     </div>
-                    <span className="font-mono text-sm font-extrabold text-emerald-400">{activeScreen.totalAr}</span>
+                    <span className="font-mono text-xs sm:text-sm font-extrabold text-emerald-400">{activeScreen.totalAr}</span>
                   </div>
 
                   {/* Action Button inside mobile UI */}
-                  <div className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-[#0b72c9] to-blue-700 text-white text-[11px] font-bold text-center shadow-md shadow-[#0b72c9]/25 flex items-center justify-center gap-1.5">
-                    {activeAppId === 'mob-pos' ? <ShoppingBag className="w-3.5 h-3.5" /> : <Receipt className="w-3.5 h-3.5" />}
+                  <div className="w-full py-1.5 sm:py-2 px-2.5 rounded-xl bg-gradient-to-r from-[#0b72c9] to-blue-700 text-white text-[10px] sm:text-[11px] font-bold text-center shadow-md shadow-[#0b72c9]/25 flex items-center justify-center gap-1.5">
+                    {activeAppId === 'mob-pos' ? <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <Receipt className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
                     <span>{activeScreen.actionBtnAr}</span>
                   </div>
 
@@ -282,27 +277,27 @@ export function ModernMobileShowcase({
               </AnimatePresence>
 
               {/* In-App Bottom Navigation Bar */}
-              <div className="flex items-center justify-around pt-3 mt-3 border-t border-slate-800/80 text-[10px] text-slate-400">
+              <div className="flex items-center justify-around pt-2 sm:pt-2.5 mt-2 sm:mt-2.5 border-t border-slate-800/80 text-slate-400">
                 <div className="flex flex-col items-center gap-0.5 text-[#299df7]">
-                  <Smartphone className="w-3.5 h-3.5" />
-                  <span className="text-[8px]">الرئيسية</span>
+                  <Smartphone className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <span className="text-[7px] sm:text-[8px]">الرئيسية</span>
                 </div>
                 <div className="flex flex-col items-center gap-0.5">
-                  <Receipt className="w-3.5 h-3.5" />
-                  <span className="text-[8px]">العمليات</span>
+                  <Receipt className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <span className="text-[7px] sm:text-[8px]">العمليات</span>
                 </div>
                 <div className="flex flex-col items-center gap-0.5">
-                  <Layers className="w-3.5 h-3.5" />
-                  <span className="text-[8px]">التقارير</span>
+                  <Layers className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <span className="text-[7px] sm:text-[8px]">التقارير</span>
                 </div>
                 <div className="flex flex-col items-center gap-0.5">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span className="text-[8px]">المزامنة</span>
+                  <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <span className="text-[7px] sm:text-[8px]">المزامنة</span>
                 </div>
               </div>
 
               {/* Bottom Home Indicator Bar */}
-              <div className="w-24 h-1 bg-slate-600 rounded-full mx-auto mt-2"></div>
+              <div className="w-16 sm:w-20 h-0.5 sm:h-1 bg-slate-600 rounded-full mx-auto mt-1.5"></div>
             </div>
 
           </div>

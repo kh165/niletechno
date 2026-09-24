@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <defs>
+    <!-- Yellow Droplet Gradient -->
+    <linearGradient id="dropGrad" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#fff133" />
+      <stop offset="35%" stop-color="#fed600" />
+      <stop offset="100%" stop-color="#f5b800" />
+    </linearGradient>
+
+    <!-- Blue Plumes Gradient -->
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d4fa8" />
+      <stop offset="50%" stop-color="#184393" />
+      <stop offset="100%" stop-color="#113274" />
+    </linearGradient>
+
+    <!-- Red Crescent Gradient -->
+    <linearGradient id="redGrad" x1="0" y1="0.2" x2="1" y2="0.8">
+      <stop offset="0%" stop-color="#ec1f27" />
+      <stop offset="60%" stop-color="#d4141c" />
+      <stop offset="100%" stop-color="#b80c13" />
+    </linearGradient>
+  </defs>
+
+  <!-- Clean Pure White Background -->
+  <rect width="1000" height="1000" fill="#ffffff" />
+
+  <!-- EMBLEM GRAPHICS -->
+  <g id="emblem">
+    <!-- 1. Bottom Red Crescent Arc -->
+    <path 
+      d="M 160 225
+         C 140 355, 175 505, 305 600
+         C 425 675, 580 660, 720 565
+         C 630 600, 480 605, 350 545
+         C 235 480, 185 365, 160 225 Z" 
+      fill="url(#redGrad)" 
+    />
+
+    <!-- 2. Right Red Flame / Petal -->
+    <path 
+      d="M 770 65
+         C 825 175, 850 315, 810 445
+         C 785 510, 750 550, 705 575
+         C 755 520, 775 440, 765 350
+         C 755 240, 730 160, 770 65 Z" 
+      fill="url(#redGrad)" 
+    />
+
+    <!-- 3. Left Blue Plume (Outer Blade with Diagonal Cut Tip) -->
+    <path 
+      d="M 240 125
+         L 335 185
+         C 355 300, 435 440, 540 535
+         C 580 565, 620 585, 650 600
+         C 610 580, 520 540, 435 460
+         C 325 355, 260 250, 240 125 Z" 
+      fill="url(#blueGrad)" 
+    />
+
+    <!-- 4. Inner Blue Plume (Middle Blade with Diagonal Cut Tip) -->
+    <path 
+      d="M 395 115
+         L 480 175
+         C 485 275, 540 405, 615 500
+         C 640 535, 665 565, 675 595
+         C 650 560, 605 515, 555 445
+         C 490 350, 440 240, 395 115 Z" 
+      fill="url(#blueGrad)" 
+    />
+
+    <!-- 5. Golden-Yellow Teardrop / Oil Drop -->
+    <path 
+      d="M 660 5
+         C 700 80, 770 180, 770 280
+         C 770 370, 720 420, 660 420
+         C 600 420, 550 370, 550 280
+         C 550 180, 620 80, 660 5 Z" 
+      fill="url(#dropGrad)" 
+    />
+
+    <!-- 6. White Glossy Pill Highlight on Left Edge of Drop -->
+    <path 
+      d="M 590 175
+         C 572 225, 568 275, 582 310
+         C 572 290, 570 240, 592 180 Z" 
+      fill="#ffffff" 
+      opacity="0.95"
+    />
+  </g>
+
+  <!-- ARABIC BRAND TYPOGRAPHY -->
+  <g id="typography">
+    <!-- Line 1: المصرية الماليزية -->
+    <text 
+      x="500" 
+      y="765" 
+      text-anchor="middle" 
+      font-family="'Cairo', 'Segoe UI', Arial, sans-serif" 
+      font-weight="900" 
+      font-size="82" 
+      fill="#d8232a" 
+      letter-spacing="1"
+    >
+      المصرية الماليزية
+    </text>
+
+    <!-- Line 2: ش . م . م -->
+    <text 
+      x="500" 
+      y="875" 
+      text-anchor="middle" 
+      font-family="'Cairo', 'Segoe UI', Arial, sans-serif" 
+      font-weight="900" 
+      font-size="68" 
+      fill="#184393" 
+      letter-spacing="12"
+    >
+      ش . م . م
+    </text>
+  </g>
+</svg>

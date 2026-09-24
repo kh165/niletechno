@@ -2,22 +2,146 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Smartphone, Check, Wifi, Battery, ChevronLeft, ChevronRight, CheckCircle2,
-  Receipt, ArrowUpRight, ShieldCheck, CheckCheck, Layers, ShoppingBag
+  Receipt, ArrowUpRight, ShieldCheck, CheckCheck, Layers, ShoppingBag, MessageSquare
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
 
+// Tailored, grammatically correct and elegant Arabic WhatsApp messages for each mobile app
+export const APP_WHATSAPP_MESSAGES = {
+  'mob-sales': {
+    ar: `السلام عليكم ورحمة الله وبركاته،
+
+أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق مندوب المبيعات الميداني الذكي (Android & iOS)" من شركة نايل تكنو للبرمجيات.
+
+المطلوب معرفته:
+• تكلفة الترخيص وتفاصيل التفعيل
+• آلية الربط والتزامن مع النظام المحاسبي
+• دعم طباعة الفواتير المحمولة وتتبع المناديب بالـ GPS
+
+شاكراً لكم حسن تعاونكم ومتابعتكم.`,
+    en: `Hello Nile Techno Sales Team,
+
+I would like to inquire about and purchase the "Smart Sales Representative App (Android & iOS)".
+
+Please provide details on:
+• Pricing and licensing options
+• Accounting ERP integration
+• Portable thermal printing & GPS tracking
+
+Thank you.`
+  },
+  'mob-pos': {
+    ar: `السلام عليكم ورحمة الله وبركاته،
+
+أود الاستفسار والتعاقد بخصوص "تطبيق نقطة البيع للموبايل المحمول (Mobile POS)" من شركة نايل تكنو.
+
+المطلوب معرفته:
+• تكلفة تفعيل نقاط البيع المحمولة
+• آلية العمل دون اتصال بالإنترنت (Offline Mode)
+• ربط طابعات البلوتوث المحمولة وقراءة الباركود
+
+شاكراً لكم حسن تعاونكم ومتابعتكم.`,
+    en: `Hello Nile Techno Sales Team,
+
+I would like to order the "Mobile POS Terminal App".
+
+Please provide details on:
+• Portable POS licensing & setup
+• Offline transaction syncing
+• Bluetooth printer compatibility
+
+Thank you.`
+  },
+  'mob-restaurant': {
+    ar: `السلام عليكم ورحمة الله وبركاته،
+
+أود الاستفسار والطلب بشأن "تطبيق كابتن الصالة والنادل الذكي ومتابعة المطبخ" للمطاعم والكافيهات.
+
+المطلوب معرفته:
+• أسعار التطبيق وتجهيزه على التابلت والموبايل
+• آلية الربط المباشر بشاشات وطابعات المطبخ (KDS)
+• دعم المنيو الرقمي وإدارة شاشات الطاولات
+
+شاكراً لكم حسن تعاونكم ومتابعتكم.`,
+    en: `Hello Nile Techno Sales Team,
+
+I would like to order the "Smart Waiter & Kitchen Display App" for restaurant operations.
+
+Please provide details on:
+• Pricing for tablets and mobile devices
+• Kitchen display & printer integration (KDS)
+• Table management & QR digital menus
+
+Thank you.`
+  },
+  'mob-medical': {
+    ar: `السلام عليكم ورحمة الله وبركاته،
+
+أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق المندوب الطبي الدوائي (Pharma & Medical Rep)" من شركة نايل تكنو.
+
+المطلوب معرفته:
+• آلية تتبع زيارات الأطباء وجدولتها
+• إدارة عينات الأدوية والهدايا الترويجية
+• عرض الأسعار وطريقة الربط بالإدارة المركزية
+
+شاكراً لكم حسن تعاونكم ومتابعتكم.`,
+    en: `Hello Nile Techno Sales Team,
+
+I am interested in purchasing the "Medical & Pharma Rep System App".
+
+Please provide details on:
+• Doctor visit scheduling & clinical logs
+• Pharmaceutical sample inventory tracking
+• Pricing and central ERP integration
+
+Thank you.`
+  }
+};
+
+export function getAppWhatsAppLink(appId, lang = 'ar') {
+  const defaultApp = 'mob-sales';
+  const msgObj = APP_WHATSAPP_MESSAGES[appId] || APP_WHATSAPP_MESSAGES[defaultApp];
+  const message = lang === 'en' ? msgObj.en : msgObj.ar;
+  return `https://wa.me/201000082722?text=${encodeURIComponent(message)}`;
+}
+
+export function AppleIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.93-2.85-.9.04-1.99.6-2.63 1.35-.57.65-1.07 1.72-.94 2.74 1.01.08 2.03-.5 2.64-1.24z"/>
+    </svg>
+  );
+}
+
+export function AndroidIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003 0-.5511.4482-.9993.9993-.9993.5516 0 .9997.4482.9997.9993 0 .5517-.4481 1.0003-.9997 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003 0-.5511.4482-.9993.9993-.9993.5516 0 .9997.4482.9997.9993 0 .5517-.4481 1.0003-.9997 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.0805 12 8.0805c-1.8533 0-3.5902.3311-5.1328.8692L4.8449 5.4467a.416.416 0 00-.5676-.1521.416.416 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
+    </svg>
+  );
+}
+
 export function ModernMobileShowcase({
-  lang,
-  theme,
-  mobileApps,
+  lang = 'ar',
+  theme = 'dark',
+  mobileApps = [],
   onSelectAppForQuote,
-  formData
+  formData = { interestedModules: [] }
 }) {
-  const [activeAppId, setActiveAppId] = useState(mobileApps[0]?.id || 'mob-sales');
+  const safeApps = Array.isArray(mobileApps) && mobileApps.length > 0 ? mobileApps : [];
+  const [activeAppId, setActiveAppId] = useState(safeApps[0]?.id || 'mob-sales');
   const [justAddedAppId, setJustAddedAppId] = useState(null);
   const swiperRef = useRef(null);
 
-  const currentApp = mobileApps.find(a => a.id === activeAppId) || mobileApps[0];
+  const fallbackApp = {
+    id: 'mob-sales',
+    titleAr: 'تطبيق مندوب المبيعات',
+    titleEn: 'Van Sales Rep App',
+    featuresAr: ['فواتير بيع وسندات قبض', 'تحديد مسار المندوب بالـ GPS'],
+    featuresEn: ['Sales invoices and payment receipts', 'GPS rep route tracking']
+  };
+
+  const currentApp = safeApps.find(a => a.id === activeAppId) || safeApps[0] || fallbackApp;
 
   // Authentic enterprise application screen data
   const appScreenDetails = {
@@ -132,37 +256,48 @@ export function ModernMobileShowcase({
       onSelectAppForQuote(appId);
     }
     setJustAddedAppId(appId);
+
+    // Smoothly scroll down to contact & quote section
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
     setTimeout(() => {
       setJustAddedAppId(null);
     }, 4000);
   };
 
-  const isInterestedInCurrent = formData?.interestedModules?.includes(currentApp.id);
+  const isInterestedInCurrent = (currentApp?.id && formData?.interestedModules) 
+    ? formData.interestedModules.includes(currentApp.id) 
+    : false;
 
   // Swiper controls for mobile space-efficiency
   const scrollToAppIndex = (index) => {
-    if (index >= 0 && index < mobileApps.length) {
-      const targetApp = mobileApps[index];
-      setActiveAppId(targetApp.id);
-      if (swiperRef.current) {
-        const children = swiperRef.current.children;
-        if (children[index]) {
-          children[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    if (index >= 0 && index < safeApps.length) {
+      const targetApp = safeApps[index];
+      if (targetApp) {
+        setActiveAppId(targetApp.id);
+        if (swiperRef.current) {
+          const children = swiperRef.current.children;
+          if (children && children[index]) {
+            children[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          }
         }
       }
     }
   };
 
-  const currentIdx = mobileApps.findIndex(a => a.id === activeAppId);
+  const currentIdx = safeApps.findIndex(a => a.id === activeAppId);
 
   return (
     <div className="w-full font-cairo">
       
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
         
-        {/* Left Side: Smartphone Handheld Device Mockup (Responsive & compact on mobile) */}
-        <div className="lg:col-span-5 flex justify-center order-2 lg:order-1 w-full px-2 sm:px-0">
-          <div className="relative w-full max-w-[250px] xs:max-w-[270px] sm:max-w-[295px] lg:max-w-[315px] rounded-[34px] sm:rounded-[42px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 border border-slate-700/80 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.5)] select-none transition-all duration-300">
+        {/* Left Side: Smartphone Handheld Device Mockup (Sleek, compact & balanced on large screens) */}
+        <div className="lg:col-span-4 flex flex-col items-center justify-start order-2 lg:order-1 w-full px-2 sm:px-0">
+          <div className="relative w-full max-w-[215px] xs:max-w-[230px] sm:max-w-[245px] lg:max-w-[250px] xl:max-w-[260px] rounded-[32px] sm:rounded-[38px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 border border-slate-700/80 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.5)] select-none transition-all duration-300">
             
             {/* Speaker & Punch-hole Camera */}
             <div className="absolute top-3 sm:top-3.5 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 sm:gap-2">
@@ -173,15 +308,15 @@ export function ModernMobileShowcase({
             </div>
 
             {/* OLED Screen Surface */}
-            <div className="w-full rounded-[28px] sm:rounded-[34px] bg-[#070b14] text-white overflow-hidden flex flex-col justify-between p-2.5 sm:p-3.5 pt-4 sm:pt-6 text-right border border-slate-800/50 shadow-inner">
+            <div className="w-full rounded-[26px] sm:rounded-[32px] bg-[#070b14] text-white overflow-hidden flex flex-col justify-between p-2.5 sm:p-3 pt-4 sm:pt-5 text-right border border-slate-800/50 shadow-inner">
               
               {/* Screen Top Status Bar */}
-              <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 pb-1.5 border-b border-slate-800/80 mb-2">
+              <div className="flex items-center justify-between text-[10px] text-slate-400 pb-1.5 border-b border-slate-800/80 mb-2">
                 <span className="font-mono font-bold text-slate-200">09:41</span>
-                <div className="flex items-center gap-1.5 font-mono text-[9px] sm:text-[10px]">
-                  <span className="text-emerald-400 font-bold text-[8px] sm:text-[9px] px-1 py-0.2 rounded bg-emerald-950/60 border border-emerald-800/40">5G</span>
-                  <Wifi className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#299df7]" />
-                  <Battery className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-300" />
+                <div className="flex items-center gap-1.5 font-mono text-[9px]">
+                  <span className="text-emerald-400 font-bold text-[8px] px-1 py-0.2 rounded bg-emerald-950/60 border border-emerald-800/40">5G</span>
+                  <Wifi className="w-3 h-3 text-[#299df7]" />
+                  <Battery className="w-3.5 h-3.5 text-slate-300" />
                 </div>
               </div>
 
@@ -267,11 +402,17 @@ export function ModernMobileShowcase({
                     <span className="font-mono text-xs sm:text-sm font-extrabold text-emerald-400">{activeScreen.totalAr}</span>
                   </div>
 
-                  {/* Action Button inside mobile UI */}
-                  <div className="w-full py-1.5 sm:py-2 px-2.5 rounded-xl bg-gradient-to-r from-[#0b72c9] to-blue-700 text-white text-[10px] sm:text-[11px] font-bold text-center shadow-md shadow-[#0b72c9]/25 flex items-center justify-center gap-1.5">
-                    {activeAppId === 'mob-pos' ? <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <Receipt className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
-                    <span>{activeScreen.actionBtnAr}</span>
-                  </div>
+                  {/* Action Button inside mobile UI - Clickable to open WhatsApp with custom message */}
+                  <a
+                    href={getAppWhatsAppLink(activeAppId, lang)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-2 px-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-[#0b72c9] hover:from-emerald-500 hover:to-[#0a66b4] text-white text-[10.5px] sm:text-[11.5px] font-bold text-center shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1.5 transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer group/action"
+                    title={lang === 'ar' ? 'طلب وشراء هذا التطبيق عبر واتساب' : 'Inquire & Purchase via WhatsApp'}
+                  >
+                    <MessageSquare className="w-3.5 h-3.5 shrink-0 text-emerald-200 group-hover/action:scale-110 transition-transform" />
+                    <span>{lang === 'ar' ? `طلب شراء وتفعيل عبر واتساب` : `Order via WhatsApp`}</span>
+                  </a>
 
                 </motion.div>
               </AnimatePresence>
@@ -304,7 +445,7 @@ export function ModernMobileShowcase({
         </div>
 
         {/* Right Side: Dynamic Horizontal Swiper on Mobile & CSS Grid on Desktop */}
-        <div className="lg:col-span-7 space-y-4 order-1 lg:order-2">
+        <div className="lg:col-span-8 space-y-3 sm:space-y-4 order-1 lg:order-2">
           
           {/* Header Note with Mobile Controls */}
           <div className="flex items-center justify-between pb-1">
@@ -335,7 +476,7 @@ export function ModernMobileShowcase({
             </div>
 
             <span className="hidden sm:inline-block text-xs text-[#0b72c9] dark:text-[#299df7] font-bold">
-              {mobileApps.length} {lang === 'ar' ? 'تطبيقات متخصصة' : 'Specialized Apps'}
+              {safeApps.length} {lang === 'ar' ? 'تطبيقات متخصصة' : 'Specialized Apps'}
             </span>
           </div>
 
@@ -347,7 +488,7 @@ export function ModernMobileShowcase({
             ref={swiperRef}
             className="flex overflow-x-auto snap-x snap-mandatory gap-3 sm:gap-3.5 pb-2 sm:pb-0 sm:grid sm:grid-cols-2 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
-            {mobileApps.map((app, idx) => {
+            {safeApps.map((app, idx) => {
               const isSelected = activeAppId === app.id;
               
               return (
@@ -400,9 +541,23 @@ export function ModernMobileShowcase({
                   </div>
 
                   <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px]">
-                    <span className={`text-[10px] ${isSelected ? 'text-[#0b72c9] dark:text-[#299df7] font-bold' : (theme === 'light' ? 'text-slate-500' : 'text-slate-500')}`}>
-                      {lang === 'ar' ? 'انقر للتبديل الفوري' : 'Click to preview'}
-                    </span>
+                    {isSelected ? (
+                      <a
+                        href={getAppWhatsAppLink(app.id, lang)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] border border-emerald-500/20 transition-colors cursor-pointer"
+                        title={lang === 'ar' ? 'طلب وشراء عبر واتساب مباشرة' : 'Order on WhatsApp'}
+                      >
+                        <MessageSquare className="w-3 h-3" />
+                        <span>{lang === 'ar' ? 'طلب عبر واتساب 💬' : 'Order via WhatsApp'}</span>
+                      </a>
+                    ) : (
+                      <span className={`text-[10px] ${theme === 'light' ? 'text-slate-500' : 'text-slate-500'}`}>
+                        {lang === 'ar' ? 'انقر للمعاينة' : 'Click to preview'}
+                      </span>
+                    )}
                     <ArrowUpRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? 'text-[#0b72c9] dark:text-[#299df7] translate-x-0.5 -translate-y-0.5' : 'text-slate-400'}`} />
                   </div>
                 </div>
@@ -412,7 +567,7 @@ export function ModernMobileShowcase({
 
           {/* Mobile Swiper Pagination Dots */}
           <div className="flex sm:hidden items-center justify-center gap-1.5 pt-1">
-            {mobileApps.map((app, idx) => (
+            {safeApps.map((app, idx) => (
               <button
                 type="button"
                 key={app.id}
@@ -434,12 +589,12 @@ export function ModernMobileShowcase({
             <div className="flex items-center gap-2 mb-3">
               <div className="w-2 h-2 rounded-full bg-[#0b72c9]"></div>
               <h4 className={`text-xs sm:text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                {lang === 'ar' ? `المزايا التشغيلية لـ (${currentApp.titleAr}):` : `Operational Features for ${currentApp.titleEn}:`}
+                {lang === 'ar' ? `المزايا التشغيلية لـ (${currentApp?.titleAr || ''}):` : `Operational Features for ${currentApp?.titleEn || ''}:`}
               </h4>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {(lang === 'ar' ? currentApp.featuresAr : currentApp.featuresEn).map((feat, fIdx) => (
+              {((lang === 'ar' ? currentApp?.featuresAr : currentApp?.featuresEn) || []).map((feat, fIdx) => (
                 <div key={fIdx} className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#0b72c9] shrink-0 mt-0.5" />
                   <span className={`text-xs leading-relaxed font-cairo ${theme === 'light' ? 'text-slate-700' : 'text-slate-300'}`}>
@@ -449,35 +604,56 @@ export function ModernMobileShowcase({
               ))}
             </div>
 
-            {/* Quick Action Button */}
-            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <span className={`text-xs font-cairo ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
-                {lang === 'ar' 
-                  ? 'يمكنك تجربة هذا التطبيق وربطه بقاعدة بيانات تجريبية فوراً.' 
-                  : 'You can test this app connected to our demo database.'}
-              </span>
+            {/* Quick Action Buttons */}
+            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex flex-col lg:flex-row items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span className={`text-xs font-cairo ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+                  {lang === 'ar' 
+                    ? `تواصل فوري لطلب وتفعيل ${currentApp?.titleAr || 'التطبيق'} عبر رسالة واتساب مجهزة:` 
+                    : `Instant contact to order ${currentApp?.titleEn || 'this app'} via prepared WhatsApp message:`}
+                </span>
+              </div>
 
-              <button
-                type="button"
-                onClick={(e) => handleRequestTrial(e, currentApp.id)}
-                className={`min-h-[42px] px-5 py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0 w-full sm:w-auto shadow-sm active:scale-95 ${
-                  justAddedAppId === currentApp.id || isInterestedInCurrent
-                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                    : 'bg-gradient-to-r from-[#0b72c9] to-blue-700 hover:from-[#0a66b4] hover:to-blue-800 text-white shadow-[#0b72c9]/25'
-                }`}
-              >
-                {justAddedAppId === currentApp.id || isInterestedInCurrent ? (
-                  <>
-                    <Check className="w-4 h-4" />
-                    <span>{lang === 'ar' ? 'تمت الإضافة لطلب العرض' : 'Added to Quote Request'}</span>
-                  </>
-                ) : (
-                  <>
-                    <Smartphone className="w-4 h-4" />
-                    <span>{lang === 'ar' ? `طلب تجربة ${currentApp.titleAr}` : `Request Trial for ${currentApp.titleEn}`}</span>
-                  </>
-                )}
-              </button>
+              <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-end">
+                {/* Primary WhatsApp Order Button with tailored message */}
+                <a
+                  href={getAppWhatsAppLink(currentApp?.id, lang)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-h-[42px] px-5 py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer w-full sm:w-auto shadow-md shadow-emerald-500/25 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white hover:scale-[1.02] active:scale-95 font-cairo"
+                  title={lang === 'ar' ? 'طلب وشراء هذا التطبيق عبر واتساب' : 'Order via WhatsApp'}
+                >
+                  <MessageSquare className="w-4 h-4 fill-white/20" />
+                  <span>
+                    {lang === 'ar' 
+                      ? `طلب شراء (${currentApp?.titleAr || ''}) عبر واتساب` 
+                      : `Order (${currentApp?.titleEn || ''}) via WhatsApp`}
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-80" />
+                </a>
+
+                {/* Secondary Button for Adding to Quote & Scrolling down */}
+                <button
+                  type="button"
+                  onClick={(e) => currentApp?.id && handleRequestTrial(e, currentApp.id)}
+                  className={`min-h-[42px] px-4 py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer w-full sm:w-auto border active:scale-95 font-cairo shadow-xs ${
+                    justAddedAppId === currentApp?.id || isInterestedInCurrent
+                      ? 'bg-blue-600 border-blue-600 text-white shadow-blue-600/25'
+                      : (theme === 'light' 
+                          ? 'bg-white hover:bg-slate-50 border-slate-300 text-slate-800 hover:border-slate-400' 
+                          : 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-white')
+                  }`}
+                  title={lang === 'ar' ? 'طلب عرض سعر في النموذج بالأسفل' : 'Request quote in form below'}
+                >
+                  <Smartphone className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
+                  <span>
+                    {lang === 'ar' 
+                      ? (isInterestedInCurrent ? 'طلب عرض السعر في النموذج ⬇️' : 'طلب عرض السعر في النموذج ⬇️') 
+                      : (isInterestedInCurrent ? 'Request Quote in Form ⬇️' : 'Request Quote in Form ⬇️')}
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
 

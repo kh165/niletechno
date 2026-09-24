@@ -6,7 +6,7 @@ import {
   Globe2, UtensilsCrossed, Wheat, House, Handshake, CarFront, Pill, Leaf, Factory
 } from 'lucide-react';
 import { SUCCESS_PARTNERS } from '../../data';
-import companyLogo from '../../assets/images/logo.png';
+import companyLogo from '../../assets/images/logo.webp';
 
 const logoTransparentWebp = companyLogo;
 
@@ -136,84 +136,102 @@ const LOGO_MANIFEST = {
   ]
 };
 
-const CLIENT_CATEGORY_DIRECTORIES = {
-  ksa: "KSA",
-  import_export: "import",
-  hospitality: "rest",
-  malls_houseware: "home_furntire",
-  mills_feed: "a3laf",
-  contracting: "contracting",
-  jewelry: "jewelry",
-  agencies_wholesale: "tawkilat",
-  car_showrooms: "Cars",
-  pharma: "medical",
-  herbs_spices: "3tara",
-  factories: "factory"
+const categoryFolders = {
+  ksa: 'KSA',
+  import_export: 'import',
+  hospitality: 'rest',
+  malls_houseware: 'home_furntire',
+  mills_feed: 'a3laf',
+  contracting: 'contracting',
+  jewelry: 'jewelry',
+  agencies_wholesale: 'tawkilat',
+  car_showrooms: 'Cars',
+  pharma: 'medical',
+  herbs_spices: '3tara',
+  factories: 'factory'
 };
 
-// Exact authentic client logo renderer from niletechno.com with high-res images and graceful fallbacks
+// Intelligent, non-lagging client logo renderer with exact manifest matching and safe fallbacks
 const PartnerLogo = ({ partner, theme }) => {
   if (!partner) return null;
 
+  const pCat = partner.category || 'ksa';
+  const folder = categoryFolders[pCat] || 'KSA';
+  const manifest = LOGO_MANIFEST[pCat] || LOGO_MANIFEST.ksa;
+  
+  // Find index of partner in its specific category pool safely
+  const partnerIdStr = String(partner.id || '');
+  const catPool = Array.isArray(SUCCESS_PARTNERS) ? SUCCESS_PARTNERS.filter(p => p && p.category === pCat) : [];
+  const indexInCat = catPool.findIndex(p => p && String(p.id) === partnerIdStr);
+  const catIdx = indexInCat !== -1 ? indexInCat : 0;
+  
+  // Resolve using exact scanned indices or direct image url
+  let imageUrl = '';
+  if (partner.imageUrl) {
+    imageUrl = partner.imageUrl;
+  } else if (manifest && manifest.length > 0) {
+    const mItem = manifest[catIdx % manifest.length] || { idx: 1, ext: 'jpg' };
+    const fileIdx = mItem.idx;
+    const ext = mItem.ext;
+    imageUrl = `https://www.niletechno.com/Clients/Clients/${folder}/${fileIdx}.${ext}`;
+  }
+
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [triedRemote, setTriedRemote] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
-  const cat = partner.category || 'ksa';
-  const dir = CLIENT_CATEGORY_DIRECTORIES[cat] || 'KSA';
-  const manifest = CLIENT_LOGOS_BY_CATEGORY[cat] || CLIENT_LOGOS_BY_CATEGORY.ksa;
-  const pool = Array.isArray(SUCCESS_PARTNERS) ? SUCCESS_PARTNERS.filter(p => p && p.category === cat) : [];
-  const idxInPool = pool.findIndex(p => p && String(p.id) === String(partner.id));
-  const safeIdx = idxInPool !== -1 ? idxInPool : 0;
-  const entry = manifest[safeIdx % manifest.length] || { idx: 1, ext: 'jpg' };
-
-  const localUrl = partner.imageUrl || `/Clients/Clients/${dir}/${entry.idx}.${entry.ext}`;
-  const remoteUrl = partner.imageUrl || `https://www.niletechno.com/Clients/Clients/${dir}/${entry.idx}.${entry.ext}`;
-
-  const currentSrc = triedRemote ? remoteUrl : localUrl;
-
+  // Generate gorgeous, high-contrast local decorative gradient cards safely
   const gradients = [
-    "from-cyan-500/20 to-blue-600/10 text-cyan-600 dark:text-cyan-400",
-    "from-blue-600/20 to-indigo-600/10 text-blue-600 dark:text-blue-400",
-    "from-emerald-500/20 to-teal-600/10 text-emerald-600 dark:text-emerald-400",
-    "from-purple-600/20 to-pink-500/10 text-purple-600 dark:text-purple-400",
-    "from-slate-700/20 to-slate-900/10 text-slate-700 dark:text-slate-400",
-    "from-amber-500/20 to-orange-600/10 text-amber-600 dark:text-amber-400"
+    'from-cyan-500/20 to-blue-600/10 text-cyan-600 dark:text-cyan-400',
+    'from-blue-600/20 to-indigo-600/10 text-blue-600 dark:text-blue-400',
+    'from-emerald-500/20 to-teal-600/10 text-emerald-600 dark:text-emerald-400',
+    'from-purple-600/20 to-pink-500/10 text-purple-600 dark:text-purple-400',
+    'from-slate-700/20 to-slate-900/10 text-slate-700 dark:text-slate-400',
+    'from-amber-500/20 to-orange-600/10 text-amber-600 dark:text-amber-400'
   ];
-  const charSum = String(partner.id || '').split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  const gradient = gradients[charSum % gradients.length];
+  const hash = partnerIdStr ? partnerIdStr.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : 0;
+  const selectedGrad = gradients[Math.abs(hash) % gradients.length];
+  
+  // Extract clean initials safely
   const rawName = String(partner.nameAr || partner.nameEn || '');
-  const monogram = rawName
-    ? rawName.split(" ").filter(w => w.length > 2).slice(0, 2).map(w => w[0]).join(" ") || partner.logoText || "NT"
-    : (partner.logoText || "NT");
+  const initials = rawName
+    ? rawName.split(' ').filter(w => w.length > 2).slice(0, 2).map(w => w[0]).join(' ') || partner.logoText || 'NT'
+    : (partner.logoText || 'NT');
 
   return (
     <div className="w-full h-full relative rounded-xl flex items-center justify-center overflow-hidden p-1 select-none">
-      <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${gradient} flex flex-col items-center justify-center p-2 text-center transition-all duration-350 ${imageLoaded ? "opacity-0 scale-95 pointer-events-none" : "opacity-100 scale-100"}`}>
+      
+      {/* 1. Instant Premium Placeholder Layer - Loads in 0ms, beautiful brand typography & matching category SVG */}
+      <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${selectedGrad} flex flex-col items-center justify-center p-2 text-center transition-all duration-350 ${
+        imageLoaded && !imageError ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
+      }`}>
         <div className="absolute inset-0 bg-white/5 dark:bg-black/5 backdrop-blur-[0.5px]"></div>
         <div className="relative z-10 flex flex-col items-center justify-center">
           <div className="mb-1 opacity-70 group-hover:scale-110 transition-transform duration-300">
-            {getPartnerLogo(partner)}
+            {getPartnerLogo(partner, theme)}
           </div>
           <span className="text-[10px] font-black tracking-wide leading-none font-cairo drop-shadow-sm select-none">
-            {monogram}
+            {initials}
           </span>
         </div>
       </div>
-      <img
-        src={currentSrc}
-        alt={rawName || "Partner"}
-        onLoad={() => setImageLoaded(true)}
-        onError={() => {
-          if (!triedRemote && localUrl !== remoteUrl) {
-            setTriedRemote(true);
-          } else {
+
+      {/* 2. Asynchronous Real Logo Image Layer - Smoothly fades in only when fully loaded */}
+      {imageUrl && !imageError && (
+        <img
+          src={imageUrl}
+          alt={rawName || "Partner"}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => {
+            setImageError(true);
             setImageLoaded(false);
-          }
-        }}
-        className={`w-full h-full object-contain select-none transition-all duration-500 ease-out p-1 bg-white rounded-lg ${imageLoaded ? "opacity-100 scale-100" : "opacity-0 scale-90 absolute pointer-events-none"}`}
-        referrerPolicy="no-referrer"
-        loading="lazy"
-      />
+          }}
+          className={`w-full h-full object-contain select-none transition-all duration-500 ease-out p-1 bg-white rounded-lg ${
+            imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90 absolute pointer-events-none'
+          }`}
+          referrerPolicy="no-referrer"
+          loading="lazy"
+        />
+      )}
     </div>
   );
 };
@@ -226,7 +244,7 @@ const NileTechnoLogo = ({ theme, lang, className }) => {
         src={companyLogo}
         alt="Nile Techno Logo"
         decoding="async"
-        className={className || "h-11 sm:h-12 md:h-13 w-auto object-contain transition-all duration-300 hover:scale-[1.02]"}
+        className={className || "h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 hover:scale-[1.02]"}
         onError={(e) => {
           e.target.src = logoTransparentWebp;
         }}

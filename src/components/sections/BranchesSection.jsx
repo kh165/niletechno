@@ -167,19 +167,26 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
                   <span>{lang === 'ar' ? 'خرائط Google 🗺️' : 'Google Maps 🗺️'}</span>
                 </a>
 
-                <a
-                  href={`https://wa.me/${selectedBranch.whatsapp}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="min-h-[44px] px-5 py-2.5 rounded-xl text-xs font-bold font-cairo flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/35 hover:-translate-y-0.5 active:scale-95 bg-gradient-to-r from-[#128c7e] via-[#25d366] to-[#34af23] text-white hover:brightness-110 flex-1 sm:flex-initial"
-                >
-                  <span className="relative flex h-2.5 w-2.5 shrink-0">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
-                  </span>
-                  <MessageSquare className="w-4 h-4 shrink-0" />
-                  <span>{lang === 'ar' ? 'تحدث مع الفرع' : 'Chat with Branch'}</span>
-                </a>
+                {(() => {
+                  const branchMsg = lang === 'ar'
+                    ? `السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (${selectedBranch.cityAr}) للاستفسار عن الأنظمة والحلول التقنية المتاحة.\n\nشاكراً لكم حسن تعاونكم.`
+                    : `Hello Nile Techno Sales Team (${selectedBranch.cityEn}),\n\nI would like to inquire about your software systems and enterprise solutions.\n\nThank you.`;
+                  return (
+                    <a
+                      href={`https://wa.me/${selectedBranch.whatsapp}?text=${encodeURIComponent(branchMsg)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="min-h-[44px] px-5 py-2.5 rounded-xl text-xs font-bold font-cairo flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/35 hover:-translate-y-0.5 active:scale-95 bg-gradient-to-r from-[#128c7e] via-[#25d366] to-[#34af23] text-white hover:brightness-110 flex-1 sm:flex-initial"
+                    >
+                      <span className="relative flex h-2.5 w-2.5 shrink-0">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+                      </span>
+                      <MessageSquare className="w-4 h-4 shrink-0" />
+                      <span>{lang === 'ar' ? 'تحدث مع الفرع' : 'Chat with Branch'}</span>
+                    </a>
+                  );
+                })()}
               </div>
             </div>
           </div>

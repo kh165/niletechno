@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, Play, Check, CheckCircle2, ChevronDown, ChevronUp, 
   Layers, Server, Cloud, ShieldCheck, X, FileText, ArrowLeft, ArrowRight,
-  Sparkles, Monitor, Store, Truck, Cpu, Database
+  Sparkles, Monitor, Store, Truck, Cpu, Database,
+  LayoutGrid, Landmark, ShoppingBag, PackageCheck, Factory
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
 
@@ -22,8 +23,11 @@ export function ModernSystemsShowcase({
 }) {
   const [expandedSystemId, setExpandedSystemId] = useState(null);
 
+  const safeModules = Array.isArray(modules) ? modules : [];
+
   // Category filtering
-  const filteredModules = modules.filter(m => {
+  const filteredModules = safeModules.filter(m => {
+    if (!m) return false;
     const matchesTab = activeTab === 'all' || m.category === activeTab;
     const term = (searchInput || '').toLowerCase().trim();
     if (!term) return matchesTab;
@@ -35,7 +39,7 @@ export function ModernSystemsShowcase({
     return matchesTab && matchSearch;
   });
 
-  const flagshipModule = modules.find(m => m.id === 'accounts') || modules[0];
+  const flagshipModule = safeModules.find(m => m && m.id === 'accounts') || safeModules[0] || { id: 'accounts' };
 
   const handleToggleInterest = (e, sysId) => {
     if (e) {
@@ -44,9 +48,11 @@ export function ModernSystemsShowcase({
     }
     setFormData(prev => ({
       ...prev,
-      interestedModules: prev.interestedModules.includes(sysId)
-        ? prev.interestedModules.filter(id => id !== sysId)
-        : [...prev.interestedModules, sysId]
+      interestedModules: Array.isArray(prev?.interestedModules)
+        ? (prev.interestedModules.includes(sysId)
+          ? prev.interestedModules.filter(id => id !== sysId)
+          : [...prev.interestedModules, sysId])
+        : [sysId]
     }));
   };
 
@@ -58,23 +64,81 @@ export function ModernSystemsShowcase({
     setExpandedSystemId(prev => (prev === sysId ? null : sysId));
   };
 
-  const isFlagshipInterested = formData.interestedModules.includes(flagshipModule.id);
+  const isFlagshipInterested = (flagshipModule?.id && formData?.interestedModules) 
+    ? formData.interestedModules.includes(flagshipModule.id) 
+    : false;
 
   // Category stats
   const categoryCounts = {
-    all: modules.length,
-    erp: modules.filter(m => m.category === 'erp').length,
-    retail: modules.filter(m => m.category === 'retail').length,
-    logistics: modules.filter(m => m.category === 'logistics').length,
-    specialized: modules.filter(m => m.category === 'specialized').length
+    all: safeModules.length,
+    erp: safeModules.filter(m => m && m.category === 'erp').length,
+    retail: safeModules.filter(m => m && m.category === 'retail').length,
+    logistics: safeModules.filter(m => m && m.category === 'logistics').length,
+    specialized: safeModules.filter(m => m && m.category === 'specialized').length
   };
 
   const categoryIcons = {
-    all: Layers,
-    erp: Database,
-    retail: Store,
-    logistics: Truck,
-    specialized: Cpu
+    all: LayoutGrid,
+    erp: Landmark,
+    retail: ShoppingBag,
+    logistics: PackageCheck,
+    specialized: Factory
+  };
+
+  const categoryColorStyles = {
+    all: {
+      activeBg: 'bg-gradient-to-r from-[#0b72c9] to-blue-600 text-white shadow-md shadow-[#0b72c9]/30',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
+    },
+    erp: {
+      activeBg: 'bg-gradient-to-r from-blue-700 to-indigo-600 text-white shadow-md shadow-indigo-600/30',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-indigo-500 dark:text-indigo-400'
+    },
+    retail: {
+      activeBg: 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/30',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-emerald-500 dark:text-emerald-400'
+    },
+    logistics: {
+      activeBg: 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-md shadow-amber-600/30',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-amber-500 dark:text-amber-400'
+    },
+    specialized: {
+      activeBg: 'bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-md shadow-purple-600/30',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-purple-500 dark:text-purple-400'
+    }
+  };
+
+  // Strictly preserve page scroll position on tab switch to prevent unwanted page jumping
+  const handleTabSelect = (e, tabId) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.currentTarget && typeof e.currentTarget.blur === 'function') {
+        e.currentTarget.blur();
+      }
+    }
+    
+    const savedY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+    setActiveTab(tabId);
+
+    // Lock position across synchronous tick, animation frame, and timeout
+    window.scrollTo({ top: savedY, behavior: 'instant' });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: savedY, behavior: 'instant' });
+      setTimeout(() => {
+        window.scrollTo({ top: savedY, behavior: 'instant' });
+      }, 15);
+    });
   };
 
   return (
@@ -221,8 +285,8 @@ export function ModernSystemsShowcase({
         </div>
 
         {/* Clean Pill Segmented Tabs with Category Icons & Counts */}
-        <div className={`p-1.5 rounded-2xl border flex flex-wrap items-center justify-center gap-1.5 ${
-          theme === 'light' ? 'bg-slate-100/80 border-slate-200/90' : 'bg-slate-900/90 border-slate-800'
+        <div className={`p-1.5 sm:p-2 rounded-2xl border flex flex-wrap items-center justify-center gap-2 ${
+          theme === 'light' ? 'bg-slate-100/90 border-slate-200/90 shadow-inner' : 'bg-slate-900/95 border-slate-800 shadow-inner'
         }`}>
           {[
             { id: 'all', label: t.filterAll },
@@ -232,33 +296,31 @@ export function ModernSystemsShowcase({
             { id: 'specialized', label: t.filterSpecialized }
           ].map((tab) => {
             const isActive = activeTab === tab.id;
-            const CatIcon = categoryIcons[tab.id] || Layers;
+            const CatIcon = categoryIcons[tab.id] || LayoutGrid;
             const count = categoryCounts[tab.id] || 0;
+            const colorStyle = categoryColorStyles[tab.id] || categoryColorStyles.all;
 
             return (
               <button
                 type="button"
                 key={tab.id}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveTab(tab.id);
-                }}
-                className={`min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer font-cairo flex items-center gap-2 ${
+                onClick={(e) => handleTabSelect(e, tab.id)}
+                className={`min-h-[42px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer font-cairo flex items-center gap-2.5 active:scale-95 ${
                   isActive
-                    ? (theme === 'light' 
-                        ? 'bg-white text-[#0b72c9] shadow-md border border-slate-200/60' 
-                        : 'bg-slate-800 text-[#299df7] shadow-md border border-slate-700/80')
+                    ? `${colorStyle.activeBg} font-extrabold`
                     : (theme === 'light' 
-                        ? 'text-slate-600 hover:text-slate-900 hover:bg-white/60' 
-                        : 'text-slate-400 hover:text-white hover:bg-slate-800/50')
+                        ? 'text-slate-700 hover:text-slate-950 hover:bg-white/80 border border-transparent hover:border-slate-200' 
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800/70 border border-transparent hover:border-slate-700/60')
                 }`}
               >
-                <CatIcon className={`w-3.5 h-3.5 ${isActive ? 'text-[#0b72c9] dark:text-[#299df7]' : 'text-slate-400'}`} />
+                <div className={`p-1 rounded-lg ${isActive ? 'bg-white/15' : 'bg-slate-200/60 dark:bg-slate-800/80'}`}>
+                  <CatIcon className={`w-4 h-4 ${isActive ? colorStyle.activeIcon : colorStyle.inactiveIcon}`} />
+                </div>
                 <span>{tab.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono ${
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
                   isActive 
-                    ? 'bg-[#0b72c9]/10 text-[#0b72c9] dark:text-[#299df7] font-bold' 
-                    : 'bg-slate-200/60 dark:bg-slate-800 text-slate-500'
+                    ? colorStyle.activeBadge 
+                    : (theme === 'light' ? 'bg-slate-200/80 text-slate-600' : 'bg-slate-800 text-slate-400')
                 }`}>
                   {count}
                 </span>
@@ -270,7 +332,7 @@ export function ModernSystemsShowcase({
       </div>
 
       {/* 3. Systems Grid - Refined Card Elevation & Smooth Drawer */}
-      <div className="min-h-[380px]">
+      <div className="min-h-[580px]" style={{ overflowAnchor: 'none' }}>
         {filteredModules.length === 0 ? (
           <div className={`text-center py-14 rounded-3xl border max-w-lg mx-auto ${
             theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-slate-900/40 border-slate-800 text-slate-400'

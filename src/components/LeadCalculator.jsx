@@ -40,23 +40,37 @@ export default function LeadCalculator({ lang, theme }) {
   };
 
   const handleWhatsAppInquiry = () => {
-    const selectedSystems = suggestions.map(s => lang === 'ar' ? s.titleAr : s.titleEn).join(', ');
+    const selectedSystems = suggestions.map(s => lang === 'ar' ? s.titleAr : s.titleEn).join('، ');
     const sectorLabel = lang === 'ar'
-      ? { retail: 'التجزئة والمطاعم', erp: 'الحسابات والتصنيع والـ HR', logistics: 'المخازن والتوزيع والنقل', specialized: 'الفلاتر والسيارات والحجوزات' }[sector]
+      ? { retail: 'قطاع التجزئة ونقاط البيع والمطاعم', erp: 'قطاع الحسابات العامة والتصنيع والـ HR', logistics: 'المخازن والتوزيع وسلاسل الإمداد', specialized: 'الأنظمة التخصصية والخدمية' }[sector]
       : { retail: 'Retail & POS', erp: 'ERP & Corporate Accounting', logistics: 'Logistics & Supply Chain', specialized: 'Specialized Custom Services' }[sector];
     const scaleLabel = lang === 'ar'
-      ? { small: 'منشأة صغيرة (موقع واحد)', medium: 'متوسطة (2-5 فروع)', large: 'شركة كبرى / مصنع' }[scale]
+      ? { small: 'منشأة فردية / فرع واحد', medium: 'منشأة متوسطة (2 - 5 فروع)', large: 'شركة كبرى / مجموعة فروع ومصانع' }[scale]
       : { small: 'Small Business (1 Location)', medium: 'Medium Sized (2-5 branches)', large: 'Enterprise level' }[scale];
     
-    const messageText = `السلام عليكم ورحمة الله وبركاته،
+    const messageText = lang === 'ar'
+      ? `السلام عليكم ورحمة الله وبركاته،
 
-أرغب في الحصول على استشارة بشأن النظام البرمجي المناسب لنشاطي من موقع شركة نايل تكنو.
+أود طلب استشارة وعرض سعر بخصوص النظام البرمجي المقترح لنشاطنا من شركة نايل تكنو:
 
-• الأنظمة المقترحة: ${selectedSystems}
-• نوع النشاط: ${sectorLabel}
+• مجال النشاط: ${sectorLabel}
 • حجم المنشأة: ${scaleLabel}
-• تطبيقات الهاتف: ${needMobile ? 'مطلوبة' : 'غير مطلوبة'}
-• دعم الفاتورة الإلكترونية: ${needEInvoicing ? 'مطلوب' : 'غير مطلوب'}`;
+• الأنظمة المقترحة: ${selectedSystems}
+• تطبيقات الموبايل الميدانية: ${needMobile ? 'مطلوبة' : 'غير مطلوبة'}
+• الربط مع منظومة الفاتورة الإلكترونية: ${needEInvoicing ? 'مطلوب' : 'غير مطلوب'}
+
+شاكراً لكم حسن تعاونكم ومتابعتكم.`
+      : `Hello Nile Techno Sales Team,
+
+I would like to request a quotation and advisory for our business software solution:
+
+• Business Sector: ${sectorLabel}
+• Operational Scale: ${scaleLabel}
+• Suggested Systems: ${selectedSystems}
+• Mobile Field Apps: ${needMobile ? 'Required' : 'Not required'}
+• E-Invoicing Compliance: ${needEInvoicing ? 'Required' : 'Not required'}
+
+Thank you.`;
 
     window.open(createWhatsAppUrl(country, messageText), '_blank', 'noopener,noreferrer');
   };

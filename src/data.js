@@ -426,7 +426,7 @@ export const BRANCHES_DATA = [
     addressAr: 'طريق أم عمارة، حي بدر، الشفا، الرياض، المملكة العربية السعودية',
     addressEn: 'Am Omara, Badr District, Al-Shifa, Riyadh, Saudi Arabia',
     phone: '009660511351059',
-    whatsapp: '9660511351059',
+    whatsapp: '966511351059',
     mapEmbedUrl: 'https://maps.google.com/maps?q=24.551130,46.611130&hl=ar&z=15&output=embed',
     googleMapsUrl: 'https://www.google.com/maps?q=24.551130,46.611130'
   },
@@ -459,6 +459,26 @@ export const BRANCHES_DATA = [
 ];
 
 export const SUCCESS_PARTNERS = [
+  {
+    id: 'sp_malizia',
+    category: 'agencies_wholesale',
+    nameAr: 'الشركة المصرية الماليزية ش.م.م',
+    nameEn: 'Egyptian Malaysian Co. S.A.E',
+    industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
+    industryEn: 'Commercial Agencies & Distribution',
+    logoText: 'EM',
+    imageUrl: '/el_malizia_logo.svg'
+  },
+  {
+    id: 'sp_skyhold',
+    category: 'contracting',
+    nameAr: 'شركة سكاي هولد لخدمات السقالات والمقاولات',
+    nameEn: 'Sky Hold Scaffolding Service',
+    industryAr: 'المقاولات العامة وأنظمة السقالات المعدنية',
+    industryEn: 'Scaffolding Systems & Contracting',
+    logoText: 'SH',
+    imageUrl: '/sky_hold_logo.svg'
+  },
   // ================= 1. المملكة العربية السعودية (ksa) =================
   { id: 'ksa1', category: 'ksa', nameAr: 'شركة اسدام الفنية للزجاج', nameEn: 'Asdam Technical Glass Company', industryAr: 'الزجاج والمقاولات المتخصصة', industryEn: 'Glass & Special Contracting', logoText: 'AS' },
   { id: 'ksa2', category: 'ksa', nameAr: 'شركة هيكسا باور للأنظمة المتقدمة', nameEn: 'Hexa Power Advanced Systems', industryAr: 'أنظمة الطاقة والمقاولات الكهربائية', industryEn: 'Power & Electrical Systems', logoText: 'HP' },
@@ -720,6 +740,22 @@ export const TRANSLATIONS = {
 };
 
 export const HOMEPAGE_SLIDER_PARTNERS = [
+  {
+    id: 'hp_malizia',
+    nameAr: 'الشركة المصرية الماليزية ش.م.م',
+    nameEn: 'Egyptian Malaysian Co. S.A.E',
+    industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
+    industryEn: 'Commercial Agencies & Distribution',
+    imageUrl: '/el_malizia_logo.svg'
+  },
+  {
+    id: 'hp_skyhold',
+    nameAr: 'شركة سكاي هولد لخدمات السقالات والمقاولات',
+    nameEn: 'Sky Hold Scaffolding Service',
+    industryAr: 'المقاولات العامة وأنظمة السقالات المعدنية',
+    industryEn: 'Scaffolding Systems & Contracting',
+    imageUrl: '/sky_hold_logo.svg'
+  },
   {
     id: 'hp1',
     nameAr: 'مجموعة المجد للسيارات والمقاولات والنقل',

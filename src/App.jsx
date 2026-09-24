@@ -16,7 +16,7 @@ import { ThemeToggle } from './components/site/ThemeToggle';
 import { InteractiveConsole } from './components/sections/InteractiveConsole';
 import { HeroSection } from './components/sections/HeroSection';
 import { ModernSystemsShowcase } from './components/sections/ModernSystemsShowcase';
-import { ModernMobileShowcase } from './components/sections/ModernMobileShowcase';
+import { ModernMobileShowcase, AppleIcon, AndroidIcon } from './components/sections/ModernMobileShowcase';
 import { PartnersSection } from './components/sections/PartnersSection';
 import { BranchesSection } from './components/sections/BranchesSection';
 import PartnersDirectoryModal from './components/modals/PartnersDirectoryModal';
@@ -24,7 +24,7 @@ const VideoModal = lazy(() => import('./components/VideoModal.jsx'));
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Award, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Facebook, Globe, Linkedin, Mail,
-  Menu, MessageSquare, Phone, Play, Search, Send, ShieldCheck, Smartphone, Target, Calculator, SlidersHorizontal, Users,
+  Menu, MessageSquare, Monitor, Phone, Play, Search, Send, ShieldCheck, Smartphone, Target, Calculator, SlidersHorizontal, Users,
   X, Youtube, Sun, Moon, AlertTriangle
 } from 'lucide-react';
 import companyLogo from './assets/images/logo.png';
@@ -187,16 +187,22 @@ export default function App() {
     message: '',
     interestedModules: []
   });
+  const [quoteGroup, setQuoteGroup] = useState('systems'); // 'systems' | 'mobile'
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(true);
 
   const handleSelectAppForQuote = (appId) => {
+    setQuoteGroup('mobile');
     setFormData(prev => ({
       ...prev,
       interestedModules: prev.interestedModules.includes(appId)
         ? prev.interestedModules
         : [...prev.interestedModules, appId]
     }));
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const t = TRANSLATIONS[lang];
@@ -252,8 +258,14 @@ export default function App() {
       params.delete('q');
     }
     const newSearch = params.toString();
-    const newUrl = `${window.location.pathname}${newSearch ? '?' + newSearch : ''}`;
-    window.history.replaceState(null, '', newUrl);
+    const currentHash = window.location.hash || '';
+    const newUrl = `${window.location.pathname}${newSearch ? '?' + newSearch : ''}${currentHash}`;
+    
+    // Only invoke replaceState if the URL actually changed, preventing unwanted scroll resets
+    const currentFullUrl = `${window.location.pathname}${window.location.search}${currentHash}`;
+    if (currentFullUrl !== newUrl) {
+      window.history.replaceState(null, '', newUrl);
+    }
   }, [activeTab, searchQuery]);
 
   // Prevent background scrolling cleanly when a modal is open without locking html documentElement
@@ -391,19 +403,55 @@ export default function App() {
     if (!cleanName || !cleanPhone) return;
     setFormSubmitted(true);
 
-    const modulesText = formData.interestedModules.map(clean).join(', ') || (lang === 'ar' ? 'استشارة عامة' : 'General Consulting');
-    const messageText = `رسالة واردة من الموقع الرسمي لشركة نايل تكنو للبرمجيات.
+    // Categorize selected items into Systems vs Mobile Apps
+    const selectedSystems = SERVICE_MODULES.filter(m => formData.interestedModules.includes(m.id));
+    const selectedApps = MOBILE_APPS.filter(a => formData.interestedModules.includes(a.id));
 
-السلام عليكم ورحمة الله وبركاته،
+    let solutionsLines = [];
+    if (selectedSystems.length > 0) {
+      solutionsLines.push(lang === 'ar' ? '💻 الأنظمة والبرمجيات المحاسبية:' : '💻 ERP & Software Systems:');
+      selectedSystems.forEach(s => {
+        solutionsLines.push(`• ${lang === 'ar' ? s.titleAr : s.titleEn}`);
+      });
+    }
+    if (selectedApps.length > 0) {
+      if (solutionsLines.length > 0) solutionsLines.push('');
+      solutionsLines.push(lang === 'ar' ? '📱 تطبيقات الموبايل الميدانية:' : '📱 Mobile Field Apps:');
+      selectedApps.forEach(a => {
+        solutionsLines.push(`• ${lang === 'ar' ? a.titleAr : a.titleEn}`);
+      });
+    }
+    if (solutionsLines.length === 0) {
+      solutionsLines.push(lang === 'ar' ? '• استشارة عامة لتحديد النظام البرمجي الأنسب لنشاطنا' : '• General Software Advisory');
+    }
 
-أرغب في الاستفسار عن حلول شركة نايل تكنو للبرمجيات.
+    const solutionsBlock = solutionsLines.join('\n');
 
-الاسم: ${cleanName}
-رقم الهاتف: ${cleanPhone}
-البريد الإلكتروني: ${cleanEmail || 'غير متوفر'}
-اسم المؤسسة: ${cleanCompanyName || 'غير متوفر'}
-الأنظمة محل الاهتمام: ${modulesText}
-تفاصيل الاستفسار: ${cleanMessage || 'أرغب في الحصول على معلومات عن الحلول البرمجية المناسبة لنشاطي.'}`;
+    const messageText = lang === 'ar'
+      ? `السلام عليكم ورحمة الله وبركاته،
+
+أود طلب عرض سعر واستشارة بخصوص حلول شركة نايل تكنو للبرمجيات.
+
+بيانات التواصل:
+• الاسم: ${cleanName}
+• رقم الهاتف: ${cleanPhone}${cleanCompanyName ? `\n• اسم المنشأة: ${cleanCompanyName}` : ''}${cleanEmail ? `\n• البريد الإلكتروني: ${cleanEmail}` : ''}
+
+الأنظمة والحلول المختارة:
+${solutionsBlock}${cleanMessage ? `\n\nتفاصيل إضافية وملاحظات:\n${cleanMessage}` : ''}
+
+أرجو تزويدنا بعرض السعر والمواصفات الفنية. شاكراً لكم حسن تعاونكم ومتابعتكم.`
+      : `Hello Nile Techno Sales Team,
+
+I would like to request a quotation and consultation for Nile Techno software solutions.
+
+Contact Details:
+• Name: ${cleanName}
+• Phone: ${cleanPhone}${cleanCompanyName ? `\n• Company: ${cleanCompanyName}` : ''}${cleanEmail ? `\n• Email: ${cleanEmail}` : ''}
+
+Selected Systems & Apps:
+${solutionsBlock}${cleanMessage ? `\n\nAdditional Requirements:\n${cleanMessage}` : ''}
+
+Please share the technical specifications and quotation. Thank you.`;
 
     const whatsappUrl = `https://wa.me/201000082722?text=${encodeURIComponent(messageText)}`;
     
@@ -440,14 +488,14 @@ export default function App() {
           : (scrolled ? 'bg-[#050914]/65 border-slate-900/60 text-white shadow-lg' : 'bg-[#050914]/90 border-slate-900 text-white')
       } backdrop-blur-md border-b transition-all duration-300`}>
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center flex-row-reverse lg:flex-row transition-all duration-300 ${scrolled ? 'h-13 sm:h-14' : 'h-14 sm:h-15'}`}>
+          <div className={`flex justify-between items-center flex-row-reverse lg:flex-row transition-all duration-300 ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
             
             {/* Corporate Logo Emblem using high-performance vector component */}
-            <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="cursor-pointer">
+            <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="cursor-pointer flex items-center py-1 group">
               <NileTechnoLogo 
                 theme={theme} 
                 lang={lang} 
-                className={scrolled ? "h-8 sm:h-8.5 md:h-9 w-auto object-contain transition-all duration-300" : "h-8.5 sm:h-9 md:h-10 w-auto object-contain transition-all duration-300"}
+                className={scrolled ? "h-9 sm:h-10 md:h-11 w-auto object-contain transition-all duration-300" : "h-11 sm:h-13 md:h-15 w-auto object-contain transition-all duration-300"}
               />
             </a>
 
@@ -922,9 +970,28 @@ export default function App() {
 
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold mb-4 font-cairo border border-cyan-500/20 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
-              <Smartphone className="w-3.5 h-3.5 shrink-0" />
-              <span>{lang === 'ar' ? 'حلول الهواتف الذكية وتطبيقات أندرويد و iOS' : 'Hybrid Mobile Companion Apps'}</span>
+            <div className={`inline-flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 px-4 py-2 rounded-2xl text-xs font-bold mb-4 font-cairo transition-all duration-300 shadow-sm ${
+              theme === 'light'
+                ? 'bg-gradient-to-r from-blue-50/90 via-sky-50/90 to-cyan-50/90 border border-blue-200/80 text-slate-800'
+                : 'bg-gradient-to-r from-slate-900/95 via-blue-950/40 to-slate-900/95 border border-cyan-500/30 text-slate-100 shadow-cyan-950/20'
+            }`}>
+              <div className="flex items-center gap-1.5 text-cyan-600 dark:text-cyan-400">
+                <Smartphone className="w-4 h-4 shrink-0" />
+                <span className="font-extrabold">{lang === 'ar' ? 'حلول وتطبيقات الهواتف الذكية' : 'Smart Mobile Companion Apps'}</span>
+              </div>
+
+              <span className="text-slate-300 dark:text-slate-700 font-bold hidden sm:inline">•</span>
+
+              <div className="flex items-center gap-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-[11px] font-bold shadow-xs hover:scale-105 transition-transform">
+                  <AppleIcon className="w-3.5 h-3.5" />
+                  <span>iOS (iPhone)</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-emerald-600 text-white dark:bg-emerald-500 dark:text-slate-950 text-[11px] font-bold shadow-xs hover:scale-105 transition-transform">
+                  <AndroidIcon className="w-3.5 h-3.5" />
+                  <span>Android</span>
+                </span>
+              </div>
             </div>
             <h2 className={`text-3xl sm:text-4.5xl font-extrabold font-cairo mb-4 uppercase tracking-wide ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
@@ -1241,41 +1308,221 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Multiple Checklist select system interest */}
-                <div>
-                  <label className={`block text-xs font-semibold uppercase tracking-wider mb-3 font-cairo ${
-                    theme === 'light' ? 'text-slate-700' : 'text-slate-400'
-                  }`}>
-                    {lang === 'ar' ? 'حدد الأنظمة المحاسبية والبرامج المهتم بها:' : 'Mark the ERP systems that you require:'}
-                  </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {SERVICE_MODULES?.map((module) => {
-                      const isChecked = formData.interestedModules.includes(module.id);
-                      return (
-                        <button
-                          key={module.id}
-                          type="button"
-                          onClick={() => toggleModuleInterest(module.id)}
-                          className={`min-h-[44px] flex items-center gap-2 p-2.5 rounded-xl border text-right transition-all cursor-pointer font-cairo ${
-                            isChecked
-                              ? (theme === 'light' ? 'bg-cyan-50 border-cyan-500 text-cyan-700 font-bold' : 'bg-cyan-500/10 border-cyan-500 text-cyan-300')
-                              : (theme === 'light' ? 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50' : 'bg-slate-950 border-slate-800 text-slate-400 hover:bg-slate-900 hover:text-white')
-                          }`}
-                        >
-                          <span className={`w-4 h-4 rounded flex items-center justify-center shrink-0 border ${
-                            isChecked 
-                              ? 'bg-cyan-500 text-white border-cyan-500' 
-                              : (theme === 'light' ? 'border-slate-300' : 'border-slate-800')
-                          }`}>
-                            {isChecked && <span className="text-[10px] font-bold">✓</span>}
-                          </span>
-                          <span className="text-[11px] truncate font-semibold leading-none">
-                            {lang === 'ar' ? module.titleAr : module.titleEn}
-                          </span>
-                        </button>
-                      );
-                    })}
+                {/* Solution Category Track Selector: Systems vs Mobile Apps */}
+                <div className="space-y-3.5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <label className={`block text-xs font-black uppercase tracking-wider font-cairo ${
+                      theme === 'light' ? 'text-slate-800' : 'text-slate-200'
+                    }`}>
+                      {lang === 'ar' ? 'اختر مسار الحلول المطلوب لطلب العرض:' : 'Choose Solution Category for Quotation:'}
+                    </label>
+                    
+                    {/* Real-time selection badge */}
+                    <div className="flex items-center gap-1.5 text-[11px] font-cairo font-bold">
+                      <span className={theme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
+                        {lang === 'ar' ? 'المحدد:' : 'Selected:'}
+                      </span>
+                      {(() => {
+                        const sysCount = SERVICE_MODULES.filter(m => formData.interestedModules.includes(m.id)).length;
+                        const appCount = MOBILE_APPS.filter(a => formData.interestedModules.includes(a.id)).length;
+                        if (sysCount === 0 && appCount === 0) {
+                          return (
+                            <span className="px-2 py-0.5 rounded-full bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px]">
+                              {lang === 'ar' ? 'استشارة عامة' : 'General Consulting'}
+                            </span>
+                          );
+                        }
+                        return (
+                          <div className="flex items-center gap-1">
+                            {sysCount > 0 && (
+                              <span className="px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/25 text-[10px]">
+                                {sysCount} {lang === 'ar' ? 'نظام محاسبي' : 'ERP System'}
+                              </span>
+                            )}
+                            {appCount > 0 && (
+                              <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25 text-[10px]">
+                                {appCount} {lang === 'ar' ? 'تطبيق موبايل' : 'Mobile App'}
+                              </span>
+                            )}
+                          </div>
+                        );
+                      })()}
+                    </div>
                   </div>
+
+                  {/* High-visibility Group Tabs: Systems vs Mobile Apps */}
+                  <div className={`grid grid-cols-2 p-1.5 rounded-2xl border transition-colors ${
+                    theme === 'light' ? 'bg-slate-200/60 border-slate-300/80 shadow-inner' : 'bg-slate-950 border-slate-800 shadow-inner'
+                  }`}>
+                    {/* Option 1: ERP & Software Systems */}
+                    <button
+                      type="button"
+                      onClick={() => setQuoteGroup('systems')}
+                      className={`min-h-[46px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                        quoteGroup === 'systems'
+                          ? 'bg-gradient-to-r from-blue-700 via-[#0b72c9] to-cyan-600 text-white shadow-md shadow-[#0b72c9]/30 scale-[1.01]'
+                          : (theme === 'light' ? 'text-slate-700 hover:text-slate-900 hover:bg-white/60' : 'text-slate-400 hover:text-white hover:bg-slate-900/60')
+                      }`}
+                    >
+                      <Monitor className="w-4 h-4 shrink-0" />
+                      <span>{lang === 'ar' ? '💻 الأنظمة والبرمجيات (ERP)' : '💻 ERP & Software Systems'}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-bold ${
+                        quoteGroup === 'systems' ? 'bg-white/20 text-white' : 'bg-slate-300 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                      }`}>
+                        {SERVICE_MODULES.length}
+                      </span>
+                    </button>
+
+                    {/* Option 2: Mobile Apps */}
+                    <button
+                      type="button"
+                      onClick={() => setQuoteGroup('mobile')}
+                      className={`min-h-[46px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                        quoteGroup === 'mobile'
+                          ? 'bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white shadow-md shadow-emerald-600/30 scale-[1.01]'
+                          : (theme === 'light' ? 'text-slate-700 hover:text-slate-900 hover:bg-white/60' : 'text-slate-400 hover:text-white hover:bg-slate-900/60')
+                      }`}
+                    >
+                      <Smartphone className="w-4 h-4 shrink-0" />
+                      <span>{lang === 'ar' ? '📱 تطبيقات الموبايل الذكية' : '📱 Smart Mobile Apps'}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-bold ${
+                        quoteGroup === 'mobile' ? 'bg-white/20 text-white' : 'bg-slate-300 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                      }`}>
+                        {MOBILE_APPS.length}
+                      </span>
+                    </button>
+                  </div>
+
+                  {/* Systems View */}
+                  {quoteGroup === 'systems' && (
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between text-[11px] text-slate-500 font-cairo px-1">
+                        <span>{lang === 'ar' ? 'انقر لتحديد أو إلغاء تحديد الأنظمة المحاسبية المطلوبة:' : 'Click to select or deselect software systems:'}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const allSysIds = SERVICE_MODULES.map(m => m.id);
+                            const allSelected = allSysIds.every(id => formData.interestedModules.includes(id));
+                            setFormData(prev => ({
+                              ...prev,
+                              interestedModules: allSelected
+                                ? prev.interestedModules.filter(id => !allSysIds.includes(id))
+                                : Array.from(new Set([...prev.interestedModules, ...allSysIds]))
+                            }));
+                          }}
+                          className="text-cyan-600 dark:text-cyan-400 hover:underline font-bold cursor-pointer"
+                        >
+                          {SERVICE_MODULES.every(m => formData.interestedModules.includes(m.id))
+                            ? (lang === 'ar' ? 'إلغاء تحديد كل الأنظمة' : 'Deselect All')
+                            : (lang === 'ar' ? 'تحديد كل الأنظمة' : 'Select All')}
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                        {SERVICE_MODULES?.map((module) => {
+                          const isChecked = formData.interestedModules.includes(module.id);
+                          return (
+                            <button
+                              key={module.id}
+                              type="button"
+                              onClick={() => toggleModuleInterest(module.id)}
+                              className={`min-h-[46px] flex items-center justify-between p-2.5 rounded-xl border text-right transition-all cursor-pointer font-cairo ${
+                                isChecked
+                                  ? (theme === 'light' ? 'bg-cyan-50 border-cyan-500 text-cyan-900 shadow-sm' : 'bg-cyan-500/10 border-cyan-500 text-cyan-200 shadow-sm')
+                                  : (theme === 'light' ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300' : 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white')
+                              }`}
+                            >
+                              <div className="flex items-center gap-2.5 min-w-0 pr-1">
+                                <span className={`w-4.5 h-4.5 rounded-md flex items-center justify-center shrink-0 border transition-colors ${
+                                  isChecked 
+                                    ? 'bg-cyan-500 text-white border-cyan-500' 
+                                    : (theme === 'light' ? 'border-slate-300 bg-slate-50' : 'border-slate-700 bg-slate-900')
+                                }`}>
+                                  {isChecked && <span className="text-[11px] font-bold">✓</span>}
+                                </span>
+                                <span className="text-[11.5px] truncate font-bold leading-tight">
+                                  {lang === 'ar' ? module.titleAr : module.titleEn}
+                                </span>
+                              </div>
+                              <span className={`text-[9px] px-1.5 py-0.5 rounded font-medium shrink-0 ${
+                                isChecked ? 'bg-cyan-500/20 text-cyan-800 dark:text-cyan-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
+                              }`}>
+                                {module.category}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Mobile Apps View */}
+                  {quoteGroup === 'mobile' && (
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between text-[11px] text-slate-500 font-cairo px-1">
+                        <span>{lang === 'ar' ? 'انقر لتحديد أو إلغاء تحديد تطبيقات الموبايل المطلوبة:' : 'Click to select or deselect mobile applications:'}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const allMobIds = MOBILE_APPS.map(a => a.id);
+                            const allSelected = allMobIds.every(id => formData.interestedModules.includes(id));
+                            setFormData(prev => ({
+                              ...prev,
+                              interestedModules: allSelected
+                                ? prev.interestedModules.filter(id => !allMobIds.includes(id))
+                                : Array.from(new Set([...prev.interestedModules, ...allMobIds]))
+                            }));
+                          }}
+                          className="text-emerald-600 dark:text-emerald-400 hover:underline font-bold cursor-pointer"
+                        >
+                          {MOBILE_APPS.every(a => formData.interestedModules.includes(a.id))
+                            ? (lang === 'ar' ? 'إلغاء تحديد كل التطبيقات' : 'Deselect All')
+                            : (lang === 'ar' ? 'تحديد كل التطبيقات' : 'Select All')}
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {MOBILE_APPS?.map((app) => {
+                          const isChecked = formData.interestedModules.includes(app.id);
+                          return (
+                            <button
+                              key={app.id}
+                              type="button"
+                              onClick={() => toggleModuleInterest(app.id)}
+                              className={`min-h-[58px] flex items-center justify-between p-3 rounded-xl border text-right transition-all cursor-pointer font-cairo ${
+                                isChecked
+                                  ? (theme === 'light' ? 'bg-emerald-50 border-emerald-500 text-emerald-950 shadow-sm' : 'bg-emerald-500/10 border-emerald-500 text-emerald-200 shadow-sm')
+                                  : (theme === 'light' ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300' : 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white')
+                              }`}
+                            >
+                              <div className="flex items-center gap-3 min-w-0 pr-1">
+                                <span className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 border transition-colors ${
+                                  isChecked 
+                                    ? 'bg-emerald-500 text-white border-emerald-500' 
+                                    : (theme === 'light' ? 'border-slate-300 bg-slate-50' : 'border-slate-700 bg-slate-900')
+                                }`}>
+                                  {isChecked && <span className="text-[12px] font-bold">✓</span>}
+                                </span>
+                                <div className="text-right truncate">
+                                  <div className="text-xs sm:text-sm font-bold truncate">
+                                    {lang === 'ar' ? app.titleAr : app.titleEn}
+                                  </div>
+                                  <div className={`text-[10px] truncate ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
+                                    {lang === 'ar' ? app.descriptionAr : app.descriptionEn}
+                                  </div>
+                                </div>
+                              </div>
+                              <span className={`text-[9.5px] px-2 py-0.5 rounded-full font-bold shrink-0 ${
+                                isChecked ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                              }`}>
+                                Android & iOS
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Inquiry text */}
@@ -1324,7 +1571,7 @@ export default function App() {
 
       <footer 
         dir={lang === 'ar' ? 'rtl' : 'ltr'} 
-        className={`relative pt-16 pb-10 border-t transition-colors duration-300 overflow-hidden font-cairo ${
+        className={`relative pt-8 sm:pt-10 pb-5 border-t transition-colors duration-300 overflow-hidden font-cairo ${
           theme === 'light' 
             ? 'bg-[#ecf2f8] text-slate-750 border-slate-200/80 shadow-inner' 
             : 'bg-gradient-to-b from-[#060a12] via-[#04070d] to-[#010204] text-slate-400 border-slate-900'
@@ -1336,67 +1583,21 @@ export default function App() {
           theme === 'light' ? 'bg-cyan-200' : 'bg-cyan-500/10'
         }`}></div>
 
-        <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-1">
           
-          {/* Top Brand Block - Inspired by nile-techno-v2.vercel.app */}
-          <div className="flex flex-col items-center justify-center text-center pt-8 pb-14 mb-14 border-b border-dashed border-slate-200/60 dark:border-slate-800/60">
-            {/* The white/dark elegant rounded card */}
-            <div className="relative group mb-6">
-              {/* Glow shadow back-drop */}
-              <div className="absolute -inset-1.5 rounded-[28px] bg-gradient-to-r from-[#00c272] via-cyan-400 to-blue-500 opacity-20 blur-xl group-hover:opacity-45 transition-all duration-500"></div>
-              
-              <div className={`relative w-52 sm:w-64 h-32 sm:h-40 rounded-3xl overflow-hidden flex items-center justify-center shadow-xl ${
-                theme === 'light' ? 'bg-white border border-slate-200/50' : 'bg-slate-950/95 border border-slate-800'
-              }`}>
-                <img
-                  src={companyLogo}
-                  alt="Nile Techno Logo"
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-contain p-4 select-none transition-transform duration-350 group-hover:scale-[1.06]"
-                  onError={(e) => {
-                    e.target.src = logoTransparentWebp;
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Complex systems group tagline */}
-            <div className="flex items-center justify-center gap-2 mb-4 px-4 max-w-4xl flex-wrap">
-              <ShieldCheck className="w-5 h-5 text-[#00c272] shrink-0" />
-              <h3 className={`text-base sm:text-lg md:text-[20px] font-black tracking-wide leading-relaxed text-center ${
-                theme === 'light' ? 'text-slate-800 font-cairo' : 'text-white font-cairo'
-              }`}>
-                <span className="font-mono uppercase tracking-wider">Nile Techno Complex Systems Group</span>
-                <span className="mx-2 text-[#00c272]">•</span>
-                <span>{lang === 'ar' ? 'مجموعة نايل تكنو للأنظمة البرمجية المتكاملة' : 'Integrated Enterprise Software Group'}</span>
-              </h3>
-              <ShieldCheck className="w-5 h-5 text-[#00c272] shrink-0" />
-            </div>
-
-            {/* Certified tax/zakat partner description */}
-            <p className={`text-xs sm:text-sm leading-relaxed max-w-3xl px-4 font-bold text-center font-cairo ${
-              theme === 'light' ? 'text-slate-600' : 'text-slate-400'
-            }`}>
-              {lang === 'ar' 
-                ? 'شريكك البرمجي والضريبي المعتمد من قبل هيئة الزكاة والضريبة والجمارك بالمملكة العربية السعودية ومصلحة الضرائب المصرية.'
-                : 'Your certified software and tax partner, approved by the Zakat, Tax and Customs Authority (ZATCA) in Saudi Arabia and the Egyptian Tax Authority (ETA).'}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-6 sm:mb-8">
             
             {/* Column 1: Our Digital Vision (رؤيتنا الرقمية) */}
-            <div className="lg:col-span-4 space-y-4">
-              <div className="flex items-center gap-2 pb-3.5 border-b border-slate-200/80 dark:border-slate-800/50">
-                <span className="w-1.5 h-4.5 rounded-full bg-cyan-400 shrink-0"></span>
-                <h4 className={`text-base font-black font-cairo ${
+            <div className="lg:col-span-4 space-y-2.5">
+              <div className="flex items-center gap-2 pb-2 border-b border-slate-200/80 dark:border-slate-800/50">
+                <span className="w-1.5 h-4 rounded-full bg-cyan-400 shrink-0"></span>
+                <h4 className={`text-sm sm:text-base font-black font-cairo ${
                   theme === 'light' ? 'text-slate-800' : 'text-white'
                 }`}>
                   {lang === 'ar' ? 'رؤيتنا الرقمية' : 'Our Digital Vision'}
                 </h4>
               </div>
-              <p className={`text-[13px] leading-relaxed font-bold font-cairo ${
+              <p className={`text-[12.5px] leading-relaxed font-bold font-cairo ${
                 theme === 'light' ? 'text-slate-600' : 'text-slate-400'
               }`}>
                 {lang === 'ar' 
@@ -1406,57 +1607,57 @@ export default function App() {
             </div>
 
             {/* Column 2: Improved Software & Systems (البرمجيات والأنظمة المحسنة) */}
-            <div className="lg:col-span-5 space-y-4">
-              <div className="flex items-center gap-2 pb-3.5 border-b border-slate-200/80 dark:border-slate-800/50">
-                <span className="w-1.5 h-4.5 rounded-full bg-blue-500 shrink-0"></span>
-                <h4 className={`text-base font-black font-cairo ${
+            <div className="lg:col-span-5 space-y-2.5">
+              <div className="flex items-center gap-2 pb-2 border-b border-slate-200/80 dark:border-slate-800/50">
+                <span className="w-1.5 h-4 rounded-full bg-blue-500 shrink-0"></span>
+                <h4 className={`text-sm sm:text-base font-black font-cairo ${
                   theme === 'light' ? 'text-slate-800' : 'text-white'
                 }`}>
                   {lang === 'ar' ? 'البرمجيات والأنظمة المحسنة' : 'Enhanced Software & Systems'}
                 </h4>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3.5 gap-x-6 text-[13px] font-bold font-cairo">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2.5 gap-x-6 text-[12.5px] font-bold font-cairo">
                 {/* RTL Right side under Arabic / First block */}
-                <div className="space-y-3">
-                  <a href="#services" className={`flex items-center gap-2.5 transition-all duration-300 hover:scale-[1.03] hover:text-[#00c272] dark:hover:text-[#00e085] ${
+                <div className="space-y-2">
+                  <a href="#services" className={`flex items-center gap-2 transition-all duration-300 hover:scale-[1.02] hover:text-[#00c272] dark:hover:text-[#00e085] ${
                     theme === 'light' ? 'text-slate-600' : 'text-slate-400'
                   }`}>
-                    <span className="text-base shrink-0">📦</span>
+                    <span className="text-sm shrink-0">📦</span>
                     <span>{lang === 'ar' ? 'مبيعات الكاشير والمستودعات' : 'Point of Sale / POS'}</span>
                   </a>
-                  <a href="#services" className={`flex items-center gap-2.5 transition-all duration-300 hover:scale-[1.03] hover:text-[#00c272] dark:hover:text-[#00e085] ${
+                  <a href="#services" className={`flex items-center gap-2 transition-all duration-300 hover:scale-[1.02] hover:text-[#00c272] dark:hover:text-[#00e085] ${
                     theme === 'light' ? 'text-slate-600' : 'text-slate-400'
                   }`}>
-                    <span className="text-base shrink-0">🏗️</span>
+                    <span className="text-sm shrink-0">🏗️</span>
                     <span>{lang === 'ar' ? 'برامج المصانع والورش والإنتاج' : 'Manufacturing & Industry'}</span>
                   </a>
-                  <a href="#services" className={`flex items-center gap-2.5 transition-all duration-300 hover:scale-[1.03] hover:text-[#00c272] dark:hover:text-[#00e085] ${
+                  <a href="#services" className={`flex items-center gap-2 transition-all duration-300 hover:scale-[1.02] hover:text-[#00c272] dark:hover:text-[#00e085] ${
                     theme === 'light' ? 'text-slate-600' : 'text-slate-400'
                   }`}>
-                    <span className="text-base shrink-0">🍕</span>
+                    <span className="text-sm shrink-0">🍕</span>
                     <span>{lang === 'ar' ? 'إدارة المطاعم والكافيهات' : 'Restaurants & Cafes POS'}</span>
                   </a>
                 </div>
 
                 {/* RTL Left side under Arabic / Second block */}
-                <div className="space-y-3">
-                  <a href="#services" className={`flex items-center gap-2.5 transition-all duration-300 hover:scale-[1.03] hover:text-[#00c272] dark:hover:text-[#00e085] ${
+                <div className="space-y-2">
+                  <a href="#services" className={`flex items-center gap-2 transition-all duration-300 hover:scale-[1.02] hover:text-[#00c272] dark:hover:text-[#00e085] ${
                     theme === 'light' ? 'text-slate-600' : 'text-slate-400'
                   }`}>
-                    <span className="text-base shrink-0">👔</span>
+                    <span className="text-sm shrink-0">👔</span>
                     <span>{lang === 'ar' ? 'شؤون الموظفين والمرتبات' : 'HR & Payroll Systems'}</span>
                   </a>
-                  <a href="#services" className={`flex items-center gap-2.5 transition-all duration-300 hover:scale-[1.03] hover:text-[#00c272] dark:hover:text-[#00e085] ${
+                  <a href="#services" className={`flex items-center gap-2 transition-all duration-300 hover:scale-[1.02] hover:text-[#00c272] dark:hover:text-[#00e085] ${
                     theme === 'light' ? 'text-slate-600' : 'text-slate-400'
                   }`}>
-                    <span className="text-base shrink-0">🏢</span>
+                    <span className="text-sm shrink-0">🏢</span>
                     <span>{lang === 'ar' ? 'المقاولات والعقارات المتكاملة' : 'Contracting & Real Estate'}</span>
                   </a>
-                  <a href="#services" className={`flex items-center gap-2.5 transition-all duration-300 hover:scale-[1.03] hover:text-[#00c272] dark:hover:text-[#00e085] ${
+                  <a href="#services" className={`flex items-center gap-2 transition-all duration-300 hover:scale-[1.02] hover:text-[#00c272] dark:hover:text-[#00e085] ${
                     theme === 'light' ? 'text-slate-600' : 'text-slate-400'
                   }`}>
-                    <span className="text-base shrink-0">📊</span>
+                    <span className="text-sm shrink-0">📊</span>
                     <span>{lang === 'ar' ? 'النسخة المحاسبية السحابية' : 'Cloud Accounting Version'}</span>
                   </a>
                 </div>
@@ -1464,115 +1665,119 @@ export default function App() {
             </div>
 
             {/* Column 3: Contact Us & Social Links (اتصل بنا والشبكات الاجتماعية) */}
-            <div className="lg:col-span-3 space-y-5">
-              <div className="flex items-center gap-2 pb-3.5 border-b border-slate-200/80 dark:border-slate-800/50">
-                <span className="w-1.5 h-4.5 rounded-full bg-indigo-500 shrink-0"></span>
-                <h4 className={`text-base font-black font-cairo ${
+            <div className="lg:col-span-3 space-y-3">
+              <div className="flex items-center gap-2 pb-2 border-b border-slate-200/80 dark:border-slate-800/50">
+                <span className="w-1.5 h-4 rounded-full bg-indigo-500 shrink-0"></span>
+                <h4 className={`text-sm sm:text-base font-black font-cairo ${
                   theme === 'light' ? 'text-slate-800' : 'text-white'
                 }`}>
                   {lang === 'ar' ? 'اتصل بنا والشبكات الاجتماعية' : 'Get Connected & Social'}
                 </h4>
               </div>
               
-              <ul className={`space-y-4 text-xs font-semibold font-cairo ${
+              <ul className={`space-y-2.5 text-xs font-semibold font-cairo ${
                 theme === 'light' ? 'text-slate-700' : 'text-slate-350'
               }`}>
-                <li className="flex gap-2.5 items-center justify-between hover:text-[#00c272] dark:hover:text-[#00e085] transition-colors duration-300">
+                <li className="flex gap-2 items-center justify-between hover:text-[#00c272] dark:hover:text-[#00e085] transition-colors duration-300">
                   <div className="flex flex-col items-start font-bold">
-                    <span className="text-[10px] text-slate-400 leading-none mb-1">{lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia Branch'}</span>
-                    <span className="font-mono text-sm tracking-wide" dir="ltr">KSA: +966 51 135 1059</span>
+                    <span className="text-[9.5px] text-slate-400 leading-none mb-0.5">{lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia Branch'}</span>
+                    <span className="font-mono text-xs tracking-wide" dir="ltr">KSA: +966 51 135 1059</span>
                   </div>
-                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0 border border-emerald-500/10">
-                    <Phone className="w-4 h-4" />
+                  <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0 border border-emerald-500/10">
+                    <Phone className="w-3.5 h-3.5" />
                   </div>
                 </li>
-                <li className="flex gap-2.5 items-center justify-between hover:text-cyan-500 transition-colors duration-300">
+                <li className="flex gap-2 items-center justify-between hover:text-cyan-500 transition-colors duration-300">
                   <div className="flex flex-col items-start font-bold">
-                    <span className="text-[10px] text-slate-400 leading-none mb-1">{lang === 'ar' ? 'جمهورية مصر العربية' : 'Egypt Office Branch'}</span>
-                    <span className="font-mono text-sm tracking-wide" dir="ltr">EGY: +20 1000082722</span>
+                    <span className="text-[9.5px] text-slate-400 leading-none mb-0.5">{lang === 'ar' ? 'جمهورية مصر العربية' : 'Egypt Office Branch'}</span>
+                    <span className="font-mono text-xs tracking-wide" dir="ltr">EGY: +20 1000082722</span>
                   </div>
-                  <div className="w-8 h-8 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-500 shrink-0 border border-cyan-500/10">
-                    <Phone className="w-4 h-4" />
+                  <div className="w-7 h-7 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-500 shrink-0 border border-cyan-500/10">
+                    <Phone className="w-3.5 h-3.5" />
                   </div>
                 </li>
-                <li className="flex gap-2.5 items-center justify-between hover:text-indigo-500 transition-colors duration-300">
+                <li className="flex gap-2 items-center justify-between hover:text-indigo-500 transition-colors duration-300">
                   <div className="flex flex-col items-start font-bold">
-                    <span className="text-[10px] text-slate-400 leading-none mb-1">{lang === 'ar' ? 'البريد الإلكتروني الموحد' : 'Corporate Email Address'}</span>
-                    <span className="lowercase font-mono text-[13px]">info@niletechno.com</span>
+                    <span className="text-[9.5px] text-slate-400 leading-none mb-0.5">{lang === 'ar' ? 'البريد الإلكتروني الموحد' : 'Corporate Email Address'}</span>
+                    <span className="lowercase font-mono text-xs">info@niletechno.com</span>
                   </div>
-                  <div className="w-8 h-8 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0 border border-indigo-500/10">
-                    <Mail className="w-4 h-4" />
+                  <div className="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0 border border-indigo-500/10">
+                    <Mail className="w-3.5 h-3.5" />
                   </div>
                 </li>
               </ul>
 
-              {/* Sophisticated Rounded Square Buttons with Dynamic Hover Colors */}
-              <div className="flex gap-3 pt-2 justify-center sm:justify-start">
+              {/* Sophisticated Compact Social Buttons */}
+              <div className="flex gap-2.5 pt-1 justify-center sm:justify-start">
                 <a 
-                  href={`https://wa.me/+201000082722?text=${encodeURIComponent('رسالة واردة من الموقع الرسمي لشركة نايل تكنو للبرمجيات.\n\nالسلام عليكم ورحمة الله وبركاته، أرغب في التواصل مع فريق المبيعات والاستفسار عن الحلول المناسبة لنشاطي.')}`} 
+                  href={`https://wa.me/+201000082722?text=${encodeURIComponent(
+                    lang === 'ar'
+                      ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود الاستفسار والتواصل مع فريق خدمة العملاء والمبيعات بشركة نايل تكنو للبرمجيات بخصوص الحلول والأنظمة المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم.'
+                      : 'Hello Nile Techno Sales Team,\n\nI would like to inquire about your software solutions and enterprise ERP systems.\n\nThank you.'
+                  )}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   aria-label="WhatsApp Support"
-                  className={`flex items-center justify-center w-10 h-10 rounded-xl border transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 ${
+                  className={`flex items-center justify-center w-8 h-8 rounded-lg border transition-all duration-300 hover:scale-110 ${
                     theme === 'light' 
-                      ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] shadow-sm shadow-emerald-500/5' 
-                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] hover:shadow-lg hover:shadow-[#25D366]/20'
+                      ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] shadow-xs' 
+                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366]'
                   }`}
                   title="WhatsApp Support"
                 >
-                  <MessageSquare className="w-[18px] h-[18px]" />
+                  <MessageSquare className="w-4 h-4" />
                 </a>
                 <a 
                   href="https://www.youtube.com/channel/UCZ76wzqWkF8fW4StPpc9L8A" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   aria-label="YouTube Channel"
-                  className={`flex items-center justify-center w-10 h-10 rounded-xl border transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 ${
+                  className={`flex items-center justify-center w-8 h-8 rounded-lg border transition-all duration-300 hover:scale-110 ${
                     theme === 'light' 
-                      ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000] shadow-sm shadow-red-500/5' 
-                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000] hover:shadow-lg hover:shadow-[#FF0000]/20'
+                      ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000] shadow-xs' 
+                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]'
                   }`}
                   title="YouTube"
                 >
-                  <Youtube className="w-[18px] h-[18px]" />
+                  <Youtube className="w-4 h-4" />
                 </a>
                 <a 
                   href="https://www.facebook.com/niletechnosoftware?_rdc=1&_rdr#" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   aria-label="Facebook Page"
-                  className={`flex items-center justify-center w-10 h-10 rounded-xl border transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 ${
+                  className={`flex items-center justify-center w-8 h-8 rounded-lg border transition-all duration-300 hover:scale-110 ${
                     theme === 'light' 
-                      ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] shadow-sm shadow-blue-500/5' 
-                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:shadow-lg hover:shadow-[#1877F2]/20'
+                      ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] shadow-xs' 
+                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]'
                   }`}
                   title="Facebook"
                 >
-                  <Facebook className="w-[18px] h-[18px]" />
+                  <Facebook className="w-4 h-4" />
                 </a>
                 <a 
                   href="https://www.linkedin.com/company/niletechno/posts/?feedView=all" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   aria-label="LinkedIn Profile"
-                  className={`flex items-center justify-center w-10 h-10 rounded-xl border transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 ${
+                  className={`flex items-center justify-center w-8 h-8 rounded-lg border transition-all duration-300 hover:scale-110 ${
                     theme === 'light' 
-                      ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] shadow-sm shadow-blue-650/5' 
-                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] hover:shadow-lg hover:shadow-[#0A66C2]/20'
+                      ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] shadow-xs' 
+                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]'
                   }`}
                   title="LinkedIn"
                 >
-                  <Linkedin className="w-[18px] h-[18px]" />
+                  <Linkedin className="w-4 h-4" />
                 </a>
               </div>
             </div>
 
           </div>
           {/* Bottom Footer legal bar */}
-          <div className={`pt-8 text-center border-t ${
+          <div className={`pt-4 text-center border-t ${
             theme === 'light' ? 'border-slate-200/80' : 'border-slate-800/50'
           }`}>
-            <span className={`text-xs font-cairo font-semibold block tracking-wide ${
+            <span className={`text-[11px] font-cairo font-semibold block tracking-wide ${
               theme === 'light' ? 'text-slate-650' : 'text-slate-400'
             }`}>
               Nile Techno — All rights reserved | 2026 ©
@@ -1586,7 +1791,11 @@ export default function App() {
       <div className="fixed bottom-6 left-6 z-[100] font-cairo select-none flex flex-col gap-2.5 items-start">
         {/* Saudi Arabia Sales Capsule */}
         <motion.a
-          href={`https://wa.me/+966511351059?text=${encodeURIComponent('رسالة واردة من الموقع الرسمي لشركة نايل تكنو للبرمجيات.\n\nالسلام عليكم ورحمة الله وبركاته، أرغب في الاستفسار عن الحلول البرمجية المناسبة لنشاطي.')}`}
+          href={`https://wa.me/+966511351059?text=${encodeURIComponent(
+            lang === 'ar'
+              ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع المملكة العربية السعودية) للاستفسار عن الأنظمة والحلول البرمجية المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم.'
+              : 'Hello Nile Techno Sales Team (Saudi Arabia Branch),\n\nI would like to inquire about your software solutions and enterprise ERP systems.\n\nThank you.'
+          )}`}
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, x: -30, y: 15 }}
@@ -1625,7 +1834,11 @@ export default function App() {
 
         {/* Egypt Sales Capsule */}
         <motion.a
-          href={`https://wa.me/+201000082722?text=${encodeURIComponent('رسالة واردة من الموقع الرسمي لشركة نايل تكنو للبرمجيات.\n\nالسلام عليكم ورحمة الله وبركاته، أرغب في الاستفسار عن الحلول البرمجية المناسبة لنشاطي.')}`}
+          href={`https://wa.me/+201000082722?text=${encodeURIComponent(
+            lang === 'ar'
+              ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع مصر) للاستفسار عن الأنظمة والحلول البرمجية المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم.'
+              : 'Hello Nile Techno Sales Team (Egypt Branch),\n\nI would like to inquire about your software solutions and enterprise ERP systems.\n\nThank you.'
+          )}`}
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, x: -30, y: 15 }}

@@ -39,8 +39,8 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
   };
 
   const partnerWhatsAppText = isRtl
-    ? 'السلام عليكم ورحمة الله وبركاته، أرغب في الاستفسار عن سابقة أعمال وخدمات شركة نايل تكنو للبرمجيات.'
-    : 'Hello, I would like to inquire about Nile Techno software services and portfolio.';
+    ? `السلام عليكم ورحمة الله وبركاته،\n\nأود الاستفسار والاطلاع على سابقة أعمال وحلول شركة نايل تكنو للبرمجيات وشركاء النجاح.\n\nشاكراً لكم حسن تعاونكم.`
+    : `Hello Nile Techno Team,\n\nI would like to inquire about your software solutions, enterprise portfolio, and success partners.\n\nThank you.`;
 
   return (
     <section 

@@ -118,7 +118,7 @@ export function HeroSection({
   return (
     <section 
       id="home" 
-      className={`relative pt-16 sm:pt-18 md:pt-20 pb-12 sm:pb-16 overflow-hidden transition-colors duration-500 ${
+      className={`relative pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 overflow-hidden transition-colors duration-500 ${
         theme === 'light'
           ? 'bg-gradient-to-b from-sky-50/70 via-white to-slate-50 text-slate-800'
           : 'bg-gradient-to-b from-[#020612] via-[#050c20] to-[#02040b] text-white'

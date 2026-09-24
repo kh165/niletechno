@@ -5,7 +5,7 @@ import { PartnerLogo } from '../site/BrandVisuals';
 import { createWhatsAppUrl } from '../../constants/config';
 import companyLogo from '../../assets/images/logo.png';
 
-export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' }) {
+export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', theme = 'dark' }) {
   const [partnerActiveTab, setPartnerActiveTab] = useState('all');
   const [partnerSearchInput, setPartnerSearchInput] = useState('');
   const [partnerSearchQuery, setPartnerSearchQuery] = useState('');
@@ -80,7 +80,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' })
 
   if (!isOpen) return null;
 
-  const waSalesText = 'السلام عليكم ورحمة الله، أرغب في الاستفسار عن سابقة أعمال وحلول شركة نايل تكنو للبرمجيات.';
+  const waSalesText = `السلام عليكم ورحمة الله وبركاته،\n\nأود الاستفسار والاطلاع على سابقة أعمال شركة نايل تكنو للبرمجيات والمشاريع المنفذة في مجال نشاطنا.\n\nشاكراً لكم حسن تعاونكم.`;
 
   return (
     <div 
@@ -237,7 +237,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar' })
                       className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-slate-200 hover:border-[#00a3c4]/60 bg-white shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex items-center justify-center p-2 sm:p-2.5 relative overflow-hidden group cursor-pointer"
                     >
                       <div className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                        <PartnerLogo partner={partner} theme="light" />
+                        <PartnerLogo partner={partner} theme={theme} />
                       </div>
                     </div>
                   );

@@ -35,14 +35,13 @@ export function HeroSection({
     }
   };
 
-  // Auto-cycle platform carousel when not hovered
+  // 5-second automatic looping carousel between the 3 platforms
   useEffect(() => {
-    if (isHoveredPlatforms) return undefined;
     const interval = setInterval(() => {
       setActivePlatformIndex((prev) => (prev + 1) % 3);
-    }, 6000);
+    }, 5000);
     return () => clearInterval(interval);
-  }, [isHoveredPlatforms, setActivePlatformIndex]);
+  }, [activePlatformIndex, setActivePlatformIndex]);
 
   const platforms = [
     {
@@ -54,7 +53,7 @@ export function HeroSection({
       badgeEn: '100% Cloud ERP',
       headlineAr: 'برنامج المحاسبة السحابي المتكامل',
       headlineEn: 'Nile Techno Cloud ERP',
-      descAr: 'أدر أعمالك، مبيعاتك، مخازنك، وفواتيرك الإلكترونية المتوافقة مع هيئة الزكاة والضريبة (ZATCA) وهيئة الضرائب المصرية (ETA) مباشرة عبر الويب. حماية عالية، نسخ احتياطي دوري، وسهولة تامة بالوصول من أي متصفح أو جوال.',
+      descAr: 'أدر أعمالك، مبيعاتك، مخازنك، وفواتيرك الإلكترونية المتوافقة مع مصلحة الضرائب المصرية (ETA) وهيئة الزكاة والضريبة والجمارك (ZATCA) مباشرة عبر الويب. حماية عالية، نسخ احتياطي دوري، وسهولة تامة بالوصول من أي متصفح أو جوال.',
       descEn: 'Manage sales, warehouses, and tax-compliant e-invoicing from any browser. High security, automated backups, and instant cross-device synchronization.',
       actionTextAr: 'الدخول للخدمة السحابية',
       actionTextEn: 'Launch Cloud Portal',
@@ -63,7 +62,7 @@ export function HeroSection({
       stats: [
         { labelAr: 'الوصول من أي مكان:', labelEn: 'Global access:', valAr: 'متاح 24/7', valEn: 'Available' },
         { labelAr: 'تشفير البيانات:', labelEn: 'Security:', valAr: 'مشفر بالكامل SSL', valEn: 'Encrypted' },
-        { labelAr: 'الفاتورة الإلكترونية:', labelEn: 'E-Invoice:', valAr: 'معتمدة ZATCA/ETA', valEn: 'Compliant' },
+        { labelAr: 'الفاتورة الإلكترونية:', labelEn: 'E-Invoice:', valAr: 'معتمدة ETA / ZATCA', valEn: 'Compliant' },
         { labelAr: 'النسخ الاحتياطي:', labelEn: 'Backups:', valAr: 'آلي سحابي', valEn: 'Automated' },
       ]
     },
@@ -121,55 +120,36 @@ export function HeroSection({
       className={`relative pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 overflow-hidden transition-colors duration-500 ${
         theme === 'light'
           ? 'bg-gradient-to-b from-sky-50/70 via-white to-slate-50 text-slate-800'
-          : 'bg-gradient-to-b from-[#020612] via-[#050c20] to-[#02040b] text-white'
+          : 'bg-gradient-to-b from-[#0b1329] via-[#0f172a] to-[#0b1329] text-white'
       }`}
     >
-      {/* Dynamic Animated Background Grid & Cyber Mesh */}
+      {/* Dynamic Animated Background Grid & Ambient Mesh */}
       <div className={`absolute inset-0 pointer-events-none ${
         theme === 'light'
           ? 'bg-[radial-gradient(#0284c718_1px,transparent_1px)] [background-size:28px_28px] opacity-80'
-          : 'bg-[radial-gradient(#38bdf822_1px,transparent_1px)] [background-size:32px_32px] opacity-50'
+          : 'bg-[radial-gradient(#38bdf815_1px,transparent_1px)] [background-size:32px_32px] opacity-35'
       }`} />
 
-      {/* Cyber Laser Horizon Scanning Beam */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            y: ['-10%', '110%']
-          }}
-          transition={{
-            duration: 9,
-            repeat: Infinity,
-            ease: 'linear'
-          }}
-          className={`w-full h-24 opacity-15 sm:opacity-20 blur-2xl ${
-            theme === 'light'
-              ? 'bg-gradient-to-b from-transparent via-cyan-400 to-transparent'
-              : 'bg-gradient-to-b from-transparent via-cyan-500 to-transparent'
-          }`}
-        />
-      </div>
-
-      {/* Multi-Layered Floating Glowing Orbs with Smooth Easing */}
+      {/* Multi-Layered Floating Ambient Light Glow with Smooth Easing */}
       <motion.div 
         animate={{ 
-          x: [0, 35, -20, 0], 
-          y: [0, -30, 20, 0],
-          scale: [1, 1.15, 0.95, 1],
-          opacity: [0.35, 0.6, 0.4, 0.35]
+          x: [0, 25, -15, 0], 
+          y: [0, -20, 15, 0],
+          scale: [1, 1.08, 0.98, 1],
+          opacity: [0.15, 0.25, 0.18, 0.15]
         }} 
-        transition={{ repeat: Infinity, duration: 14, ease: 'easeInOut' }}
-        className="absolute top-10 left-10 md:left-1/4 w-80 sm:w-96 h-80 sm:h-96 bg-cyan-500/20 rounded-full blur-[110px] pointer-events-none"
+        transition={{ repeat: Infinity, duration: 16, ease: 'easeInOut' }}
+        className="absolute top-10 left-10 md:left-1/4 w-80 sm:w-96 h-80 sm:h-96 bg-cyan-500/15 rounded-full blur-[120px] pointer-events-none"
       />
       <motion.div 
         animate={{ 
-          x: [0, -40, 25, 0], 
-          y: [0, 35, -25, 0],
-          scale: [1, 1.2, 0.9, 1],
-          opacity: [0.3, 0.55, 0.35, 0.3]
+          x: [0, -30, 20, 0], 
+          y: [0, 25, -20, 0],
+          scale: [1, 1.1, 0.95, 1],
+          opacity: [0.15, 0.28, 0.18, 0.15]
         }} 
-        transition={{ repeat: Infinity, duration: 18, ease: 'easeInOut', delay: 1 }}
-        className="absolute bottom-10 right-10 md:right-1/4 w-96 sm:w-[420px] h-96 sm:h-[420px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"
+        transition={{ repeat: Infinity, duration: 20, ease: 'easeInOut', delay: 1 }}
+        className="absolute bottom-10 right-10 md:right-1/4 w-96 sm:w-[420px] h-96 sm:h-[420px] bg-blue-600/15 rounded-full blur-[130px] pointer-events-none"
       />
       <motion.div 
         animate={{ 
@@ -222,7 +202,7 @@ export function HeroSection({
         <div className={`relative w-full rounded-3xl border backdrop-blur-xl overflow-hidden p-6 sm:p-10 md:p-12 mb-8 sm:mb-10 transition-all duration-300 ${
           theme === 'light'
             ? 'bg-white/90 border-cyan-200/70 shadow-2xl shadow-cyan-100/40'
-            : 'bg-[#060b18]/90 border-cyan-500/25 shadow-2xl shadow-cyan-950/60'
+            : 'bg-[#131d35]/90 border-slate-700/60 shadow-xl'
         }`}>
           {/* Subtle Top Accent */}
           <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
@@ -275,12 +255,8 @@ export function HeroSection({
           </motion.p>
         </div>
 
-        {/* Interactive Platform Previewer (Cloud / Desktop / Mobile) - Clean & Wide */}
-        <div 
-          onMouseEnter={() => setIsHoveredPlatforms(true)}
-          onMouseLeave={() => setIsHoveredPlatforms(false)}
-          className="w-full text-right font-cairo"
-        >
+        {/* Interactive Platform Previewer (Cloud / Desktop / Mobile) - Looping Visual Showcase */}
+        <div className="w-full text-right font-cairo">
           {/* Platform Tab Navigation Buttons */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-4">
             {platforms.map((tab) => {
@@ -290,16 +266,25 @@ export function HeroSection({
                 <button
                   key={tab.id}
                   onClick={() => setActivePlatformIndex(tab.id)}
-                  className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer font-cairo ${
+                  className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer font-cairo relative overflow-hidden ${
                     isActive
                       ? 'bg-cyan-500 text-white border-cyan-400 shadow-md shadow-cyan-500/20'
                       : theme === 'light'
                         ? 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
-                        : 'bg-slate-900/70 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                        : 'bg-[#15203b] border-slate-700/60 text-slate-300 hover:border-slate-600 hover:text-white'
                   }`}
                 >
                   <TabIcon className="w-3.5 h-3.5" />
                   <span>{lang === 'ar' ? tab.titleAr : tab.titleEn}</span>
+                  {isActive && (
+                    <motion.div
+                      key={`progress-${activePlatformIndex}`}
+                      initial={{ width: '0%' }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: 5, ease: 'linear' }}
+                      className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-white/80 rounded-full"
+                    />
+                  )}
                 </button>
               );
             })}
@@ -317,7 +302,7 @@ export function HeroSection({
                 className={`grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 sm:p-7 rounded-2xl border transition-all duration-300 items-center text-right ${
                   theme === 'light'
                     ? 'bg-white/95 border-slate-200 shadow-md'
-                    : 'bg-[#080e1e]/90 border-slate-800 shadow-xl'
+                    : 'bg-[#131d35]/95 border-slate-700/60 shadow-xl'
                 }`}
               >
                 {/* Platform Description & CTA */}
@@ -354,7 +339,7 @@ export function HeroSection({
                   <div className={`p-4 rounded-xl border text-xs text-right ${
                     theme === 'light' 
                       ? 'bg-slate-50 border-slate-200 text-slate-700' 
-                      : 'bg-slate-950/80 border-slate-800 text-cyan-300'
+                      : 'bg-[#0e1629] border-slate-700/60 text-slate-200'
                   }`}>
                     <div className="flex items-center justify-between pb-2 mb-3 border-b border-cyan-500/10">
                       <span className="text-xs font-bold text-emerald-500 flex items-center gap-1.5 font-cairo">
@@ -399,7 +384,7 @@ export function HeroSection({
             <div 
               key={idx} 
               className={`p-3 rounded-xl border transition-all duration-200 ${
-                theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-900/40 border-slate-800/80'
+                theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-[#131d35]/70 border-slate-700/50'
               }`}
             >
               <div className="text-lg sm:text-xl font-black font-mono text-cyan-500 mb-0.5">

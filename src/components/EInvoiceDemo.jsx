@@ -19,11 +19,11 @@ import {
 export default function EInvoiceDemo({ lang, theme }) {
   const t = TRANSLATIONS[lang];
 
-  // Invoice Data inputs
+  // Invoice Data inputs - Egypt prioritized by default
   const [sellerName, setSellerName] = useState('شركة نايل تكنو للبرمجيات');
-  const [vatNumber, setVatNumber] = useState('310123456700003');
-  const [totalPrice, setTotalPrice] = useState('115.00');
-  const [vatRate, setVatRate] = useState(15);
+  const [vatNumber, setVatNumber] = useState('100245789');
+  const [totalPrice, setTotalPrice] = useState('114.00');
+  const [vatRate, setVatRate] = useState(14);
   
   // Format fixed invoice timestamp at creation time (Does not tick continuously)
   const getFormattedNow = () => {
@@ -73,7 +73,7 @@ export default function EInvoiceDemo({ lang, theme }) {
 
     try {
       const displaySeller = sellerName.trim() || 'شركة نايل تكنو للبرمجيات';
-      const displayVat = vatNumber.trim() || '310123456700003';
+      const displayVat = vatNumber.trim() || '100245789';
       const displayPrice = grossTotal.toFixed(2);
       const displayTax = taxAmount.toFixed(2);
       const displayTime = invoiceTimestamp.trim() || getFormattedNow();
@@ -130,7 +130,7 @@ export default function EInvoiceDemo({ lang, theme }) {
     <div id="einvoice-simulator" className={`relative rounded-3xl border p-6 md:p-8 transition-colors duration-300 ${
       theme === 'light' 
         ? 'bg-slate-50/70 border-slate-200 text-slate-800 shadow-sm' 
-        : 'bg-[#060b17] border-slate-800 text-white'
+        : 'bg-[#131d35] border-slate-700/60 text-white'
     }`}>
       
       {/* Title & Simulator Disclaimer */}
@@ -327,8 +327,8 @@ export default function EInvoiceDemo({ lang, theme }) {
                       : 'bg-slate-950 border-slate-800 text-slate-200 focus:border-cyan-500'
                   }`}
                 >
-                  <option value={15}>15% ({lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'})</option>
                   <option value={14}>14% ({lang === 'ar' ? 'جمهورية مصر العربية' : 'Egypt'})</option>
+                  <option value={15}>15% ({lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'})</option>
                   <option value={5}>5% ({lang === 'ar' ? 'فئات خاصة / معفاة' : 'Special / Exempt'})</option>
                 </select>
               </div>

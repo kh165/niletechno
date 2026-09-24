@@ -6,6 +6,7 @@ import { createWhatsAppUrl } from '../../constants/config';
 import companyLogo from '../../assets/images/logo.png';
 
 export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', theme = 'dark' }) {
+  const isRtl = lang === 'ar';
   const [partnerActiveTab, setPartnerActiveTab] = useState('all');
   const [partnerSearchInput, setPartnerSearchInput] = useState('');
   const [partnerSearchQuery, setPartnerSearchQuery] = useState('');
@@ -34,6 +35,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
   // Categories matching the official Nile Techno portal
   const categories = useMemo(() => [
     { id: 'all', label: lang === 'ar' ? '📌 الكل' : '📌 All' },
+    { id: 'egypt', label: lang === 'ar' ? '🇪🇬 مصر' : '🇪🇬 Egypt' },
     { id: 'ksa', label: lang === 'ar' ? '🇸🇦 السعودية' : '🇸🇦 Saudi Arabia' },
     { id: 'import_export', label: lang === 'ar' ? '📦 الاستيراد والتصدير' : '📦 Import & Export' },
     { id: 'hospitality', label: lang === 'ar' ? '☕ الكافيهات والمطاعم' : '☕ Cafes & Restaurants' },
@@ -53,7 +55,11 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
     if (!Array.isArray(SUCCESS_PARTNERS)) return [];
     return SUCCESS_PARTNERS.filter((partner) => {
       if (!partner) return false;
-      const categoryMatch = partnerActiveTab === 'all' || partner.category === partnerActiveTab;
+      const categoryMatch = partnerActiveTab === 'all' 
+        ? true 
+        : partnerActiveTab === 'egypt' 
+        ? partner.category !== 'ksa' 
+        : partner.category === partnerActiveTab;
       if (!categoryMatch) return false;
 
       if (!partnerSearchQuery.trim()) return true;
@@ -71,10 +77,16 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
   const scrollTabs = useCallback((direction) => {
     const el = tabsScrollRef.current;
     if (!el) return;
-    const step = 220;
-    const delta = direction === 'right' ? step : -step;
-    el.scrollBy({ left: delta, behavior: 'smooth' });
-  }, []);
+    const step = 260;
+    // In RTL, leftward scrolling is negative scrollLeft in modern browsers
+    if (isRtl) {
+      const delta = direction === 'left' ? -step : step;
+      el.scrollBy({ left: delta, behavior: 'smooth' });
+    } else {
+      const delta = direction === 'right' ? step : -step;
+      el.scrollBy({ left: delta, behavior: 'smooth' });
+    }
+  }, [isRtl]);
 
   const handlePartnerClick = (partner) => {
     if (!partner) return;
@@ -88,7 +100,6 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
 
   if (!isOpen) return null;
 
-  const isRtl = lang === 'ar';
   const waSalesText = isRtl
     ? `السلام عليكم ورحمة الله وبركاته،\n\nأود الاستفسار والاطلاع على سابقة أعمال شركة نايل تكنو للبرمجيات والمشاريع المنفذة في مجال نشاطنا والتوكيلات التجارية.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
     : `Hello Nile Techno Sales Team,\n\nI would like to inquire about Nile Techno software implementations, client case studies, and enterprise agency portfolio.\n\nThank you for your assistance.`;
@@ -198,14 +209,14 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
             </div>
 
             {/* Categories Carousel */}
-            <div className="flex-1 min-w-0 flex items-center gap-1.5" dir="ltr">
+            <div className="flex-1 min-w-0 flex items-center gap-1.5" dir={isRtl ? 'rtl' : 'ltr'}>
               <button
                 type="button"
-                onClick={() => scrollTabs('left')}
+                onClick={() => scrollTabs(isRtl ? 'right' : 'left')}
                 className="w-8 h-8 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 hover:bg-[#00a3c4] hover:text-white hover:border-[#00a3c4] active:bg-[#008ba8] hover:scale-110 active:scale-90 transition-all duration-200 shadow-xs shrink-0 cursor-pointer"
-                aria-label="Previous"
+                aria-label={isRtl ? 'السابق' : 'Previous'}
               >
-                <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
+                {isRtl ? <ChevronRight className="w-4 h-4 stroke-[2.5]" /> : <ChevronLeft className="w-4 h-4 stroke-[2.5]" />}
               </button>
 
               <div 
@@ -233,11 +244,11 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
 
               <button
                 type="button"
-                onClick={() => scrollTabs('right')}
+                onClick={() => scrollTabs(isRtl ? 'left' : 'right')}
                 className="w-8 h-8 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 hover:bg-[#00a3c4] hover:text-white hover:border-[#00a3c4] active:bg-[#008ba8] hover:scale-110 active:scale-90 transition-all duration-200 shadow-xs shrink-0 cursor-pointer"
-                aria-label="Next"
+                aria-label={isRtl ? 'التالي' : 'Next'}
               >
-                <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+                {isRtl ? <ChevronLeft className="w-4 h-4 stroke-[2.5]" /> : <ChevronRight className="w-4 h-4 stroke-[2.5]" />}
               </button>
             </div>
 
@@ -248,13 +259,9 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
             {filteredPartners.length > 0 ? (
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 justify-items-center">
                 {filteredPartners.map((partner) => {
-                  const title = isRtl 
-                    ? `${partner.nameAr} - ${partner.industryAr || ''}`
-                    : `${partner.nameEn || partner.nameAr} - ${partner.industryEn || ''}`;
                   return (
                     <div 
                       key={partner.id}
-                      title={title}
                       onClick={() => handlePartnerClick(partner)}
                       className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-slate-200 hover:border-[#00a3c4]/70 bg-white shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex items-center justify-center p-2 sm:p-2.5 relative overflow-hidden group cursor-pointer"
                     >

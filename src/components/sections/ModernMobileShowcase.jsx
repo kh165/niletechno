@@ -468,19 +468,19 @@ export function ModernMobileShowcase({
             <div className="flex sm:hidden items-center gap-1.5">
               <button
                 type="button"
-                onClick={() => scrollToAppIndex(currentIdx - 1)}
-                disabled={currentIdx === 0}
+                onClick={() => scrollToAppIndex(currentIdx + 1)}
+                disabled={currentIdx >= safeApps.length - 1}
                 className="w-7 h-7 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 disabled:opacity-30 cursor-pointer"
-                aria-label="Previous app"
+                aria-label="Next app"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
               <button
                 type="button"
-                onClick={() => scrollToAppIndex(currentIdx + 1)}
-                disabled={currentIdx === mobileApps.length - 1}
+                onClick={() => scrollToAppIndex(currentIdx - 1)}
+                disabled={currentIdx <= 0}
                 className="w-7 h-7 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 disabled:opacity-30 cursor-pointer"
-                aria-label="Next app"
+                aria-label="Previous app"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>

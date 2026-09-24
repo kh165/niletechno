@@ -20,7 +20,7 @@ export default function LeadCalculator({ lang, theme }) {
 
   const [sector, setSector] = useState('retail');
   const [scale, setScale] = useState('medium');
-  const [country, setCountry] = useState('ksa');
+  const [country, setCountry] = useState('egy');
   const [needMobile, setNeedMobile] = useState(true);
   const [needEInvoicing, setNeedEInvoicing] = useState(true);
   const [imgVisible, setImgVisible] = useState(true);
@@ -134,8 +134,8 @@ Thank you for your prompt assistance and cooperation.`;
               </label>
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { id: 'ksa', flag: 'sa', ar: 'المملكة العربية السعودية', en: 'Saudi Arabia' },
                   { id: 'egy', flag: 'eg', ar: 'جمهورية مصر العربية', en: 'Egypt' },
+                  { id: 'ksa', flag: 'sa', ar: 'المملكة العربية السعودية', en: 'Saudi Arabia' },
                 ].map(c => (
                   <button key={c.id} type="button" onClick={() => setCountry(c.id)}
                     className={`min-h-[44px] py-3 px-4 rounded-xl border text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 font-cairo cursor-pointer ${

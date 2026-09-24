@@ -16,16 +16,6 @@ export const COMPANY_CONFIG = {
   
   // Standardized phones and WhatsApp links (No local 0 after country code)
   contact: {
-    ksa: {
-      countryNameAr: 'المملكة العربية السعودية',
-      countryNameEn: 'Saudi Arabia',
-      phoneDisplay: '+966 51 135 1059',
-      phoneRaw: '+966511351059',
-      whatsappNumber: '966511351059', // Clean E.164 for wa.me
-      whatsappUrl: 'https://wa.me/966511351059',
-      addressAr: 'طريق أم عمارة، حي بدر، الشفا، الرياض، المملكة العربية السعودية',
-      addressEn: 'Am Omara, Badr District, Al-Shifa, Riyadh, Saudi Arabia',
-    },
     egypt: {
       countryNameAr: 'جمهورية مصر العربية',
       countryNameEn: 'Egypt',
@@ -35,6 +25,16 @@ export const COMPANY_CONFIG = {
       whatsappUrl: 'https://wa.me/201000082722',
       addressAr: 'شارع كورنيش النيل، المعادي، القاهرة / طنطا - طريق مصر الإسكندرية الزراعي',
       addressEn: 'Corniche El Nile St, Maadi, Cairo / Tanta - Alex Agricultural Rd',
+    },
+    ksa: {
+      countryNameAr: 'المملكة العربية السعودية',
+      countryNameEn: 'Saudi Arabia',
+      phoneDisplay: '+966 53 565 3688',
+      phoneRaw: '+966535653688',
+      whatsappNumber: '966535653688', // Clean E.164 for wa.me
+      whatsappUrl: 'https://wa.me/966535653688',
+      addressAr: 'طريق أم عمارة، حي بدر، الشفا، الرياض، المملكة العربية السعودية',
+      addressEn: 'Am Omara, Badr District, Al-Shifa, Riyadh, Saudi Arabia',
     },
   },
 
@@ -53,7 +53,7 @@ export const COMPANY_CONFIG = {
   ]
 };
 
-export const createWhatsAppUrl = (country = 'ksa', message = '') => {
-  const number = country === 'egy' ? COMPANY_CONFIG.contact.egypt.whatsappNumber : COMPANY_CONFIG.contact.ksa.whatsappNumber;
+export const createWhatsAppUrl = (country = 'egy', message = '') => {
+  const number = country === 'ksa' ? COMPANY_CONFIG.contact.ksa.whatsappNumber : COMPANY_CONFIG.contact.egypt.whatsappNumber;
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 };

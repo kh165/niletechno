@@ -19,7 +19,7 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
       className={`py-16 sm:py-20 relative transition-colors duration-300 ${
         theme === 'light' 
           ? 'bg-slate-50 border-t border-b border-slate-200' 
-          : 'bg-[#09101f] border-t border-b border-slate-850'
+          : 'bg-[#0b1329] border-t border-b border-slate-800/80'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -94,7 +94,7 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
 
           {/* Branch Details & Embedded Map */}
           <div className={`lg:col-span-7 rounded-2xl border p-5 sm:p-6 transition-colors duration-300 flex flex-col justify-between ${
-            theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-900/60 border-slate-800'
+            theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-[#131d35] border-slate-700/60'
           }`}>
             {/* Top Branch Header - Clean without misplaced buttons */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 border-b pb-4 border-slate-200 dark:border-slate-800">

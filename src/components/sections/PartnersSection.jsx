@@ -10,23 +10,13 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
   const renderPartnerCard = (partner, idx, groupIndex) => {
     if (!partner) return null;
 
-    const borderColors = [
-      'border-t-cyan-500',
-      'border-t-blue-500',
-      'border-t-indigo-500',
-      'border-t-emerald-500',
-      'border-t-teal-500'
-    ];
-    const borderAccent = borderColors[idx % borderColors.length];
-
     return (
       <div
         key={`${groupIndex}-${partner.id || idx}`}
-        title={isRtl ? `${partner.nameAr} - ${partner.industryAr || ''}` : `${partner.nameEn || partner.nameAr} - ${partner.industryEn || ''}`}
-        className={`partner-marquee-card w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 shrink-0 group p-0 rounded-2xl border-t-4 border-r border-b border-l hover:border-cyan-500/60 dark:hover:border-cyan-400/55 transition-all duration-300 flex items-center justify-center relative overflow-hidden ${borderAccent} ${
+        className={`partner-marquee-card w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 shrink-0 group p-0 rounded-2xl border transition-all duration-300 flex items-center justify-center relative overflow-hidden ${
           theme === 'light'
-            ? 'bg-gradient-to-br from-white via-slate-50/50 to-cyan-50/20 border-slate-200 shadow-xs hover:shadow-md'
-            : 'bg-gradient-to-br from-[#0f172a] to-[#070e1e] border-slate-800 hover:bg-slate-900/60'
+            ? 'bg-white border-slate-200 shadow-xs hover:shadow-md hover:border-slate-300'
+            : 'bg-[#131d35] border-slate-700/60 hover:border-slate-600 hover:bg-[#162340]'
         }`}
         onClick={() => setShowPartnersModal?.(true)}
         onKeyDown={(event) => {
@@ -38,7 +28,6 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
         tabIndex={0}
         role="button"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
         <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
           <PartnerLogo partner={partner} theme={theme} />
         </div>
@@ -56,7 +45,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
       className={`py-12 sm:py-16 relative overflow-hidden transition-colors duration-300 border-t border-b ${
         theme === 'light' 
           ? 'bg-gradient-to-b from-white via-slate-50/60 to-white border-slate-200' 
-          : 'bg-gradient-to-b from-[#060c18] to-[#091020] border-slate-900'
+          : 'bg-gradient-to-b from-[#0b1329] via-[#0f172a] to-[#0b1329] border-slate-800/80'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -85,10 +74,10 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
         <div className="relative mb-10 overflow-hidden">
           {/* Subtle edge fades for smooth entrance and exit */}
           <div className={`absolute left-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-r z-10 pointer-events-none ${
-            theme === 'light' ? 'from-white via-white/80 to-transparent' : 'from-[#060c18] via-[#060c18]/80 to-transparent'
+            theme === 'light' ? 'from-white via-white/80 to-transparent' : 'from-[#0b1329] via-[#0b1329]/80 to-transparent'
           }`} />
           <div className={`absolute right-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-l z-10 pointer-events-none ${
-            theme === 'light' ? 'from-white via-white/80 to-transparent' : 'from-[#060c18] via-[#060c18]/80 to-transparent'
+            theme === 'light' ? 'from-white via-white/80 to-transparent' : 'from-[#0b1329] via-[#0b1329]/80 to-transparent'
           }`} />
 
           <div className="partners-marquee-viewport" dir="ltr">

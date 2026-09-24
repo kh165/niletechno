@@ -97,7 +97,7 @@ export default function App() {
     return () => clearTimeout(handler);
   }, [searchInput]);
 
-  const [selectedBranchId, setSelectedBranchId] = useState('riyadh');
+  const [selectedBranchId, setSelectedBranchId] = useState('cairo');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [aboutActivePanel, setAboutActivePanel] = useState('vision');
 
@@ -162,14 +162,6 @@ export default function App() {
   };
 
   const [hasInteractedWithPlatforms, setHasInteractedWithPlatforms] = useState(false);
-
-  useEffect(() => {
-    if (isHoveredPlatforms) return;
-    const interval = setInterval(() => {
-      setActivePlatformIndex((prev) => (prev + 1) % 3);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [isHoveredPlatforms]);
 
   // Video Lightbox Modal State
   const [videoModal, setVideoModal] = useState({
@@ -493,96 +485,119 @@ Thank you for your prompt assistance and cooperation.`;
     <ErrorBoundary>
       <div 
         dir={lang === 'ar' ? 'rtl' : 'ltr'} 
-      className={`min-h-screen ${lang === 'ar' ? 'rtl font-cairo' : 'ltr font-sans'} ${
-        theme === 'light' 
-          ? 'bg-white text-slate-800' 
-          : 'bg-[#0a0f1d] text-slate-100'
-      } selection:bg-cyan-500 selection:text-slate-900 transition-colors duration-300`}
-    >
-      {/* 1. Header & Navigation Panel */}
-      <nav className={`fixed top-0 inset-x-0 z-50 ${
-        theme === 'light' 
-          ? (scrolled ? 'bg-white/70 border-slate-200/50 text-slate-800 shadow-sm' : 'bg-white/95 border-slate-200 text-slate-800 shadow-sm')
-          : (scrolled ? 'bg-[#050914]/65 border-slate-900/60 text-white shadow-lg' : 'bg-[#050914]/90 border-slate-900 text-white')
-      } backdrop-blur-md border-b transition-all duration-300`}>
-        <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex min-w-0 justify-between items-center gap-2 flex-row-reverse lg:flex-row transition-all duration-300 ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
+        className={`min-h-screen ${lang === 'ar' ? 'rtl font-cairo' : 'ltr font-sans'} ${
+          theme === 'light' 
+            ? 'bg-[#f4f6f9] text-slate-800' 
+            : 'bg-[#0b1329] text-slate-100'
+        } selection:bg-cyan-500 selection:text-slate-900 transition-colors duration-300`}
+      >
+        {/* Main Body Canvas - Bounded with clean white/ambient margins on large screens instead of stretching edge-to-edge */}
+        <div className={`w-full max-w-[1440px] 2xl:max-w-[1536px] mx-auto min-h-screen relative transition-colors duration-300 ${
+          theme === 'light'
+            ? 'bg-white shadow-[0_0_50px_rgba(0,0,0,0.06)] border-x border-slate-200/80'
+            : 'bg-[#0f172a] shadow-[0_0_60px_rgba(0,0,0,0.35)] border-x border-slate-800/70'
+        }`}>
+
+        {/* 1. Header & Navigation Panel */}
+        <nav className={`fixed top-0 inset-x-0 z-50 ${
+          theme === 'light' 
+            ? (scrolled ? 'bg-white/80 border-slate-200/60 text-slate-800 shadow-xs' : 'bg-white/95 border-slate-200 text-slate-800 shadow-xs')
+            : (scrolled ? 'bg-[#0f172a]/85 border-slate-800/80 text-white shadow-lg' : 'bg-[#0f172a]/95 border-slate-800/80 text-white')
+        } backdrop-blur-md border-b transition-all duration-300`}>
+          <div className="max-w-[1440px] 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className={`flex min-w-0 justify-between items-center gap-2 transition-all duration-300 ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
             
-            {/* Corporate Logo Emblem using high-performance vector component */}
-            <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="min-w-0 max-w-[52vw] cursor-pointer flex items-center py-1 group">
-              <NileTechnoLogo 
-                theme={theme} 
-                lang={lang} 
-                className={scrolled ? "h-9 sm:h-10 md:h-11 w-auto object-contain transition-all duration-300" : "h-11 sm:h-13 md:h-15 w-auto object-contain transition-all duration-300"}
-              />
-            </a>
-
-            {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center gap-4 xl:gap-5">
-              {[
-                { label: t.navHome, href: '#home' },
-                { label: t.navAbout, href: '#about' },
-                { label: t.navEinvoice, href: '#einvoicing' },
-                { label: t.navServices, href: '#services' },
-                { label: t.navMobile, href: '#mobile-apps' },
-                { label: t.navCustomers, href: '#customers' },
-                { label: t.navContact, href: '#contact' }
-              ].map((link, idx) => (
-                <a 
-                  key={idx} 
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className={`nav-link-premium text-[11px] sm:text-xs font-bold font-cairo py-1 px-1.5 transition-colors duration-200 uppercase tracking-wide ${
-                    activeSection === link.href.slice(1) ? 'nav-link-active' : ''
-                  } ${
-                    theme === 'light' 
-                      ? 'text-slate-500 hover:text-cyan-600' 
-                      : 'text-slate-300 hover:text-cyan-400'
+              {/* Theme Toggle, Language Switcher, WhatsApp Contact, and Drawer Trigger */}
+              <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 order-1 lg:order-3">
+                {/* Hamburger Mobile Menu Indicator */}
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className={`lg:hidden min-w-[38px] min-h-[38px] flex items-center justify-center p-2 rounded-xl border transition-colors cursor-pointer ${
+                    theme === 'light'
+                      ? 'bg-slate-100 border-slate-300 text-slate-600 hover:text-slate-900'
+                      : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
                   }`}
+                  aria-label={lang === 'ar' ? 'عرض القائمة المنسدلة للأجهزة الذكية' : 'Toggle mobile drawer menu options'}
                 >
-                  {link.label}
+                  {mobileMenuOpen ? <X className="w-4.5 h-4.5" /> : <Menu className="w-4.5 h-4.5" />}
+                </button>
+
+                {/* Persistent Theme Toggle Component */}
+                <ThemeToggle 
+                  theme={theme} 
+                  setTheme={setTheme} 
+                  lang={lang} 
+                />
+
+                {/* Language Switch button */}
+                <button 
+                  onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
+                  className={`min-h-[36px] flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all cursor-pointer ${
+                    theme === 'light'
+                      ? 'border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      : 'border-slate-700/80 bg-[#0d1527] text-slate-300 hover:border-cyan-500 hover:text-cyan-400'
+                  }`}
+                  aria-label={lang === 'ar' ? 'عرض الصفحة باللغة الإنجليزية' : 'Translate page presentation to Arabic'}
+                >
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>{lang === 'ar' ? 'English' : 'العربية'}</span>
+                </button>
+
+                {/* Calm & Chic WhatsApp Contact Quick Action */}
+                <a
+                  href="#contact"
+                  onClick={(e) => handleNavClick(e, '#contact')}
+                  className={`min-h-[36px] flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all duration-200 cursor-pointer select-none ${
+                    theme === 'light'
+                      ? 'border-emerald-700/20 bg-emerald-50/70 text-emerald-800 hover:bg-emerald-100/80 hover:border-emerald-700/35 hover:text-emerald-900 shadow-2xs'
+                      : 'border-emerald-500/25 bg-emerald-950/30 text-emerald-300 hover:bg-emerald-950/50 hover:border-emerald-500/40 hover:text-emerald-200 shadow-2xs'
+                  }`}
+                  title={lang === 'ar' ? 'الانتقال إلى قسم التواصل' : 'Scroll down to contact section'}
+                  aria-label={lang === 'ar' ? 'الانتقال إلى قسم التواصل' : 'Scroll down to contact section'}
+                >
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current text-emerald-600 dark:text-emerald-400 shrink-0" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                  <span className="font-cairo whitespace-nowrap">{lang === 'ar' ? 'للتواصل' : 'Contact'}</span>
                 </a>
-              ))}
-            </div>
+              </div>
 
-            {/* Theme Toggle, Language Switcher and Drawer Trigger */}
-            <div className="flex shrink-0 items-center gap-2">
-              
-              {/* Persistent Theme Toggle Component */}
-              <ThemeToggle 
-                theme={theme} 
-                setTheme={setTheme} 
-                lang={lang} 
-                className="order-3 lg:order-1" 
-              />
+              {/* Desktop Navigation Links */}
+              <div className="hidden lg:flex items-center gap-4 xl:gap-5 lg:order-2">
+                {[
+                  { label: t.navHome, href: '#home' },
+                  { label: t.navAbout, href: '#about' },
+                  { label: t.navEinvoice, href: '#einvoicing' },
+                  { label: t.navServices, href: '#services' },
+                  { label: t.navMobile, href: '#mobile-apps' },
+                  { label: t.navCustomers, href: '#customers' },
+                  { label: t.navContact, href: '#contact' }
+                ].map((link, idx) => (
+                  <a 
+                    key={idx} 
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={`nav-link-premium text-[11px] sm:text-xs font-bold font-cairo py-1 px-1.5 transition-colors duration-200 uppercase tracking-wide ${
+                      activeSection === link.href.slice(1) ? 'nav-link-active' : ''
+                    } ${
+                      theme === 'light' 
+                        ? 'text-slate-500 hover:text-cyan-600' 
+                        : 'text-slate-300 hover:text-cyan-400'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
 
-              {/* Language Switch button */}
-              <button 
-                onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
-                className={`min-h-[36px] flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all cursor-pointer order-2 lg:order-2 ${
-                  theme === 'light'
-                    ? 'border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200'
-                    : 'border-slate-700/80 bg-[#0d1527] text-slate-300 hover:border-cyan-500 hover:text-cyan-400'
-                }`}
-                aria-label={lang === 'ar' ? 'عرض الصفحة باللغة الإنجليزية' : 'Translate page presentation to Arabic'}
-              >
-                <Globe className="w-3.5 h-3.5" />
-                <span>{lang === 'ar' ? 'English' : 'العربية'}</span>
-              </button>
-
-              {/* Hamburger Mobile Menu Indicator */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`lg:hidden min-w-[38px] min-h-[38px] flex items-center justify-center p-2 rounded-xl border transition-colors cursor-pointer order-1 lg:order-3 ${
-                  theme === 'light'
-                    ? 'bg-slate-100 border-slate-300 text-slate-600 hover:text-slate-900'
-                    : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-                }`}
-                aria-label={lang === 'ar' ? 'عرض القائمة المنسدلة للأجهزة الذكية' : 'Toggle mobile drawer menu options'}
-              >
-                {mobileMenuOpen ? <X className="w-4.5 h-4.5" /> : <Menu className="w-4.5 h-4.5" />}
-              </button>
-            </div>
+              {/* Corporate Logo Emblem using high-performance vector component */}
+              <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="min-w-0 max-w-[55vw] sm:max-w-none cursor-pointer flex items-center shrink-0 group order-2 lg:order-1">
+                <NileTechnoLogo 
+                  theme={theme} 
+                  lang={lang} 
+                  className={scrolled ? "h-10 sm:h-11 md:h-12 lg:h-[52px] w-auto object-contain transition-all duration-300" : "h-12 sm:h-14 md:h-16 lg:h-[72px] w-auto object-contain transition-all duration-300"}
+                />
+              </a>
 
           </div>
         </div>
@@ -619,6 +634,27 @@ Thank you for your prompt assistance and cooperation.`;
                 {link.label}
               </a>
             ))}
+
+            {/* Direct WhatsApp & Contact Button in Mobile Drawer */}
+            <div className="pt-2 border-t border-slate-200/60 dark:border-slate-800/80">
+              <a 
+                href="#contact"
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleNavClick(e, '#contact');
+                }}
+                className={`min-h-[44px] flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border text-xs font-bold font-cairo transition-all cursor-pointer ${
+                  theme === 'light'
+                    ? 'border-emerald-700/25 bg-emerald-50/80 text-emerald-900 hover:bg-emerald-100 shadow-2xs'
+                    : 'border-emerald-500/30 bg-emerald-950/40 text-emerald-300 hover:bg-emerald-950/60 shadow-2xs'
+                }`}
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current text-emerald-600 dark:text-emerald-400 shrink-0" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+                <span>{lang === 'ar' ? 'تواصل معنا (واتساب ومبيعات)' : 'Contact Us (WhatsApp & Sales)'}</span>
+              </a>
+            </div>
           </div>
         )}
       </nav>
@@ -691,7 +727,7 @@ Thank you for your prompt assistance and cooperation.`;
                 </p>
 
                 <div className={`p-4 rounded-xl border flex items-center gap-3 transition-colors ${
-                  theme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0a0f1d] border border-slate-800'
+                  theme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#131d35] border border-slate-700/60'
                 }`}>
                   <div className="p-3 rounded-lg bg-cyan-500/10 text-cyan-400 shrink-0">
                     <Award className="w-6 h-6" />
@@ -1593,7 +1629,7 @@ Thank you for your prompt assistance and cooperation.`;
         className={`relative pt-8 sm:pt-10 pb-5 border-t transition-colors duration-300 overflow-hidden font-cairo ${
           theme === 'light' 
             ? 'bg-[#ecf2f8] text-slate-750 border-slate-200/80 shadow-inner' 
-            : 'bg-gradient-to-b from-[#060a12] via-[#04070d] to-[#010204] text-slate-400 border-slate-900'
+            : 'bg-gradient-to-b from-[#0e1629] to-[#0b1329] text-slate-400 border-slate-800/80'
         }`}
       >
         {/* Dynamic decorative backdrop subtle lights */}
@@ -1697,21 +1733,21 @@ Thank you for your prompt assistance and cooperation.`;
               <ul className={`space-y-2.5 text-xs font-semibold font-cairo ${
                 theme === 'light' ? 'text-slate-700' : 'text-slate-350'
               }`}>
-                <li className="flex gap-2 items-center justify-between hover:text-[#00c272] dark:hover:text-[#00e085] transition-colors duration-300">
-                  <div className="flex flex-col items-start font-bold">
-                    <span className="text-[9.5px] text-slate-400 leading-none mb-0.5">{lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia Branch'}</span>
-                    <span className="font-mono text-xs tracking-wide" dir="ltr">KSA: +966 51 135 1059</span>
-                  </div>
-                  <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0 border border-emerald-500/10">
-                    <Phone className="w-3.5 h-3.5" />
-                  </div>
-                </li>
                 <li className="flex gap-2 items-center justify-between hover:text-cyan-500 transition-colors duration-300">
                   <div className="flex flex-col items-start font-bold">
                     <span className="text-[9.5px] text-slate-400 leading-none mb-0.5">{lang === 'ar' ? 'جمهورية مصر العربية' : 'Egypt Office Branch'}</span>
-                    <span className="font-mono text-xs tracking-wide" dir="ltr">EGY: +20 1000082722</span>
+                    <span className="font-mono text-xs tracking-wide" dir="ltr">EGY: +20 100 008 2722</span>
                   </div>
                   <div className="w-7 h-7 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-500 shrink-0 border border-cyan-500/10">
+                    <Phone className="w-3.5 h-3.5" />
+                  </div>
+                </li>
+                <li className="flex gap-2 items-center justify-between hover:text-[#00c272] dark:hover:text-[#00e085] transition-colors duration-300">
+                  <div className="flex flex-col items-start font-bold">
+                    <span className="text-[9.5px] text-slate-400 leading-none mb-0.5">{lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia Branch'}</span>
+                    <span className="font-mono text-xs tracking-wide" dir="ltr">KSA: +966 53 565 3688</span>
+                  </div>
+                  <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0 border border-emerald-500/10">
                     <Phone className="w-3.5 h-3.5" />
                   </div>
                 </li>
@@ -1740,7 +1776,7 @@ Thank you for your prompt assistance and cooperation.`;
                   className={`flex items-center justify-center w-8 h-8 rounded-lg border transition-all duration-300 hover:scale-110 ${
                     theme === 'light' 
                       ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] shadow-xs' 
-                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366]'
+                      : 'bg-[#131d35] border border-slate-700/60 text-slate-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366]'
                   }`}
                   title="WhatsApp Support"
                 >
@@ -1754,7 +1790,7 @@ Thank you for your prompt assistance and cooperation.`;
                   className={`flex items-center justify-center w-8 h-8 rounded-lg border transition-all duration-300 hover:scale-110 ${
                     theme === 'light' 
                       ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000] shadow-xs' 
-                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]'
+                      : 'bg-[#131d35] border border-slate-700/60 text-slate-400 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]'
                   }`}
                   title="YouTube"
                 >
@@ -1768,7 +1804,7 @@ Thank you for your prompt assistance and cooperation.`;
                   className={`flex items-center justify-center w-8 h-8 rounded-lg border transition-all duration-300 hover:scale-110 ${
                     theme === 'light' 
                       ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] shadow-xs' 
-                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]'
+                      : 'bg-[#131d35] border border-slate-700/60 text-slate-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]'
                   }`}
                   title="Facebook"
                 >
@@ -1782,7 +1818,7 @@ Thank you for your prompt assistance and cooperation.`;
                   className={`flex items-center justify-center w-8 h-8 rounded-lg border transition-all duration-300 hover:scale-110 ${
                     theme === 'light' 
                       ? 'bg-white border-slate-200 text-slate-500 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] shadow-xs' 
-                      : 'bg-[#0b101c] border border-slate-800 text-slate-400 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]'
+                      : 'bg-[#131d35] border border-slate-700/60 text-slate-400 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]'
                   }`}
                   title="LinkedIn"
                 >
@@ -1805,53 +1841,11 @@ Thank you for your prompt assistance and cooperation.`;
 
         </div>
       </footer>
+      </div>
 
       {/* 12. Floating Ultra-Premium Stacked WhatsApp Capsule Dock */}
       <div className="fixed bottom-6 left-6 z-[100] font-cairo select-none flex flex-col gap-2.5 items-start">
-        {/* Saudi Arabia Sales Capsule */}
-        <motion.a
-          href={`https://wa.me/+966511351059?text=${encodeURIComponent(
-            lang === 'ar'
-              ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع المملكة العربية السعودية) للاستفسار عن الأنظمة والحلول البرمجية المناسبة لنشاطنا بالمملكة.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.'
-              : 'Hello Nile Techno Sales Team (Saudi Arabia Branch),\n\nI would like to inquire about your software solutions, enterprise ERP systems, and services for our business in Saudi Arabia.\n\nThank you for your assistance.'
-          )}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={{ opacity: 0, x: -30, y: 15 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.96 }}
-          className={`group flex items-center justify-between w-[136px] sm:w-[144px] min-h-[44px] h-[44px] px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
-            theme === 'light'
-              ? 'bg-white/95 border-emerald-100 shadow-emerald-500/5 hover:border-emerald-400 text-slate-800'
-              : 'bg-slate-950/90 border-slate-900 shadow-black/80 hover:border-emerald-500/30 text-white'
-          }`}
-        >
-          {/* Real WhatsApp Icon inside the field */}
-          <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#128c7e] to-[#25d366] flex items-center justify-center text-white shrink-0 group-hover:rotate-12 transition-transform duration-300 shadow-sm shadow-emerald-500/10">
-            <svg viewBox="0 0 24 24" className="w-3 h-3 fill-white" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-          </div>
-          <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 border border-slate-200/20 shadow-inner flex items-center justify-center">
-            <img 
-              src="https://flagcdn.com/w40/sa.png" 
-              alt="KSA" 
-              className="w-full h-full object-cover scale-110" 
-              referrerPolicy="no-referrer" 
-            />
-          </div>
-          <span className="w-14 text-center text-[10px] sm:text-[11px] font-black tracking-wide font-cairo shrink-0">
-            {lang === 'ar' ? 'السعودية' : 'KSA'}
-          </span>
-          <span className="relative flex h-1.5 w-1.5 select-none shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-          </span>
-        </motion.a>
-
-        {/* Egypt Sales Capsule */}
+        {/* Egypt Sales Capsule - Prioritized */}
         <motion.a
           href={`https://wa.me/+201000082722?text=${encodeURIComponent(
             lang === 'ar'
@@ -1862,7 +1856,7 @@ Thank you for your prompt assistance and cooperation.`;
           rel="noopener noreferrer"
           initial={{ opacity: 0, x: -30, y: 15 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.96 }}
           className={`group flex items-center justify-between w-[136px] sm:w-[144px] min-h-[44px] h-[44px] px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
@@ -1887,6 +1881,49 @@ Thank you for your prompt assistance and cooperation.`;
           </div>
           <span className="w-14 text-center text-[10px] sm:text-[11px] font-black tracking-wide font-cairo shrink-0">
             {lang === 'ar' ? 'مصر' : 'Egypt'}
+          </span>
+          <span className="relative flex h-1.5 w-1.5 select-none shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+          </span>
+        </motion.a>
+
+        {/* Saudi Arabia Sales Capsule */}
+        <motion.a
+          href={`https://wa.me/966535653688?text=${encodeURIComponent(
+            lang === 'ar'
+              ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع المملكة العربية السعودية) للاستفسار عن الأنظمة والحلول البرمجية المناسبة لنشاطنا بالمملكة.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.'
+              : 'Hello Nile Techno Sales Team (Saudi Arabia Branch),\n\nI would like to inquire about your software solutions, enterprise ERP systems, and services for our business in Saudi Arabia.\n\nThank you for your assistance.'
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, x: -30, y: 15 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          whileHover={{ scale: 1.05, y: -2 }}
+          whileTap={{ scale: 0.96 }}
+          className={`group flex items-center justify-between w-[136px] sm:w-[144px] min-h-[44px] h-[44px] px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
+            theme === 'light'
+              ? 'bg-white/95 border-emerald-100 shadow-emerald-500/5 hover:border-emerald-400 text-slate-800'
+              : 'bg-slate-950/90 border-slate-900 shadow-black/80 hover:border-emerald-500/30 text-white'
+          }`}
+        >
+          {/* Real WhatsApp Icon inside the field */}
+          <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#128c7e] to-[#25d366] flex items-center justify-center text-white shrink-0 group-hover:rotate-12 transition-transform duration-300 shadow-sm shadow-emerald-500/10">
+            <svg viewBox="0 0 24 24" className="w-3 h-3 fill-white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+          </div>
+          <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 border border-slate-200/20 shadow-inner flex items-center justify-center">
+            <img 
+              src="https://flagcdn.com/w40/sa.png" 
+              alt="KSA" 
+              className="w-full h-full object-cover scale-110" 
+              referrerPolicy="no-referrer" 
+            />
+          </div>
+          <span className="w-14 text-center text-[10px] sm:text-[11px] font-black tracking-wide font-cairo shrink-0">
+            {lang === 'ar' ? 'السعودية' : 'KSA'}
           </span>
           <span className="relative flex h-1.5 w-1.5 select-none shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>

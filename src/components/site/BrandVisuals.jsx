@@ -219,7 +219,7 @@ const PartnerLogo = ({ partner, theme }) => {
       {imageUrl && !imageError && (
         <img
           src={imageUrl}
-          alt={rawName || "Partner"}
+          alt=""
           onLoad={() => setImageLoaded(true)}
           onError={() => {
             setImageError(true);
@@ -244,7 +244,7 @@ const NileTechnoLogo = ({ theme, lang, className }) => {
         src={companyLogo}
         alt="Nile Techno Logo"
         decoding="async"
-        className={`${className || "h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 hover:scale-[1.02]"} max-w-full`}
+        className={`${className || "h-12 sm:h-14 md:h-16 lg:h-[72px] w-auto object-contain transition-all duration-300 hover:scale-[1.03]"} max-w-full`}
         onError={(e) => {
           e.target.src = logoTransparentWebp;
         }}

@@ -27,7 +27,7 @@ export function SectionSeparator({ theme = 'dark' }) {
       {/* Center micro decorative jewel */}
       <div 
         className={`absolute px-3 py-0.5 flex items-center gap-1.5 transition-colors duration-300 ${
-          isLight ? 'bg-slate-50' : 'bg-[#060c1a]'
+          isLight ? 'bg-slate-50' : 'bg-[#0f172a]'
         }`}
       >
         <span className={`w-1 h-1 rounded-full ${isLight ? 'bg-slate-300' : 'bg-cyan-500/50'}`} />
@@ -35,7 +35,7 @@ export function SectionSeparator({ theme = 'dark' }) {
           className={`w-1.5 h-1.5 rotate-45 border ${
             isLight 
               ? 'border-cyan-500/60 bg-cyan-50' 
-              : 'border-cyan-400/70 bg-[#081226] shadow-[0_0_8px_rgba(6,182,212,0.35)]'
+              : 'border-cyan-400/60 bg-[#131d35]'
           }`} 
         />
         <span className={`w-1 h-1 rounded-full ${isLight ? 'bg-slate-300' : 'bg-cyan-500/50'}`} />

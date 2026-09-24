@@ -27,7 +27,7 @@ function InteractiveConsole({ lang, theme }) {
 
   return (
     <section className={`py-14 relative overflow-hidden text-right border-b ${
-      theme === 'light' ? 'bg-slate-50/55 border-slate-200' : 'bg-[#060b17] border-slate-900'
+      theme === 'light' ? 'bg-slate-50/55 border-slate-200' : 'bg-[#0f172a] border-slate-800/80'
     }`} id="interactive-console">
       <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-10">
@@ -52,11 +52,11 @@ function InteractiveConsole({ lang, theme }) {
 
         {/* Elegant glassmorphic console frame */}
         <div className={`max-w-4xl mx-auto rounded-2xl border overflow-hidden shadow-2xl transition-all duration-300 ${
-          theme === 'light' ? 'bg-white border-slate-200/80 shadow-cyan-100/20' : 'bg-[#0b1329]/80 border-slate-800'
+          theme === 'light' ? 'bg-white border-slate-200/80 shadow-cyan-100/20' : 'bg-[#131d35]/90 border-slate-700/60'
         }`}>
           {/* Header bar */}
           <div className={`px-4 py-3 border-b flex justify-between items-center ${
-            theme === 'light' ? 'bg-slate-100/50 border-slate-205' : 'bg-[#090f23] border-slate-800/85'
+            theme === 'light' ? 'bg-slate-100/50 border-slate-205' : 'bg-[#0e1629] border-slate-700/60'
           }`}>
             {/* Window control dots */}
             <div className="flex gap-1.5 order-2 sm:order-1">
@@ -77,7 +77,7 @@ function InteractiveConsole({ lang, theme }) {
           <div className="grid grid-cols-1 md:grid-cols-12 min-h-[380px]">
             {/* Left sidebar console tabs controls */}
             <div className={`md:col-span-3 p-4 flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-x-visible border-b md:border-b-0 md:border-l ${
-              theme === 'light' ? 'bg-slate-50/75 border-slate-200/80' : 'bg-[#070d1e]/80 border-slate-800/80'
+              theme === 'light' ? 'bg-slate-50/75 border-slate-200/80' : 'bg-[#0e1629]/90 border-slate-700/60'
             }`}>
               <button
                 type="button"

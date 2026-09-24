@@ -11,7 +11,6 @@ const loadEInvoiceDemo = () => import('./components/EInvoiceDemo.jsx');
 const LeadCalculator = lazy(loadLeadCalculator);
 const EInvoiceDemo = lazy(loadEInvoiceDemo);
 import { IconComponent, NileTechnoLogo } from './components/site/BrandVisuals';
-import { SectionSeparator } from './components/site/SectionSeparator';
 import { ThemeToggle } from './components/site/ThemeToggle';
 import { InteractiveConsole } from './components/sections/InteractiveConsole';
 import { HeroSection } from './components/sections/HeroSection';
@@ -71,6 +70,19 @@ class ErrorBoundary extends React.Component {
     }
     return this.props.children;
   }
+}
+
+function SectionDivider({ theme }) {
+  return (
+    <div
+      className={`section-divider ${theme === 'light' ? 'section-divider-light' : 'section-divider-dark'}`}
+      aria-hidden="true"
+    >
+      <span className="section-divider-line" />
+      <span className="section-divider-mark" />
+      <span className="section-divider-line" />
+    </div>
+  );
 }
 
 export default function App() {
@@ -485,7 +497,7 @@ Thank you for your prompt assistance and cooperation.`;
     <ErrorBoundary>
       <div 
         dir={lang === 'ar' ? 'rtl' : 'ltr'} 
-        className={`min-h-screen ${lang === 'ar' ? 'rtl font-cairo' : 'ltr font-sans'} ${
+          className={`min-h-screen ${lang === 'ar' ? 'rtl font-cairo' : 'ltr font-sans'} ${
           theme === 'light' 
             ? 'bg-[#f4f6f9] text-slate-800' 
             : 'bg-[#0b1329] text-slate-100'
@@ -674,17 +686,16 @@ Thank you for your prompt assistance and cooperation.`;
         setIsHoveredPlatforms={setIsHoveredPlatforms}
       />
 
-      {/* Decorative Separator: Hero -> About */}
-      <SectionSeparator theme={theme} />
+      <SectionDivider theme={theme} />
 
       {/* 3. Who We Are Section */}
-      <section id="about" className={`py-8 sm:py-10 relative transition-all duration-500 border-t ${
+      <section id="about" className={`py-12 sm:py-16 relative transition-all duration-500 ${
         theme === 'light' 
-          ? 'bg-gradient-to-b from-white via-slate-50/50 to-slate-100/30 border-slate-150' 
-          : 'bg-gradient-to-b from-[#040814] to-[#070d1e] border-slate-900'
+          ? 'bg-gradient-to-b from-blue-50/40 via-white to-sky-50/30' 
+          : 'bg-gradient-to-b from-[#0a1329] via-[#0c1836] to-[#0a142c]'
       }`}>
         <div className="absolute top-10 right-10 w-72 h-72 bg-blue-500/5 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-10 left-10 w-80 h-80 bg-cyan-500/5 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute bottom-10 left-10 w-80 h-80 bg-cyan-500/5 dark:bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
         
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -755,7 +766,7 @@ Thank you for your prompt assistance and cooperation.`;
                   onClick={() => setAboutActivePanel('vision')}
                   className={`min-h-[44px] flex items-center justify-center py-2.5 px-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
                     aboutActivePanel === 'vision'
-                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
+                      ? 'bg-cyan-500 hover:bg-cyan-400 text-white shadow-md'
                       : (theme === 'light' ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white')
                   }`}
                 >
@@ -765,7 +776,7 @@ Thank you for your prompt assistance and cooperation.`;
                   onClick={() => setAboutActivePanel('mission')}
                   className={`min-h-[44px] flex items-center justify-center py-2.5 px-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
                     aboutActivePanel === 'mission'
-                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
+                      ? 'bg-cyan-500 hover:bg-cyan-400 text-white shadow-md'
                       : (theme === 'light' ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white')
                   }`}
                 >
@@ -817,14 +828,13 @@ Thank you for your prompt assistance and cooperation.`;
         </div>
       </section>
 
-      {/* Decorative Separator: About -> E-Invoice */}
-      <SectionSeparator theme={theme} />
+      <SectionDivider theme={theme} />
 
       {/* 4. Complete E-Invoicing Section */}
-      <section id="einvoicing" className={`pt-12 pb-1 relative transition-all duration-500 border-t border-b ${
+      <section id="einvoicing" className={`pt-12 pb-14 relative transition-all duration-500 ${
         theme === 'light' 
-          ? 'bg-gradient-to-b from-slate-100/30 via-cyan-50/15 to-white border-slate-150' 
-          : 'bg-gradient-to-b from-[#070d1e] to-[#050917] border-slate-900'
+          ? 'bg-gradient-to-b from-sky-50/30 via-cyan-50/30 to-blue-50/40' 
+          : 'bg-gradient-to-b from-[#0a142c] via-[#0d1b3d] to-[#0a1329]'
       }`}>
         <div className="absolute inset-0 bg-[radial-gradient(#0b72c908_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
         <div className="absolute bottom-10 left-10 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
@@ -963,14 +973,13 @@ Thank you for your prompt assistance and cooperation.`;
         </div>
       </section>
 
-      {/* Decorative Separator: E-Invoice -> Services */}
-      <SectionSeparator theme={theme} />
+      <SectionDivider theme={theme} />
 
       {/* 5. Software Systems Grid Showcase */}
-      <section id="services" className={`pt-4 pb-16 relative border-t transition-all duration-500 ${
+      <section id="services" className={`pt-10 pb-16 relative transition-all duration-500 ${
         theme === 'light' 
-          ? 'bg-gradient-to-b from-white via-slate-50/60 to-white border-slate-150' 
-          : 'bg-gradient-to-b from-[#050917] via-[#091122] to-[#040814] border-slate-900'
+          ? 'bg-gradient-to-b from-blue-50/40 via-white to-sky-50/30' 
+          : 'bg-gradient-to-b from-[#0a1329] via-[#0f2044] to-[#0b1632]'
       }`}>
         <div className="absolute top-1/4 right-0 w-80 h-80 bg-cyan-500/5 dark:bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-blue-500/5 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -1011,14 +1020,13 @@ Thank you for your prompt assistance and cooperation.`;
         </div>
       </section>
 
-      {/* Decorative Separator: Services -> Mobile Apps */}
-      <SectionSeparator theme={theme} />
+      <SectionDivider theme={theme} />
 
       {/* 6. Modern Mobile Applications Studio Section */}
-      <section id="mobile-apps" className={`py-12 sm:py-16 relative transition-all duration-500 border-t border-b ${
+      <section id="mobile-apps" className={`py-12 sm:py-16 relative transition-all duration-500 ${
         theme === 'light' 
-          ? 'bg-gradient-to-b from-white via-cyan-50/15 to-slate-50 border-slate-150' 
-          : 'bg-gradient-to-b from-[#040814] to-[#080e1b] border-slate-900'
+          ? 'bg-gradient-to-b from-sky-50/30 via-cyan-50/20 to-blue-50/30' 
+          : 'bg-gradient-to-b from-[#0b1632] via-[#0d1a3a] to-[#091225]'
       }`}>
         <div className="absolute inset-0 bg-[radial-gradient(#0b72c908_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none"></div>
         <div className="absolute top-1/2 left-10 w-80 h-80 bg-blue-500/5 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -1073,10 +1081,9 @@ Thank you for your prompt assistance and cooperation.`;
       {/* 7. Consultation Lead Calculator Section (Collapsible & Expandable) */}
       <section id="consulting" className={`py-12 sm:py-16 relative transition-all duration-500 border-t border-b ${
         theme === 'light' 
-          ? 'bg-gradient-to-b from-slate-50 via-white to-slate-100/30 border-slate-200' 
-          : 'bg-gradient-to-b from-[#080e1b] to-[#060c18] border-slate-900'
+          ? 'bg-white border-slate-200/50' 
+          : 'bg-[#0f172a] border-cyan-500/10'
       }`}>
-        <div className="absolute inset-0 bg-[radial-gradient(#cbd2db_0.8px,transparent_0.8px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none opacity-40"></div>
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-8">
@@ -1211,7 +1218,7 @@ Thank you for your prompt assistance and cooperation.`;
                     </div>
 
                     <div className="w-full md:w-auto shrink-0 flex items-center justify-end">
-                      <div className="w-full md:w-auto px-6 py-3 rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-md shadow-cyan-500/20 transition-all duration-200 group-hover:scale-[1.02]">
+                      <div className="w-full md:w-auto px-6 py-3 rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2.5 bg-cyan-500 hover:bg-cyan-400 text-white shadow-md shadow-cyan-500/20 transition-all duration-200 group-hover:scale-[1.02]">
                         <span>{lang === 'ar' ? 'فتح واستخدام الحاسبة التفاعلية' : 'Expand Interactive Calculator'}</span>
                         <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-200" />
                       </div>
@@ -1226,16 +1233,19 @@ Thank you for your prompt assistance and cooperation.`;
       </section>
 
       {/* 8. Success Partners Block */}
+      <SectionDivider theme={theme} />
       <PartnersSection lang={lang} theme={theme} setShowPartnersModal={setShowPartnersModal} />
 
       {/* 9. Interactive Maps & Branches coordinates component */}
+      <SectionDivider theme={theme} />
       <BranchesSection lang={lang} theme={theme} t={t} selectedBranchId={selectedBranchId} setSelectedBranchId={setSelectedBranchId} />
 
       {/* 10. Contact Us Advanced Leads Form */}
-      <section id="contact" className={`py-8 sm:py-10 relative transition-all duration-500 border-t border-b ${
+      <SectionDivider theme={theme} />
+      <section id="contact" className={`py-12 sm:py-16 relative transition-all duration-500 ${
         theme === 'light' 
-          ? 'bg-gradient-to-b from-white via-cyan-50/20 to-slate-50 border-slate-150' 
-          : 'bg-gradient-to-b from-[#050916] to-[#02050c] border-slate-900'
+          ? 'bg-gradient-to-b from-sky-50/30 via-cyan-50/20 to-slate-100/70' 
+          : 'bg-gradient-to-b from-[#0a1329] via-[#0e1c3e] to-[#081022]'
       }`}>
         <div className="absolute inset-0 bg-[radial-gradient(#cbd2db_0.7px,transparent_0.7px)] dark:bg-[radial-gradient(#ffffff02_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40"></div>
         <div className="absolute top-10 right-1/4 w-80 h-80 bg-blue-500/5 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -1626,10 +1636,10 @@ Thank you for your prompt assistance and cooperation.`;
 
       <footer 
         dir={lang === 'ar' ? 'rtl' : 'ltr'} 
-        className={`relative pt-8 sm:pt-10 pb-5 border-t transition-colors duration-300 overflow-hidden font-cairo ${
+        className={`relative pt-10 sm:pt-12 pb-6 border-t transition-colors duration-500 overflow-hidden font-cairo ${
           theme === 'light' 
-            ? 'bg-[#ecf2f8] text-slate-750 border-slate-200/80 shadow-inner' 
-            : 'bg-gradient-to-b from-[#0e1629] to-[#0b1329] text-slate-400 border-slate-800/80'
+            ? 'bg-gradient-to-b from-slate-100/70 via-slate-100 to-slate-200/90 text-slate-750 border-slate-200/80 shadow-inner' 
+            : 'bg-gradient-to-b from-[#081022] to-[#050b18] text-slate-400 border-slate-800/80'
         }`}
       >
         {/* Dynamic decorative backdrop subtle lights */}
@@ -1722,7 +1732,7 @@ Thank you for your prompt assistance and cooperation.`;
             {/* Column 3: Contact Us & Social Links (اتصل بنا والشبكات الاجتماعية) */}
             <div className="lg:col-span-3 space-y-3">
               <div className="flex items-center gap-2 pb-2 border-b border-slate-200/80 dark:border-slate-800/50">
-                <span className="w-1.5 h-4 rounded-full bg-indigo-500 shrink-0"></span>
+                <span className="w-1.5 h-4 rounded-full bg-cyan-500 shrink-0"></span>
                 <h4 className={`text-sm sm:text-base font-black font-cairo ${
                   theme === 'light' ? 'text-slate-800' : 'text-white'
                 }`}>
@@ -1751,12 +1761,12 @@ Thank you for your prompt assistance and cooperation.`;
                     <Phone className="w-3.5 h-3.5" />
                   </div>
                 </li>
-                <li className="flex gap-2 items-center justify-between hover:text-indigo-500 transition-colors duration-300">
+                <li className="flex gap-2 items-center justify-between hover:text-cyan-500 transition-colors duration-300">
                   <div className="flex flex-col items-start font-bold">
                     <span className="text-[9.5px] text-slate-400 leading-none mb-0.5">{lang === 'ar' ? 'البريد الإلكتروني الموحد' : 'Corporate Email Address'}</span>
                     <span className="lowercase font-mono text-xs">info@niletechno.com</span>
                   </div>
-                  <div className="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0 border border-indigo-500/10">
+                  <div className="w-7 h-7 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-500 shrink-0 border border-cyan-500/10">
                     <Mail className="w-3.5 h-3.5" />
                   </div>
                 </li>

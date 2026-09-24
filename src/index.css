@@ -972,3 +972,47 @@ nav.fixed .nav-link-premium:focus-visible {
     animation: none !important;
   }
 }
+
+
+/* Unified visual separators and e-invoice controls */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  min-height: 28px;
+  padding: 0 1rem;
+  background: #ffffff;
+}
+.section-divider-dark { background: #0f172a; }
+.section-divider-line {
+  width: min(22vw, 10rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(8,145,178,.35), rgba(59,130,246,.55));
+}
+.section-divider-line:last-child {
+  background: linear-gradient(90deg, rgba(59,130,246,.55), rgba(8,145,178,.35), transparent);
+}
+.section-divider-mark {
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid #0b72c9;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(8,145,178,.07);
+}
+.section-divider-dark .section-divider-mark { background: #0f172a; border-color: #22d3ee; box-shadow: 0 0 0 4px rgba(34,211,238,.08); }
+.einvoice-primary-btn {
+  background: linear-gradient(135deg, #0b72c9 0%, #2563eb 52%, #0891b2 100%);
+  border-color: rgba(8,145,178,.55);
+}
+.einvoice-primary-btn:hover {
+  filter: brightness(1.08) saturate(1.05);
+  box-shadow: 0 8px 20px rgba(8,145,178,.22);
+  transform: translateY(-1px);
+}
+@media (max-width: 640px) {
+  .section-divider { min-height: 22px; gap: .5rem; }
+  .section-divider-line { width: min(20vw, 5rem); }
+}

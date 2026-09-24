@@ -16,10 +16,10 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
   return (
     <section 
       id="branches" 
-      className={`py-16 sm:py-20 relative transition-colors duration-300 ${
+      className={`py-16 sm:py-20 relative transition-colors duration-500 border-t border-b ${
         theme === 'light' 
-          ? 'bg-slate-50 border-t border-b border-slate-200' 
-          : 'bg-[#0b1329] border-t border-b border-slate-800/80'
+          ? 'bg-gradient-to-b from-blue-50/30 via-sky-50/40 to-slate-50 border-slate-200/50' 
+          : 'bg-gradient-to-b from-[#091226] via-[#0d1a39] to-[#0a1329] border-cyan-500/10'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

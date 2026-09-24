@@ -42,10 +42,10 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
   return (
     <section 
       id="customers" 
-      className={`py-12 sm:py-16 relative overflow-hidden transition-colors duration-300 border-t border-b ${
+      className={`py-12 sm:py-16 relative overflow-hidden transition-colors duration-500 border-t border-b ${
         theme === 'light' 
-          ? 'bg-gradient-to-b from-white via-slate-50/60 to-white border-slate-200' 
-          : 'bg-gradient-to-b from-[#0b1329] via-[#0f172a] to-[#0b1329] border-slate-800/80'
+          ? 'bg-gradient-to-b from-sky-50/30 via-white to-blue-50/30 border-slate-200/50' 
+          : 'bg-gradient-to-b from-[#0a1329] via-[#0c1735] to-[#091226] border-cyan-500/10'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

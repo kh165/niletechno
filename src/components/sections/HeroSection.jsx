@@ -119,8 +119,8 @@ export function HeroSection({
       id="home" 
       className={`relative pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 overflow-hidden transition-colors duration-500 ${
         theme === 'light'
-          ? 'bg-gradient-to-b from-sky-50/70 via-white to-slate-50 text-slate-800'
-          : 'bg-gradient-to-b from-[#0b1329] via-[#0f172a] to-[#0b1329] text-white'
+          ? 'bg-gradient-to-b from-sky-50/70 via-white to-blue-50/40 text-slate-800'
+          : 'bg-gradient-to-b from-[#0b152e] via-[#0d1a3a] to-[#0a1329] text-white'
       }`}
     >
       {/* Dynamic Animated Background Grid & Ambient Mesh */}
@@ -159,7 +159,7 @@ export function HeroSection({
           opacity: [0.2, 0.45, 0.25, 0.2]
         }} 
         transition={{ repeat: Infinity, duration: 16, ease: 'easeInOut', delay: 2.5 }}
-        className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-indigo-500/10 rounded-full blur-[130px] pointer-events-none"
+        className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-cyan-500/10 rounded-full blur-[130px] pointer-events-none"
       />
 
       {/* Floating Animated Geometric Tech Particles */}

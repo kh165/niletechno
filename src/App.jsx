@@ -199,9 +199,23 @@ export default function App() {
         ? prev.interestedModules
         : [...prev.interestedModules, appId]
     }));
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+    const targetEl = document.getElementById('quote-selection-group') || document.getElementById('contact');
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  const handleSelectSystemForQuote = (sysId) => {
+    setQuoteGroup('systems');
+    setFormData(prev => ({
+      ...prev,
+      interestedModules: prev.interestedModules.includes(sysId)
+        ? prev.interestedModules
+        : [...prev.interestedModules, sysId]
+    }));
+    const targetEl = document.getElementById('quote-selection-group') || document.getElementById('contact');
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
 
@@ -952,6 +966,7 @@ Please share the technical specifications and quotation. Thank you.`;
             handleOpenVideo={handleOpenVideo}
             formData={formData}
             setFormData={setFormData}
+            onSelectSystemForQuote={handleSelectSystemForQuote}
           />
         </div>
       </section>
@@ -1335,12 +1350,12 @@ Please share the technical specifications and quotation. Thank you.`;
                         return (
                           <div className="flex items-center gap-1">
                             {sysCount > 0 && (
-                              <span className="px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/25 text-[10px]">
+                              <span className="px-2 py-0.5 rounded-full bg-[#0b72c9]/15 text-[#0b72c9] dark:text-[#299df7] border border-[#0b72c9]/25 text-[10px] font-bold">
                                 {sysCount} {lang === 'ar' ? 'نظام محاسبي' : 'ERP System'}
                               </span>
                             )}
                             {appCount > 0 && (
-                              <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25 text-[10px]">
+                              <span className="px-2 py-0.5 rounded-full bg-[#0b72c9]/15 text-[#0b72c9] dark:text-[#299df7] border border-[#0b72c9]/25 text-[10px] font-bold">
                                 {appCount} {lang === 'ar' ? 'تطبيق موبايل' : 'Mobile App'}
                               </span>
                             )}
@@ -1351,7 +1366,7 @@ Please share the technical specifications and quotation. Thank you.`;
                   </div>
 
                   {/* High-visibility Group Tabs: Systems vs Mobile Apps */}
-                  <div className={`grid grid-cols-2 p-1.5 rounded-2xl border transition-colors ${
+                  <div id="quote-selection-group" className={`grid grid-cols-2 p-1.5 rounded-2xl border transition-colors ${
                     theme === 'light' ? 'bg-slate-200/60 border-slate-300/80 shadow-inner' : 'bg-slate-950 border-slate-800 shadow-inner'
                   }`}>
                     {/* Option 1: ERP & Software Systems */}
@@ -1360,14 +1375,14 @@ Please share the technical specifications and quotation. Thank you.`;
                       onClick={() => setQuoteGroup('systems')}
                       className={`min-h-[46px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
                         quoteGroup === 'systems'
-                          ? 'bg-gradient-to-r from-blue-700 via-[#0b72c9] to-cyan-600 text-white shadow-md shadow-[#0b72c9]/30 scale-[1.01]'
+                          ? 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/30 scale-[1.01]'
                           : (theme === 'light' ? 'text-slate-700 hover:text-slate-900 hover:bg-white/60' : 'text-slate-400 hover:text-white hover:bg-slate-900/60')
                       }`}
                     >
                       <Monitor className="w-4 h-4 shrink-0" />
-                      <span>{lang === 'ar' ? '💻 الأنظمة والبرمجيات (ERP)' : '💻 ERP & Software Systems'}</span>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-bold ${
-                        quoteGroup === 'systems' ? 'bg-white/20 text-white' : 'bg-slate-300 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                      <span>{lang === 'ar' ? 'الأنظمة والبرمجيات' : 'ERP & Software Systems'}</span>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
+                        quoteGroup === 'systems' ? 'bg-white/25 text-white' : 'bg-slate-300 dark:bg-slate-800 text-slate-700 dark:text-slate-400'
                       }`}>
                         {SERVICE_MODULES.length}
                       </span>
@@ -1379,14 +1394,14 @@ Please share the technical specifications and quotation. Thank you.`;
                       onClick={() => setQuoteGroup('mobile')}
                       className={`min-h-[46px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
                         quoteGroup === 'mobile'
-                          ? 'bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white shadow-md shadow-emerald-600/30 scale-[1.01]'
+                          ? 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/30 scale-[1.01]'
                           : (theme === 'light' ? 'text-slate-700 hover:text-slate-900 hover:bg-white/60' : 'text-slate-400 hover:text-white hover:bg-slate-900/60')
                       }`}
                     >
                       <Smartphone className="w-4 h-4 shrink-0" />
-                      <span>{lang === 'ar' ? '📱 تطبيقات الموبايل الذكية' : '📱 Smart Mobile Apps'}</span>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-bold ${
-                        quoteGroup === 'mobile' ? 'bg-white/20 text-white' : 'bg-slate-300 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                      <span>{lang === 'ar' ? 'تطبيقات الموبايل' : 'Smart Mobile Apps'}</span>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
+                        quoteGroup === 'mobile' ? 'bg-white/25 text-white' : 'bg-slate-300 dark:bg-slate-800 text-slate-700 dark:text-slate-400'
                       }`}>
                         {MOBILE_APPS.length}
                       </span>
@@ -1410,7 +1425,7 @@ Please share the technical specifications and quotation. Thank you.`;
                                 : Array.from(new Set([...prev.interestedModules, ...allSysIds]))
                             }));
                           }}
-                          className="text-cyan-600 dark:text-cyan-400 hover:underline font-bold cursor-pointer"
+                          className="text-[#0b72c9] dark:text-[#299df7] hover:underline font-bold cursor-pointer"
                         >
                           {SERVICE_MODULES.every(m => formData.interestedModules.includes(m.id))
                             ? (lang === 'ar' ? 'إلغاء تحديد كل الأنظمة' : 'Deselect All')
@@ -1428,14 +1443,14 @@ Please share the technical specifications and quotation. Thank you.`;
                               onClick={() => toggleModuleInterest(module.id)}
                               className={`min-h-[46px] flex items-center justify-between p-2.5 rounded-xl border text-right transition-all cursor-pointer font-cairo ${
                                 isChecked
-                                  ? (theme === 'light' ? 'bg-cyan-50 border-cyan-500 text-cyan-900 shadow-sm' : 'bg-cyan-500/10 border-cyan-500 text-cyan-200 shadow-sm')
+                                  ? (theme === 'light' ? 'bg-blue-50/80 border-[#0b72c9] text-slate-900 shadow-xs' : 'bg-blue-950/40 border-[#0b72c9] text-white shadow-xs')
                                   : (theme === 'light' ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300' : 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white')
                               }`}
                             >
                               <div className="flex items-center gap-2.5 min-w-0 pr-1">
                                 <span className={`w-4.5 h-4.5 rounded-md flex items-center justify-center shrink-0 border transition-colors ${
                                   isChecked 
-                                    ? 'bg-cyan-500 text-white border-cyan-500' 
+                                    ? 'bg-[#0b72c9] text-white border-[#0b72c9]' 
                                     : (theme === 'light' ? 'border-slate-300 bg-slate-50' : 'border-slate-700 bg-slate-900')
                                 }`}>
                                   {isChecked && <span className="text-[11px] font-bold">✓</span>}
@@ -1445,7 +1460,7 @@ Please share the technical specifications and quotation. Thank you.`;
                                 </span>
                               </div>
                               <span className={`text-[9px] px-1.5 py-0.5 rounded font-medium shrink-0 ${
-                                isChecked ? 'bg-cyan-500/20 text-cyan-800 dark:text-cyan-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
+                                isChecked ? 'bg-[#0b72c9]/15 text-[#0b72c9] dark:text-[#299df7] border border-[#0b72c9]/25' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
                               }`}>
                                 {module.category}
                               </span>
@@ -1473,7 +1488,7 @@ Please share the technical specifications and quotation. Thank you.`;
                                 : Array.from(new Set([...prev.interestedModules, ...allMobIds]))
                             }));
                           }}
-                          className="text-emerald-600 dark:text-emerald-400 hover:underline font-bold cursor-pointer"
+                          className="text-[#0b72c9] dark:text-[#299df7] hover:underline font-bold cursor-pointer"
                         >
                           {MOBILE_APPS.every(a => formData.interestedModules.includes(a.id))
                             ? (lang === 'ar' ? 'إلغاء تحديد كل التطبيقات' : 'Deselect All')
@@ -1491,14 +1506,14 @@ Please share the technical specifications and quotation. Thank you.`;
                               onClick={() => toggleModuleInterest(app.id)}
                               className={`min-h-[58px] flex items-center justify-between p-3 rounded-xl border text-right transition-all cursor-pointer font-cairo ${
                                 isChecked
-                                  ? (theme === 'light' ? 'bg-emerald-50 border-emerald-500 text-emerald-950 shadow-sm' : 'bg-emerald-500/10 border-emerald-500 text-emerald-200 shadow-sm')
+                                  ? (theme === 'light' ? 'bg-blue-50/80 border-[#0b72c9] text-slate-900 shadow-xs' : 'bg-blue-950/40 border-[#0b72c9] text-white shadow-xs')
                                   : (theme === 'light' ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300' : 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white')
                               }`}
                             >
                               <div className="flex items-center gap-3 min-w-0 pr-1">
                                 <span className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 border transition-colors ${
                                   isChecked 
-                                    ? 'bg-emerald-500 text-white border-emerald-500' 
+                                    ? 'bg-[#0b72c9] text-white border-[#0b72c9]' 
                                     : (theme === 'light' ? 'border-slate-300 bg-slate-50' : 'border-slate-700 bg-slate-900')
                                 }`}>
                                   {isChecked && <span className="text-[12px] font-bold">✓</span>}
@@ -1513,7 +1528,7 @@ Please share the technical specifications and quotation. Thank you.`;
                                 </div>
                               </div>
                               <span className={`text-[9.5px] px-2 py-0.5 rounded-full font-bold shrink-0 ${
-                                isChecked ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                                isChecked ? 'bg-[#0b72c9]/15 text-[#0b72c9] dark:text-[#299df7] border border-[#0b72c9]/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
                               }`}>
                                 Android & iOS
                               </span>

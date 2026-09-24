@@ -4,7 +4,7 @@ import {
   Search, Play, Check, CheckCircle2, ChevronDown, ChevronUp, 
   Layers, Server, Cloud, ShieldCheck, X, FileText, ArrowLeft, ArrowRight,
   Sparkles, Monitor, Store, Truck, Cpu, Database,
-  LayoutGrid, Landmark, ShoppingBag, PackageCheck, Factory
+  LayoutGrid, Landmark, ShoppingBag, PackageCheck, Factory, ArrowDown
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
 
@@ -19,7 +19,8 @@ export function ModernSystemsShowcase({
   setSearchInput, 
   handleOpenVideo, 
   formData, 
-  setFormData 
+  setFormData,
+  onSelectSystemForQuote
 }) {
   const [expandedSystemId, setExpandedSystemId] = useState(null);
 
@@ -41,19 +42,31 @@ export function ModernSystemsShowcase({
 
   const flagshipModule = safeModules.find(m => m && m.id === 'accounts') || safeModules[0] || { id: 'accounts' };
 
-  const handleToggleInterest = (e, sysId) => {
+  const handleRequestQuote = (e, sysId) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
-    setFormData(prev => ({
-      ...prev,
-      interestedModules: Array.isArray(prev?.interestedModules)
-        ? (prev.interestedModules.includes(sysId)
-          ? prev.interestedModules.filter(id => id !== sysId)
-          : [...prev.interestedModules, sysId])
-        : [sysId]
-    }));
+    if (onSelectSystemForQuote) {
+      onSelectSystemForQuote(sysId);
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        interestedModules: Array.isArray(prev?.interestedModules)
+          ? (prev.interestedModules.includes(sysId)
+            ? prev.interestedModules
+            : [...prev.interestedModules, sysId])
+          : [sysId]
+      }));
+      const quoteEl = document.getElementById('quote-selection-group') || document.getElementById('contact');
+      if (quoteEl) {
+        quoteEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  };
+
+  const handleToggleInterest = (e, sysId) => {
+    handleRequestQuote(e, sysId);
   };
 
   const toggleExpand = (e, sysId) => {
@@ -85,36 +98,37 @@ export function ModernSystemsShowcase({
     specialized: Factory
   };
 
+  // Uniform brand blue styling across all category tabs for a clean, calm and elegant experience
   const categoryColorStyles = {
     all: {
-      activeBg: 'bg-gradient-to-r from-[#0b72c9] to-blue-600 text-white shadow-md shadow-[#0b72c9]/30',
+      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
       activeBadge: 'bg-white/20 text-white',
       activeIcon: 'text-white',
       inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
     },
     erp: {
-      activeBg: 'bg-gradient-to-r from-blue-700 to-indigo-600 text-white shadow-md shadow-indigo-600/30',
+      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
       activeBadge: 'bg-white/20 text-white',
       activeIcon: 'text-white',
-      inactiveIcon: 'text-indigo-500 dark:text-indigo-400'
+      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
     },
     retail: {
-      activeBg: 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/30',
+      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
       activeBadge: 'bg-white/20 text-white',
       activeIcon: 'text-white',
-      inactiveIcon: 'text-emerald-500 dark:text-emerald-400'
+      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
     },
     logistics: {
-      activeBg: 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-md shadow-amber-600/30',
+      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
       activeBadge: 'bg-white/20 text-white',
       activeIcon: 'text-white',
-      inactiveIcon: 'text-amber-500 dark:text-amber-400'
+      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
     },
     specialized: {
-      activeBg: 'bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-md shadow-purple-600/30',
+      activeBg: 'bg-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/25',
       activeBadge: 'bg-white/20 text-white',
       activeIcon: 'text-white',
-      inactiveIcon: 'text-purple-500 dark:text-purple-400'
+      inactiveIcon: 'text-[#0b72c9] dark:text-[#299df7]'
     }
   };
 
@@ -226,26 +240,17 @@ export function ModernSystemsShowcase({
 
             <button
               type="button"
-              onClick={(e) => handleToggleInterest(e, flagshipModule.id)}
+              onClick={(e) => handleRequestQuote(e, flagshipModule.id)}
               className={`min-h-[46px] px-6 py-3 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 ${
                 isFlagshipInterested
-                  ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400'
+                  ? 'bg-blue-50 dark:bg-blue-950/40 border-[#0b72c9] text-[#0b72c9] dark:text-[#299df7]'
                   : (theme === 'light' 
                       ? 'bg-white border-slate-300 text-slate-800 hover:border-[#0b72c9] hover:bg-slate-50' 
                       : 'bg-slate-900/90 border-slate-700 text-slate-200 hover:border-[#0b72c9] hover:bg-slate-800')
               }`}
             >
-              {isFlagshipInterested ? (
-                <>
-                  <Check className="w-4 h-4 text-emerald-500" />
-                  <span>{lang === 'ar' ? 'مضاف إلى قائمة التسعير' : 'Added to Quote List'}</span>
-                </>
-              ) : (
-                <>
-                  <FileText className="w-4 h-4 text-slate-400" />
-                  <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة' : 'Request Official Quote'}</span>
-                </>
-              )}
+              <ArrowDown className="w-4 h-4 text-[#0b72c9]" />
+              <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة بالأسفل ⬇️' : 'Request Official Quote Below ⬇️'}</span>
             </button>
           </div>
 
@@ -479,18 +484,17 @@ export function ModernSystemsShowcase({
 
                       <button
                         type="button"
-                        onClick={(e) => handleToggleInterest(e, sys.id)}
-                        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 ${
+                        onClick={(e) => handleRequestQuote(e, sys.id)}
+                        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 flex items-center gap-1.5 ${
                           isInterested
-                            ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400 shadow-xs'
+                            ? 'bg-blue-50 dark:bg-blue-950/40 border-[#0b72c9] text-[#0b72c9] dark:text-[#299df7] shadow-xs'
                             : (theme === 'light' 
                                 ? 'bg-slate-50 hover:bg-[#0b72c9] hover:text-white hover:border-[#0b72c9] border-slate-300 text-slate-800 shadow-2xs hover:shadow-md hover:shadow-[#0b72c9]/20' 
                                 : 'bg-slate-900 hover:bg-[#0b72c9] hover:text-white hover:border-[#0b72c9] border-slate-700 text-slate-200 hover:shadow-lg hover:shadow-[#0b72c9]/30')
                         }`}
                       >
-                        {isInterested 
-                          ? (lang === 'ar' ? 'تمت الإضافة' : 'Added') 
-                          : (lang === 'ar' ? 'طلب تسعيرة' : 'Get Quote')}
+                        <ArrowDown className="w-3.5 h-3.5" />
+                        <span>{lang === 'ar' ? 'طلب عرض سعر' : 'Get Quote'}</span>
                       </button>
                     </div>
                   </div>

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Smartphone, Check, Wifi, Battery, ChevronLeft, ChevronRight, CheckCircle2,
-  Receipt, ArrowUpRight, ShieldCheck, CheckCheck, Layers, ShoppingBag, MessageSquare
+  Receipt, ArrowUpRight, ShieldCheck, CheckCheck, Layers, ShoppingBag, MessageSquare, ArrowDown
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
 
@@ -257,10 +257,10 @@ export function ModernMobileShowcase({
     }
     setJustAddedAppId(appId);
 
-    // Smoothly scroll down to contact & quote section
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+    // Smoothly scroll down directly to quote selection group & form
+    const quoteEl = document.getElementById('quote-selection-group') || document.getElementById('contact');
+    if (quoteEl) {
+      quoteEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     setTimeout(() => {
@@ -402,17 +402,28 @@ export function ModernMobileShowcase({
                     <span className="font-mono text-xs sm:text-sm font-extrabold text-emerald-400">{activeScreen.totalAr}</span>
                   </div>
 
-                  {/* Action Button inside mobile UI - Clickable to open WhatsApp with custom message */}
-                  <a
-                    href={getAppWhatsAppLink(activeAppId, lang)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2 px-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-[#0b72c9] hover:from-emerald-500 hover:to-[#0a66b4] text-white text-[10.5px] sm:text-[11.5px] font-bold text-center shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1.5 transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer group/action"
-                    title={lang === 'ar' ? 'طلب وشراء هذا التطبيق عبر واتساب' : 'Inquire & Purchase via WhatsApp'}
-                  >
-                    <MessageSquare className="w-3.5 h-3.5 shrink-0 text-emerald-200 group-hover/action:scale-110 transition-transform" />
-                    <span>{lang === 'ar' ? `طلب شراء وتفعيل عبر واتساب` : `Order via WhatsApp`}</span>
-                  </a>
+                  {/* Action Buttons inside mobile UI */}
+                  <div className="grid grid-cols-2 gap-1.5 pt-0.5">
+                    <button
+                      type="button"
+                      onClick={(e) => handleRequestTrial(e, activeAppId)}
+                      className="py-1.5 px-2 rounded-xl bg-[#0b72c9] hover:bg-blue-600 text-white text-[10px] sm:text-[10.5px] font-bold text-center shadow-xs flex items-center justify-center gap-1 transition-all active:scale-95 cursor-pointer"
+                      title={lang === 'ar' ? 'طلب عرض سعر في النموذج بالأسفل' : 'Request quote below'}
+                    >
+                      <ArrowDown className="w-3 h-3 shrink-0" />
+                      <span>{lang === 'ar' ? 'طلب عرض سعر' : 'Get Quote'}</span>
+                    </button>
+                    <a
+                      href={getAppWhatsAppLink(activeAppId, lang)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-1.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-[10px] sm:text-[10.5px] font-bold text-center flex items-center justify-center gap-1 transition-all active:scale-95 cursor-pointer"
+                      title={lang === 'ar' ? 'طلب عبر واتساب' : 'Order via WhatsApp'}
+                    >
+                      <MessageSquare className="w-3 h-3 shrink-0 text-emerald-400" />
+                      <span>{lang === 'ar' ? 'واتساب' : 'WhatsApp'}</span>
+                    </a>
+                  </div>
 
                 </motion.div>
               </AnimatePresence>
@@ -637,20 +648,20 @@ export function ModernMobileShowcase({
                 <button
                   type="button"
                   onClick={(e) => currentApp?.id && handleRequestTrial(e, currentApp.id)}
-                  className={`min-h-[42px] px-4 py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer w-full sm:w-auto border active:scale-95 font-cairo shadow-xs ${
+                  className={`min-h-[42px] px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer w-full sm:w-auto border active:scale-95 font-cairo shadow-xs ${
                     justAddedAppId === currentApp?.id || isInterestedInCurrent
-                      ? 'bg-blue-600 border-blue-600 text-white shadow-blue-600/25'
+                      ? 'bg-[#0b72c9] border-[#0b72c9] text-white shadow-md shadow-[#0b72c9]/30'
                       : (theme === 'light' 
-                          ? 'bg-white hover:bg-slate-50 border-slate-300 text-slate-800 hover:border-slate-400' 
-                          : 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-white')
+                          ? 'bg-blue-50/80 hover:bg-blue-100 border-[#0b72c9]/30 text-[#0b72c9]' 
+                          : 'bg-[#0b72c9]/15 hover:bg-[#0b72c9]/25 border-[#0b72c9]/40 text-[#299df7]')
                   }`}
                   title={lang === 'ar' ? 'طلب عرض سعر في النموذج بالأسفل' : 'Request quote in form below'}
                 >
-                  <Smartphone className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
+                  <ArrowDown className="w-4 h-4 shrink-0" />
                   <span>
                     {lang === 'ar' 
-                      ? (isInterestedInCurrent ? 'طلب عرض السعر في النموذج ⬇️' : 'طلب عرض السعر في النموذج ⬇️') 
-                      : (isInterestedInCurrent ? 'Request Quote in Form ⬇️' : 'Request Quote in Form ⬇️')}
+                      ? 'طلب عرض السعر في النموذج بالأسفل ⬇️' 
+                      : 'Request Quote in Form Below ⬇️'}
                   </span>
                 </button>
               </div>

@@ -169,8 +169,8 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
 
                 {(() => {
                   const branchMsg = lang === 'ar'
-                    ? `السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (${selectedBranch.cityAr}) للاستفسار عن الأنظمة والحلول التقنية المتاحة.\n\nشاكراً لكم حسن تعاونكم.`
-                    : `Hello Nile Techno Sales Team (${selectedBranch.cityEn}),\n\nI would like to inquire about your software systems and enterprise solutions.\n\nThank you.`;
+                    ? `السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع ${selectedBranch.cityAr}) للاستفسار عن الأنظمة والحلول التقنية المتاحة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
+                    : `Hello Nile Techno Sales Team (${selectedBranch.cityEn} Branch),\n\nI would like to inquire about your enterprise software systems and solutions for our business.\n\nThank you for your prompt assistance.`;
                   return (
                     <a
                       href={`https://wa.me/${selectedBranch.whatsapp}?text=${encodeURIComponent(branchMsg)}`}

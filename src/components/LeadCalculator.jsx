@@ -51,26 +51,28 @@ export default function LeadCalculator({ lang, theme }) {
     const messageText = lang === 'ar'
       ? `السلام عليكم ورحمة الله وبركاته،
 
-أود طلب استشارة وعرض سعر بخصوص النظام البرمجي المقترح لنشاطنا من شركة نايل تكنو:
+أود طلب استشارة رسمية وعرض سعر بخصوص المنظومة البرمجية المقترحة لنشاطنا من شركة نايل تكنو للبرمجيات:
 
+📋 تفاصيل المتطلبات:
 • مجال النشاط: ${sectorLabel}
-• حجم المنشأة: ${scaleLabel}
+• حجم ونطاق المنشأة: ${scaleLabel}
 • الأنظمة المقترحة: ${selectedSystems}
 • تطبيقات الموبايل الميدانية: ${needMobile ? 'مطلوبة' : 'غير مطلوبة'}
 • الربط مع منظومة الفاتورة الإلكترونية: ${needEInvoicing ? 'مطلوب' : 'غير مطلوب'}
 
-شاكراً لكم حسن تعاونكم ومتابعتكم.`
+شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
       : `Hello Nile Techno Sales Team,
 
-I would like to request a quotation and advisory for our business software solution:
+I would like to request an official quotation and software advisory for our business from Nile Techno:
 
+📋 Requirements Overview:
 • Business Sector: ${sectorLabel}
 • Operational Scale: ${scaleLabel}
-• Suggested Systems: ${selectedSystems}
-• Mobile Field Apps: ${needMobile ? 'Required' : 'Not required'}
-• E-Invoicing Compliance: ${needEInvoicing ? 'Required' : 'Not required'}
+• Suggested Software Systems: ${selectedSystems}
+• Mobile Field Applications: ${needMobile ? 'Required' : 'Not required'}
+• E-Invoicing Integration: ${needEInvoicing ? 'Required' : 'Not required'}
 
-Thank you.`;
+Thank you for your prompt assistance and cooperation.`;
 
     window.open(createWhatsAppUrl(country, messageText), '_blank', 'noopener,noreferrer');
   };

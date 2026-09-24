@@ -244,7 +244,7 @@ const NileTechnoLogo = ({ theme, lang, className }) => {
         src={companyLogo}
         alt="Nile Techno Logo"
         decoding="async"
-        className={className || "h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 hover:scale-[1.02]"}
+        className={`${className || "h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 hover:scale-[1.02]"} max-w-full`}
         onError={(e) => {
           e.target.src = logoTransparentWebp;
         }}

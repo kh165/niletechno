@@ -57,6 +57,48 @@ section:not(#home) {
   nav .max-w-7xl > div {
     height: 60px !important;
   }
+  nav .max-w-7xl > div,
+  nav .max-w-7xl > div > a {
+    min-width: 0;
+  }
+  nav .max-w-7xl > div > a img {
+    max-width: 100%;
+  }
+}
+
+/* Keep touch controls and long Arabic labels inside the viewport. */
+@media (max-width: 480px) {
+  nav .max-w-7xl {
+    padding-left: .75rem;
+    padding-right: .75rem;
+  }
+  nav .max-w-7xl > div {
+    gap: .5rem;
+  }
+  nav .max-w-7xl > div > a {
+    max-width: 52vw;
+  }
+  nav .max-w-7xl > div > a img {
+    max-height: 2.75rem;
+  }
+  nav .max-w-7xl > div > div:last-child {
+    gap: .35rem;
+  }
+  nav .max-w-7xl > div > div:last-child > button:nth-child(2) {
+    min-width: 2.25rem;
+    max-width: 6.25rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    white-space: nowrap;
+  }
+  nav .max-w-7xl > div > div:last-child > button:nth-child(2) span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #home button,
+  #home a {
+    max-width: 100%;
+  }
 }
 
 /* ========================================
@@ -732,7 +774,29 @@ nav.fixed .nav-link-premium:focus-visible {
 }
 .partners-marquee-viewport:hover .partners-marquee-track,
 .partners-marquee-track:hover { animation-play-state: paused; }
-.partners-marquee-track > div { transition: transform 240ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, box-shadow 240ms ease; }
+.partners-marquee-track > div { transition: transform 240ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, box-shadow 240ms ease, filter 240ms ease; }
+.partners-marquee-card {
+  filter: blur(0);
+  will-change: transform, filter, opacity;
+  outline: none;
+}
+.partners-marquee-track:has(.partner-marquee-card:hover) .partner-marquee-card:not(:hover),
+.partners-marquee-track:has(.partner-marquee-card:focus-visible) .partner-marquee-card:not(:focus-visible) {
+  filter: blur(3px);
+  opacity: .5;
+  transform: scale(.96);
+}
+.partners-marquee-card:hover,
+.partners-marquee-card:focus-visible {
+  position: relative;
+  z-index: 2;
+  transform: scale(1.08);
+  box-shadow: 0 14px 30px rgba(8, 145, 178, .2);
+}
+.partners-marquee-card:focus-visible {
+  outline: 2px solid rgba(6, 182, 212, .8);
+  outline-offset: 3px;
+}
 @keyframes partnersMarquee {
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }
@@ -908,4 +972,3 @@ nav.fixed .nav-link-premium:focus-visible {
     animation: none !important;
   }
 }
-

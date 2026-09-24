@@ -23,12 +23,20 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
       <div
         key={`${groupIndex}-${partner.id || idx}`}
         title={isRtl ? `${partner.nameAr} - ${partner.industryAr || ''}` : `${partner.nameEn || partner.nameAr} - ${partner.industryEn || ''}`}
-        className={`w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 shrink-0 group p-0 rounded-2xl border-t-4 border-r border-b border-l hover:border-cyan-500/60 dark:hover:border-cyan-400/55 transition-all duration-300 flex items-center justify-center relative overflow-hidden ${borderAccent} ${
+        className={`partner-marquee-card w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 shrink-0 group p-0 rounded-2xl border-t-4 border-r border-b border-l hover:border-cyan-500/60 dark:hover:border-cyan-400/55 transition-all duration-300 flex items-center justify-center relative overflow-hidden ${borderAccent} ${
           theme === 'light'
             ? 'bg-gradient-to-br from-white via-slate-50/50 to-cyan-50/20 border-slate-200 shadow-xs hover:shadow-md'
             : 'bg-gradient-to-br from-[#0f172a] to-[#070e1e] border-slate-800 hover:bg-slate-900/60'
         }`}
         onClick={() => setShowPartnersModal?.(true)}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            setShowPartnersModal?.(true);
+          }
+        }}
+        tabIndex={0}
+        role="button"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
         <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
@@ -39,8 +47,8 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
   };
 
   const partnerWhatsAppText = isRtl
-    ? `السلام عليكم ورحمة الله وبركاته،\n\nأود الاستفسار والاطلاع على سابقة أعمال وحلول شركة نايل تكنو للبرمجيات وشركاء النجاح.\n\nشاكراً لكم حسن تعاونكم.`
-    : `Hello Nile Techno Team,\n\nI would like to inquire about your software solutions, enterprise portfolio, and success partners.\n\nThank you.`;
+    ? `السلام عليكم ورحمة الله وبركاته،\n\nأود الاستفسار والاطلاع على سابقة أعمال شركة نايل تكنو للبرمجيات والأنظمة المنفذة لشركاء النجاح والتوكيلات التجارية.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
+    : `Hello Nile Techno Sales Team,\n\nI would like to inquire about your software solutions, enterprise portfolio, and success partners.\n\nThank you for your assistance.`;
 
   return (
     <section 

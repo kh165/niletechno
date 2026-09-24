@@ -460,6 +460,16 @@ export const BRANCHES_DATA = [
 
 export const SUCCESS_PARTNERS = [
   {
+    id: 'sp_yg_agencies',
+    category: 'agencies_wholesale',
+    nameAr: 'شركة واي جي للتوكيلات التجارية',
+    nameEn: 'YG for Trading Agencies',
+    industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
+    industryEn: 'Commercial Agencies & Distribution',
+    logoText: 'YG',
+    imageUrl: '/yg_trading_agencies_logo.png'
+  },
+  {
     id: 'sp_malizia',
     category: 'agencies_wholesale',
     nameAr: 'الشركة المصرية الماليزية ش.م.م',
@@ -467,7 +477,7 @@ export const SUCCESS_PARTNERS = [
     industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
     industryEn: 'Commercial Agencies & Distribution',
     logoText: 'EM',
-    imageUrl: '/el_malizia_logo.svg'
+    imageUrl: '/el_malizia_logo.png'
   },
   {
     id: 'sp_skyhold',
@@ -741,12 +751,20 @@ export const TRANSLATIONS = {
 
 export const HOMEPAGE_SLIDER_PARTNERS = [
   {
+    id: 'hp_yg_agencies',
+    nameAr: 'شركة واي جي للتوكيلات التجارية',
+    nameEn: 'YG for Trading Agencies',
+    industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
+    industryEn: 'Commercial Agencies & Distribution',
+    imageUrl: '/yg_trading_agencies_logo.png'
+  },
+  {
     id: 'hp_malizia',
     nameAr: 'الشركة المصرية الماليزية ش.م.م',
     nameEn: 'Egyptian Malaysian Co. S.A.E',
     industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
     industryEn: 'Commercial Agencies & Distribution',
-    imageUrl: '/el_malizia_logo.svg'
+    imageUrl: '/el_malizia_logo.png'
   },
   {
     id: 'hp_skyhold',

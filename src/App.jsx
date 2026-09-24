@@ -444,28 +444,32 @@ export default function App() {
     const messageText = lang === 'ar'
       ? `السلام عليكم ورحمة الله وبركاته،
 
-أود طلب عرض سعر واستشارة بخصوص حلول شركة نايل تكنو للبرمجيات.
+أود طلب عرض سعر رسمي واستشارة بخصوص حلول وأنظمة شركة نايل تكنو للبرمجيات.
 
-بيانات التواصل:
+📋 بيانات التواصل:
 • الاسم: ${cleanName}
-• رقم الهاتف: ${cleanPhone}${cleanCompanyName ? `\n• اسم المنشأة: ${cleanCompanyName}` : ''}${cleanEmail ? `\n• البريد الإلكتروني: ${cleanEmail}` : ''}
+• رقم الهاتف: ${cleanPhone}${cleanCompanyName ? `\n• اسم المنشأة / الشركة: ${cleanCompanyName}` : ''}${cleanEmail ? `\n• البريد الإلكتروني: ${cleanEmail}` : ''}
 
-الأنظمة والحلول المختارة:
-${solutionsBlock}${cleanMessage ? `\n\nتفاصيل إضافية وملاحظات:\n${cleanMessage}` : ''}
+🎯 الحلول والأنظمة المختارة:
+${solutionsBlock}${cleanMessage ? `\n\n📝 ملاحظات وتفاصيل إضافية:\n${cleanMessage}` : ''}
 
-أرجو تزويدنا بعرض السعر والمواصفات الفنية. شاكراً لكم حسن تعاونكم ومتابعتكم.`
+أرجو التكرم بتزويدنا بعرض السعر المعتمد والمواصفات الفنية وجدول التنفيذ.
+
+شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
       : `Hello Nile Techno Sales Team,
 
-I would like to request a quotation and consultation for Nile Techno software solutions.
+I would like to request an official quotation and consultation regarding Nile Techno software solutions and enterprise systems.
 
-Contact Details:
+📋 Contact Information:
 • Name: ${cleanName}
-• Phone: ${cleanPhone}${cleanCompanyName ? `\n• Company: ${cleanCompanyName}` : ''}${cleanEmail ? `\n• Email: ${cleanEmail}` : ''}
+• Phone: ${cleanPhone}${cleanCompanyName ? `\n• Company / Organization: ${cleanCompanyName}` : ''}${cleanEmail ? `\n• Email: ${cleanEmail}` : ''}
 
-Selected Systems & Apps:
-${solutionsBlock}${cleanMessage ? `\n\nAdditional Requirements:\n${cleanMessage}` : ''}
+🎯 Selected Systems & Applications:
+${solutionsBlock}${cleanMessage ? `\n\n📝 Additional Requirements / Details:\n${cleanMessage}` : ''}
 
-Please share the technical specifications and quotation. Thank you.`;
+Please provide us with the official quotation, technical specifications, and implementation roadmap.
+
+Thank you for your prompt assistance and cooperation.`;
 
     const whatsappUrl = `https://wa.me/201000082722?text=${encodeURIComponent(messageText)}`;
     
@@ -502,10 +506,10 @@ Please share the technical specifications and quotation. Thank you.`;
           : (scrolled ? 'bg-[#050914]/65 border-slate-900/60 text-white shadow-lg' : 'bg-[#050914]/90 border-slate-900 text-white')
       } backdrop-blur-md border-b transition-all duration-300`}>
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center flex-row-reverse lg:flex-row transition-all duration-300 ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
+          <div className={`flex min-w-0 justify-between items-center gap-2 flex-row-reverse lg:flex-row transition-all duration-300 ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
             
             {/* Corporate Logo Emblem using high-performance vector component */}
-            <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="cursor-pointer flex items-center py-1 group">
+            <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="min-w-0 max-w-[52vw] cursor-pointer flex items-center py-1 group">
               <NileTechnoLogo 
                 theme={theme} 
                 lang={lang} 
@@ -518,9 +522,9 @@ Please share the technical specifications and quotation. Thank you.`;
               {[
                 { label: t.navHome, href: '#home' },
                 { label: t.navAbout, href: '#about' },
+                { label: t.navEinvoice, href: '#einvoicing' },
                 { label: t.navServices, href: '#services' },
                 { label: t.navMobile, href: '#mobile-apps' },
-                { label: t.navEinvoice, href: '#einvoicing' },
                 { label: t.navCustomers, href: '#customers' },
                 { label: t.navContact, href: '#contact' }
               ].map((link, idx) => (
@@ -542,7 +546,7 @@ Please share the technical specifications and quotation. Thank you.`;
             </div>
 
             {/* Theme Toggle, Language Switcher and Drawer Trigger */}
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               
               {/* Persistent Theme Toggle Component */}
               <ThemeToggle 
@@ -590,12 +594,12 @@ Please share the technical specifications and quotation. Thank you.`;
               ? 'bg-white border-slate-200 text-slate-800' 
               : 'bg-[#0d1527] border-slate-800 text-white'
           }`}>
-            {[
-              { label: t.navHome, href: '#home' },
-              { label: t.navAbout, href: '#about' },
-              { label: t.navServices, href: '#services' },
-              { label: t.navMobile, href: '#mobile-apps' },
-              { label: t.navEinvoice, href: '#einvoicing' },
+              {[
+                { label: t.navHome, href: '#home' },
+                { label: t.navAbout, href: '#about' },
+                { label: t.navEinvoice, href: '#einvoicing' },
+                { label: t.navServices, href: '#services' },
+                { label: t.navMobile, href: '#mobile-apps' },
               { label: t.navCustomers, href: '#customers' },
               { label: t.navContact, href: '#contact' }
             ].map((link, idx) => (
@@ -1727,8 +1731,8 @@ Please share the technical specifications and quotation. Thank you.`;
                 <a 
                   href={`https://wa.me/+201000082722?text=${encodeURIComponent(
                     lang === 'ar'
-                      ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود الاستفسار والتواصل مع فريق خدمة العملاء والمبيعات بشركة نايل تكنو للبرمجيات بخصوص الحلول والأنظمة المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم.'
-                      : 'Hello Nile Techno Sales Team,\n\nI would like to inquire about your software solutions and enterprise ERP systems.\n\nThank you.'
+                      ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل والاستفسار مع فريق خدمة العملاء والمبيعات بشركة نايل تكنو للبرمجيات بخصوص الحلول والأنظمة المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.'
+                      : 'Hello Nile Techno Sales Team,\n\nI would like to inquire about your software solutions, enterprise ERP systems, and services.\n\nThank you for your assistance.'
                   )}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
@@ -1808,8 +1812,8 @@ Please share the technical specifications and quotation. Thank you.`;
         <motion.a
           href={`https://wa.me/+966511351059?text=${encodeURIComponent(
             lang === 'ar'
-              ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع المملكة العربية السعودية) للاستفسار عن الأنظمة والحلول البرمجية المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم.'
-              : 'Hello Nile Techno Sales Team (Saudi Arabia Branch),\n\nI would like to inquire about your software solutions and enterprise ERP systems.\n\nThank you.'
+              ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع المملكة العربية السعودية) للاستفسار عن الأنظمة والحلول البرمجية المناسبة لنشاطنا بالمملكة.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.'
+              : 'Hello Nile Techno Sales Team (Saudi Arabia Branch),\n\nI would like to inquire about your software solutions, enterprise ERP systems, and services for our business in Saudi Arabia.\n\nThank you for your assistance.'
           )}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -1851,8 +1855,8 @@ Please share the technical specifications and quotation. Thank you.`;
         <motion.a
           href={`https://wa.me/+201000082722?text=${encodeURIComponent(
             lang === 'ar'
-              ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع مصر) للاستفسار عن الأنظمة والحلول البرمجية المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم.'
-              : 'Hello Nile Techno Sales Team (Egypt Branch),\n\nI would like to inquire about your software solutions and enterprise ERP systems.\n\nThank you.'
+              ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع جمهورية مصر العربية) للاستفسار عن الأنظمة والحلول البرمجية المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.'
+              : 'Hello Nile Techno Sales Team (Egypt Branch),\n\nI would like to inquire about your software solutions, enterprise ERP systems, and services for our business in Egypt.\n\nThank you for your assistance.'
           )}`}
           target="_blank"
           rel="noopener noreferrer"

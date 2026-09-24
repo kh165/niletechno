@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@800;900&amp;family=Montserrat:wght@800;900&amp;display=swap');
+      .ar-brand {
+        font-family: 'Cairo', 'Tajawal', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        font-weight: 900;
+        font-size: 50px;
+        fill: #ffffff;
+        text-anchor: middle;
+      }
+      .en-brand {
+        font-family: 'Montserrat', 'Arial Black', system-ui, -apple-system, sans-serif;
+        font-weight: 900;
+        font-size: 42px;
+        letter-spacing: 2.5px;
+        fill: #ffffff;
+        text-anchor: middle;
+      }
+    </style>
+  </defs>
+
+  <!-- Clean Circle Red Badge Background -->
+  <circle cx="500" cy="500" r="480" fill="#E52320" />
+
+  <!-- Outer Stylized Monogram Graphic (Pure White) -->
+  <g id="logo-graphic" fill="#FFFFFF">
+    <!-- 1. Outer Frame with Integrated Prongs and Rounded Edges -->
+    <path d="
+      M 380 170
+      L 630 170
+      C 700 170, 745 215, 745 285
+      L 745 350
+      C 745 365, 735 375, 720 375
+      L 470 375
+      C 455 375, 445 365, 445 350
+      L 445 340
+      C 445 325, 455 315, 470 315
+      L 675 315
+      L 675 275
+      C 675 245, 650 235, 620 235
+      L 385 235
+      C 355 235, 330 260, 330 290
+      L 330 550
+      C 330 580, 355 605, 385 605
+      L 620 605
+      C 650 605, 675 580, 675 550
+      L 675 520
+      C 675 505, 685 495, 700 495
+      L 715 495
+      C 730 495, 740 505, 740 520
+      L 740 560
+      C 740 630, 695 675, 625 675
+      L 380 675
+      C 310 675, 265 630, 265 560
+      L 265 285
+      C 265 215, 310 170, 380 170
+      Z
+    " />
+
+    <!-- 2. Inner Stylized 'y' Monogram Element -->
+    <path d="
+      M 465 375
+      L 715 375
+      C 730 375, 740 385, 740 400
+      L 740 405
+      C 740 420, 730 430, 715 430
+      L 565 430
+      L 565 525
+      C 565 565, 595 595, 635 595
+      L 670 595
+      C 685 595, 695 605, 695 620
+      L 695 625
+      C 695 640, 685 650, 670 650
+      L 620 650
+      C 555 650, 500 595, 500 530
+      L 500 430
+      L 465 430
+      C 450 430, 440 420, 440 405
+      L 440 400
+      C 440 385, 450 375, 465 375
+      Z
+    " />
+  </g>
+
+  <!-- Two Circular Holes on the Left Vertical Bar (Cutouts showing red background) -->
+  <circle cx="298" cy="425" r="16.5" fill="#E52320" />
+  <circle cx="298" cy="470" r="16.5" fill="#E52320" />
+
+  <!-- Arabic Corporate Title: واى جى للتوكيلات التجارية -->
+  <g transform="skewX(-6) translate(35, 0)">
+    <text x="465" y="750" class="ar-brand" dir="rtl">واى جى للتوكيلات التجارية</text>
+  </g>
+
+  <!-- English Corporate Title: YG FOR TRADING AGENCIES -->
+  <g transform="skewX(-6) translate(35, 0)">
+    <text x="465" y="818" class="en-brand">YG FOR TRADING AGENCIES</text>
+  </g>
+</svg>

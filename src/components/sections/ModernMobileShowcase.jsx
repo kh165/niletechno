@@ -6,95 +6,95 @@ import {
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
 
-// Tailored, grammatically correct and elegant Arabic WhatsApp messages for each mobile app
+// Tailored, grammatically correct and elegant WhatsApp messages for each mobile app
 export const APP_WHATSAPP_MESSAGES = {
   'mob-sales': {
     ar: `السلام عليكم ورحمة الله وبركاته،
 
 أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق مندوب المبيعات الميداني الذكي (Android & iOS)" من شركة نايل تكنو للبرمجيات.
 
-المطلوب معرفته:
+المعلومات المطلوبة:
 • تكلفة الترخيص وتفاصيل التفعيل
-• آلية الربط والتزامن مع النظام المحاسبي
-• دعم طباعة الفواتير المحمولة وتتبع المناديب بالـ GPS
+• آلية الربط والتزامن اللحظي مع النظام المحاسبي المركزي
+• دعم طباعة الفواتير المحمولة وتتبع خطوط سير المناديب بالـ GPS
 
-شاكراً لكم حسن تعاونكم ومتابعتكم.`,
+شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`,
     en: `Hello Nile Techno Sales Team,
 
-I would like to inquire about and purchase the "Smart Sales Representative App (Android & iOS)".
+I would like to inquire about and request an official quotation for the "Smart Mobile Sales Representative App (Android & iOS)".
 
-Please provide details on:
-• Pricing and licensing options
-• Accounting ERP integration
-• Portable thermal printing & GPS tracking
+Requested Information:
+• Licensing cost and deployment options
+• Real-time synchronization with central ERP & accounting
+• Mobile thermal receipt printing and GPS route tracking
 
-Thank you.`
+Thank you for your prompt assistance and cooperation.`
   },
   'mob-pos': {
     ar: `السلام عليكم ورحمة الله وبركاته،
 
-أود الاستفسار والتعاقد بخصوص "تطبيق نقطة البيع للموبايل المحمول (Mobile POS)" من شركة نايل تكنو.
+أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق نقطة البيع للمحمول (Mobile POS)" من شركة نايل تكنو للبرمجيات.
 
-المطلوب معرفته:
+المعلومات المطلوبة:
 • تكلفة تفعيل نقاط البيع المحمولة
 • آلية العمل دون اتصال بالإنترنت (Offline Mode)
-• ربط طابعات البلوتوث المحمولة وقراءة الباركود
+• ربط طابعات البلوتوث المحمولة وقارئ الباركود
 
-شاكراً لكم حسن تعاونكم ومتابعتكم.`,
+شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`,
     en: `Hello Nile Techno Sales Team,
 
-I would like to order the "Mobile POS Terminal App".
+I would like to inquire about and request an official quotation for the "Mobile POS Terminal App".
 
-Please provide details on:
-• Portable POS licensing & setup
-• Offline transaction syncing
-• Bluetooth printer compatibility
+Requested Information:
+• Setup and licensing for portable POS devices
+• Offline transaction processing and automated syncing
+• Bluetooth printer and barcode scanner compatibility
 
-Thank you.`
+Thank you for your prompt assistance and cooperation.`
   },
   'mob-restaurant': {
     ar: `السلام عليكم ورحمة الله وبركاته،
 
-أود الاستفسار والطلب بشأن "تطبيق كابتن الصالة والنادل الذكي ومتابعة المطبخ" للمطاعم والكافيهات.
+أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق كابتن الصالة والنادل الذكي ومتابعة المطبخ" للمطاعم والكافيهات.
 
-المطلوب معرفته:
-• أسعار التطبيق وتجهيزه على التابلت والموبايل
+المعلومات المطلوبة:
+• أسعار التطبيق وتجهيزه على أجهزة التابلت والموبايل
 • آلية الربط المباشر بشاشات وطابعات المطبخ (KDS)
-• دعم المنيو الرقمي وإدارة شاشات الطاولات
+• دعم المنيو الرقمي وإدارة شاشات الطاولات والتحويل السريع
 
-شاكراً لكم حسن تعاونكم ومتابعتكم.`,
+شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`,
     en: `Hello Nile Techno Sales Team,
 
-I would like to order the "Smart Waiter & Kitchen Display App" for restaurant operations.
+I would like to inquire about and request an official quotation for the "Smart Waiter & Kitchen Display App" for restaurants and cafes.
 
-Please provide details on:
-• Pricing for tablets and mobile devices
-• Kitchen display & printer integration (KDS)
-• Table management & QR digital menus
+Requested Information:
+• Pricing and tablet/mobile deployment setup
+• Kitchen Display System (KDS) and direct thermal printer routing
+• Digital menus, table assignments, and fast order dispatch
 
-Thank you.`
+Thank you for your prompt assistance and cooperation.`
   },
   'mob-medical': {
     ar: `السلام عليكم ورحمة الله وبركاته،
 
-أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق المندوب الطبي الدوائي (Pharma & Medical Rep)" من شركة نايل تكنو.
+أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق المندوب الطبي والدوائي (Medical & Pharma Rep)" من شركة نايل تكنو للبرمجيات.
 
-المطلوب معرفته:
-• آلية تتبع زيارات الأطباء وجدولتها
-• إدارة عينات الأدوية والهدايا الترويجية
-• عرض الأسعار وطريقة الربط بالإدارة المركزية
+المعلومات المطلوبة:
+• آلية جدولة وتتبع زيارات الأطباء والصيدليات بالـ GPS
+• إدارة عينات الأدوية والهدايا الترويجية ومسح الكود
+• عرض الأسعار وطريقة التكامل مع المنظومة المركزية
 
-شاكراً لكم حسن تعاونكم ومتابعتكم.`,
+شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`,
     en: `Hello Nile Techno Sales Team,
 
-I am interested in purchasing the "Medical & Pharma Rep System App".
+I would like to inquire about and request an official quotation for the "Medical & Pharmaceutical Representative System App".
 
-Please provide details on:
-• Doctor visit scheduling & clinical logs
-• Pharmaceutical sample inventory tracking
-• Pricing and central ERP integration
+Requested Information:
+• Clinic & pharmacy visit scheduling with GPS audit logs
+• Medical sample tracking and promotional item inventory
+• Licensing quotation and central ERP connectivity
 
-Thank you.`
+Thank you for your prompt assistance and cooperation.`
   }
 };
 

@@ -1018,3 +1018,28 @@ nav.fixed .nav-link-premium:focus-visible {
   .section-divider { min-height: 22px; gap: .5rem; }
   .section-divider-line { width: min(20vw, 5rem); }
 }
+
+/* Calm, consistent button sizing across the site. Keep dedicated controls and mobile tap targets intact. */
+.site-density button:not([aria-label*="الوضع"]):not([aria-label*="mode"]),
+.site-density a[class*="cursor-pointer"] {
+  line-height: 1.25;
+}
+
+@media (min-width: 769px) {
+  .site-density button:not([aria-label*="الوضع"]):not([aria-label*="mode"]):not(.whatsapp-btn-text),
+  .site-density a[class*="cursor-pointer"] {
+    min-height: 38px;
+  }
+
+  .site-density button:not([aria-label*="الوضع"]):not([aria-label*="mode"]):not(.whatsapp-btn-text) {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-density button:not([aria-label*="الوضع"]):not([aria-label*="mode"]),
+  .site-density a[class*="cursor-pointer"] {
+    min-height: 38px;
+  }
+}

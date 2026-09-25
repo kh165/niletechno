@@ -349,6 +349,28 @@ export const MOBILE_APPS = [
     accentColor: 'from-blue-600/20 to-blue-500/10'
   },
   {
+    id: 'mob-medical',
+    titleAr: 'تطبيق المندوب الطبي الدوائي',
+    titleEn: 'Medical & Pharma Rep System',
+    descriptionAr: 'برنامج مخصص لشركات الأدوية لمتابعة نشاط مناديب الدعاية الطبية ومقابلات الأطباء والتوزيع للصيدليات.',
+    descriptionEn: 'Comprehensive companion tool for healthcare sales representatives, detailing clinic logs and pharmacy campaigns.',
+    featuresAr: [
+      'جدولة وتتبع زيارات الأطباء اليومية وكتابة تقرير المقابلات الفورية لجهة عمله',
+      'عرض تفاعلي رائع ومحدث لكتيب المنتجات والمواصفات الطبية والمزايا',
+      'تسجيل عينات الأدوية الموزعة مجاناً والهدايا العينية للعيادات',
+      'تحصيل وتدوين طلبيات الصيدليات وربطها بالمخازن ووكلاء التوزيع'
+    ],
+    featuresEn: [
+      'Schedule physician visits & draft immediate clinical meetup comments',
+      'Demonstrate pharmaceutical digital product brochures with interactive specs',
+      'Log free samples distribution & material aid inventories per clinic',
+      'Collect pharmacy bookings and integrate them directly with warehouse queues'
+    ],
+    iconName: 'HeartPulse',
+    imageUrl: '/images/medical_rep/medical_rep_dashboard.png',
+    accentColor: 'from-pink-600/20 to-pink-500/10'
+  },
+  {
     id: 'mob-pos',
     titleAr: 'تطبيق نقطة البيع للموبايل (Mobile POS)',
     titleEn: 'Interactive Mobile POS App',
@@ -392,28 +414,6 @@ export const MOBILE_APPS = [
     imageUrl: 'https://www.niletechno.com/assets/img/mobile/resturant.png',
     accentColor: 'from-orange-600/20 to-orange-500/10'
   },
-  {
-    id: 'mob-medical',
-    titleAr: 'تطبيق المندوب الطبي الدوائي',
-    titleEn: 'Medical & Pharma Rep System',
-    descriptionAr: 'برنامج مخصص لشركات الأدوية لمتابعة نشاط مناديب الدعاية الطبية ومقابلات الأطباء والتوزيع للصيدليات.',
-    descriptionEn: 'Comprehensive companion tool for healthcare sales representatives, detailing clinic logs and pharmacy campaigns.',
-    featuresAr: [
-      'جدولة وتتبع زيارات الأطباء اليومية وكتابة تقرير المقابلات الفورية لجهة عمله',
-      'عرض تفاعلي رائع ومحدث لكتيب المنتجات والمواصفات الطبية والمزايا',
-      'تسجيل عينات الأدوية الموزعة مجاناً والهدايا العينية للعيادات',
-      'تحصيل وتدوين طلبيات الصيدليات وربطها بالمخازن ووكلاء التوزيع'
-    ],
-    featuresEn: [
-      'Schedule physician visits & draft immediate clinical meetup comments',
-      'Demonstrate pharmaceutical digital product brochures with interactive specs',
-      'Log free samples distribution & material aid inventories per clinic',
-      'Collect pharmacy bookings and integrate them directly with warehouse queues'
-    ],
-    iconName: 'HeartPulse',
-    imageUrl: 'https://www.niletechno.com/assets/img/mobile/medical_rep.jpg',
-    accentColor: 'from-pink-600/20 to-pink-500/10'
-  }
 ];
 
 export const BRANCHES_DATA = [
@@ -612,12 +612,12 @@ export const TRANSLATIONS = {
     visionContent: 'نسعى لنكون أحد أكبر المراجع الخدمية والرائدة لتقديم حلول التحول برمجياً وإلكترونياً في الوطن العربي، عبر إرساء أرقى معايير السهولة والعملية في البرامج الإدارية والمالية مع تكلفة اقتصادية تناسب الجميع.',
     missionContent: 'ابتكار وبناء حلول تبرمج واقع الأنشطة التجارية والصناعية برؤية واضحة تجعل إدارة مخازنك، موظفيك، وسياراتك غاية في العملية، مدعومةً بأفضل خدمات الدعم الفني وخدمات ما بعد البيع في الأسواق.',
     einvoiceHeadline: 'دعم كامل للفاتورة الإلكترونية',
-    einvoiceSub: 'حلول ذكية مطابقة لتعليمات هيئة الزكاة والضريبة والجمارك (ZATCA) في السعودية ومصلحة الضرائب المصرية (ETA).',
-    einvoiceDesc: 'تحتوي جميع أنظمتنا على مديول الفاتورة الإلكترونية والربط المباشر لحفظ وإصدار الفواتير الضريبية المشفرة مع توليد فوري لرموز الاستجابة السريعة (QR Code) المشفرة والداعمة لمتطلبات المرحلة الأولى والمرحلة الثانية للربط الفني.',
-    einvoiceListTitle: 'مواصفات الفاتورة الإلكترونية المعتمدة لدينا:',
-    einvoiceItem1: 'توليد وتلقيم رمز الـ QR مشفر تماماً يقرأ البيانات الرئيسية (البائع، الرقم الضريبي، التاريخ، الإجمالي، قيمة الضريبة).',
-    einvoiceItem2: 'إتاحة إصدار الفواتير دون انقطاع حتى في حالات ضعف أو تباطؤ الاتصال السيرفر الرئيسي.',
-    einvoiceItem3: 'ربط مباشر مع واجهات الـ API المعتمدة من الهيئة ومزامنة الفواتير بسلاسة كاملة وبصمة إلكترونية مشفرة.',
+    einvoiceSub: 'حلول متوافقة مع منظومة الفاتورة والإيصال الإلكتروني لمصلحة الضرائب المصرية (ETA) وهيئة الزكاة والضريبة والجمارك (ZATCA).',
+    einvoiceDesc: 'تحتوي جميع أنظمتنا على مديول الفاتورة الإلكترونية والربط المباشر لحفظ وإصدار الفواتير الضريبية المشفرة مع توليد فوري لرموز الاستجابة السريعة (QR Code) المشفرة والداعمة لمتطلبات الربط الفني.',
+    einvoiceListTitle: 'مواصفات الفاتورة الإلكترونية في أنظمتنا:',
+    einvoiceItem1: 'توليد رمز QR مشفر يقرأ البيانات الرئيسية (البائع، الرقم الضريبي، التاريخ، الإجمالي، قيمة الضريبة).',
+    einvoiceItem2: 'إمكانية إصدار الفواتير دون توقف حتى في حال انقطاع الاتصال بالسيرفر.',
+    einvoiceItem3: 'ربط مباشر مع واجهات الـ API المعتمدة ومزامنة الفواتير ببصمة إلكترونية مشفرة.',
     calculatorHeadline: 'الحاسبة التفاعلية واقتراح النظام الأمثل',
     calculatorSub: 'أجب عن بضعة تفاصيل حول نشاطك، وسوف تتأكد من اختيار البرنامج وحزمة الخدمات والتقدير السعري الأمثل لعملك فوراً!',
     calcTypeSelection: 'ما هو قطاع ونوع عملك الرئيسي؟',

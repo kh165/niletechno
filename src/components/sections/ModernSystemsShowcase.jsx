@@ -159,7 +159,7 @@ export function ModernSystemsShowcase({
     <div className="w-full font-cairo">
       
       {/* 1. Flagship Core ERP Suite Showcase - Premium Executive Presentation */}
-      <div className={`relative rounded-3xl border p-6 sm:p-8 md:p-9 mb-10 transition-all duration-300 overflow-hidden hover:border-[#1a85ea]/50 group ${
+      <div className={`relative rounded-3xl border p-5 sm:p-6 md:p-7 mb-8 transition-all duration-300 overflow-hidden hover:border-[#1a85ea]/50 group ${
         theme === 'light'
           ? 'bg-gradient-to-br from-white via-slate-50 to-[#1a85ea]/5 border-slate-200/90 shadow-lg shadow-slate-200/60 hover:shadow-xl hover:shadow-[#1a85ea]/10'
           : 'bg-gradient-to-br from-[#070e22] via-[#09132e] to-[#0a1838] border-slate-800 shadow-xl shadow-black/40 hover:shadow-2xl hover:shadow-[#1a85ea]/20'
@@ -232,7 +232,7 @@ export function ModernSystemsShowcase({
                 e.stopPropagation();
                 handleOpenVideo(flagshipModule.youtubeUrl, lang === 'ar' ? flagshipModule.titleAr : flagshipModule.titleEn);
               }}
-              className="min-h-[46px] px-6 py-3 rounded-xl bg-[#1a85ea] hover:bg-[#1470c7] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#1a85ea]/25 hover:shadow-lg active:scale-98"
+              className="min-h-[42px] px-5 py-2.5 rounded-xl bg-[#1a85ea] hover:bg-[#1470c7] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#1a85ea]/25 hover:shadow-lg active:scale-98"
             >
               <Play className="w-4 h-4 fill-current" />
               <span>{lang === 'ar' ? 'مشاهدة فيديو المنظومة' : 'Watch System Demo'}</span>
@@ -241,7 +241,7 @@ export function ModernSystemsShowcase({
             <button
               type="button"
               onClick={(e) => handleRequestQuote(e, flagshipModule.id)}
-              className={`min-h-[46px] px-6 py-3 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 ${
+              className={`min-h-[42px] px-5 py-2.5 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 ${
                 isFlagshipInterested
                   ? 'bg-blue-50 dark:bg-blue-950/40 border-[#1a85ea] text-[#1a85ea] dark:text-[#38bdf8]'
                   : (theme === 'light' 
@@ -267,7 +267,7 @@ export function ModernSystemsShowcase({
             placeholder={lang === 'ar' ? 'ابحث باسم النظام أو النشاط (حسابات، نقاط بيع، كاشير، تصنيع، مجوهرات، عيادات...)' : 'Search by software system or industry...'}
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className={`w-full min-h-[48px] pl-12 pr-12 py-3 rounded-2xl border text-xs sm:text-sm transition-all focus:outline-none focus:border-[#1a85ea] focus:ring-2 focus:ring-[#1a85ea]/20 font-cairo ${
+            className={`w-full min-h-[44px] pl-12 pr-12 py-2.5 rounded-2xl border text-xs sm:text-sm transition-all focus:outline-none focus:border-[#1a85ea] focus:ring-2 focus:ring-[#1a85ea]/20 font-cairo ${
               theme === 'light'
                 ? 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400 shadow-xs'
                 : 'bg-slate-900/80 border-slate-800 placeholder:text-slate-500 text-white shadow-inner'
@@ -290,9 +290,7 @@ export function ModernSystemsShowcase({
         </div>
 
         {/* Clean Pill Segmented Tabs with Category Icons & Counts */}
-        <div className={`p-1.5 sm:p-2 rounded-2xl border flex flex-wrap items-center justify-center gap-2 ${
-          theme === 'light' ? 'bg-slate-100/90 border-slate-200/90 shadow-inner' : 'bg-slate-900/95 border-slate-800 shadow-inner'
-        }`}>
+        <div className={`p-1.5 sm:p-2 rounded-2xl border flex flex-wrap items-center justify-center gap-2 ${theme === 'light' ? 'bg-slate-50/95 border-slate-200/90 shadow-sm' : 'bg-slate-900/95 border-slate-800 shadow-inner'}`}>
           {[
             { id: 'all', label: t.filterAll },
             { id: 'erp', label: t.filterErp },
@@ -310,7 +308,7 @@ export function ModernSystemsShowcase({
                 type="button"
                 key={tab.id}
                 onClick={(e) => handleTabSelect(e, tab.id)}
-                className={`min-h-[42px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer font-cairo flex items-center gap-2.5 active:scale-95 ${
+                className={`min-h-[40px] px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer font-cairo flex items-center gap-2.5 active:scale-95 ${
                   isActive
                     ? `${colorStyle.activeBg} font-extrabold`
                     : (theme === 'light' 
@@ -318,14 +316,14 @@ export function ModernSystemsShowcase({
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/70 border border-transparent hover:border-slate-700/60')
                 }`}
               >
-                <div className={`p-1 rounded-lg ${isActive ? 'bg-white/15' : 'bg-slate-200/60 dark:bg-slate-800/80'}`}>
+                  <div className={`p-1 rounded-lg ${isActive ? 'bg-white/15' : 'bg-cyan-50'}`}>
                   <CatIcon className={`w-4 h-4 ${isActive ? colorStyle.activeIcon : colorStyle.inactiveIcon}`} />
                 </div>
                 <span>{tab.label}</span>
                 <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
                   isActive 
                     ? colorStyle.activeBadge 
-                    : (theme === 'light' ? 'bg-slate-200/80 text-slate-600' : 'bg-slate-800 text-slate-400')
+                    : (theme === 'light' ? 'bg-cyan-50 text-[#1470c7] border border-cyan-100' : 'bg-slate-800 text-slate-400')
                 }`}>
                   {count}
                 </span>

@@ -22,8 +22,8 @@ export default function EInvoiceDemo({ lang, theme }) {
   // Invoice Data inputs
   const [sellerName, setSellerName] = useState('شركة نايل تكنو للبرمجيات');
   const [vatNumber, setVatNumber] = useState('310123456700003');
-  const [totalPrice, setTotalPrice] = useState('115.00');
-  const [vatRate, setVatRate] = useState(15);
+  const [totalPrice, setTotalPrice] = useState('114.00');
+  const [vatRate, setVatRate] = useState(14);
   
   // Format fixed invoice timestamp at creation time (Does not tick continuously)
   const getFormattedNow = () => {
@@ -156,39 +156,39 @@ export default function EInvoiceDemo({ lang, theme }) {
           type="button"
           onClick={() => setShowExplanation(!showExplanation)}
           aria-expanded={showExplanation}
-          className="min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-bold font-cairo transition-colors cursor-pointer bg-slate-900 hover:bg-slate-800 border-slate-700 text-cyan-300 shadow-sm"
+          className="min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#1a85ea]/20 text-xs font-bold font-cairo transition-colors cursor-pointer bg-[#1a85ea] hover:bg-[#1470c7] text-white shadow-md shadow-[#1a85ea]/25"
         >
-          <HelpCircle className="w-4 h-4 text-cyan-400" />
+          <HelpCircle className="w-4 h-4 text-white" />
           <span>{lang === 'ar' ? 'عن هذا المحاكي التعليمي' : 'About This Simulator'}</span>
-          {showExplanation ? <ChevronUp className="w-3.5 h-3.5 text-cyan-400" /> : <ChevronDown className="w-3.5 h-3.5 text-cyan-400" />}
+          {showExplanation ? <ChevronUp className="w-3.5 h-3.5 text-white" /> : <ChevronDown className="w-3.5 h-3.5 text-white" />}
         </button>
       </div>
 
       {/* Guide details panel */}
       {showExplanation && (
-        <div className="mb-6 p-5 rounded-2xl border transition-all text-right bg-slate-900/90 border-slate-700 text-white shadow-xl">
+        <div className={`mb-6 p-5 rounded-2xl border transition-all text-right ${theme === 'light' ? 'bg-white border-slate-200 text-slate-800 shadow-md shadow-slate-200/60' : 'bg-slate-900/90 border-slate-700 text-white shadow-xl'}`}>
           <div className="space-y-3">
-            <p className="text-xs font-cairo leading-relaxed text-justify text-slate-200">
+            <p className="text-xs font-cairo leading-relaxed text-justify text-slate-600">
               {lang === 'ar' 
                 ? 'ملاحظة توضيحية: هذا المكون محاكي تفاعلي محلي يُظهر كيفية ترميز الحقول الخمسة الأساسية (اسم التاجر، الرقم الضريبي، الطابع الزمني، المبلغ، والضريبة) بنظام Tag-Length-Value وتحويلها إلى Base64. يتم توليد رمز الـ QR محلياً داخل المتصفح بالكامل بدون أي طلبات لخدمات خارجية.'
                 : 'Note: This component is a local interactive simulator illustrating the 5 standardized TLV tags encoded into Base64 format. The QR is generated 100% client-side without external dependencies.'}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-right">
-              <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="text-xs font-bold text-cyan-400 font-cairo flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+              <div className="p-3 rounded-xl bg-sky-50/70 border border-sky-100">
+                <span className="text-xs font-bold text-[#1a85ea] font-cairo flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#1a85ea]" />
                   <span>{lang === 'ar' ? 'خصوصية وأمان تام:' : 'Complete Security & Privacy:'}</span>
                 </span>
-                <p className="text-[11px] mt-1 font-cairo leading-relaxed text-slate-300">
+                <p className="text-[11px] mt-1 font-cairo leading-relaxed text-slate-600">
                   {lang === 'ar' ? 'البيانات تُعالج محلياً في المتصفح ولا يتم حفظها أو نقلها لخوادم خارجية.' : 'All data is computed in-memory locally in your browser.'}
                 </p>
               </div>
-              <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="text-xs font-bold text-cyan-400 font-cairo flex items-center gap-1.5">
+              <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-100">
+                <span className="text-xs font-bold text-[#1a85ea] font-cairo flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5 text-emerald-400" />
                   <span>{lang === 'ar' ? 'طابع زمني تلقائي فوري:' : 'Automatic Live Timestamp:'}</span>
                 </span>
-                <p className="text-[11px] mt-1 font-cairo leading-relaxed text-slate-300">
+                <p className="text-[11px] mt-1 font-cairo leading-relaxed text-slate-600">
                   {lang === 'ar' ? 'يتم ضبط وتحديث وقت وتاريخ الفاتورة تلقائياً لحظة بلحظة دون أي تدخل يدوي.' : 'Timestamp is automatically synchronized live in real-time.'}
                 </p>
               </div>
@@ -327,8 +327,8 @@ export default function EInvoiceDemo({ lang, theme }) {
                       : 'bg-slate-950 border-slate-800 text-slate-200 focus:border-cyan-500'
                   }`}
                 >
-                  <option value={15}>15% ({lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'})</option>
                   <option value={14}>14% ({lang === 'ar' ? 'جمهورية مصر العربية' : 'Egypt'})</option>
+                  <option value={15}>15% ({lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'})</option>
                   <option value={5}>5% ({lang === 'ar' ? 'فئات خاصة / معفاة' : 'Special / Exempt'})</option>
                 </select>
               </div>
@@ -420,37 +420,34 @@ export default function EInvoiceDemo({ lang, theme }) {
       </div>
 
       {/* Base64 Payload inspection box */}
-      <div className={`mt-6 p-4 rounded-2xl border transition-colors ${
-        theme === 'light' ? 'bg-white border-slate-200' : 'bg-slate-900/60 border-slate-800'
-      }`}>
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
-          <h4 className="text-xs font-bold font-cairo text-cyan-500 flex items-center gap-1.5">
-            <Code2 className="w-4 h-4" />
+      <div className={`mt-5 p-3 rounded-2xl border transition-colors ${theme === 'light' ? 'border-slate-200 bg-white shadow-sm' : 'border-slate-800 bg-slate-900/60 shadow-sm'}`}>
+        <div className="flex flex-row items-center justify-between gap-2 mb-2">
+          <h4 className="text-sm md:text-base font-extrabold font-cairo text-[#1470c7] flex items-center gap-1 min-w-0">
+            <Code2 className="w-3.5 h-3.5 shrink-0" />
             {lang === 'ar' ? 'سلسلة الترميز الناتجة (Base64 Payload):' : 'Generated Base64 Payload String:'}
           </h4>
-          {copySuccess && (
-            <span className="text-[10px] text-emerald-500 font-bold font-cairo flex items-center gap-1">
-              <Check className="w-3.5 h-3.5" />
-              {lang === 'ar' ? 'تم نسخ النص بنجاح' : 'Copied successfully'}
-            </span>
-          )}
+          <div className="flex items-center gap-2 shrink-0">
+            {copySuccess && (
+              <span className="hidden sm:flex text-[10px] text-emerald-600 font-bold font-cairo items-center gap-1">
+                <Check className="w-3.5 h-3.5" />
+                {lang === 'ar' ? 'تم النسخ' : 'Copied'}
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={copyToClipboard}
+              className="min-h-[36px] px-3 rounded-lg border border-sky-200 bg-sky-50 hover:bg-sky-100 text-[#1470c7] transition-colors cursor-pointer flex items-center justify-center gap-1 font-bold font-cairo shadow-sm text-[10px] md:text-xs"
+              title="Copy payload"
+              aria-label="Copy payload"
+            >
+              <span>{lang === 'ar' ? 'نسخ السلسلة' : 'Copy String'}</span>
+              <ClipboardCopy className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
-        <div className="relative">
-          <div className={`text-[10px] font-mono p-3 rounded-xl border select-all max-h-16 overflow-y-auto break-all leading-relaxed ${
-            theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-slate-950 border-slate-800 text-cyan-300'
-          }`}>
-            {base64Payload}
-          </div>
-          <button
-            type="button"
-            onClick={copyToClipboard}
-            className="absolute left-2 top-2 min-w-[44px] min-h-[44px] flex items-center justify-center p-2 border rounded-xl bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200 transition-colors cursor-pointer"
-            title="Copy payload"
-            aria-label="Copy payload"
-          >
-            <ClipboardCopy className="w-4 h-4" />
-          </button>
+        <div className={`text-[9px] md:text-[10px] font-mono p-2.5 rounded-xl border select-all max-h-12 overflow-y-auto break-all leading-relaxed text-left ${theme === 'light' ? 'border-slate-200 bg-slate-50 text-slate-700' : 'border-slate-800 bg-slate-950 text-cyan-300'}`} dir="ltr">
+          {base64Payload}
         </div>
       </div>
 

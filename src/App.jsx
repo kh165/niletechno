@@ -497,7 +497,7 @@ Thank you for your prompt assistance and cooperation.`;
     <ErrorBoundary>
       <div 
         dir={lang === 'ar' ? 'rtl' : 'ltr'} 
-          className={`min-h-screen ${lang === 'ar' ? 'rtl font-cairo' : 'ltr font-sans'} ${
+          className={`site-density min-h-screen ${lang === 'ar' ? 'rtl font-cairo' : 'ltr font-sans'} ${
           theme === 'light' 
             ? 'bg-[#f4f6f9] text-slate-800' 
             : 'bg-[#0b1329] text-slate-100'
@@ -689,7 +689,7 @@ Thank you for your prompt assistance and cooperation.`;
       <SectionDivider theme={theme} />
 
       {/* 3. Who We Are Section */}
-      <section id="about" className={`py-12 sm:py-16 relative transition-all duration-500 ${
+      <section id="about" className={`py-10 sm:py-12 relative transition-all duration-500 ${
         theme === 'light' 
           ? 'bg-gradient-to-b from-blue-50/40 via-white to-sky-50/30' 
           : 'bg-gradient-to-b from-[#0a1329] via-[#0c1836] to-[#0a142c]'
@@ -764,7 +764,7 @@ Thank you for your prompt assistance and cooperation.`;
               }`}>
                 <button
                   onClick={() => setAboutActivePanel('vision')}
-                  className={`min-h-[44px] flex items-center justify-center py-2.5 px-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
+                  className={`min-h-[40px] flex items-center justify-center py-2 px-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
                     aboutActivePanel === 'vision'
                       ? 'bg-[#1a85ea] hover:bg-[#1470c7] text-white shadow-md shadow-[#1a85ea]/25'
                       : (theme === 'light' ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white')
@@ -774,7 +774,7 @@ Thank you for your prompt assistance and cooperation.`;
                 </button>
                 <button
                   onClick={() => setAboutActivePanel('mission')}
-                  className={`min-h-[44px] flex items-center justify-center py-2.5 px-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
+                  className={`min-h-[40px] flex items-center justify-center py-2 px-3 rounded-lg text-xs font-bold transition-all text-center font-cairo cursor-pointer ${
                     aboutActivePanel === 'mission'
                       ? 'bg-[#1a85ea] hover:bg-[#1470c7] text-white shadow-md shadow-[#1a85ea]/25'
                       : (theme === 'light' ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white')
@@ -831,7 +831,7 @@ Thank you for your prompt assistance and cooperation.`;
       <SectionDivider theme={theme} />
 
       {/* 4. Complete E-Invoicing Section */}
-      <section id="einvoicing" className={`pt-12 pb-14 relative transition-all duration-500 ${
+      <section id="einvoicing" className={`pt-10 pb-12 relative transition-all duration-500 ${
         theme === 'light' 
           ? 'bg-gradient-to-b from-sky-50/30 via-cyan-50/30 to-blue-50/40' 
           : 'bg-gradient-to-b from-[#0a142c] via-[#0d1b3d] to-[#0a1329]'
@@ -1023,7 +1023,7 @@ Thank you for your prompt assistance and cooperation.`;
       <SectionDivider theme={theme} />
 
       {/* 6. Modern Mobile Applications Studio Section */}
-      <section id="mobile-apps" className={`py-12 sm:py-16 relative transition-all duration-500 ${
+      <section id="mobile-apps" className={`py-10 sm:py-12 relative transition-all duration-500 ${
         theme === 'light' 
           ? 'bg-gradient-to-b from-sky-50/30 via-cyan-50/20 to-blue-50/30' 
           : 'bg-gradient-to-b from-[#0b1632] via-[#0d1a3a] to-[#091225]'
@@ -1079,7 +1079,7 @@ Thank you for your prompt assistance and cooperation.`;
       </section>
 
       {/* 7. Consultation Lead Calculator Section (Collapsible & Expandable) */}
-      <section id="consulting" className={`py-12 sm:py-16 relative transition-all duration-500 border-t border-b ${
+      <section id="consulting" className={`py-10 sm:py-12 relative transition-all duration-500 border-t border-b ${
         theme === 'light' 
           ? 'bg-white border-slate-200/50' 
           : 'bg-[#0f172a] border-cyan-500/10'
@@ -1242,7 +1242,7 @@ Thank you for your prompt assistance and cooperation.`;
 
       {/* 10. Contact Us Advanced Leads Form */}
       <SectionDivider theme={theme} />
-      <section id="contact" className={`py-12 sm:py-16 relative transition-all duration-500 ${
+      <section id="contact" className={`py-10 sm:py-12 relative transition-all duration-500 ${
         theme === 'light' 
           ? 'bg-gradient-to-b from-sky-50/30 via-cyan-50/20 to-slate-100/70' 
           : 'bg-gradient-to-b from-[#0a1329] via-[#0e1c3e] to-[#081022]'
@@ -1392,7 +1392,7 @@ Thank you for your prompt assistance and cooperation.`;
                         const appCount = MOBILE_APPS.filter(a => formData.interestedModules.includes(a.id)).length;
                         if (sysCount === 0 && appCount === 0) {
                           return (
-                            <span className="px-2 py-0.5 rounded-full bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px]">
+                            <span className="px-2 py-0.5 rounded-full bg-sky-50 text-[#1470c7] border border-sky-100 text-[10px]">
                               {lang === 'ar' ? 'استشارة عامة' : 'General Consulting'}
                             </span>
                           );
@@ -1416,23 +1416,21 @@ Thank you for your prompt assistance and cooperation.`;
                   </div>
 
                   {/* High-visibility Group Tabs: Systems vs Mobile Apps */}
-                  <div id="quote-selection-group" className={`grid grid-cols-2 p-1.5 rounded-2xl border transition-colors ${
-                    theme === 'light' ? 'bg-slate-200/60 border-slate-300/80 shadow-inner' : 'bg-slate-950 border-slate-800 shadow-inner'
-                  }`}>
+                  <div id="quote-selection-group" className={`grid grid-cols-2 p-1.5 rounded-2xl border transition-colors ${theme === 'light' ? 'bg-slate-100/95 border-slate-200/90 shadow-sm' : 'bg-slate-900/95 border-slate-800 shadow-inner'}`}>
                     {/* Option 1: ERP & Software Systems */}
                     <button
                       type="button"
                       onClick={() => setQuoteGroup('systems')}
-                      className={`min-h-[46px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                      className={`min-h-[42px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
                         quoteGroup === 'systems'
                           ? 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25 scale-[1.01]'
-                          : (theme === 'light' ? 'text-slate-700 hover:text-slate-900 hover:bg-white/60' : 'text-slate-400 hover:text-white hover:bg-slate-900/60')
+                          : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
                       }`}
                     >
                       <Monitor className="w-4 h-4 shrink-0" />
                       <span>{lang === 'ar' ? 'الأنظمة والبرمجيات' : 'ERP & Software Systems'}</span>
                       <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
-                        quoteGroup === 'systems' ? 'bg-white/25 text-white' : 'bg-slate-300 dark:bg-slate-800 text-slate-700 dark:text-slate-400'
+                        quoteGroup === 'systems' ? 'bg-white/25 text-white' : 'bg-sky-50 border border-sky-100 text-[#1470c7]'
                       }`}>
                         {SERVICE_MODULES.length}
                       </span>
@@ -1442,16 +1440,16 @@ Thank you for your prompt assistance and cooperation.`;
                     <button
                       type="button"
                       onClick={() => setQuoteGroup('mobile')}
-                      className={`min-h-[46px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                      className={`min-h-[42px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
                         quoteGroup === 'mobile'
                           ? 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25 scale-[1.01]'
-                          : (theme === 'light' ? 'text-slate-700 hover:text-slate-900 hover:bg-white/60' : 'text-slate-400 hover:text-white hover:bg-slate-900/60')
+                          : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
                       }`}
                     >
                       <Smartphone className="w-4 h-4 shrink-0" />
                       <span>{lang === 'ar' ? 'تطبيقات الموبايل' : 'Smart Mobile Apps'}</span>
                       <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
-                        quoteGroup === 'mobile' ? 'bg-white/25 text-white' : 'bg-slate-300 dark:bg-slate-800 text-slate-700 dark:text-slate-400'
+                        quoteGroup === 'mobile' ? 'bg-white/25 text-white' : 'bg-sky-50 border border-sky-100 text-[#1470c7]'
                       }`}>
                         {MOBILE_APPS.length}
                       </span>
@@ -1510,7 +1508,7 @@ Thank you for your prompt assistance and cooperation.`;
                                 </span>
                               </div>
                               <span className={`text-[9px] px-1.5 py-0.5 rounded font-medium shrink-0 ${
-                                isChecked ? 'bg-[#1a85ea]/15 text-[#1a85ea] dark:text-[#38bdf8] border border-[#1a85ea]/25' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
+                                isChecked ? 'bg-[#1a85ea]/10 text-[#1a85ea] border border-[#1a85ea]/25' : (theme === 'light' ? 'bg-cyan-50 text-[#1a85ea] border border-cyan-100' : 'bg-slate-800 text-slate-300 border border-slate-700')
                               }`}>
                                 {module.category}
                               </span>
@@ -1554,7 +1552,7 @@ Thank you for your prompt assistance and cooperation.`;
                               key={app.id}
                               type="button"
                               onClick={() => toggleModuleInterest(app.id)}
-                              className={`min-h-[58px] flex items-center justify-between p-3 rounded-xl border text-right transition-all cursor-pointer font-cairo ${
+                              className={`min-h-[50px] flex items-center justify-between p-2.5 rounded-xl border text-right transition-all cursor-pointer font-cairo ${
                                 isChecked
                                   ? (theme === 'light' ? 'bg-blue-50/80 border-[#1a85ea] text-slate-900 shadow-xs' : 'bg-blue-950/40 border-[#1a85ea] text-white shadow-xs')
                                   : (theme === 'light' ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300' : 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white')
@@ -1578,7 +1576,7 @@ Thank you for your prompt assistance and cooperation.`;
                                 </div>
                               </div>
                               <span className={`text-[9.5px] px-2 py-0.5 rounded-full font-bold shrink-0 ${
-                                isChecked ? 'bg-[#1a85ea]/15 text-[#1a85ea] dark:text-[#38bdf8] border border-[#1a85ea]/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                                isChecked ? 'bg-[#1a85ea]/10 text-[#1a85ea] border border-[#1a85ea]/30' : (theme === 'light' ? 'bg-cyan-50 text-[#1a85ea] border border-cyan-100' : 'bg-slate-800 text-slate-300 border border-slate-700')
                               }`}>
                                 Android & iOS
                               </span>
@@ -1619,7 +1617,7 @@ Thank you for your prompt assistance and cooperation.`;
                   <button
                     type="submit"
                     aria-label={lang === 'ar' ? 'إرسال الطلب عبر واتساب' : 'Send via WhatsApp'}
-                    className="w-full sm:w-auto min-h-[44px] px-8 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 cursor-pointer font-cairo"
+                    className="w-full sm:w-auto min-h-[42px] px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 cursor-pointer font-cairo"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span>{lang === 'ar' ? 'إرسال الطلب عبر واتساب' : 'Send Inquiry via WhatsApp'}</span>

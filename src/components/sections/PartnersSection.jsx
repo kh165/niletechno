@@ -98,7 +98,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
           <button 
             type="button"
             onClick={() => setShowPartnersModal?.(true)}
-            className="w-full sm:w-auto min-h-[46px] px-7 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-3 transition-all duration-300 cursor-pointer font-cairo shadow-lg shadow-[#1a85ea]/25 hover:shadow-[#1a85ea]/40 hover:-translate-y-0.5 active:scale-95 bg-[#1a85ea] hover:bg-[#1470c7] text-white"
+            className="w-full sm:w-auto min-h-[42px] px-6 py-2.5 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-3 transition-all duration-300 cursor-pointer font-cairo shadow-lg shadow-[#1a85ea]/25 hover:shadow-[#1a85ea]/40 hover:-translate-y-0.5 active:scale-95 bg-[#1a85ea] hover:bg-[#1470c7] text-white"
           >
             <span>{isRtl ? 'تصفح دليل شركاء النجاح وسابقة الأعمال' : 'Open Complete Client Directory'}</span>
             <Award className="w-4 h-4 text-white shrink-0" />
@@ -108,7 +108,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
             href={createWhatsAppUrl('egy', partnerWhatsAppText)} 
             target="_blank" 
             rel="noopener noreferrer"
-            className={`w-full sm:w-auto min-h-[44px] px-6 py-3 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer font-cairo ${
+            className={`w-full sm:w-auto min-h-[40px] px-5 py-2.5 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer font-cairo ${
               theme === 'light'
                 ? 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200'
                 : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-800'
@@ -121,7 +121,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
           <a 
             href={COMPANY_CONFIG.pdfProfileUrl}
             download="NileTechno_Company_Profile.pdf"
-            className={`w-full sm:w-auto min-h-[44px] px-6 py-3 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer font-cairo ${
+            className={`w-full sm:w-auto min-h-[40px] px-5 py-2.5 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer font-cairo ${
               theme === 'light'
                 ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
                 : 'bg-slate-900 hover:bg-slate-800 border-slate-800 text-slate-200'

@@ -230,7 +230,7 @@ export function HeroSection({
             className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 leading-snug sm:leading-tight font-cairo"
           >
             <span className={theme === 'light' ? 'text-slate-900' : 'text-white'}>
-              {lang === 'ar' ? 'دعنا ندير أعمالك بنجاح مع' : 'Empower Your Business With'}
+              {lang === 'ar' ? 'دعنا ندير أعمالك بنجاح مع' : 'let us manage your business'}
             </span>
             <span className="block mt-2 bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600 bg-clip-text text-transparent">
               {lang === 'ar' ? 'نايل تكنو للبرمجيات' : 'Nile Techno Software'}
@@ -266,7 +266,7 @@ export function HeroSection({
                 <button
                   key={tab.id}
                   onClick={() => setActivePlatformIndex(tab.id)}
-                  className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer font-cairo relative overflow-hidden ${
+                  className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer font-cairo relative overflow-hidden ${
                     isActive
                       ? 'bg-[#1a85ea] text-white border-[#1a85ea] shadow-md shadow-[#1a85ea]/25'
                       : theme === 'light'
@@ -326,7 +326,7 @@ export function HeroSection({
                       href={currentPlatform.actionHref}
                       target={currentPlatform.isExternal ? '_blank' : '_self'}
                       rel={currentPlatform.isExternal ? 'noopener noreferrer' : undefined}
-                      className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs transition-all shadow-md shadow-cyan-500/20 cursor-pointer font-cairo"
+                      className="inline-flex items-center justify-center gap-2 min-h-[40px] px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs transition-all shadow-md shadow-cyan-500/20 cursor-pointer font-cairo"
                     >
                       <span>{lang === 'ar' ? currentPlatform.actionTextAr : currentPlatform.actionTextEn}</span>
                       <currentPlatform.icon className="w-3.5 h-3.5" />

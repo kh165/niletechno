@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, Play, Check, CheckCircle2, ChevronDown, ChevronUp, 
   Layers, Server, Cloud, ShieldCheck, X, FileText, ArrowLeft, ArrowRight,
-  Sparkles, Monitor, Store, Truck, Cpu, Database
+  Sparkles, Monitor, Store, Truck, Cpu, Database,
+  LayoutGrid, Landmark, ShoppingBag, PackageCheck, Factory, ArrowDown
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
 
@@ -18,12 +19,16 @@ export function ModernSystemsShowcase({
   setSearchInput, 
   handleOpenVideo, 
   formData, 
-  setFormData 
+  setFormData,
+  onSelectSystemForQuote
 }) {
   const [expandedSystemId, setExpandedSystemId] = useState(null);
 
+  const safeModules = Array.isArray(modules) ? modules : [];
+
   // Category filtering
-  const filteredModules = modules.filter(m => {
+  const filteredModules = safeModules.filter(m => {
+    if (!m) return false;
     const matchesTab = activeTab === 'all' || m.category === activeTab;
     const term = (searchInput || '').toLowerCase().trim();
     if (!term) return matchesTab;
@@ -35,19 +40,33 @@ export function ModernSystemsShowcase({
     return matchesTab && matchSearch;
   });
 
-  const flagshipModule = modules.find(m => m.id === 'accounts') || modules[0];
+  const flagshipModule = safeModules.find(m => m && m.id === 'accounts') || safeModules[0] || { id: 'accounts' };
 
-  const handleToggleInterest = (e, sysId) => {
+  const handleRequestQuote = (e, sysId) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
-    setFormData(prev => ({
-      ...prev,
-      interestedModules: prev.interestedModules.includes(sysId)
-        ? prev.interestedModules.filter(id => id !== sysId)
-        : [...prev.interestedModules, sysId]
-    }));
+    if (onSelectSystemForQuote) {
+      onSelectSystemForQuote(sysId);
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        interestedModules: Array.isArray(prev?.interestedModules)
+          ? (prev.interestedModules.includes(sysId)
+            ? prev.interestedModules
+            : [...prev.interestedModules, sysId])
+          : [sysId]
+      }));
+      const quoteEl = document.getElementById('quote-selection-group') || document.getElementById('contact');
+      if (quoteEl) {
+        quoteEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  };
+
+  const handleToggleInterest = (e, sysId) => {
+    handleRequestQuote(e, sysId);
   };
 
   const toggleExpand = (e, sysId) => {
@@ -58,36 +77,95 @@ export function ModernSystemsShowcase({
     setExpandedSystemId(prev => (prev === sysId ? null : sysId));
   };
 
-  const isFlagshipInterested = formData.interestedModules.includes(flagshipModule.id);
+  const isFlagshipInterested = (flagshipModule?.id && formData?.interestedModules) 
+    ? formData.interestedModules.includes(flagshipModule.id) 
+    : false;
 
   // Category stats
   const categoryCounts = {
-    all: modules.length,
-    erp: modules.filter(m => m.category === 'erp').length,
-    retail: modules.filter(m => m.category === 'retail').length,
-    logistics: modules.filter(m => m.category === 'logistics').length,
-    specialized: modules.filter(m => m.category === 'specialized').length
+    all: safeModules.length,
+    erp: safeModules.filter(m => m && m.category === 'erp').length,
+    retail: safeModules.filter(m => m && m.category === 'retail').length,
+    logistics: safeModules.filter(m => m && m.category === 'logistics').length,
+    specialized: safeModules.filter(m => m && m.category === 'specialized').length
   };
 
   const categoryIcons = {
-    all: Layers,
-    erp: Database,
-    retail: Store,
-    logistics: Truck,
-    specialized: Cpu
+    all: LayoutGrid,
+    erp: Landmark,
+    retail: ShoppingBag,
+    logistics: PackageCheck,
+    specialized: Factory
+  };
+
+  // Uniform brand blue styling across all category tabs for a clean, calm and elegant experience
+  const categoryColorStyles = {
+    all: {
+      activeBg: 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-[#1a85ea] dark:text-[#38bdf8]'
+    },
+    erp: {
+      activeBg: 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-[#1a85ea] dark:text-[#38bdf8]'
+    },
+    retail: {
+      activeBg: 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-[#1a85ea] dark:text-[#38bdf8]'
+    },
+    logistics: {
+      activeBg: 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-[#1a85ea] dark:text-[#38bdf8]'
+    },
+    specialized: {
+      activeBg: 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25',
+      activeBadge: 'bg-white/20 text-white',
+      activeIcon: 'text-white',
+      inactiveIcon: 'text-[#1a85ea] dark:text-[#38bdf8]'
+    }
+  };
+
+  // Strictly preserve page scroll position on tab switch to prevent unwanted page jumping
+  const handleTabSelect = (e, tabId) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.currentTarget && typeof e.currentTarget.blur === 'function') {
+        e.currentTarget.blur();
+      }
+    }
+    
+    const savedY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+    setActiveTab(tabId);
+
+    // Lock position across synchronous tick, animation frame, and timeout
+    window.scrollTo({ top: savedY, behavior: 'instant' });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: savedY, behavior: 'instant' });
+      setTimeout(() => {
+        window.scrollTo({ top: savedY, behavior: 'instant' });
+      }, 15);
+    });
   };
 
   return (
     <div className="w-full font-cairo">
       
       {/* 1. Flagship Core ERP Suite Showcase - Premium Executive Presentation */}
-      <div className={`relative rounded-3xl border p-6 sm:p-8 md:p-9 mb-10 transition-all duration-300 overflow-hidden hover:border-[#0b72c9]/50 group ${
+      <div className={`relative rounded-3xl border p-6 sm:p-8 md:p-9 mb-10 transition-all duration-300 overflow-hidden hover:border-[#1a85ea]/50 group ${
         theme === 'light'
-          ? 'bg-gradient-to-br from-white via-slate-50 to-[#0b72c9]/5 border-slate-200/90 shadow-lg shadow-slate-200/60 hover:shadow-xl hover:shadow-[#0b72c9]/10'
-          : 'bg-gradient-to-br from-[#070e22] via-[#09132e] to-[#0a1838] border-slate-800 shadow-xl shadow-black/40 hover:shadow-2xl hover:shadow-[#0b72c9]/20'
+          ? 'bg-gradient-to-br from-white via-slate-50 to-[#1a85ea]/5 border-slate-200/90 shadow-lg shadow-slate-200/60 hover:shadow-xl hover:shadow-[#1a85ea]/10'
+          : 'bg-gradient-to-br from-[#070e22] via-[#09132e] to-[#0a1838] border-slate-800 shadow-xl shadow-black/40 hover:shadow-2xl hover:shadow-[#1a85ea]/20'
       }`}>
         {/* Subtle decorative accent glow */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#0b72c9]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#1a85ea]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
@@ -100,7 +178,7 @@ export function ModernSystemsShowcase({
                 <span>{lang === 'ar' ? 'معتمد رسمياً للفاتورة الإلكترونية ZATCA & ETA' : 'Certified E-Invoicing (ZATCA & ETA)'}</span>
               </span>
               <span className="hidden sm:inline text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#0b72c9]/10 text-[#0b72c9] dark:text-[#299df7] font-bold">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#1a85ea]/10 text-[#1a85ea] dark:text-[#38bdf8] font-bold">
                 <Database className="w-3.5 h-3.5" />
                 <span>{lang === 'ar' ? 'المنظومة المركزية الشاملة' : 'Flagship Central ERP'}</span>
               </span>
@@ -129,17 +207,17 @@ export function ModernSystemsShowcase({
             {/* Architecture capability highlights */}
             <div className="flex flex-wrap items-center gap-y-2 gap-x-5 pt-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
               <div className="flex items-center gap-2">
-                <Cloud className="w-4 h-4 text-[#0b72c9]" />
+                <Cloud className="w-4 h-4 text-[#1a85ea]" />
                 <span>{lang === 'ar' ? 'سحابي مع تشفير كامل' : 'Cloud Hosted with Encryption'}</span>
               </div>
               <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
               <div className="flex items-center gap-2">
-                <Server className="w-4 h-4 text-[#0b72c9]" />
+                <Server className="w-4 h-4 text-[#1a85ea]" />
                 <span>{lang === 'ar' ? 'قواعد بيانات SQL Server المعتمدة' : 'Enterprise SQL Server DB'}</span>
               </div>
               <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
               <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-[#0b72c9]" />
+                <Layers className="w-4 h-4 text-[#1a85ea]" />
                 <span>{lang === 'ar' ? 'ربط متعدد الفروع والمخازن' : 'Multi-Branch & Warehouses'}</span>
               </div>
             </div>
@@ -154,7 +232,7 @@ export function ModernSystemsShowcase({
                 e.stopPropagation();
                 handleOpenVideo(flagshipModule.youtubeUrl, lang === 'ar' ? flagshipModule.titleAr : flagshipModule.titleEn);
               }}
-              className="min-h-[46px] px-6 py-3 rounded-xl bg-gradient-to-r from-[#0b72c9] to-blue-700 hover:from-[#0a66b4] hover:to-blue-800 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#0b72c9]/25 hover:shadow-lg active:scale-98"
+              className="min-h-[46px] px-6 py-3 rounded-xl bg-[#1a85ea] hover:bg-[#1470c7] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#1a85ea]/25 hover:shadow-lg active:scale-98"
             >
               <Play className="w-4 h-4 fill-current" />
               <span>{lang === 'ar' ? 'مشاهدة فيديو المنظومة' : 'Watch System Demo'}</span>
@@ -162,26 +240,17 @@ export function ModernSystemsShowcase({
 
             <button
               type="button"
-              onClick={(e) => handleToggleInterest(e, flagshipModule.id)}
+              onClick={(e) => handleRequestQuote(e, flagshipModule.id)}
               className={`min-h-[46px] px-6 py-3 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 ${
                 isFlagshipInterested
-                  ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400'
+                  ? 'bg-blue-50 dark:bg-blue-950/40 border-[#1a85ea] text-[#1a85ea] dark:text-[#38bdf8]'
                   : (theme === 'light' 
-                      ? 'bg-white border-slate-300 text-slate-800 hover:border-[#0b72c9] hover:bg-slate-50' 
-                      : 'bg-slate-900/90 border-slate-700 text-slate-200 hover:border-[#0b72c9] hover:bg-slate-800')
+                      ? 'bg-white border-slate-300 text-slate-800 hover:border-[#1a85ea] hover:bg-slate-50' 
+                      : 'bg-slate-900/90 border-slate-700 text-slate-200 hover:border-[#1a85ea] hover:bg-slate-800')
               }`}
             >
-              {isFlagshipInterested ? (
-                <>
-                  <Check className="w-4 h-4 text-emerald-500" />
-                  <span>{lang === 'ar' ? 'مضاف إلى قائمة التسعير' : 'Added to Quote List'}</span>
-                </>
-              ) : (
-                <>
-                  <FileText className="w-4 h-4 text-slate-400" />
-                  <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة' : 'Request Official Quote'}</span>
-                </>
-              )}
+              <ArrowDown className="w-4 h-4 text-[#1a85ea]" />
+              <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة بالأسفل ⬇️' : 'Request Official Quote Below ⬇️'}</span>
             </button>
           </div>
 
@@ -198,7 +267,7 @@ export function ModernSystemsShowcase({
             placeholder={lang === 'ar' ? 'ابحث باسم النظام أو النشاط (حسابات، نقاط بيع، كاشير، تصنيع، مجوهرات، عيادات...)' : 'Search by software system or industry...'}
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className={`w-full min-h-[48px] pl-12 pr-12 py-3 rounded-2xl border text-xs sm:text-sm transition-all focus:outline-none focus:border-[#0b72c9] focus:ring-2 focus:ring-[#0b72c9]/20 font-cairo ${
+            className={`w-full min-h-[48px] pl-12 pr-12 py-3 rounded-2xl border text-xs sm:text-sm transition-all focus:outline-none focus:border-[#1a85ea] focus:ring-2 focus:ring-[#1a85ea]/20 font-cairo ${
               theme === 'light'
                 ? 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400 shadow-xs'
                 : 'bg-slate-900/80 border-slate-800 placeholder:text-slate-500 text-white shadow-inner'
@@ -221,8 +290,8 @@ export function ModernSystemsShowcase({
         </div>
 
         {/* Clean Pill Segmented Tabs with Category Icons & Counts */}
-        <div className={`p-1.5 rounded-2xl border flex flex-wrap items-center justify-center gap-1.5 ${
-          theme === 'light' ? 'bg-slate-100/80 border-slate-200/90' : 'bg-slate-900/90 border-slate-800'
+        <div className={`p-1.5 sm:p-2 rounded-2xl border flex flex-wrap items-center justify-center gap-2 ${
+          theme === 'light' ? 'bg-slate-100/90 border-slate-200/90 shadow-inner' : 'bg-slate-900/95 border-slate-800 shadow-inner'
         }`}>
           {[
             { id: 'all', label: t.filterAll },
@@ -232,33 +301,31 @@ export function ModernSystemsShowcase({
             { id: 'specialized', label: t.filterSpecialized }
           ].map((tab) => {
             const isActive = activeTab === tab.id;
-            const CatIcon = categoryIcons[tab.id] || Layers;
+            const CatIcon = categoryIcons[tab.id] || LayoutGrid;
             const count = categoryCounts[tab.id] || 0;
+            const colorStyle = categoryColorStyles[tab.id] || categoryColorStyles.all;
 
             return (
               <button
                 type="button"
                 key={tab.id}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveTab(tab.id);
-                }}
-                className={`min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer font-cairo flex items-center gap-2 ${
+                onClick={(e) => handleTabSelect(e, tab.id)}
+                className={`min-h-[42px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer font-cairo flex items-center gap-2.5 active:scale-95 ${
                   isActive
-                    ? (theme === 'light' 
-                        ? 'bg-white text-[#0b72c9] shadow-md border border-slate-200/60' 
-                        : 'bg-slate-800 text-[#299df7] shadow-md border border-slate-700/80')
+                    ? `${colorStyle.activeBg} font-extrabold`
                     : (theme === 'light' 
-                        ? 'text-slate-600 hover:text-slate-900 hover:bg-white/60' 
-                        : 'text-slate-400 hover:text-white hover:bg-slate-800/50')
+                        ? 'text-slate-700 hover:text-slate-950 hover:bg-white/80 border border-transparent hover:border-slate-200' 
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800/70 border border-transparent hover:border-slate-700/60')
                 }`}
               >
-                <CatIcon className={`w-3.5 h-3.5 ${isActive ? 'text-[#0b72c9] dark:text-[#299df7]' : 'text-slate-400'}`} />
+                <div className={`p-1 rounded-lg ${isActive ? 'bg-white/15' : 'bg-slate-200/60 dark:bg-slate-800/80'}`}>
+                  <CatIcon className={`w-4 h-4 ${isActive ? colorStyle.activeIcon : colorStyle.inactiveIcon}`} />
+                </div>
                 <span>{tab.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono ${
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
                   isActive 
-                    ? 'bg-[#0b72c9]/10 text-[#0b72c9] dark:text-[#299df7] font-bold' 
-                    : 'bg-slate-200/60 dark:bg-slate-800 text-slate-500'
+                    ? colorStyle.activeBadge 
+                    : (theme === 'light' ? 'bg-slate-200/80 text-slate-600' : 'bg-slate-800 text-slate-400')
                 }`}>
                   {count}
                 </span>
@@ -270,7 +337,7 @@ export function ModernSystemsShowcase({
       </div>
 
       {/* 3. Systems Grid - Refined Card Elevation & Smooth Drawer */}
-      <div className="min-h-[380px]">
+      <div className="min-h-[580px]" style={{ overflowAnchor: 'none' }}>
         {filteredModules.length === 0 ? (
           <div className={`text-center py-14 rounded-3xl border max-w-lg mx-auto ${
             theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-slate-900/40 border-slate-800 text-slate-400'
@@ -285,7 +352,7 @@ export function ModernSystemsShowcase({
                 setSearchInput('');
                 setActiveTab('all');
               }}
-              className="text-xs text-[#0b72c9] dark:text-[#299df7] font-bold hover:underline cursor-pointer"
+              className="text-xs text-[#1a85ea] dark:text-[#38bdf8] font-bold hover:underline cursor-pointer"
             >
               {lang === 'ar' ? 'إعادة عرض كافة الأنظمة' : 'Reset filters and view all'}
             </button>
@@ -303,37 +370,37 @@ export function ModernSystemsShowcase({
                   whileTap={{ scale: 0.99 }}
                   className={`group rounded-2xl border p-5 flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-default ${
                     theme === 'light'
-                      ? 'bg-gradient-to-b from-white via-white to-slate-50/80 border-slate-200/90 hover:border-[#0b72c9]/50 shadow-sm hover:shadow-xl hover:shadow-[#0b72c9]/10'
-                      : 'bg-gradient-to-b from-[#091124] via-[#091124] to-[#070d1d] border-slate-800 hover:border-[#0b72c9]/60 shadow-md hover:shadow-2xl hover:shadow-[#0b72c9]/20'
+                      ? 'bg-gradient-to-b from-white via-white to-slate-50/80 border-slate-200/90 hover:border-[#1a85ea]/50 shadow-sm hover:shadow-xl hover:shadow-[#1a85ea]/10'
+                      : 'bg-gradient-to-b from-[#091124] via-[#091124] to-[#070d1d] border-slate-800 hover:border-[#1a85ea]/60 shadow-md hover:shadow-2xl hover:shadow-[#1a85ea]/20'
                   }`}
                 >
                   {/* Subtle top animated neon glow line on hover */}
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#0b72c9] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#1a85ea] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                   {/* Gentle hover ambient illumination */}
-                  <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#0b72c9]/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#1a85ea]/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                   <div className="relative z-10">
                     {/* Top Row: Icon Container & Category Tag */}
                     <div className="flex items-center justify-between mb-4">
                       <div className={`p-2.5 rounded-xl transition-all duration-300 transform group-hover:scale-110 group-hover:-rotate-3 ${
                         theme === 'light' 
-                          ? 'bg-[#0b72c9]/10 text-[#0b72c9] group-hover:bg-[#0b72c9] group-hover:text-white group-hover:shadow-md group-hover:shadow-[#0b72c9]/30' 
-                          : 'bg-slate-800/80 text-[#299df7] group-hover:bg-[#0b72c9] group-hover:text-white group-hover:shadow-lg group-hover:shadow-[#0b72c9]/40'
+                          ? 'bg-[#1a85ea]/10 text-[#1a85ea] group-hover:bg-[#1a85ea] group-hover:text-white group-hover:shadow-md group-hover:shadow-[#1a85ea]/30' 
+                          : 'bg-slate-800/80 text-[#38bdf8] group-hover:bg-[#1a85ea] group-hover:text-white group-hover:shadow-lg group-hover:shadow-[#1a85ea]/40'
                       }`}>
                         <IconComponent name={sys.iconName} className="w-5 h-5 transition-transform duration-300" />
                       </div>
                       <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-md border font-mono tracking-wider transition-colors duration-300 ${
                         theme === 'light'
-                          ? 'bg-slate-100 border-slate-200 text-slate-600 group-hover:border-[#0b72c9]/30 group-hover:text-[#0b72c9]'
-                          : 'bg-slate-800/60 border-slate-700 text-slate-400 group-hover:border-[#0b72c9]/40 group-hover:text-[#299df7]'
+                          ? 'bg-slate-100 border-slate-200 text-slate-600 group-hover:border-[#1a85ea]/30 group-hover:text-[#1a85ea]'
+                          : 'bg-slate-800/60 border-slate-700 text-slate-400 group-hover:border-[#1a85ea]/40 group-hover:text-[#38bdf8]'
                       }`}>
                         {sys.category.toUpperCase()}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h4 className={`text-[15px] sm:text-base font-bold font-cairo mb-2 leading-snug group-hover:text-[#0b72c9] dark:group-hover:text-[#299df7] transition-colors duration-200 ${
+                    <h4 className={`text-[15px] sm:text-base font-bold font-cairo mb-2 leading-snug group-hover:text-[#1a85ea] dark:group-hover:text-[#38bdf8] transition-colors duration-200 ${
                       theme === 'light' ? 'text-slate-900' : 'text-white'
                     }`}>
                       {lang === 'ar' ? sys.titleAr : sys.titleEn}
@@ -350,7 +417,7 @@ export function ModernSystemsShowcase({
                     <div className="space-y-1.5 mb-4">
                       {(lang === 'ar' ? sys.featuresAr : sys.featuresEn).slice(0, 3).map((feat, fIdx) => (
                         <div key={fIdx} className="flex items-start gap-2 text-xs transition-transform duration-200 group-hover:translate-x-0.5">
-                          <Check className="w-3.5 h-3.5 text-[#0b72c9] shrink-0 mt-0.5 transition-transform duration-200 group-hover:scale-110" />
+                          <Check className="w-3.5 h-3.5 text-[#1a85ea] shrink-0 mt-0.5 transition-transform duration-200 group-hover:scale-110" />
                           <span className={`line-clamp-1 ${theme === 'light' ? 'text-slate-700' : 'text-slate-300'}`}>
                             {feat}
                           </span>
@@ -374,7 +441,7 @@ export function ModernSystemsShowcase({
                           </div>
                           {(lang === 'ar' ? sys.featuresAr : sys.featuresEn).map((feat, idx) => (
                             <div key={idx} className="flex items-start gap-2 text-[11px] text-slate-600 dark:text-slate-400">
-                              <span className="text-[#0b72c9] font-bold">·</span>
+                              <span className="text-[#1a85ea] font-bold">·</span>
                               <span>{feat}</span>
                             </div>
                           ))}
@@ -386,7 +453,7 @@ export function ModernSystemsShowcase({
                     <button
                       type="button"
                       onClick={(e) => toggleExpand(e, sys.id)}
-                      className="text-[11px] font-bold text-[#0b72c9] dark:text-[#299df7] hover:underline flex items-center gap-1 mb-4 cursor-pointer transition-transform duration-150 hover:translate-x-0.5"
+                      className="text-[11px] font-bold text-[#1a85ea] dark:text-[#38bdf8] hover:underline flex items-center gap-1 mb-4 cursor-pointer transition-transform duration-150 hover:translate-x-0.5"
                     >
                       <span>
                         {isExpanded 
@@ -409,26 +476,25 @@ export function ModernSystemsShowcase({
                           e.stopPropagation();
                           handleOpenVideo(sys.youtubeUrl, lang === 'ar' ? sys.titleAr : sys.titleEn);
                         }}
-                        className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-[#0b72c9] dark:hover:text-[#299df7] flex items-center gap-1.5 transition-all duration-200 cursor-pointer py-1 group/btn hover:scale-105"
+                        className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-[#1a85ea] dark:hover:text-[#38bdf8] flex items-center gap-1.5 transition-all duration-200 cursor-pointer py-1 group/btn hover:scale-105"
                       >
-                        <Play className="w-3.5 h-3.5 text-[#0b72c9] fill-current group-hover/btn:scale-110 transition-transform" />
+                        <Play className="w-3.5 h-3.5 text-[#1a85ea] fill-current group-hover/btn:scale-110 transition-transform" />
                         <span>{t.showDemo}</span>
                       </button>
 
                       <button
                         type="button"
-                        onClick={(e) => handleToggleInterest(e, sys.id)}
-                        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 ${
+                        onClick={(e) => handleRequestQuote(e, sys.id)}
+                        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 flex items-center gap-1.5 ${
                           isInterested
-                            ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400 shadow-xs'
+                            ? 'bg-blue-50 dark:bg-blue-950/40 border-[#1a85ea] text-[#1a85ea] dark:text-[#38bdf8] shadow-xs'
                             : (theme === 'light' 
-                                ? 'bg-slate-50 hover:bg-[#0b72c9] hover:text-white hover:border-[#0b72c9] border-slate-300 text-slate-800 shadow-2xs hover:shadow-md hover:shadow-[#0b72c9]/20' 
-                                : 'bg-slate-900 hover:bg-[#0b72c9] hover:text-white hover:border-[#0b72c9] border-slate-700 text-slate-200 hover:shadow-lg hover:shadow-[#0b72c9]/30')
+                                ? 'bg-slate-50 hover:bg-[#1a85ea] hover:text-white hover:border-[#1a85ea] border-slate-300 text-slate-800 shadow-2xs hover:shadow-md hover:shadow-[#1a85ea]/20' 
+                                : 'bg-slate-900 hover:bg-[#1a85ea] hover:text-white hover:border-[#1a85ea] border-slate-700 text-slate-200 hover:shadow-lg hover:shadow-[#1a85ea]/30')
                         }`}
                       >
-                        {isInterested 
-                          ? (lang === 'ar' ? 'تمت الإضافة' : 'Added') 
-                          : (lang === 'ar' ? 'طلب تسعيرة' : 'Get Quote')}
+                        <ArrowDown className="w-3.5 h-3.5" />
+                        <span>{lang === 'ar' ? 'طلب عرض سعر' : 'Get Quote'}</span>
                       </button>
                     </div>
                   </div>

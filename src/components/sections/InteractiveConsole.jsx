@@ -84,7 +84,7 @@ function InteractiveConsole({ lang, theme }) {
                 onClick={() => setActiveTab('sales')}
                 className={`w-full text-right px-4 py-3.5 rounded-xl transition-all flex items-center justify-between gap-3 text-xs font-bold font-cairo cursor-pointer shrink-0 ${
                   activeTab === 'sales'
-                    ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'
+                    ? 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25'
                     : (theme === 'light' ? 'text-slate-700 hover:bg-slate-100' : 'text-slate-400 hover:bg-slate-800/40')
                 }`}
               >
@@ -96,7 +96,7 @@ function InteractiveConsole({ lang, theme }) {
                 onClick={() => setActiveTab('branches')}
                 className={`w-full text-right px-4 py-3.5 rounded-xl transition-all flex items-center justify-between gap-3 text-xs font-bold font-cairo cursor-pointer shrink-0 ${
                   activeTab === 'branches'
-                    ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'
+                    ? 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25'
                     : (theme === 'light' ? 'text-slate-700 hover:bg-slate-100' : 'text-slate-400 hover:bg-slate-800/40')
                 }`}
               >
@@ -108,7 +108,7 @@ function InteractiveConsole({ lang, theme }) {
                 onClick={() => setActiveTab('compliance')}
                 className={`w-full text-right px-4 py-3.5 rounded-xl transition-all flex items-center justify-between gap-3 text-xs font-bold font-cairo cursor-pointer shrink-0 ${
                   activeTab === 'compliance'
-                    ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'
+                    ? 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25'
                     : (theme === 'light' ? 'text-slate-700 hover:bg-slate-100' : 'text-slate-400 hover:bg-slate-800/40')
                 }`}
               >
@@ -166,15 +166,15 @@ function InteractiveConsole({ lang, theme }) {
                       <svg className="absolute inset-x-0 bottom-2 h-32 w-full overflow-visible" preserveAspectRatio="none">
                         <defs>
                           <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#0b72c9" stopOpacity="0.4" />
-                            <stop offset="100%" stopColor="#0b72c9" stopOpacity="0.0" />
+                            <stop offset="0%" stopColor="#1a85ea" stopOpacity="0.4" />
+                            <stop offset="100%" stopColor="#1a85ea" stopOpacity="0.0" />
                           </linearGradient>
                         </defs>
                         {/* Dynamic Path compilation based on state */}
                         <path
                           d={`M ${salesData.map((val, idx) => `${(idx / (salesData.length - 1)) * 100}%,${100 - (val / 100) * 100}`).join(' L ')}`}
                           fill="none"
-                          stroke="#0b72c9"
+                          stroke="#1a85ea"
                           strokeWidth="3.5"
                           strokeLinecap="round"
                           className="transition-all duration-500 ease-out"
@@ -267,15 +267,15 @@ function InteractiveConsole({ lang, theme }) {
                         {/* Connection beams layout */}
                         <div className="absolute inset-0 overflow-hidden pointer-events-none">
                           <svg className="w-full h-full" viewBox="0 0 200 120">
-                            <line x1="40" y1="30" x2="160" y2="40" stroke="#0b72c9" strokeWidth="1" strokeDasharray="3,3" className="animate-pulse" />
-                            <line x1="40" y1="30" x2="60" y2="90" stroke="#0b72c9" strokeWidth="1" strokeDasharray="3,3" />
-                            <line x1="160" y1="40" x2="60" y2="90" stroke="#0b72c9" strokeWidth="1.5" strokeDasharray="4,4" />
-                            <line x1="160" y1="40" x2="140" y2="95" stroke="#0b72c9" strokeWidth="1" strokeDasharray="4,4" />
+                            <line x1="40" y1="30" x2="160" y2="40" stroke="#1a85ea" strokeWidth="1" strokeDasharray="3,3" className="animate-pulse" />
+                            <line x1="40" y1="30" x2="60" y2="90" stroke="#1a85ea" strokeWidth="1" strokeDasharray="3,3" />
+                            <line x1="160" y1="40" x2="60" y2="90" stroke="#1a85ea" strokeWidth="1.5" strokeDasharray="4,4" />
+                            <line x1="160" y1="40" x2="140" y2="95" stroke="#1a85ea" strokeWidth="1" strokeDasharray="4,4" />
                             {/* Sync packets animating */}
-                            <circle r="2.5" fill="#299df7" className="animate-bounce">
+                            <circle r="2.5" fill="#38bdf8" className="animate-bounce">
                               <animateMotion path="M 40,30 Q 100,20 160,40" dur="2s" repeatCount="indefinite" />
                             </circle>
-                            <circle r="2.5" fill="#0b72c9" className="animate-ping">
+                            <circle r="2.5" fill="#1a85ea" className="animate-ping">
                               <animateMotion path="M 160,40 Q 110,65 60,90" dur="1.5s" repeatCount="indefinite" />
                             </circle>
                           </svg>

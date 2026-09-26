@@ -159,10 +159,10 @@ export function ModernSystemsShowcase({
     <div className="w-full font-cairo">
       
       {/* 1. Flagship Core ERP Suite Showcase - Premium Executive Presentation */}
-      <div className={`relative rounded-3xl border p-5 sm:p-6 md:p-7 mb-8 transition-all duration-300 overflow-hidden hover:border-[#1a85ea]/50 group ${
+      <div className={`service-card-lift relative rounded-3xl border p-5 sm:p-6 md:p-7 mb-8 transition-all duration-300 overflow-hidden hover:border-[#1a85ea]/50 hover:-translate-y-1.5 hover:scale-[1.006] group ${
         theme === 'light'
-          ? 'bg-gradient-to-br from-white via-slate-50 to-[#1a85ea]/5 border-slate-200/90 shadow-lg shadow-slate-200/60 hover:shadow-xl hover:shadow-[#1a85ea]/10'
-          : 'bg-gradient-to-br from-[#070e22] via-[#09132e] to-[#0a1838] border-slate-800 shadow-xl shadow-black/40 hover:shadow-2xl hover:shadow-[#1a85ea]/20'
+          ? 'bg-gradient-to-br from-white via-slate-50 to-[#1a85ea]/5 border-slate-200/90 shadow-lg shadow-slate-200/60 hover:shadow-2xl hover:shadow-[#1a85ea]/15'
+          : 'bg-gradient-to-br from-[#070e22] via-[#09132e] to-[#0a1838] border-slate-800 shadow-xl shadow-black/40 hover:shadow-2xl hover:shadow-[#1a85ea]/25'
       }`}>
         {/* Subtle decorative accent glow */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-[#1a85ea]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
@@ -232,16 +232,16 @@ export function ModernSystemsShowcase({
                 e.stopPropagation();
                 handleOpenVideo(flagshipModule.youtubeUrl, lang === 'ar' ? flagshipModule.titleAr : flagshipModule.titleEn);
               }}
-              className="min-h-[42px] px-5 py-2.5 rounded-xl bg-[#1a85ea] hover:bg-[#1470c7] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#1a85ea]/25 hover:shadow-lg active:scale-98"
+              className="min-h-[42px] px-4 sm:px-5 py-2.5 rounded-xl bg-[#1a85ea] hover:bg-[#1470c7] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#1a85ea]/25 hover:shadow-lg active:scale-98 flex-1 sm:flex-1 lg:flex-initial text-center"
             >
-              <Play className="w-4 h-4 fill-current" />
+              <Play className="w-4 h-4 fill-current shrink-0" />
               <span>{lang === 'ar' ? 'مشاهدة فيديو المنظومة' : 'Watch System Demo'}</span>
             </button>
 
             <button
               type="button"
               onClick={(e) => handleRequestQuote(e, flagshipModule.id)}
-              className={`min-h-[42px] px-5 py-2.5 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 ${
+              className={`min-h-[42px] px-4 sm:px-5 py-2.5 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 flex-1 sm:flex-1 lg:flex-initial text-center ${
                 isFlagshipInterested
                   ? 'bg-blue-50 dark:bg-blue-950/40 border-[#1a85ea] text-[#1a85ea] dark:text-[#38bdf8]'
                   : (theme === 'light' 
@@ -249,8 +249,8 @@ export function ModernSystemsShowcase({
                       : 'bg-slate-900/90 border-slate-700 text-slate-200 hover:border-[#1a85ea] hover:bg-slate-800')
               }`}
             >
-              <ArrowDown className="w-4 h-4 text-[#1a85ea]" />
-              <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة بالأسفل ⬇️' : 'Request Official Quote Below ⬇️'}</span>
+              <ArrowDown className="w-4 h-4 text-[#1a85ea] shrink-0" />
+              <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة ⬇️' : 'Request Official Quote ⬇️'}</span>
             </button>
           </div>
 
@@ -364,12 +364,12 @@ export function ModernSystemsShowcase({
               return (
                 <motion.div 
                   key={sys.id}
-                  whileHover={{ y: -7, transition: { duration: 0.22, ease: 'easeOut' } }}
+                  whileHover={{ y: -6, scale: 1.015, transition: { duration: 0.24, ease: [0.16, 1, 0.3, 1] } }}
                   whileTap={{ scale: 0.99 }}
-                  className={`group rounded-2xl border p-5 flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-default ${
+                  className={`service-card-lift group rounded-2xl border p-5 flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-default ${
                     theme === 'light'
-                      ? 'bg-gradient-to-b from-white via-white to-slate-50/80 border-slate-200/90 hover:border-[#1a85ea]/50 shadow-sm hover:shadow-xl hover:shadow-[#1a85ea]/10'
-                      : 'bg-gradient-to-b from-[#091124] via-[#091124] to-[#070d1d] border-slate-800 hover:border-[#1a85ea]/60 shadow-md hover:shadow-2xl hover:shadow-[#1a85ea]/20'
+                      ? 'bg-gradient-to-b from-white via-white to-slate-50/80 border-slate-200/90 hover:border-[#1a85ea]/50 shadow-sm hover:shadow-xl hover:shadow-[#1a85ea]/15'
+                      : 'bg-gradient-to-b from-[#091124] via-[#091124] to-[#070d1d] border-slate-800 hover:border-[#1a85ea]/60 shadow-md hover:shadow-2xl hover:shadow-[#1a85ea]/25'
                   }`}
                 >
                   {/* Subtle top animated neon glow line on hover */}
@@ -388,7 +388,7 @@ export function ModernSystemsShowcase({
                       }`}>
                         <IconComponent name={sys.iconName} className="w-5 h-5 transition-transform duration-300" />
                       </div>
-                      <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-md border font-mono tracking-wider transition-colors duration-300 ${
+                      <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md border font-sans uppercase tracking-wider whitespace-nowrap transition-colors duration-300 ${
                         theme === 'light'
                           ? 'bg-slate-100 border-slate-200 text-slate-600 group-hover:border-[#1a85ea]/30 group-hover:text-[#1a85ea]'
                           : 'bg-slate-800/60 border-slate-700 text-slate-400 group-hover:border-[#1a85ea]/40 group-hover:text-[#38bdf8]'
@@ -462,11 +462,11 @@ export function ModernSystemsShowcase({
                     </button>
                   </div>
 
-                  {/* Actions Footer */}
+                  {/* Actions Footer - Perfectly responsive so buttons never overflow */}
                   <div className={`pt-3.5 border-t flex flex-col gap-2 mt-auto relative z-10 ${
                     theme === 'light' ? 'border-slate-100' : 'border-slate-800'
                   }`}>
-                    <div className="flex items-center justify-between gap-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                       <button
                         type="button"
                         onClick={(e) => {
@@ -474,16 +474,16 @@ export function ModernSystemsShowcase({
                           e.stopPropagation();
                           handleOpenVideo(sys.youtubeUrl, lang === 'ar' ? sys.titleAr : sys.titleEn);
                         }}
-                        className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-[#1a85ea] dark:hover:text-[#38bdf8] flex items-center gap-1.5 transition-all duration-200 cursor-pointer py-1 group/btn hover:scale-105"
+                        className="min-h-[38px] px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-[#1a85ea] dark:hover:text-[#38bdf8] bg-slate-50 dark:bg-slate-900/60 sm:bg-transparent sm:dark:bg-transparent border sm:border-transparent border-slate-200/80 dark:border-slate-800/80 flex items-center justify-center sm:justify-start gap-2 transition-all duration-200 cursor-pointer w-full sm:w-auto"
                       >
-                        <Play className="w-3.5 h-3.5 text-[#1a85ea] fill-current group-hover/btn:scale-110 transition-transform" />
-                        <span>{t.showDemo}</span>
+                        <Play className="w-3.5 h-3.5 text-[#1a85ea] fill-current" />
+                        <span className="whitespace-nowrap">{t.showDemo}</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={(e) => handleRequestQuote(e, sys.id)}
-                        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 flex items-center gap-1.5 ${
+                        className={`min-h-[38px] px-3.5 py-2 rounded-xl border text-xs font-bold transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto whitespace-nowrap active:scale-95 ${
                           isInterested
                             ? 'bg-blue-50 dark:bg-blue-950/40 border-[#1a85ea] text-[#1a85ea] dark:text-[#38bdf8] shadow-xs'
                             : (theme === 'light' 
@@ -491,7 +491,7 @@ export function ModernSystemsShowcase({
                                 : 'bg-slate-900 hover:bg-[#1a85ea] hover:text-white hover:border-[#1a85ea] border-slate-700 text-slate-200 hover:shadow-lg hover:shadow-[#1a85ea]/30')
                         }`}
                       >
-                        <ArrowDown className="w-3.5 h-3.5" />
+                        <ArrowDown className="w-3.5 h-3.5 shrink-0" />
                         <span>{lang === 'ar' ? 'طلب عرض سعر' : 'Get Quote'}</span>
                       </button>
                     </div>

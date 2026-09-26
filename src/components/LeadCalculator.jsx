@@ -132,19 +132,19 @@ Thank you for your prompt assistance and cooperation.`;
               <label className={`block text-xs font-semibold uppercase tracking-wider mb-2 font-cairo ${theme === 'light' ? 'text-slate-700' : 'text-slate-400'}`}>
                 {lang === 'ar' ? 'بلد المنشأة المستهدف' : 'Target Business Country'}
               </label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                 {[
                   { id: 'egy', flag: 'eg', ar: 'جمهورية مصر العربية', en: 'Egypt' },
                   { id: 'ksa', flag: 'sa', ar: 'المملكة العربية السعودية', en: 'Saudi Arabia' },
                 ].map(c => (
                   <button key={c.id} type="button" onClick={() => setCountry(c.id)}
-                    className={`min-h-[44px] py-3 px-4 rounded-xl border text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 font-cairo cursor-pointer ${
+                    className={`min-h-[46px] py-2.5 sm:py-3 px-3.5 sm:px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 font-cairo cursor-pointer text-center leading-normal ${
                       country === c.id
                         ? 'bg-gradient-to-r from-emerald-600/20 to-teal-500/15 border-emerald-500 text-emerald-600 dark:text-emerald-300 shadow-md ring-1 ring-emerald-500/25'
                         : theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700/80 hover:text-white'
                     }`}>
-                    <img loading="lazy" decoding="async" src={`https://flagcdn.com/w40/${c.flag}.png`} alt={c.id} className="w-5 h-3.5 object-cover rounded-sm" referrerPolicy="no-referrer" />
-                    {lang === 'ar' ? c.ar : c.en}
+                    <img loading="lazy" decoding="async" src={`https://flagcdn.com/w40/${c.flag}.png`} alt={c.id} className="w-5 h-3.5 object-cover rounded-sm shrink-0" referrerPolicy="no-referrer" />
+                    <span>{lang === 'ar' ? c.ar : c.en}</span>
                   </button>
                 ))}
               </div>
@@ -163,7 +163,7 @@ Thank you for your prompt assistance and cooperation.`;
                   { id: 'specialized', ar: 'حلول تخصصية', en: 'Special Tech' },
                 ].map(sec => (
                   <button key={sec.id} type="button" onClick={() => handleSectorChange(sec.id)}
-                    className={`min-h-[44px] p-2.5 rounded-xl border text-xs font-bold text-center flex items-center justify-center transition-all duration-300 font-cairo cursor-pointer ${
+                    className={`min-h-[46px] px-3 py-2.5 sm:py-3 rounded-xl border text-xs font-bold text-center flex items-center justify-center transition-all duration-300 font-cairo cursor-pointer leading-normal ${
                       sector === sec.id
                         ? theme === 'light' ? 'bg-cyan-50 border-cyan-400 text-cyan-700 shadow-sm' : 'bg-cyan-500/10 border-cyan-500 text-cyan-300 shadow-sm'
                         : theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100' : 'bg-slate-800/60 border-slate-800 text-slate-400 hover:bg-slate-800 hover:text-white'
@@ -179,14 +179,14 @@ Thank you for your prompt assistance and cooperation.`;
               <label className={`block text-xs font-semibold uppercase tracking-wider mb-2 font-cairo ${theme === 'light' ? 'text-slate-700' : 'text-slate-400'}`}>
                 {t.calcSizeSelection}
               </label>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {[
-                  { id: 'small', ar: '1-3 مستخدمين', en: 'Small (1-3 users)' },
-                  { id: 'medium', ar: 'فروع متعددة', en: 'Medium Multi-branch' },
-                  { id: 'large', ar: 'مجمعات ومصانع', en: 'Large Enterprise' },
+                  { id: 'small', ar: '1-3 مستخدمين (فردي / فرع واحد)', en: 'Small (1-3 users)' },
+                  { id: 'medium', ar: 'فروع متعددة (2 - 5 فروع)', en: 'Medium (2-5 branches)' },
+                  { id: 'large', ar: 'مجمعات ومصانع (شركات كبرى)', en: 'Large Enterprise' },
                 ].map(scl => (
                   <button key={scl.id} type="button" onClick={() => setScale(scl.id)}
-                    className={`min-h-[44px] py-2 px-2 rounded-xl border text-[11px] sm:text-xs font-bold text-center flex items-center justify-center transition-all duration-300 font-cairo cursor-pointer ${
+                    className={`min-h-[46px] py-2.5 px-3.5 rounded-xl border text-xs font-bold text-center flex items-center justify-center transition-all duration-300 font-cairo cursor-pointer leading-normal ${
                       scale === scl.id
                         ? theme === 'light' ? 'bg-white border-cyan-500 text-cyan-600 shadow-sm ring-1 ring-cyan-500/25' : 'bg-slate-800 border-cyan-500 text-cyan-400'
                         : theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100' : 'bg-slate-800/60 border-slate-800 text-slate-400 hover:bg-slate-800 hover:text-white'
@@ -198,13 +198,13 @@ Thank you for your prompt assistance and cooperation.`;
             </div>
 
             {/* الخيارات الإضافية */}
-            <div className="pt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="pt-2 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               {[
                 { state: needMobile, setState: setNeedMobile, ar: 'تضمين تطبيقات الموبايل للمناديب', en: 'Mobile Sales Representative App', subAr: 'توصيل النظام بأندرويد و iOS', subEn: 'Connect to Android/iOS tablets' },
                 { state: needEInvoicing, setState: setNeedEInvoicing, ar: 'تفعيل مديول الفاتورة الإلكترونية', en: 'E-Invoicing integration module', subAr: 'تشفير QR والربط المرفق الفوري', subEn: 'Automated QR codes & secure compliance' },
               ].map((item, i) => (
-                <label key={i} className={`min-h-[44px] flex items-center gap-3 p-3 rounded-xl border transition-colors duration-200 select-none cursor-pointer ${
-                  theme === 'light' ? 'bg-slate-50 border-slate-200 hover:bg-slate-100' : 'bg-slate-800/40 border-slate-800 hover:bg-slate-800/60'
+                <label key={i} className={`feature-block-lift min-h-[48px] flex items-center gap-3 p-3 sm:p-3.5 rounded-xl border transition-all duration-200 select-none cursor-pointer hover:-translate-y-0.5 hover:shadow-xs ${
+                  theme === 'light' ? 'bg-slate-50 border-slate-200 hover:bg-slate-100 hover:border-cyan-300' : 'bg-slate-800/40 border-slate-800 hover:bg-slate-800/60 hover:border-slate-700'
                 }`}>
                   <input
                     type="checkbox"
@@ -239,8 +239,8 @@ Thank you for your prompt assistance and cooperation.`;
 
             <div className="space-y-4">
               {suggestions.map(sys => (
-                <div key={sys.id} className={`p-3 rounded-xl border transition-all duration-300 ${
-                  theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-900/80 border-slate-800/80'
+                <div key={sys.id} className={`service-card-lift p-3.5 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-md ${
+                  theme === 'light' ? 'bg-white border-slate-200 shadow-sm hover:border-cyan-300' : 'bg-slate-900/80 border-slate-800/80 hover:border-slate-700'
                 }`}>
                   <div className="flex items-center justify-between mb-2">
                     <h4 className={`text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-slate-100'}`}>

@@ -55,14 +55,14 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
                   key={branch.id}
                   type="button"
                   onClick={() => setSelectedBranchId(branch.id)}
-                  className={`w-full text-right p-4 sm:p-5 rounded-2xl border transition-all duration-300 flex items-start gap-3.5 cursor-pointer ${
+                  className={`service-card-lift w-full text-right p-4 sm:p-5 rounded-2xl border transition-all duration-300 flex items-start gap-3.5 cursor-pointer hover:-translate-y-1.5 hover:scale-[1.01] ${
                     isSelected
                       ? theme === 'light'
-                        ? 'bg-white border-[#1a85ea] shadow-md ring-1 ring-[#1a85ea]/20'
-                        : 'bg-slate-900 border-[#1a85ea] shadow-lg shadow-[#1a85ea]/10'
+                        ? 'bg-white border-[#1a85ea] shadow-md ring-1 ring-[#1a85ea]/20 hover:shadow-xl'
+                        : 'bg-slate-900 border-[#1a85ea] shadow-lg shadow-[#1a85ea]/10 hover:shadow-2xl'
                       : theme === 'light'
-                        ? 'bg-white/80 border-slate-200 hover:bg-white text-slate-700'
-                        : 'bg-slate-900/50 border-slate-800 hover:bg-slate-900 text-slate-300'
+                        ? 'bg-white/80 border-slate-200 hover:bg-white text-slate-700 hover:border-[#1a85ea]/50 hover:shadow-lg'
+                        : 'bg-slate-900/50 border-slate-800 hover:bg-slate-900 text-slate-300 hover:border-[#1a85ea]/50 hover:shadow-xl'
                   }`}
                 >
                   <div className={`p-2.5 rounded-xl shrink-0 transition-colors ${
@@ -93,8 +93,8 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
           </div>
 
           {/* Branch Details & Embedded Map */}
-          <div className={`lg:col-span-7 rounded-2xl border p-5 sm:p-6 transition-colors duration-300 flex flex-col justify-between ${
-            theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-[#131d35] border-slate-700/60'
+          <div className={`feature-block-lift lg:col-span-7 rounded-2xl border p-5 sm:p-6 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl ${
+            theme === 'light' ? 'bg-white border-slate-200 shadow-sm hover:border-cyan-300' : 'bg-[#131d35] border-slate-700/60 hover:border-slate-600'
           }`}>
             {/* Top Branch Header - Clean without misplaced buttons */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 border-b pb-4 border-slate-200 dark:border-slate-800">
@@ -115,9 +115,9 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
               {/* Direct Call Link */}
               <a
                 href={`tel:${selectedBranch.id === 'riyadh' ? COMPANY_CONFIG.contact.ksa.phoneRaw : COMPANY_CONFIG.contact.egypt.phoneRaw}`}
-                className={`inline-flex items-center justify-center min-h-[40px] gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold font-cairo transition-colors shadow-sm ${theme === 'light' ? 'bg-blue-50/80 hover:bg-blue-100 text-[#1470c7] border-[#1a85ea]/25' : 'bg-slate-800 hover:bg-slate-700 text-sky-300 border-slate-700'}`}
+                className={`inline-flex items-center justify-center min-h-[40px] gap-2 px-3.5 py-2 rounded-xl border text-xs font-bold font-cairo transition-colors shadow-sm w-full sm:w-auto ${theme === 'light' ? 'bg-blue-50/80 hover:bg-blue-100 text-[#1470c7] border-[#1a85ea]/25' : 'bg-slate-800 hover:bg-slate-700 text-sky-300 border-slate-700'}`}
               >
-                <PhoneCall className="w-3.5 h-3.5 text-[#1a85ea]" />
+                <PhoneCall className="w-3.5 h-3.5 text-[#1a85ea] shrink-0" />
                 <span dir="ltr">{selectedBranch.id === 'riyadh' ? COMPANY_CONFIG.contact.ksa.phoneDisplay : COMPANY_CONFIG.contact.egypt.phoneDisplay}</span>
               </a>
             </div>

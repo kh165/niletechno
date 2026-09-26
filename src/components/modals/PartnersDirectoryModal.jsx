@@ -263,7 +263,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
                     <div 
                       key={partner.id}
                       onClick={() => handlePartnerClick(partner)}
-                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-slate-200 hover:border-[#1a85ea]/70 bg-white shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex items-center justify-center p-2 sm:p-2.5 relative overflow-hidden group cursor-pointer"
+                      className="service-card-lift w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-slate-200 hover:border-[#1a85ea]/70 bg-white shadow-xs hover:shadow-lg hover:-translate-y-1.5 hover:scale-105 transition-all duration-300 flex items-center justify-center p-2 sm:p-2.5 relative overflow-hidden group cursor-pointer"
                     >
                       <div className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                         <PartnerLogo partner={partner} theme={theme} />
@@ -298,13 +298,13 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
               : '* Click any partner to inquire about deployed software systems, or contact sales'}
           </span>
 
-          <div className="flex items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
             {/* WhatsApp Button */}
             <a
               href={createWhatsAppUrl('egy', waSalesText)}
               target="_blank"
               rel="noopener noreferrer"
-              className="min-h-[38px] px-4 py-2 rounded-xl bg-gradient-to-r from-[#1eb854] to-[#25d366] hover:brightness-105 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm cursor-pointer font-cairo transition-all active:scale-95 flex-1 sm:flex-initial"
+              className="min-h-[40px] px-4 py-2 rounded-xl bg-gradient-to-r from-[#1eb854] to-[#25d366] hover:brightness-105 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm cursor-pointer font-cairo transition-all active:scale-95 w-full sm:w-auto"
             >
               <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80"></span>
@@ -318,7 +318,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
             <button
               type="button"
               onClick={onClose}
-              className="min-h-[38px] px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs cursor-pointer font-cairo transition-colors flex-1 sm:flex-initial"
+              className="min-h-[40px] px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs cursor-pointer font-cairo transition-colors w-full sm:w-auto"
             >
               {isRtl ? 'إغلاق الدليل' : 'Close'}
             </button>

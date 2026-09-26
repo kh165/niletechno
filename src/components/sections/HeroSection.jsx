@@ -266,7 +266,7 @@ export function HeroSection({
                 <button
                   key={tab.id}
                   onClick={() => setActivePlatformIndex(tab.id)}
-                  className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer font-cairo relative overflow-hidden ${
+                  className={`min-h-[42px] px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer font-cairo relative overflow-hidden flex-1 sm:flex-initial min-w-[115px] max-w-full ${
                     isActive
                       ? 'bg-[#1a85ea] text-white border-[#1a85ea] shadow-md shadow-[#1a85ea]/25'
                       : theme === 'light'
@@ -274,8 +274,8 @@ export function HeroSection({
                         : 'bg-[#15203b] border-slate-700/60 text-slate-300 hover:border-slate-600 hover:text-white'
                   }`}
                 >
-                  <TabIcon className="w-3.5 h-3.5" />
-                  <span>{lang === 'ar' ? tab.titleAr : tab.titleEn}</span>
+                  <TabIcon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="whitespace-nowrap">{lang === 'ar' ? tab.titleAr : tab.titleEn}</span>
                   {isActive && (
                     <motion.div
                       key={`progress-${activePlatformIndex}`}
@@ -293,27 +293,27 @@ export function HeroSection({
           {/* Platform Active Slide View */}
           <div className="relative overflow-hidden">
             <AnimatePresence mode="wait">
-              <motion.div
+                <motion.div
                 key={currentPlatform.id}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.22 }}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 sm:p-7 rounded-2xl border transition-all duration-300 items-center text-right ${
+                className={`feature-block-lift grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 sm:p-7 rounded-2xl border transition-all duration-300 items-center text-right hover:-translate-y-1 hover:shadow-2xl ${
                   theme === 'light'
-                    ? 'bg-white/95 border-slate-200 shadow-md'
-                    : 'bg-[#131d35]/95 border-slate-700/60 shadow-xl'
+                    ? 'bg-white/95 border-slate-200 shadow-md hover:border-cyan-400/40'
+                    : 'bg-[#131d35]/95 border-slate-700/60 shadow-xl hover:border-cyan-500/40'
                 }`}
               >
                 {/* Platform Description & CTA */}
                 <div className="lg:col-span-7 space-y-3">
                   <div className="flex items-center gap-2 justify-start">
-                    <span className="inline-flex px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
+                    <span className="inline-flex px-2.5 py-1 rounded-md text-[11px] font-black uppercase tracking-wider bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 whitespace-nowrap">
                       {lang === 'ar' ? currentPlatform.badgeAr : currentPlatform.badgeEn}
                     </span>
                   </div>
 
-                  <h3 className={`text-base sm:text-lg font-black ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                  <h3 className={`text-base sm:text-lg font-black leading-snug ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
                     {lang === 'ar' ? currentPlatform.headlineAr : currentPlatform.headlineEn}
                   </h3>
 
@@ -326,22 +326,22 @@ export function HeroSection({
                       href={currentPlatform.actionHref}
                       target={currentPlatform.isExternal ? '_blank' : '_self'}
                       rel={currentPlatform.isExternal ? 'noopener noreferrer' : undefined}
-                      className="inline-flex items-center justify-center gap-2 min-h-[40px] px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs transition-all shadow-md shadow-cyan-500/20 cursor-pointer font-cairo"
+                      className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 sm:px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-cyan-500/20 cursor-pointer font-cairo w-full sm:w-auto text-center leading-normal"
                     >
                       <span>{lang === 'ar' ? currentPlatform.actionTextAr : currentPlatform.actionTextEn}</span>
-                      <currentPlatform.icon className="w-3.5 h-3.5" />
+                      <currentPlatform.icon className="w-4 h-4 shrink-0" />
                     </a>
                   </div>
                 </div>
 
                 {/* Micro Live Status Panel */}
                 <div className="lg:col-span-5">
-                  <div className={`p-4 rounded-xl border text-xs text-right ${
+                  <div className={`feature-block-lift p-4 sm:p-5 rounded-2xl border text-xs text-right transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
                     theme === 'light' 
-                      ? 'bg-slate-50 border-slate-200 text-slate-700' 
-                      : 'bg-[#0e1629] border-slate-700/60 text-slate-200'
+                      ? 'bg-slate-50 border-slate-200 text-slate-700 shadow-2xs hover:border-cyan-300' 
+                      : 'bg-[#0e1629] border-slate-700/60 text-slate-200 hover:border-slate-600'
                   }`}>
-                    <div className="flex items-center justify-between pb-2 mb-3 border-b border-cyan-500/10">
+                    <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-cyan-500/10">
                       <span className="text-xs font-bold text-emerald-500 flex items-center gap-1.5 font-cairo">
                         <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                         {lang === 'ar' ? 'الحالة: نشط ومتوافق' : 'Status: Active & Certified'}
@@ -349,13 +349,13 @@ export function HeroSection({
                       <span className="text-[10px] text-slate-400 font-mono">v2026.4</span>
                     </div>
 
-                    <div className="space-y-1.5 font-cairo text-xs">
+                    <div className="space-y-2 font-cairo text-xs">
                       {currentPlatform.stats.map((st, sIdx) => (
-                        <div key={sIdx} className="flex justify-between items-center py-0.5 border-b border-slate-200/40 dark:border-slate-800/40 last:border-none">
+                        <div key={sIdx} className="flex justify-between items-center py-1.5 gap-2 border-b border-slate-200/50 dark:border-slate-800/50 last:border-none">
                           <span className={theme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
                             {lang === 'ar' ? st.labelAr : st.labelEn}
                           </span>
-                          <span className="font-bold text-cyan-600 dark:text-cyan-400">
+                          <span className="font-bold text-cyan-600 dark:text-cyan-400 whitespace-nowrap shrink-0">
                             {lang === 'ar' ? st.valAr : st.valEn}
                           </span>
                         </div>
@@ -383,14 +383,14 @@ export function HeroSection({
           ].map((metric, idx) => (
             <div 
               key={idx} 
-              className={`p-3 rounded-xl border transition-all duration-200 ${
+              className={`p-3.5 sm:p-4 rounded-xl border transition-all duration-200 flex flex-col justify-center min-h-[74px] ${
                 theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-[#131d35]/70 border-slate-700/50'
               }`}
             >
-              <div className="text-lg sm:text-xl font-black font-mono text-cyan-500 mb-0.5">
+              <div className="text-lg sm:text-xl font-black font-mono text-cyan-500 mb-1 whitespace-nowrap">
                 {metric.val}
               </div>
-              <div className={`text-[11px] font-bold font-cairo ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+              <div className={`text-[11px] sm:text-xs font-bold font-cairo leading-snug ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
                 {lang === 'ar' ? metric.labelAr : metric.labelEn}
               </div>
             </div>

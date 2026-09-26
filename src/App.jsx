@@ -520,11 +520,11 @@ Thank you for your prompt assistance and cooperation.`;
             <div className={`flex min-w-0 justify-between items-center gap-2 transition-all duration-300 ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
             
               {/* Theme Toggle, Language Switcher, WhatsApp Contact, and Drawer Trigger */}
-              <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 order-1 lg:order-3">
+              <div className="flex shrink-0 items-center gap-1 sm:gap-2 order-1 lg:order-3">
                 {/* Hamburger Mobile Menu Indicator */}
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className={`lg:hidden min-w-[38px] min-h-[38px] flex items-center justify-center p-2 rounded-xl border transition-colors cursor-pointer ${
+                  className={`lg:hidden min-w-[36px] min-h-[36px] w-9 h-9 flex items-center justify-center p-1.5 rounded-xl border transition-colors cursor-pointer shrink-0 ${
                     theme === 'light'
                       ? 'bg-slate-100 border-slate-300 text-slate-600 hover:text-slate-900'
                       : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
@@ -539,12 +539,13 @@ Thank you for your prompt assistance and cooperation.`;
                   theme={theme} 
                   setTheme={setTheme} 
                   lang={lang} 
+                  className="min-w-[36px] min-h-[36px] w-9 h-9"
                 />
 
                 {/* Language Switch button */}
                 <button 
                   onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
-                  className={`min-h-[36px] flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all cursor-pointer ${
+                  className={`min-h-[36px] flex items-center justify-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all cursor-pointer shrink-0 ${
                     theme === 'light'
                       ? 'border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200'
                       : 'border-slate-700/80 bg-[#0d1527] text-slate-300 hover:border-cyan-500 hover:text-cyan-400'
@@ -552,14 +553,14 @@ Thank you for your prompt assistance and cooperation.`;
                   aria-label={lang === 'ar' ? 'عرض الصفحة باللغة الإنجليزية' : 'Translate page presentation to Arabic'}
                 >
                   <Globe className="w-3.5 h-3.5" />
-                  <span>{lang === 'ar' ? 'English' : 'العربية'}</span>
+                  <span className="whitespace-nowrap">{lang === 'ar' ? 'English' : 'العربية'}</span>
                 </button>
 
                 {/* Calm & Chic WhatsApp Contact Quick Action */}
                 <a
                   href="#contact"
                   onClick={(e) => handleNavClick(e, '#contact')}
-                  className={`min-h-[36px] flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all duration-200 cursor-pointer select-none ${
+                  className={`min-h-[36px] flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all duration-200 cursor-pointer select-none shrink-0 ${
                     theme === 'light'
                       ? 'border-emerald-700/20 bg-emerald-50/70 text-emerald-800 hover:bg-emerald-100/80 hover:border-emerald-700/35 hover:text-emerald-900 shadow-2xs'
                       : 'border-emerald-500/25 bg-emerald-950/30 text-emerald-300 hover:bg-emerald-950/50 hover:border-emerald-500/40 hover:text-emerald-200 shadow-2xs'
@@ -570,7 +571,7 @@ Thank you for your prompt assistance and cooperation.`;
                   <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current text-emerald-600 dark:text-emerald-400 shrink-0" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                   </svg>
-                  <span className="font-cairo whitespace-nowrap">{lang === 'ar' ? 'للتواصل' : 'Contact'}</span>
+                  <span className="font-cairo whitespace-nowrap hidden sm:inline">{lang === 'ar' ? 'للتواصل' : 'Contact'}</span>
                 </a>
               </div>
 
@@ -603,11 +604,11 @@ Thank you for your prompt assistance and cooperation.`;
               </div>
 
               {/* Corporate Logo Emblem using high-performance vector component */}
-              <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="min-w-0 max-w-[55vw] sm:max-w-none cursor-pointer flex items-center shrink-0 group order-2 lg:order-1">
+              <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="min-w-0 max-w-[42vw] sm:max-w-none cursor-pointer flex items-center shrink-0 group order-2 lg:order-1">
                 <NileTechnoLogo 
                   theme={theme} 
                   lang={lang} 
-                  className={scrolled ? "h-10 sm:h-11 md:h-12 lg:h-[52px] w-auto object-contain transition-all duration-300" : "h-12 sm:h-14 md:h-16 lg:h-[72px] w-auto object-contain transition-all duration-300"}
+                  className={scrolled ? "h-9 sm:h-11 md:h-12 lg:h-[52px] w-auto max-w-full object-contain transition-all duration-300" : "h-11 sm:h-14 md:h-16 lg:h-[72px] w-auto max-w-full object-contain transition-all duration-300"}
                 />
               </a>
 
@@ -718,8 +719,8 @@ Thank you for your prompt assistance and cooperation.`;
             {/* Left Column: Visual branding statement card */}
             <div className="lg:col-span-5 relative">
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-20 blur pointer-events-none"></div>
-              <div className={`relative p-6 sm:p-8 rounded-2xl border transition-all duration-300 ${
-                theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-900 rounded-2xl border border-slate-800'
+              <div className={`feature-block-lift relative p-6 sm:p-8 rounded-2xl border transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.008] ${
+                theme === 'light' ? 'bg-white border-slate-200 shadow-sm hover:shadow-xl hover:border-cyan-400/40' : 'bg-slate-900 rounded-2xl border border-slate-800 hover:shadow-2xl hover:border-cyan-500/40'
               }`}>
                 <h3 className={`text-lg font-bold mb-4 font-cairo ${
                   theme === 'light' ? 'text-slate-900' : 'text-white'
@@ -737,8 +738,8 @@ Thank you for your prompt assistance and cooperation.`;
                   {t.aboutCompanyDesc2}
                 </p>
 
-                <div className={`p-4 rounded-xl border flex items-center gap-3 transition-colors ${
-                  theme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#131d35] border border-slate-700/60'
+                <div className={`feature-block-lift p-4 rounded-xl border flex items-center gap-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
+                  theme === 'light' ? 'bg-slate-50 border-slate-200 hover:border-cyan-300' : 'bg-[#131d35] border border-slate-700/60 hover:border-slate-600'
                 }`}>
                   <div className="p-3 rounded-lg bg-cyan-500/10 text-cyan-400 shrink-0">
                     <Award className="w-6 h-6" />
@@ -785,8 +786,8 @@ Thank you for your prompt assistance and cooperation.`;
               </div>
 
               {/* Dynamic Content display */}
-              <div className={`p-6 sm:p-8 rounded-2xl border min-h-64 flex flex-col justify-between transition-colors duration-300 ${
-                theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-900/40 rounded-2xl border border-slate-800'
+              <div className={`feature-block-lift p-6 sm:p-8 rounded-2xl border min-h-64 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.008] ${
+                theme === 'light' ? 'bg-white border-slate-200 shadow-sm hover:shadow-xl hover:border-cyan-400/40' : 'bg-slate-900/40 rounded-2xl border border-slate-800 hover:shadow-2xl hover:border-cyan-500/40'
               }`}>
                 <div className="space-y-4">
                   <span className="inline-flex p-2.5 rounded-lg bg-cyan-500/10 text-cyan-500 mb-2">
@@ -865,8 +866,10 @@ Thank you for your prompt assistance and cooperation.`;
             <div className="lg:col-span-5 space-y-6">
               
               {/* Dynamic compliance imagery at the top as requested - perfectly visual and fully customizable */}
-              <div className="grid grid-cols-2 gap-6 pt-2 pb-4">
-                <div className="flex flex-col items-center justify-center p-2 transition-transform duration-300 hover:scale-[1.05]">
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-2 pb-4">
+                <div className={`feature-block-lift flex flex-col items-center justify-center p-3 rounded-2xl border transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.03] hover:shadow-lg ${
+                  theme === 'light' ? 'bg-white border-slate-200/90 shadow-2xs hover:border-cyan-400/50' : 'bg-slate-900/60 border-slate-800 hover:border-cyan-500/50 shadow-inner'
+                }`}>
                   <div className="h-20 w-full flex items-center justify-center">
                     <img 
                       src={etaImage}
@@ -885,7 +888,9 @@ Thank you for your prompt assistance and cooperation.`;
                   </div>
                 </div>
 
-                <div className="flex flex-col items-center justify-center p-2 transition-transform duration-300 hover:scale-[1.05]">
+                <div className={`feature-block-lift flex flex-col items-center justify-center p-3 rounded-2xl border transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.03] hover:shadow-lg ${
+                  theme === 'light' ? 'bg-white border-slate-200/90 shadow-2xs hover:border-cyan-400/50' : 'bg-slate-900/60 border-slate-800 hover:border-cyan-500/50 shadow-inner'
+                }`}>
                   <div className="h-20 w-full flex items-center justify-center">
                     <img 
                       src={zatcaImage}
@@ -940,8 +945,8 @@ Thank you for your prompt assistance and cooperation.`;
                 </div>
 
                 {/* Secure tag */}
-                <div className={`p-4 rounded-xl flex items-center gap-3 border transition-colors ${
-                  theme === 'light' ? 'bg-slate-50 border-slate-200/80 shadow-sm' : 'bg-slate-900 border border-slate-800'
+                <div className={`feature-block-lift p-4 rounded-xl flex items-center gap-3 border transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
+                  theme === 'light' ? 'bg-slate-50 border-slate-200/80 shadow-sm hover:border-emerald-300' : 'bg-slate-900 border border-slate-800 hover:border-emerald-500/40'
                 }`}>
                   <ShieldCheck className="w-8 h-8 text-emerald-500 shrink-0" />
                   <div>
@@ -1116,27 +1121,27 @@ Thank you for your prompt assistance and cooperation.`;
                   className="space-y-4"
                 >
                   {/* Top Active Bar with Close Control */}
-                  <div className={`p-4 sm:p-5 rounded-2xl border flex items-center justify-between gap-4 transition-colors ${
+                  <div className={`feature-block-lift p-4 sm:p-5 rounded-2xl border flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
                     theme === 'light' 
-                      ? 'bg-white border-slate-200 shadow-sm' 
-                      : 'bg-slate-900/90 border-slate-800 shadow-md'
+                      ? 'bg-white border-slate-200 shadow-sm hover:border-cyan-300' 
+                      : 'bg-slate-900/90 border-slate-800 shadow-md hover:border-slate-700'
                   }`}>
-                    <div className="flex items-center gap-3.5">
+                    <div className="flex items-center gap-3.5 min-w-0">
                       <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm">
                         <Calculator className="w-5 h-5" />
                       </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className={`text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className={`text-xs sm:text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
                             {lang === 'ar' ? 'مستشار اختيار وتخصيص النظام المناسب' : 'Smart Solution & Package Finder'}
                           </span>
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shrink-0">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                             <span>{lang === 'ar' ? 'نشط الآن' : 'Active'}</span>
                           </span>
                         </div>
                         <p className={`text-[11px] font-cairo mt-0.5 ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
-                          {lang === 'ar' ? 'قم بتحديد بيانات نشاطك بالأسفل ثم انقر زر الاستشارة عبر واتساب' : 'Select your sector and scale to reveal instant package recommendations'}
+                          {lang === 'ar' ? 'حدد نشاطك وحجم فروعك بالأسفل ثم انقر زر الاستشارة عبر واتساب' : 'Select your sector and scale below then request an instant advisory'}
                         </p>
                       </div>
                     </div>
@@ -1144,14 +1149,14 @@ Thank you for your prompt assistance and cooperation.`;
                     <button
                       type="button"
                       onClick={() => setIsCalculatorOpen(false)}
-                      className={`min-h-[42px] px-4 py-2 rounded-xl text-xs font-bold font-cairo flex items-center gap-2 cursor-pointer transition-all shrink-0 ${
+                      className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-bold font-cairo flex items-center justify-center gap-2 cursor-pointer transition-all shrink-0 w-full sm:w-auto ${
                         theme === 'light' 
                           ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200' 
                           : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
                       }`}
                     >
                       <span>{lang === 'ar' ? 'طي وإخفاء الحاسبة' : 'Collapse Calculator'}</span>
-                      <ChevronUp className="w-4 h-4" />
+                      <ChevronUp className="w-4 h-4 shrink-0" />
                     </button>
                   </div>
 
@@ -1169,13 +1174,13 @@ Thank you for your prompt assistance and cooperation.`;
                         const el = document.getElementById('consulting');
                         if (el) el.scrollIntoView({ behavior: 'smooth' });
                       }}
-                      className={`min-h-[44px] px-6 py-2.5 rounded-xl text-xs font-bold font-cairo flex items-center gap-2 cursor-pointer transition-all shadow-sm ${
+                      className={`min-h-[44px] px-6 py-2.5 rounded-xl text-xs font-bold font-cairo flex items-center justify-center gap-2 cursor-pointer transition-all shadow-sm w-full sm:w-auto ${
                         theme === 'light' 
                           ? 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200' 
                           : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
                       }`}
                     >
-                      <ChevronUp className="w-4 h-4" />
+                      <ChevronUp className="w-4 h-4 shrink-0" />
                       <span>{lang === 'ar' ? 'طي وإخفاء الحاسبة التفاعلية' : 'Collapse Calculator'}</span>
                     </button>
                   </div>
@@ -1188,23 +1193,23 @@ Thank you for your prompt assistance and cooperation.`;
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   onClick={() => setIsCalculatorOpen(true)}
-                  className={`group p-6 sm:p-8 rounded-3xl border cursor-pointer transition-all duration-300 shadow-md hover:shadow-xl hover:scale-[1.006] ${
+                  className={`feature-block-lift group p-5 sm:p-7 md:p-8 rounded-3xl border cursor-pointer transition-all duration-300 shadow-md hover:shadow-2xl hover:-translate-y-1.5 hover:scale-[1.008] ${
                     theme === 'light' 
                       ? 'bg-white border-slate-200 hover:border-cyan-400 shadow-slate-200/50' 
                       : 'bg-gradient-to-br from-[#091224] to-[#0c1830] border-slate-800 hover:border-cyan-500/60 shadow-slate-950/60'
                   }`}
                 >
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="flex items-center gap-4 text-right">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300">
-                        <Calculator className="w-7 h-7" />
+                  <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-5">
+                    <div className="flex items-center gap-3.5 sm:gap-4 text-right min-w-0">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300">
+                        <Calculator className="w-6 h-6 sm:w-7 sm:h-7" />
                       </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                          <h3 className={`text-lg sm:text-xl font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <h3 className={`text-base sm:text-xl font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
                             {lang === 'ar' ? 'مستشار اختيار وتخصيص النظام المناسب' : 'Interactive Scope & Pricing Estimator'}
                           </h3>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 shrink-0">
                             <SlidersHorizontal className="w-3 h-3" />
                             <span>{lang === 'ar' ? 'أداة تفاعلية سريعة' : 'Instant Tool'}</span>
                           </span>
@@ -1218,9 +1223,9 @@ Thank you for your prompt assistance and cooperation.`;
                     </div>
 
                     <div className="w-full md:w-auto shrink-0 flex items-center justify-end">
-                      <div className="w-full md:w-auto px-6 py-3 rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2.5 bg-cyan-500 hover:bg-cyan-400 text-white shadow-md shadow-cyan-500/20 transition-all duration-200 group-hover:scale-[1.02]">
+                      <div className="w-full md:w-auto min-h-[44px] px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2.5 bg-cyan-500 hover:bg-cyan-400 text-white shadow-md shadow-cyan-500/20 transition-all duration-200">
                         <span>{lang === 'ar' ? 'فتح واستخدام الحاسبة التفاعلية' : 'Expand Interactive Calculator'}</span>
-                        <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-200" />
+                        <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-200 shrink-0" />
                       </div>
                     </div>
                   </div>

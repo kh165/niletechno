@@ -13,10 +13,10 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
     return (
       <div
         key={`${groupIndex}-${partner.id || idx}`}
-        className={`partner-marquee-card w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 shrink-0 group p-0 rounded-2xl border transition-all duration-300 flex items-center justify-center relative overflow-hidden ${
+        className={`service-card-lift partner-marquee-card w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 shrink-0 group p-0 rounded-2xl border transition-all duration-300 flex items-center justify-center relative overflow-hidden hover:-translate-y-1.5 hover:scale-105 ${
           theme === 'light'
-            ? 'bg-white border-slate-200 shadow-xs hover:shadow-md hover:border-slate-300'
-            : 'bg-[#131d35] border-slate-700/60 hover:border-slate-600 hover:bg-[#162340]'
+            ? 'bg-white border-slate-200 shadow-xs hover:shadow-xl hover:border-cyan-300'
+            : 'bg-[#131d35] border-slate-700/60 hover:border-cyan-500/50 hover:bg-[#162340] hover:shadow-xl'
         }`}
         onClick={() => setShowPartnersModal?.(true)}
         onKeyDown={(event) => {

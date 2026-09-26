@@ -156,11 +156,11 @@ export default function EInvoiceDemo({ lang, theme }) {
           type="button"
           onClick={() => setShowExplanation(!showExplanation)}
           aria-expanded={showExplanation}
-          className="min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#1a85ea]/20 text-xs font-bold font-cairo transition-colors cursor-pointer bg-[#1a85ea] hover:bg-[#1470c7] text-white shadow-md shadow-[#1a85ea]/25"
+          className="min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#1a85ea]/20 text-xs font-bold font-cairo transition-colors cursor-pointer bg-[#1a85ea] hover:bg-[#1470c7] text-white shadow-md shadow-[#1a85ea]/25 w-full sm:w-auto shrink-0"
         >
-          <HelpCircle className="w-4 h-4 text-white" />
+          <HelpCircle className="w-4 h-4 text-white shrink-0" />
           <span>{lang === 'ar' ? 'عن هذا المحاكي التعليمي' : 'About This Simulator'}</span>
-          {showExplanation ? <ChevronUp className="w-3.5 h-3.5 text-white" /> : <ChevronDown className="w-3.5 h-3.5 text-white" />}
+          {showExplanation ? <ChevronUp className="w-3.5 h-3.5 text-white shrink-0" /> : <ChevronDown className="w-3.5 h-3.5 text-white shrink-0" />}
         </button>
       </div>
 
@@ -420,23 +420,23 @@ export default function EInvoiceDemo({ lang, theme }) {
       </div>
 
       {/* Base64 Payload inspection box */}
-      <div className={`mt-5 p-3 rounded-2xl border transition-colors ${theme === 'light' ? 'border-slate-200 bg-white shadow-sm' : 'border-slate-800 bg-slate-900/60 shadow-sm'}`}>
-        <div className="flex flex-row items-center justify-between gap-2 mb-2">
-          <h4 className="text-sm md:text-base font-extrabold font-cairo text-[#1470c7] flex items-center gap-1 min-w-0">
-            <Code2 className="w-3.5 h-3.5 shrink-0" />
-            {lang === 'ar' ? 'سلسلة الترميز الناتجة (Base64 Payload):' : 'Generated Base64 Payload String:'}
+      <div className={`mt-5 p-3.5 sm:p-4 rounded-2xl border transition-colors ${theme === 'light' ? 'border-slate-200 bg-white shadow-sm' : 'border-slate-800 bg-slate-900/60 shadow-sm'}`}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-2.5">
+          <h4 className="text-xs sm:text-sm md:text-base font-extrabold font-cairo text-[#1470c7] flex items-center gap-1.5 min-w-0">
+            <Code2 className="w-4 h-4 shrink-0" />
+            <span>{lang === 'ar' ? 'سلسلة الترميز الناتجة (Base64 Payload):' : 'Generated Base64 Payload String:'}</span>
           </h4>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
             {copySuccess && (
-              <span className="hidden sm:flex text-[10px] text-emerald-600 font-bold font-cairo items-center gap-1">
+              <span className="text-[10px] text-emerald-600 font-bold font-cairo flex items-center gap-1">
                 <Check className="w-3.5 h-3.5" />
-                {lang === 'ar' ? 'تم النسخ' : 'Copied'}
+                <span>{lang === 'ar' ? 'تم النسخ' : 'Copied'}</span>
               </span>
             )}
             <button
               type="button"
               onClick={copyToClipboard}
-              className="min-h-[36px] px-3 rounded-lg border border-sky-200 bg-sky-50 hover:bg-sky-100 text-[#1470c7] transition-colors cursor-pointer flex items-center justify-center gap-1 font-bold font-cairo shadow-sm text-[10px] md:text-xs"
+              className="min-h-[38px] px-3.5 py-1.5 rounded-xl border border-sky-200 bg-sky-50 hover:bg-sky-100 text-[#1470c7] transition-colors cursor-pointer flex items-center justify-center gap-1.5 font-bold font-cairo shadow-sm text-xs"
               title="Copy payload"
               aria-label="Copy payload"
             >
@@ -446,7 +446,7 @@ export default function EInvoiceDemo({ lang, theme }) {
           </div>
         </div>
 
-        <div className={`text-[9px] md:text-[10px] font-mono p-2.5 rounded-xl border select-all max-h-12 overflow-y-auto break-all leading-relaxed text-left ${theme === 'light' ? 'border-slate-200 bg-slate-50 text-slate-700' : 'border-slate-800 bg-slate-950 text-cyan-300'}`} dir="ltr">
+        <div className={`text-[10px] md:text-xs font-mono p-3 rounded-xl border select-all max-h-16 overflow-y-auto break-all leading-relaxed text-left ${theme === 'light' ? 'border-slate-200 bg-slate-50 text-slate-700' : 'border-slate-800 bg-slate-950 text-cyan-300'}`} dir="ltr">
           {base64Payload}
         </div>
       </div>

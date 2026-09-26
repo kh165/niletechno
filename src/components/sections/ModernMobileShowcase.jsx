@@ -339,11 +339,10 @@ export function ModernMobileShowcase({
         {/* Left Side: Real Handheld Smartphone Mockup (Pixel-perfect width & height display) */}
         <div className="lg:col-span-4 flex flex-col items-center justify-start order-2 lg:order-1 w-full px-2 sm:px-0">
           
-          {/* Outer Sleek Phone Bezel (Exact smartphone ergonomic curves) */}
           <div 
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="relative w-full max-w-[260px] xs:max-w-[280px] sm:max-w-[295px] md:max-w-[310px] rounded-[38px] sm:rounded-[44px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-750 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] select-none transition-all duration-300 group"
+            className="feature-block-lift relative w-full max-w-[260px] xs:max-w-[280px] sm:max-w-[295px] md:max-w-[310px] rounded-[38px] sm:rounded-[44px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-750 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_28px_60px_-10px_rgba(26,133,234,0.3)] select-none transition-all duration-300 group hover:-translate-y-1.5"
           >
             {/* Top Speaker & Punch-hole Camera */}
             <div className="absolute top-2.5 sm:top-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-none">
@@ -600,7 +599,7 @@ export function ModernMobileShowcase({
               </div>
 
               {/* Screen Quick Tabs */}
-              <div className="grid grid-cols-3 gap-1">
+              <div className="grid grid-cols-3 gap-1.5">
                 {REAL_SALES_APP_SCREENS.map((sc, sIdx) => {
                   const isCur = activeScreenIndex === sIdx;
                   return (
@@ -608,7 +607,7 @@ export function ModernMobileShowcase({
                       key={sc.id}
                       type="button"
                       onClick={() => setActiveScreenIndex(sIdx)}
-                      className={`px-1.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer truncate ${
+                      className={`px-2 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer text-center flex items-center justify-center ${
                         isCur
                           ? 'bg-[#1a85ea] text-white border-[#1a85ea] shadow-xs'
                           : (theme === 'light' 
@@ -617,23 +616,23 @@ export function ModernMobileShowcase({
                       }`}
                       title={lang === 'ar' ? sc.titleAr : sc.titleEn}
                     >
-                      {lang === 'ar' ? sc.shortAr : sc.shortEn}
+                      <span className="truncate">{lang === 'ar' ? sc.shortAr : sc.shortEn}</span>
                     </button>
                   );
                 })}
               </div>
 
               {/* Official Google Play Store Download Action */}
-              <div className="pt-1 flex items-center justify-between gap-1.5 text-[10px]">
+              <div className="pt-1.5 flex items-center justify-between text-xs">
                 <a
                   href="https://play.google.com/store/apps/details?id=com.niletechno.salesperson_app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all hover:scale-[1.02] active:scale-95 cursor-pointer font-cairo"
+                  className="w-full min-h-[42px] py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-95 cursor-pointer font-cairo text-xs text-center"
                 >
-                  <AndroidIcon className="w-3.5 h-3.5 fill-current" />
+                  <AndroidIcon className="w-4 h-4 fill-current shrink-0" />
                   <span>{lang === 'ar' ? 'تطبيق المندوب على Google Play' : 'Get App on Google Play'}</span>
-                  <ExternalLink className="w-3 h-3 opacity-80" />
+                  <ExternalLink className="w-3.5 h-3.5 opacity-80 shrink-0" />
                 </a>
               </div>
             </div>
@@ -701,14 +700,14 @@ export function ModernMobileShowcase({
                     e.preventDefault();
                     setActiveAppId(app.id);
                   }}
-                  className={`snap-center shrink-0 w-[82vw] max-w-[290px] sm:w-auto sm:max-w-none p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                  className={`service-card-lift snap-center shrink-0 w-[82vw] max-w-[290px] sm:w-auto sm:max-w-none p-4 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between hover:-translate-y-1.5 hover:scale-[1.015] ${
                     isSelected
                       ? (theme === 'light' 
-                          ? 'bg-white border-[#1a85ea] shadow-md ring-2 ring-[#1a85ea]/20' 
-                          : 'bg-slate-900 border-[#1a85ea] shadow-lg ring-1 ring-[#1a85ea]/40')
+                          ? 'bg-white border-[#1a85ea] shadow-md ring-2 ring-[#1a85ea]/20 hover:shadow-xl' 
+                          : 'bg-slate-900 border-[#1a85ea] shadow-lg ring-1 ring-[#1a85ea]/40 hover:shadow-2xl')
                       : (theme === 'light' 
-                          ? 'bg-slate-50/80 border-slate-200 hover:bg-white hover:border-slate-300' 
-                          : 'bg-slate-900/40 border-slate-800 hover:border-slate-700/80 hover:bg-slate-900/70')
+                          ? 'bg-slate-50/80 border-slate-200 hover:bg-white hover:border-[#1a85ea]/50 hover:shadow-lg' 
+                          : 'bg-slate-900/40 border-slate-800 hover:border-[#1a85ea]/50 hover:bg-slate-900/70 hover:shadow-xl')
                   }`}
                 >
                   <div>
@@ -794,8 +793,8 @@ export function ModernMobileShowcase({
           </div>
 
           {/* Detailed Features of the Selected App */}
-          <div className={`p-4 sm:p-5 rounded-2xl border transition-all ${
-            theme === 'light' ? 'bg-white border-slate-200 shadow-xs' : 'bg-slate-900/60 border-slate-800'
+          <div className={`feature-block-lift p-4 sm:p-5 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+            theme === 'light' ? 'bg-white border-slate-200 shadow-xs hover:border-[#1a85ea]/40' : 'bg-slate-900/60 border-slate-800 hover:border-[#1a85ea]/40'
           }`}>
             <div className="flex items-center gap-2 mb-3">
               <div className="w-2 h-2 rounded-full bg-[#1a85ea]"></div>
@@ -826,29 +825,29 @@ export function ModernMobileShowcase({
                 </span>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-end">
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full lg:w-auto justify-end">
                 {/* Primary WhatsApp Order Button with tailored message */}
                 <a
                   href={getAppWhatsAppLink(currentApp?.id, lang)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-h-[42px] px-5 py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer w-full sm:w-auto shadow-md shadow-emerald-500/25 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white hover:scale-[1.02] active:scale-95 font-cairo"
+                  className="min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer w-full sm:w-auto shadow-md shadow-emerald-500/25 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white active:scale-95 font-cairo text-center leading-normal"
                   title={lang === 'ar' ? 'طلب وشراء هذا التطبيق عبر واتساب' : 'Order via WhatsApp'}
                 >
-                  <MessageSquare className="w-4 h-4 fill-white/20" />
+                  <MessageSquare className="w-4 h-4 shrink-0 fill-white/20" />
                   <span>
                     {lang === 'ar' 
-                      ? `طلب شراء (${currentApp?.titleAr || ''}) عبر واتساب` 
-                      : `Order (${currentApp?.titleEn || ''}) via WhatsApp`}
+                      ? 'طلب وشراء التطبيق عبر واتساب' 
+                      : `Order (${currentApp?.titleEn || 'App'}) via WhatsApp`}
                   </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-80" />
+                  <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-80" />
                 </a>
 
                 {/* Secondary Button for Adding to Quote & Scrolling down */}
                 <button
                   type="button"
                   onClick={(e) => currentApp?.id && handleRequestTrial(e, currentApp.id)}
-                  className={`min-h-[42px] px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer w-full sm:w-auto border active:scale-95 font-cairo shadow-xs ${
+                  className={`min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer w-full sm:w-auto border active:scale-95 font-cairo shadow-xs text-center leading-normal ${
                     justAddedAppId === currentApp?.id || isInterestedInCurrent
                       ? 'bg-[#1a85ea] border-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25'
                       : (theme === 'light' 
@@ -860,8 +859,8 @@ export function ModernMobileShowcase({
                   <ArrowDown className="w-4 h-4 shrink-0" />
                   <span>
                     {lang === 'ar' 
-                      ? 'طلب عرض السعر في النموذج بالأسفل ⬇️' 
-                      : 'Request Quote in Form Below ⬇️'}
+                      ? 'طلب عرض السعر بالنموذج ⬇️' 
+                      : 'Request Quote Below ⬇️'}
                   </span>
                 </button>
               </div>

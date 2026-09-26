@@ -236,7 +236,7 @@ export function HeroSection({
             className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 leading-snug sm:leading-tight font-cairo"
           >
             <span className={theme === 'light' ? 'text-slate-900' : 'text-white'}>
-              {lang === 'ar' ? 'دعنا ندير أعمالك بنجاح مع' : 'let us manage your business'}
+              {lang === 'ar' ? 'دعنا ندير أعمالك بنجاح مع' : 'Let Us Manage Your Business'}
             </span>
             <span className="block mt-2 bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600 bg-clip-text text-transparent">
               {lang === 'ar' ? 'نايل تكنو للبرمجيات' : 'Nile Techno Software'}

@@ -48,17 +48,17 @@ export function ThemeToggle({ theme, setTheme, lang = 'ar', className = '' }) {
       onClick={toggleTheme}
       title={label}
       aria-label={label}
-      className={`relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl transition-all duration-300 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 active:scale-95 ${
+      className={`relative inline-flex items-center justify-center min-w-[38px] min-h-[38px] w-9 h-9 rounded-xl transition-all duration-300 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 active:scale-95 ${
         isDark
           ? 'bg-slate-900/90 text-amber-300 border border-slate-700/80 hover:border-amber-400/50 hover:bg-slate-800 shadow-sm'
           : 'bg-slate-100 text-slate-700 border border-slate-300/80 hover:border-slate-400 hover:bg-slate-200/80 shadow-sm'
       } ${className}`}
     >
-      <div className="relative w-5 h-5 flex items-center justify-center">
+      <div className="relative w-4 h-4 flex items-center justify-center">
         {isDark ? (
-          <Sun className="w-5 h-5 transition-transform duration-300 rotate-0 hover:rotate-45 text-amber-300" />
+          <Sun className="w-4 h-4 transition-transform duration-300 rotate-0 hover:rotate-45 text-amber-300" />
         ) : (
-          <Moon className="w-5 h-5 transition-transform duration-300 -rotate-12 hover:rotate-0 text-slate-700" />
+          <Moon className="w-4 h-4 transition-transform duration-300 -rotate-12 hover:rotate-0 text-slate-700" />
         )}
       </div>
     </button>

@@ -333,13 +333,13 @@ const SubtitleRotator = ({ lang, theme }) => {
     },
     {
       icon: Warehouse,
-      ar: 'إدارة مستودعات ومخازن ذكية بنظام الباركود متعدد الفروع',
+      ar: 'إدارة المستودعات والمخازن بالباركود متعدد الفروع',
       en: 'Intelligent Warehouse Tracking & Multi-Store Barcode Management',
       color: 'text-blue-500'
     },
     {
       icon: Smartphone,
-      ar: 'تطبيقات الهاتف الذكية لربط مناديب المبيعات والطباعة الحرارية',
+      ar: 'تطبيقات الهاتف لمناديب المبيعات والطباعة الحرارية',
       en: 'Advanced Mobile Companion Apps for Salesmen & Thermal Printing',
       color: 'text-indigo-500'
     },

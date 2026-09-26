@@ -335,7 +335,7 @@ export function ModernSystemsShowcase({
       </div>
 
       {/* 3. Systems Grid - Refined Card Elevation & Smooth Drawer */}
-      <div className="min-h-[580px]" style={{ overflowAnchor: 'none' }}>
+      <div className="systems-list-wrap min-h-[580px]" style={{ overflowAnchor: 'none' }}>
         {filteredModules.length === 0 ? (
           <div className={`text-center py-14 rounded-3xl border max-w-lg mx-auto ${
             theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-slate-900/40 border-slate-800 text-slate-400'
@@ -356,7 +356,12 @@ export function ModernSystemsShowcase({
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-stretch">
+          <>
+          <div className={`systems-scroll-hint mb-2 flex items-center gap-1.5 text-[11px] font-semibold ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`} aria-hidden="true">
+            <span>{lang === 'ar' ? 'اسحب لليمين أو اليسار لعرض باقي البرامج' : 'Swipe to browse the other systems'}</span>
+            <span className="inline-flex items-center text-[#1a85ea] dark:text-[#38bdf8]" dir="ltr"><ArrowLeft className="h-3 w-3" /><ArrowRight className="h-3 w-3" /></span>
+          </div>
+          <div className="systems-cards-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-stretch" role="region" aria-label={lang === 'ar' ? 'برامج الشركة، اسحب أفقياً لاستعراضها' : 'Software systems, swipe horizontally to browse'}>
             {filteredModules.map((sys) => {
               const isInterested = formData.interestedModules.includes(sys.id);
               const isExpanded = expandedSystemId === sys.id;
@@ -466,7 +471,7 @@ export function ModernSystemsShowcase({
                   <div className={`pt-3.5 border-t flex flex-col gap-2 mt-auto relative z-10 ${
                     theme === 'light' ? 'border-slate-100' : 'border-slate-800'
                   }`}>
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                    <div className="system-card-actions flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-2.5">
                       <button
                         type="button"
                         onClick={(e) => {
@@ -474,10 +479,10 @@ export function ModernSystemsShowcase({
                           e.stopPropagation();
                           handleOpenVideo(sys.youtubeUrl, lang === 'ar' ? sys.titleAr : sys.titleEn);
                         }}
-                        className="min-h-[38px] px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-[#1a85ea] dark:hover:text-[#38bdf8] bg-slate-50 dark:bg-slate-900/60 sm:bg-transparent sm:dark:bg-transparent border sm:border-transparent border-slate-200/80 dark:border-slate-800/80 flex items-center justify-center sm:justify-start gap-2 transition-all duration-200 cursor-pointer w-full sm:w-auto"
+                        className="system-card-video-button min-h-[38px] min-w-0 max-w-full px-3 py-2 rounded-xl text-xs font-bold text-[#0f5aa3] dark:text-[#7dd3fc] hover:text-[#0f5aa3] dark:hover:text-[#7dd3fc] bg-blue-50/90 dark:bg-[#0c263e] hover:bg-blue-100 dark:hover:bg-[#0c3557] border border-blue-200/80 dark:border-blue-700/50 flex items-center justify-center sm:justify-start gap-2 transition-all duration-200 cursor-pointer w-full sm:w-auto"
                       >
                         <Play className="w-3.5 h-3.5 text-[#1a85ea] fill-current" />
-                        <span className="whitespace-nowrap">{t.showDemo}</span>
+                        <span className="system-card-video-label">{t.showDemo}</span>
                       </button>
 
                       <button
@@ -501,6 +506,7 @@ export function ModernSystemsShowcase({
               );
             })}
           </div>
+          </>
         )}
       </div>
 

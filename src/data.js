@@ -111,7 +111,7 @@ export const SERVICE_MODULES = [
     id: 'hr',
     titleAr: 'إدارة شئون الموظفين (HR)',
     titleEn: 'HR, Attendance & Arabic Payroll',
-    descriptionAr: 'منظومة ذكية لإدارة الموارد البشرية، تتبع الحضور والانصراف، وحساب الرواتب والضرائب تلقائياً.',
+    descriptionAr: 'نظام لإدارة الموارد البشرية والحضور والانصراف وحساب الرواتب والضرائب.',
     descriptionEn: 'Optimize human resource management with bio-metric integrations, local labor tax calculations, and dynamic scheduler options.',
     category: 'erp',
     iconName: 'Users',
@@ -328,7 +328,7 @@ export const SERVICE_MODULES = [
 export const MOBILE_APPS = [
   {
     id: 'mob-sales',
-    titleAr: 'تطبيق مندوب المبيعات الذكي',
+    titleAr: 'تطبيق مندوب المبيعات',
     titleEn: 'Smart Sales Representative App',
     descriptionAr: 'تطبيق موبايل ميداني يتبع المبيعات والعملاء ويسهل قيد الفواتير والتحصيل المباشر بكفاءة.',
     descriptionEn: 'Equip field agents with map routing, instant Bluetooth invoice printouts, and offline transaction records.',
@@ -372,7 +372,7 @@ export const MOBILE_APPS = [
   },
   {
     id: 'mob-restaurant',
-    titleAr: 'تطبيق النادل الذكي ومتابعة المطبخ',
+    titleAr: 'تطبيق النادل ومتابعة المطبخ',
     titleEn: 'Smart Waiter & Kitchen App',
     descriptionAr: 'تسهيل طلبات الطاولات من خلال النادل وتسجيل كابتن الأوردر مباشرة وإرساله لوحدات التحضير بدون وقت ضائع.',
     descriptionEn: 'Empower floor captains to log table orders on handheld screens, instantly updating preparation monitors.',
@@ -646,7 +646,7 @@ export const TRANSLATIONS = {
     einvoiceItem1: 'توليد رمز QR مشفر يقرأ البيانات الرئيسية (البائع، الرقم الضريبي، التاريخ، الإجمالي، قيمة الضريبة).',
     einvoiceItem2: 'إمكانية إصدار الفواتير دون توقف حتى في حال انقطاع الاتصال بالسيرفر.',
     einvoiceItem3: 'ربط مباشر مع واجهات الـ API المعتمدة ومزامنة الفواتير ببصمة إلكترونية مشفرة.',
-    calculatorHeadline: 'الحاسبة التفاعلية واقتراح النظام الأمثل',
+    calculatorHeadline: 'الحاسبة التفاعلية واختيار النظام المناسب',
     calculatorSub: 'حدد نشاطك وحجم عملك، وسنقترح عليك الأنظمة الأنسب مع تقدير مبدئي لاحتياجاتك.',
     calcTypeSelection: 'ما هو قطاع ونوع عملك الرئيسي؟',
     calcSizeSelection: 'حجم الشركة التقريبي (عدد الموظفين أو المنافذ):',

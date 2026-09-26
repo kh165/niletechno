@@ -11,7 +11,7 @@ import { IconComponent } from '../site/BrandVisuals';
 export const APP_WHATSAPP_MESSAGES = {
   'mob-sales': {
     ar: `السلام عليكم ورحمة الله وبركاته،
-أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق مندوب المبيعات الميداني الذكي (Android & iOS)" من شركة نايل تكنو للبرمجيات.
+أود الاستفسار وطلب تفاصيل وعرض سعر تطبيق مندوب المبيعات الميداني (Android & iOS) من شركة نايل تكنو للبرمجيات.
 المعلومات المطلوبة:
 • تكلفة الترخيص وتفاصيل التفعيل
 • آلية الربط والتزامن اللحظي مع النظام المحاسبي المركزي
@@ -43,7 +43,7 @@ Thank you for your prompt assistance and cooperation.`
   },
   'mob-restaurant': {
     ar: `السلام عليكم ورحمة الله وبركاته،
-أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق كابتن الصالة والنادل الذكي ومتابعة المطبخ" للمطاعم والكافيهات.
+أود الاستفسار وطلب تفاصيل وعرض سعر تطبيق النادل ومتابعة المطبخ للمطاعم والكافيهات.
 المعلومات المطلوبة:
 • أسعار التطبيق وتجهيزه على أجهزة التابلت والموبايل
 • آلية الربط المباشر بشاشات وطابعات المطبخ (KDS)
@@ -138,16 +138,16 @@ export const REAL_SALES_APP_SCREENS = [
     shortEn: 'Customers',
     descAr: 'استعراض كشوفات الحساب، المديونيات المتبقية، وسجل الحركات السابقة',
     descEn: 'Customer statements, age-debt analysis, contact info & transaction history',
-    image: '/images/sales_rep/screen_4.png'
+    image: '/images/sales_rep/screen_6.png'
   },
   {
     id: 5,
-    titleAr: 'تتبع خط السير والموقع GPS',
-    titleEn: 'GPS Route Navigation',
-    shortAr: 'خط السير GPS',
-    shortEn: 'GPS Route',
-    descAr: 'جدولة خطوط السير وتتبع حركة المندوب والتأكد من إتمام الزيارات الميدانية',
-    descEn: 'Scheduled daily route optimization, geofenced visits & live GPS audit',
+    titleAr: 'متابعة العملاء',
+    titleEn: 'Customer Follow-up',
+    shortAr: 'متابعة العملاء',
+    shortEn: 'Follow-up',
+    descAr: 'قائمة العملاء وبيانات التواصل لمراجعة آخر الزيارات ومتابعة كل عميل.',
+    descEn: 'Customer list and contact details for reviewing recent visits and follow-ups.',
     image: '/images/sales_rep/screen_5.png'
   },
   {
@@ -158,7 +158,7 @@ export const REAL_SALES_APP_SCREENS = [
     shortEn: 'Products',
     descAr: 'استعراض الأصناف، أسعار الجملة والقطاعي، والرصيد الفعلي بالمخزن الرئيسي',
     descEn: 'Live stock balances, wholesale and retail tiers, and fast barcode search',
-    image: '/images/sales_rep/screen_6.png'
+    image: '/images/sales_rep/screen_4.png'
   }
 ];
 
@@ -342,7 +342,7 @@ export function ModernMobileShowcase({
           <div 
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="feature-block-lift relative w-full max-w-[260px] xs:max-w-[280px] sm:max-w-[295px] md:max-w-[310px] rounded-[38px] sm:rounded-[44px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-750 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_28px_60px_-10px_rgba(26,133,234,0.3)] select-none transition-all duration-300 group hover:-translate-y-1.5"
+            className="mobile-phone-frame feature-block-lift relative w-full max-w-[285px] rounded-[38px] sm:rounded-[44px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-750 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_28px_60px_-10px_rgba(26,133,234,0.3)] select-none transition-all duration-300 group hover:-translate-y-1.5"
           >
             {/* Top Speaker & Punch-hole Camera */}
             <div className="absolute top-2.5 sm:top-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-none">
@@ -424,7 +424,7 @@ export function ModernMobileShowcase({
 
                   {/* Bottom Indicator Dots Inside Phone */}
                   <div className="absolute bottom-2.5 left-0 right-0 z-20 flex flex-col items-center gap-1 pointer-events-none">
-                    <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/10 pointer-events-auto">
+                    <div className="phone-screen-indicators flex items-center gap-1.5 pointer-events-auto" role="group" aria-label={lang === 'ar' ? 'اختيار شاشة التطبيق' : 'Choose app screenshot'}>
                       {REAL_SALES_APP_SCREENS.map((sc, sIdx) => (
                         <button
                           key={sc.id}
@@ -433,11 +433,12 @@ export function ModernMobileShowcase({
                             e.stopPropagation();
                             setActiveScreenIndex(sIdx);
                           }}
-                          className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                          className={`phone-screen-dot rounded-full transition-all cursor-pointer ${
                             activeScreenIndex === sIdx
-                              ? 'w-4 bg-[#1a85ea]'
-                              : 'w-1.5 bg-white/40 hover:bg-white/70'
+                              ? 'bg-[#1a85ea]'
+                              : 'bg-white/45 hover:bg-white/80'
                           }`}
+                          aria-current={activeScreenIndex === sIdx ? 'true' : undefined}
                           title={lang === 'ar' ? sc.titleAr : sc.titleEn}
                           aria-label={`Go to ${sc.titleAr}`}
                         />
@@ -776,17 +777,14 @@ export function ModernMobileShowcase({
           </div>
 
           {/* Mobile Swiper Pagination Dots */}
-          <div className="flex sm:hidden items-center justify-center gap-1.5 pt-1">
+          <div className="mobile-app-pagination flex sm:hidden items-center justify-center gap-0.5 pt-1" role="group" aria-label={lang === 'ar' ? 'التنقل بين التطبيقات' : 'Choose a mobile app'}>
             {safeApps.map((app, idx) => (
               <button
                 type="button"
                 key={app.id}
                 onClick={() => scrollToAppIndex(idx)}
-                className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                  activeAppId === app.id
-                    ? 'w-6 bg-[#1a85ea]'
-                    : 'w-1.5 bg-slate-300 dark:bg-slate-700'
-                }`}
+                className="app-carousel-dot rounded-full cursor-pointer"
+                aria-current={activeAppId === app.id ? 'true' : undefined}
                 aria-label={`Go to ${app.titleAr}`}
               />
             ))}
@@ -825,29 +823,27 @@ export function ModernMobileShowcase({
                 </span>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full lg:w-auto justify-end">
+              <div className="mobile-app-actions flex flex-col sm:flex-row items-center gap-2.5 w-full lg:w-auto justify-end">
                 {/* Primary WhatsApp Order Button with tailored message */}
                 <a
                   href={getAppWhatsAppLink(currentApp?.id, lang)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer w-full sm:w-auto shadow-md shadow-emerald-500/25 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white active:scale-95 font-cairo text-center leading-normal"
+                  className="mobile-app-action min-h-[38px] min-w-0 px-3 py-1.5 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer w-full sm:w-auto shadow-sm shadow-emerald-500/20 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white active:scale-95 font-cairo text-center leading-tight"
                   title={lang === 'ar' ? 'طلب وشراء هذا التطبيق عبر واتساب' : 'Order via WhatsApp'}
                 >
-                  <MessageSquare className="w-4 h-4 shrink-0 fill-white/20" />
-                  <span>
-                    {lang === 'ar' 
-                      ? 'طلب وشراء التطبيق عبر واتساب' 
-                      : `Order (${currentApp?.titleEn || 'App'}) via WhatsApp`}
+                  <MessageSquare className="w-3.5 h-3.5 shrink-0 fill-white/20" />
+                  <span className="mobile-app-action-label">
+                    {lang === 'ar' ? 'واتساب' : 'WhatsApp'}
                   </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-80" />
+                  <ArrowUpRight className="w-3 h-3 shrink-0 opacity-80" />
                 </a>
 
                 {/* Secondary Button for Adding to Quote & Scrolling down */}
                 <button
                   type="button"
                   onClick={(e) => currentApp?.id && handleRequestTrial(e, currentApp.id)}
-                  className={`min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer w-full sm:w-auto border active:scale-95 font-cairo shadow-xs text-center leading-normal ${
+                  className={`mobile-app-action min-h-[38px] min-w-0 px-3 py-1.5 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer w-full sm:w-auto border active:scale-95 font-cairo shadow-xs text-center leading-tight ${
                     justAddedAppId === currentApp?.id || isInterestedInCurrent
                       ? 'bg-[#1a85ea] border-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25'
                       : (theme === 'light' 
@@ -856,11 +852,9 @@ export function ModernMobileShowcase({
                   }`}
                   title={lang === 'ar' ? 'طلب عرض سعر في النموذج بالأسفل' : 'Request quote in form below'}
                 >
-                  <ArrowDown className="w-4 h-4 shrink-0" />
-                  <span>
-                    {lang === 'ar' 
-                      ? 'طلب عرض السعر بالنموذج ⬇️' 
-                      : 'Request Quote Below ⬇️'}
+                  <ArrowDown className="w-3.5 h-3.5 shrink-0" />
+                  <span className="mobile-app-action-label">
+                    {lang === 'ar' ? 'السعر' : 'Quote'}
                   </span>
                 </button>
               </div>

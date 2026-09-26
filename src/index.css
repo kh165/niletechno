@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-cyan-50: #f0f7ff;
@@ -1073,3 +1074,204 @@ nav.fixed .nav-link-premium:focus-visible {
   }
 }
 
+
+
+/* Compact, swipeable software cards and proportionate in-app phone preview. */
+.systems-scroll-hint { display: none; }
+@media (max-width: 767px) {
+  .systems-scroll-hint { display: flex; }
+  .systems-cards-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch;
+    gap: .8rem !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: .25rem .1rem .8rem;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: .25rem;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(26,133,234,.55) transparent;
+  }
+  .systems-cards-grid > * {
+    flex: 0 0 min(84vw, 320px);
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
+  .mobile-phone-frame {
+    width: min(100%, clamp(210px, 29vw, 260px));
+    max-width: none !important;
+  }
+  .phone-screen-indicators {
+    padding: 5px 9px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 999px;
+    background: rgba(0,0,0,.62);
+    backdrop-filter: blur(8px);
+  }
+  .phone-screen-dot {
+    display: block;
+    width: 7px;
+    height: 7px;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0;
+    flex: 0 0 auto;
+  }
+  .phone-screen-dot[aria-current="true"] { width: 17px; }
+  .site-density button { font-size: min(.875rem, 1em); }
+  .site-density button[aria-label*="screen" i],
+  .site-density button[aria-label*="شاشة"] { font-size: inherit; }
+}
+@media (max-width: 480px) {
+  .systems-cards-grid > * { flex-basis: min(86vw, 300px); }
+  .mobile-phone-frame { width: min(72vw, 230px); }
+  .systems-scroll-hint { font-size: 10px; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .mobile-phone-frame { width: min(100%, 245px); max-width: none !important; }
+}
+
+@media (max-width: 767px) {
+  .systems-list-wrap { min-height: 0 !important; }
+}
+@media (min-width: 1024px) {
+  .mobile-phone-frame {
+    width: min(100%, clamp(250px, 25vw, 340px));
+    max-width: none !important;
+  }
+}
+
+.phone-screen-dot {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  min-width: 0 !important;
+  min-height: 20px !important;
+  padding: 0 !important;
+  border: 0;
+  flex: 0 0 auto;
+  background: transparent !important;
+}
+.phone-screen-indicators {
+  gap: 2px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+.phone-screen-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #0f5aa3;
+  transition: width .2s ease, height .2s ease, background-color .2s ease;
+}
+.phone-screen-dot[aria-current="true"]::before {
+  width: 8px;
+  height: 8px;
+  background: #1a85ea;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.75);
+}
+.app-carousel-dot {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  min-width: 0 !important;
+  min-height: 20px !important;
+  padding: 0 !important;
+  border: 0;
+  flex: 0 0 auto;
+  background: transparent !important;
+}
+.app-carousel-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #64748b;
+  transition: width .2s ease, height .2s ease, background-color .2s ease;
+}
+.dark .app-carousel-dot::before { background: #94a3b8; }
+.app-carousel-dot[aria-current="true"]::before {
+  width: 8px;
+  height: 8px;
+  background: #1a85ea;
+}
+.app-carousel-dot:focus-visible {
+  outline: 2px solid #1a85ea;
+  outline-offset: 1px;
+}
+
+/* Let button labels wrap instead of clipping when a responsive row gets narrow. */
+.site-density button,
+.site-density a[class*="cursor-pointer"] {
+  min-width: 0;
+  max-width: 100%;
+}
+.site-density button > span,
+.site-density a[class*="cursor-pointer"] > span {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal !important;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 639px) {
+  .hero-platform-tabs { gap: .4rem !important; }
+  .hero-platform-tab { gap: .3rem !important; padding-inline: .35rem !important; }
+  .hero-platform-tab-label { font-size: 11px; }
+  .hero-platform-stat-row { align-items: flex-start !important; }
+  .hero-platform-stat-value {
+    min-width: 0;
+    flex-shrink: 1 !important;
+    text-align: left;
+    white-space: normal !important;
+  }
+  .calculator-closed-card { padding: .75rem !important; }
+}
+
+.site-density .mobile-app-actions .mobile-app-action {
+  min-height: 38px !important;
+  height: auto;
+  padding: 6px 10px !important;
+}
+.mobile-app-action-label {
+  font-size: 11px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (max-width: 639px) {
+  .mobile-app-actions {
+    flex-direction: row !important;
+    align-items: stretch !important;
+    gap: .5rem !important;
+  }
+  .mobile-app-action {
+    flex: 1 1 0;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 38px !important;
+    padding: .4rem .5rem !important;
+    gap: .35rem !important;
+    font-size: 11px !important;
+  }
+  .mobile-app-action-label {
+    min-width: 0;
+    font-size: 11px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+}
+
+.system-card-actions { min-width: 0; }
+.system-card-video-button { max-width: 100%; min-width: 0; }
+.system-card-video-label { white-space: normal; overflow-wrap: break-word; line-height: 1.25; }

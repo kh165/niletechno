@@ -422,8 +422,8 @@ export default function EInvoiceDemo({ lang, theme }) {
       {/* Base64 Payload inspection box */}
       <div className={`mt-5 p-3.5 sm:p-4 rounded-2xl border transition-colors ${theme === 'light' ? 'border-slate-200 bg-white shadow-sm' : 'border-slate-800 bg-slate-900/60 shadow-sm'}`}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-2.5">
-          <h4 className="text-xs sm:text-sm md:text-base font-extrabold font-cairo text-[#1470c7] flex items-center gap-1.5 min-w-0">
-            <Code2 className="w-4 h-4 shrink-0" />
+          <h4 className="text-[11px] sm:text-xs md:text-sm font-extrabold font-cairo text-[#1470c7] flex items-center gap-1.5 min-w-0">
+            <Code2 className="w-3.5 h-3.5 shrink-0" />
             <span>{lang === 'ar' ? 'سلسلة الترميز الناتجة (Base64 Payload):' : 'Generated Base64 Payload String:'}</span>
           </h4>
           <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
@@ -434,20 +434,20 @@ export default function EInvoiceDemo({ lang, theme }) {
               </span>
             )}
             <button
-              type="button"
-              onClick={copyToClipboard}
-              className="min-h-[38px] px-3.5 py-1.5 rounded-xl border border-sky-200 bg-sky-50 hover:bg-sky-100 text-[#1470c7] transition-colors cursor-pointer flex items-center justify-center gap-1.5 font-bold font-cairo shadow-sm text-xs"
-              title="Copy payload"
-              aria-label="Copy payload"
-            >
-              <span>{lang === 'ar' ? 'نسخ السلسلة' : 'Copy String'}</span>
-              <ClipboardCopy className="w-3.5 h-3.5" />
+                type="button"
+                onClick={copyToClipboard}
+                className="min-h-[34px] px-3 py-1.5 rounded-xl border border-sky-200 bg-sky-50 hover:bg-sky-100 text-[#1470c7] transition-colors cursor-pointer flex items-center justify-center gap-1.5 font-bold font-cairo shadow-sm text-[11px]"
+                title="Copy payload"
+                aria-label="Copy payload"
+              >
+                <span>{lang === 'ar' ? 'نسخ السلسلة' : 'Copy String'}</span>
+                <ClipboardCopy className="w-3 h-3" />
             </button>
           </div>
         </div>
 
-        <div className={`text-[10px] md:text-xs font-mono p-3 rounded-xl border select-all max-h-16 overflow-y-auto break-all leading-relaxed text-left ${theme === 'light' ? 'border-slate-200 bg-slate-50 text-slate-700' : 'border-slate-800 bg-slate-950 text-cyan-300'}`} dir="ltr">
-          {base64Payload}
+        <div className={`text-[9px] md:text-[10px] font-mono p-3 rounded-xl border select-all max-h-16 overflow-y-auto break-all leading-relaxed text-left ${theme === 'light' ? 'border-slate-200 bg-slate-50 text-slate-700' : 'border-slate-800 bg-slate-950 text-cyan-300'}`} dir="ltr">
+            {base64Payload}
         </div>
       </div>
 

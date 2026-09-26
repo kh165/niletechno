@@ -97,12 +97,12 @@ Thank you for your prompt assistance and cooperation.`;
                   <Calculator className="w-6 h-6" />
                 </span>
                 <h3 className={`text-xl md:text-2xl font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                  {lang === 'ar' ? 'مستشار اختيار وتخصيص النظام المناسب' : 'Smart Solution & Package Finder'}
+                  {lang === 'ar' ? 'الحاسبة التفاعلية' : 'Solution & Package Finder'}
                 </h3>
               </div>
               <p className={`text-sm font-cairo text-justify leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
                 {lang === 'ar'
-                  ? 'حدد طبيعة عملك وحجم منشأتك لاكتشاف النظام البرمجي والمديولات المقترحة المناسبة لمتطلباتك والحصول على استشارة متخصصة.'
+                  ? 'حدد طبيعة عملك وحجم منشأتك لعرض الأنظمة التي تناسب احتياجاتك.'
                   : 'Specify your business sector and branch scale to identify recommended modules and receive a dedicated advisory plan.'}
               </p>
             </div>
@@ -234,7 +234,7 @@ Thank you for your prompt assistance and cooperation.`;
           <div className="h-full flex flex-col">
             <div className="flex items-center gap-1.5 text-xs text-cyan-600 dark:text-cyan-400 font-bold tracking-wider mb-4 font-cairo">
               <Award className="w-4 h-4" />
-              <span>{lang === 'ar' ? 'الحل المقترح من مستشاري نايل تكنو' : 'Nile Techno Recommended Solution'}</span>
+              <span>{lang === 'ar' ? 'أنظمة تناسب اختيارك' : 'Systems Matching Your Selection'}</span>
             </div>
 
             <div className="space-y-4">

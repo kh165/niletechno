@@ -23,7 +23,7 @@ const VideoModal = lazy(() => import('./components/VideoModal.jsx'));
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Award, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Facebook, Globe, Linkedin, Mail,
-  Menu, MessageSquare, Monitor, Phone, Play, Search, Send, ShieldCheck, Smartphone, Target, Calculator, SlidersHorizontal, Users,
+  Menu, MessageSquare, Monitor, Phone, Play, Search, Send, ShieldCheck, Smartphone, Target, Calculator, Users,
   X, Youtube, Sun, Moon, AlertTriangle
 } from 'lucide-react';
 import companyLogo from './assets/images/logo.png';
@@ -193,7 +193,7 @@ export default function App() {
   });
   const [quoteGroup, setQuoteGroup] = useState('systems'); // 'systems' | 'mobile'
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [isCalculatorOpen, setIsCalculatorOpen] = useState(true);
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
 
   const handleSelectAppForQuote = (appId) => {
     setQuoteGroup('mobile');
@@ -529,7 +529,7 @@ Thank you for your prompt assistance and cooperation.`;
                       ? 'bg-slate-100 border-slate-300 text-slate-600 hover:text-slate-900'
                       : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
                   }`}
-                  aria-label={lang === 'ar' ? 'عرض القائمة المنسدلة للأجهزة الذكية' : 'Toggle mobile drawer menu options'}
+                  aria-label={lang === 'ar' ? 'فتح قائمة الهاتف' : 'Toggle mobile menu'}
                 >
                   {mobileMenuOpen ? <X className="w-4.5 h-4.5" /> : <Menu className="w-4.5 h-4.5" />}
                 </button>
@@ -966,7 +966,7 @@ Thank you for your prompt assistance and cooperation.`;
 
             </div>
 
-            {/* Right: Embedded Interactive simulator demo - "متقربش خالص من محاكي ومولد الفاتورة الإلكترونية الذكي" */}
+            {/* Right: embedded interactive e-invoicing simulator */}
             <div className="lg:col-span-7">
               <Suspense fallback={<div className="min-h-[420px] rounded-3xl bg-slate-100/50 dark:bg-slate-900/50 animate-pulse" />}>
                 <EInvoiceDemo lang={lang} theme={theme} />
@@ -999,12 +999,12 @@ Thank you for your prompt assistance and cooperation.`;
             <h2 className={`text-3xl sm:text-4.5xl font-extrabold font-cairo mb-4 uppercase tracking-wide ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
             }`}>
-              {lang === 'ar' ? 'برمجيات وحلول نايل تكنو الذكية' : 'Nile Techno Software Ecosystem'}
+              {lang === 'ar' ? 'برمجيات وحلول نايل تكنو' : 'Nile Techno Software'}
             </h2>
             <p className={`text-xs sm:text-sm font-cairo ${
               theme === 'light' ? 'text-slate-600' : 'text-slate-400'
             }`}>
-              {lang === 'ar' ? 'أنظمة محاسبية ذكية، مصممة بدقة لتلبية تطلعات مختلف الأنشطة والمؤسسات مع إمكانية التشغيل السحابي أو المحلي.' : 'Engineered products tailored to resolve specific business challenges locally or via advanced regional cloud clusters.'}
+              {lang === 'ar' ? 'أنظمة محاسبية وإدارية تناسب الأنشطة المختلفة، وتعمل عبر السحابة أو على خوادم الشركة.' : 'Accounting and business systems for different industries, available on cloud or local servers.'}
             </p>
           </div>
 
@@ -1045,7 +1045,7 @@ Thank you for your prompt assistance and cooperation.`;
             }`}>
               <div className="flex items-center gap-1.5 text-cyan-600 dark:text-cyan-400">
                 <Smartphone className="w-4 h-4 shrink-0" />
-                <span className="font-extrabold">{lang === 'ar' ? 'حلول وتطبيقات الهواتف الذكية' : 'Smart Mobile Companion Apps'}</span>
+                <span className="font-extrabold">{lang === 'ar' ? 'حلول وتطبيقات الهواتف' : 'Mobile Applications'}</span>
               </div>
 
               <span className="text-slate-300 dark:text-slate-700 font-bold hidden sm:inline">•</span>
@@ -1084,18 +1084,14 @@ Thank you for your prompt assistance and cooperation.`;
       </section>
 
       {/* 7. Consultation Lead Calculator Section (Collapsible & Expandable) */}
-      <section id="consulting" className={`py-10 sm:py-12 relative transition-all duration-500 border-t border-b ${
+      <section id="consulting" className={`py-7 sm:py-9 relative transition-all duration-500 border-t border-b ${
         theme === 'light' 
           ? 'bg-white border-slate-200/50' 
           : 'bg-[#0f172a] border-cyan-500/10'
       }`}>
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-3xl mx-auto mb-8">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold mb-4 font-cairo border border-cyan-500/20 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
-              <Calculator className="w-3.5 h-3.5 shrink-0" />
-              <span>{lang === 'ar' ? 'استشارة برمجية سريعة' : 'Instant ERP Advisory'}</span>
-            </div>
+          <div className="text-center max-w-3xl mx-auto mb-5">
             <h2 className={`text-2xl sm:text-3.5xl font-extrabold font-cairo mb-3 uppercase tracking-wide ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
             }`}>
@@ -1104,7 +1100,7 @@ Thank you for your prompt assistance and cooperation.`;
             <p className={`text-xs sm:text-sm font-cairo max-w-2xl mx-auto ${
               theme === 'light' ? 'text-slate-600' : 'text-slate-400'
             }`}>
-              {lang === 'ar' ? 'استخدم حاسبتنا الذكية لتقدير النطاق والأنظمة المتكاملة المطلوبة لقطاع نشاطك فوراً وبخطوة واحدة!' : 'Enter your parameters to see recommended packages tailored specifically for your operational target.'}
+              {lang === 'ar' ? 'حدد نشاطك وحجم منشأتك للاطلاع على الأنظمة التي تناسب احتياجاتك.' : 'Choose your industry and business size to view matching systems.'}
             </p>
           </div>
 
@@ -1132,12 +1128,8 @@ Thank you for your prompt assistance and cooperation.`;
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className={`text-xs sm:text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                            {lang === 'ar' ? 'مستشار اختيار وتخصيص النظام المناسب' : 'Smart Solution & Package Finder'}
-                          </span>
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shrink-0">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span>{lang === 'ar' ? 'نشط الآن' : 'Active'}</span>
+                  <span className={`text-xs sm:text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                            {lang === 'ar' ? 'الحاسبة التفاعلية' : 'Interactive Calculator'}
                           </span>
                         </div>
                         <p className={`text-[11px] font-cairo mt-0.5 ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
@@ -1155,7 +1147,7 @@ Thank you for your prompt assistance and cooperation.`;
                           : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
                       }`}
                     >
-                      <span>{lang === 'ar' ? 'طي وإخفاء الحاسبة' : 'Collapse Calculator'}</span>
+                      <span>{lang === 'ar' ? 'إغلاق الحاسبة' : 'Close Calculator'}</span>
                       <ChevronUp className="w-4 h-4 shrink-0" />
                     </button>
                   </div>
@@ -1165,25 +1157,6 @@ Thank you for your prompt assistance and cooperation.`;
                     <LeadCalculator lang={lang} theme={theme} />
                   </Suspense>
 
-                  {/* Bottom Collapse Button for effortless UX */}
-                  <div className="pt-2 flex justify-center">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsCalculatorOpen(false);
-                        const el = document.getElementById('consulting');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                      className={`min-h-[44px] px-6 py-2.5 rounded-xl text-xs font-bold font-cairo flex items-center justify-center gap-2 cursor-pointer transition-all shadow-sm w-full sm:w-auto ${
-                        theme === 'light' 
-                          ? 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200' 
-                          : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
-                      }`}
-                    >
-                      <ChevronUp className="w-4 h-4 shrink-0" />
-                      <span>{lang === 'ar' ? 'طي وإخفاء الحاسبة التفاعلية' : 'Collapse Calculator'}</span>
-                    </button>
-                  </div>
                 </motion.div>
               ) : (
                 <motion.div
@@ -1193,39 +1166,44 @@ Thank you for your prompt assistance and cooperation.`;
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   onClick={() => setIsCalculatorOpen(true)}
-                  className={`feature-block-lift group p-5 sm:p-7 md:p-8 rounded-3xl border cursor-pointer transition-all duration-300 shadow-md hover:shadow-2xl hover:-translate-y-1.5 hover:scale-[1.008] ${
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded="false"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setIsCalculatorOpen(true);
+                    }
+                  }}
+                  className={`calculator-closed-card feature-block-lift group p-3.5 sm:p-4 md:p-5 rounded-2xl border cursor-pointer transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 ${
                     theme === 'light' 
-                      ? 'bg-white border-slate-200 hover:border-cyan-400 shadow-slate-200/50' 
-                      : 'bg-gradient-to-br from-[#091224] to-[#0c1830] border-slate-800 hover:border-cyan-500/60 shadow-slate-950/60'
+                      ? 'bg-gradient-to-r from-sky-50 via-cyan-50 to-blue-50 border-cyan-200 hover:border-[#1a85ea]/60 shadow-cyan-100/60'
+                      : 'bg-gradient-to-r from-[#102746] via-[#10365a] to-[#12304d] border-[#1a85ea]/40 hover:border-[#38bdf8]/70 shadow-blue-950/40'
                   }`}
                 >
-                  <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-5">
-                    <div className="flex items-center gap-3.5 sm:gap-4 text-right min-w-0">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300">
-                        <Calculator className="w-6 h-6 sm:w-7 sm:h-7" />
+                  <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
+                    <div className="flex items-center gap-3 sm:gap-3.5 text-right min-w-0">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#1a85ea] to-cyan-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-cyan-500/30 group-hover:scale-105 transition-transform duration-300">
+                        <Calculator className="w-5 h-5" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <h3 className={`text-base sm:text-xl font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                            {lang === 'ar' ? 'مستشار اختيار وتخصيص النظام المناسب' : 'Interactive Scope & Pricing Estimator'}
+                        <div className="mb-1">
+                          <h3 className={`text-sm sm:text-base font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                            {lang === 'ar' ? 'الحاسبة التفاعلية' : 'Interactive Scope & Pricing Estimator'}
                           </h3>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 shrink-0">
-                            <SlidersHorizontal className="w-3 h-3" />
-                            <span>{lang === 'ar' ? 'أداة تفاعلية سريعة' : 'Instant Tool'}</span>
-                          </span>
                         </div>
                         <p className={`text-xs sm:text-sm font-cairo leading-relaxed max-w-xl ${theme === 'light' ? 'text-slate-600' : 'text-slate-300'}`}>
                           {lang === 'ar' 
-                            ? 'حدد نشاطك وحجم فروعك لاكتشاف النظام المقترح مع تفاصيل الموديولات وإمكانية طلب عرض السعر فوراً عبر واتساب.' 
-                            : 'Select your sector and operational scale to view suggested modules and receive a dedicated advisory plan via WhatsApp.'}
+                            ? 'حدد نشاطك وحجم منشأتك للاطلاع على الأنظمة المناسبة.'
+                            : 'Choose your industry and company size to see suitable systems.'}
                         </p>
                       </div>
                     </div>
 
                     <div className="w-full md:w-auto shrink-0 flex items-center justify-end">
-                      <div className="w-full md:w-auto min-h-[44px] px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2.5 bg-cyan-500 hover:bg-cyan-400 text-white shadow-md shadow-cyan-500/20 transition-all duration-200">
-                        <span>{lang === 'ar' ? 'فتح واستخدام الحاسبة التفاعلية' : 'Expand Interactive Calculator'}</span>
-                        <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-200 shrink-0" />
+                      <div className="w-full md:w-auto min-h-[38px] px-3.5 py-2 rounded-lg font-bold text-[11px] sm:text-xs font-cairo flex items-center justify-center gap-2 bg-gradient-to-r from-[#1a85ea] to-cyan-500 hover:from-[#1470c7] hover:to-cyan-400 text-white shadow-sm shadow-cyan-500/30 transition-all duration-200">
+                        <span>{lang === 'ar' ? 'فتح الحاسبة' : 'Open calculator'}</span>
+                        <ChevronDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform duration-200 shrink-0" />
                       </div>
                     </div>
                   </div>
@@ -1767,7 +1745,7 @@ Thank you for your prompt assistance and cooperation.`;
                 <li className="flex gap-2 items-center justify-between hover:text-cyan-500 transition-colors duration-300">
                   <div className="flex flex-col items-start font-bold">
                     <span className="text-[9.5px] text-slate-400 leading-none mb-0.5">{lang === 'ar' ? 'البريد الإلكتروني الموحد' : 'Corporate Email Address'}</span>
-                    <span className="lowercase font-mono text-xs">info@niletechno.com</span>
+                    <a href="mailto:info@niletechno.com" className="inline-flex min-h-0 lowercase font-mono text-xs underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a85ea] rounded-sm" aria-label={lang === 'ar' ? 'إرسال بريد إلكتروني إلى info@niletechno.com' : 'Email info@niletechno.com'}>info@niletechno.com</a>
                   </div>
                   <div className="w-7 h-7 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-500 shrink-0 border border-cyan-500/10">
                     <Mail className="w-3.5 h-3.5" />

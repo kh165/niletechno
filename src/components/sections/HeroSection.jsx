@@ -48,6 +48,8 @@ export function HeroSection({
       id: 0,
       titleAr: 'برنامج المحاسبة السحابي',
       titleEn: 'Cloud ERP Portal',
+      mobileTitleAr: 'سحابي',
+      mobileTitleEn: 'Cloud',
       icon: Cloud,
       badgeAr: 'سحابي بالكامل 100%',
       badgeEn: '100% Cloud ERP',
@@ -70,12 +72,14 @@ export function HeroSection({
       id: 1,
       titleAr: 'أنظمة الديسكتوب والشبكات',
       titleEn: 'Desktop & LAN Systems',
+      mobileTitleAr: 'ديسكتوب',
+      mobileTitleEn: 'Desktop',
       icon: Monitor,
       badgeAr: 'شبكات محلية واستقرار فائق',
       badgeEn: 'Local Network ERP',
       headlineAr: 'أنظمة سطح المكتب للمصانع والشركات',
       headlineEn: 'High-Stability Desktop ERP',
-      descAr: 'الحل البرمجي الأمثل للمصانع والورش والأنشطة التي تحتاج استقراراً مطلقاً بدون انقطاع. يعمل بالكامل دون الحاجة لاتصال بالإنترنت، ويدعم الربط بين عشرات أجهزة الكاشير ونقاط البيع وقواعد البيانات الضخمة.',
+      descAr: 'أنظمة للمصانع والورش تعمل دون الحاجة إلى اتصال بالإنترنت، مع ربط أجهزة الكاشير ونقاط البيع وقواعد البيانات على الشبكة المحلية.',
       descEn: 'Enterprise desktop software built for manufacturing, distribution, and heavy POS operations without internet dependency. Robust local database clustering.',
       actionTextAr: 'تصفح باقات سطح المكتب',
       actionTextEn: 'Explore Desktop Packages',
@@ -92,10 +96,12 @@ export function HeroSection({
       id: 2,
       titleAr: 'تطبيق مبيعات المناديب',
       titleEn: 'Mobile Field Sales',
+      mobileTitleAr: 'موبايل',
+      mobileTitleEn: 'Mobile',
       icon: Smartphone,
       badgeAr: 'أندرويد و GPS ميداني',
       badgeEn: 'Android Field Companion',
-      headlineAr: 'تطبيق المندوب الذكي والتوزيع الميداني',
+      headlineAr: 'تطبيق المندوب والتوزيع الميداني',
       headlineEn: 'Mobile Sales Representative App',
       descAr: 'تطبيق أندرويد متطور لمندوبي المبيعات وسيارات التوزيع. يتيح إصدار وطباعة الفواتير عبر طابعات البلوتوث المحمولة، تتبع خط سير المندوب بالـ GPS، ومزامنة حركة المبيعات والمخزن مع السيرفر الرئيسي لحظياً.',
       descEn: 'Dedicated Android mobile app for field reps. Print thermal receipts on Bluetooth printers, track routes via GPS, and sync transactions in real time.',
@@ -219,7 +225,7 @@ export function HeroSection({
             <ShieldCheck className="w-4 h-4 text-cyan-500 shrink-0" />
             <span>
               {lang === 'ar' 
-                ? 'منظومة إدارة الأعمال والمحاسبة الذكية ERP | مصر & السعودية' 
+                ? 'أنظمة إدارة الأعمال والمحاسبة ERP | مصر والسعودية'
                 : 'Enterprise ERP & Certified E-Invoicing | EG & KSA'}
             </span>
           </motion.div>
@@ -250,7 +256,7 @@ export function HeroSection({
             }`}
           >
             {lang === 'ar' 
-              ? 'حلول موحدة لإدارة الحسابات العامة، المخازن، نقاط البيع، وتطبيقات المناديب الذكية — مع ربط كامل ومباشر بالفاتورة الإلكترونية المعتمدة في مصر والمملكة العربية السعودية.'
+              ? 'برامج لإدارة الحسابات والمخازن ونقاط البيع وتطبيقات المناديب، مع الربط بالفاتورة الإلكترونية في مصر والمملكة العربية السعودية.'
               : 'A unified software suite for financials, multi-branch warehouses, cloud POS, and field sales apps — fully integrated with official electronic invoicing.'}
           </motion.p>
         </div>
@@ -258,7 +264,7 @@ export function HeroSection({
         {/* Interactive Platform Previewer (Cloud / Desktop / Mobile) - Looping Visual Showcase */}
         <div className="w-full text-right font-cairo">
           {/* Platform Tab Navigation Buttons */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-4">
+          <div className="hero-platform-tabs flex flex-wrap justify-center gap-2 sm:gap-3 mb-4">
             {platforms.map((tab) => {
               const TabIcon = tab.icon;
               const isActive = activePlatformIndex === tab.id;
@@ -266,7 +272,7 @@ export function HeroSection({
                 <button
                   key={tab.id}
                   onClick={() => setActivePlatformIndex(tab.id)}
-                  className={`min-h-[42px] px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer font-cairo relative overflow-hidden flex-1 sm:flex-initial min-w-[115px] max-w-full ${
+                  className={`hero-platform-tab min-h-[42px] px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer font-cairo relative overflow-hidden flex-1 sm:flex-initial min-w-0 max-w-full ${
                     isActive
                       ? 'bg-[#1a85ea] text-white border-[#1a85ea] shadow-md shadow-[#1a85ea]/25'
                       : theme === 'light'
@@ -275,7 +281,10 @@ export function HeroSection({
                   }`}
                 >
                   <TabIcon className="w-3.5 h-3.5 shrink-0" />
-                  <span className="whitespace-nowrap">{lang === 'ar' ? tab.titleAr : tab.titleEn}</span>
+                  <span className="hero-platform-tab-label min-w-0 text-center leading-tight">
+                    <span className="hidden sm:inline">{lang === 'ar' ? tab.titleAr : tab.titleEn}</span>
+                    <span className="sm:hidden">{lang === 'ar' ? tab.mobileTitleAr : tab.mobileTitleEn}</span>
+                  </span>
                   {isActive && (
                     <motion.div
                       key={`progress-${activePlatformIndex}`}
@@ -326,9 +335,9 @@ export function HeroSection({
                       href={currentPlatform.actionHref}
                       target={currentPlatform.isExternal ? '_blank' : '_self'}
                       rel={currentPlatform.isExternal ? 'noopener noreferrer' : undefined}
-                      className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 sm:px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-cyan-500/20 cursor-pointer font-cairo w-full sm:w-auto text-center leading-normal"
+                      className="inline-flex items-center justify-center gap-2 min-h-[44px] min-w-0 max-w-full px-4 sm:px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-cyan-500/20 cursor-pointer font-cairo w-full sm:w-auto text-center leading-tight whitespace-normal"
                     >
-                      <span>{lang === 'ar' ? currentPlatform.actionTextAr : currentPlatform.actionTextEn}</span>
+                      <span className="min-w-0 whitespace-normal">{lang === 'ar' ? currentPlatform.actionTextAr : currentPlatform.actionTextEn}</span>
                       <currentPlatform.icon className="w-4 h-4 shrink-0" />
                     </a>
                   </div>
@@ -351,11 +360,11 @@ export function HeroSection({
 
                     <div className="space-y-2 font-cairo text-xs">
                       {currentPlatform.stats.map((st, sIdx) => (
-                        <div key={sIdx} className="flex justify-between items-center py-1.5 gap-2 border-b border-slate-200/50 dark:border-slate-800/50 last:border-none">
+                        <div key={sIdx} className="hero-platform-stat-row flex justify-between items-center py-1.5 gap-2 border-b border-slate-200/50 dark:border-slate-800/50 last:border-none">
                           <span className={theme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
                             {lang === 'ar' ? st.labelAr : st.labelEn}
                           </span>
-                          <span className="font-bold text-cyan-600 dark:text-cyan-400 whitespace-nowrap shrink-0">
+                          <span className="hero-platform-stat-value font-bold text-cyan-600 dark:text-cyan-400 whitespace-nowrap shrink-0">
                             {lang === 'ar' ? st.valAr : st.valEn}
                           </span>
                         </div>

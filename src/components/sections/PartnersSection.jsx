@@ -13,7 +13,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
     return (
       <div
         key={`${groupIndex}-${partner.id || idx}`}
-        className="group relative p-2 sm:p-2.5 rounded-2xl border transition-all duration-300 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex flex-col items-center justify-center cursor-pointer overflow-hidden hover:-translate-y-1.5 hover:scale-105 bg-white border-slate-200 shadow-xs hover:shadow-xl hover:border-cyan-300 dark:bg-[#131d35] dark:border-slate-700/60 dark:hover:border-cyan-500/50 dark:hover:bg-[#162340]"
+        className="partner-marquee-card group relative p-2 sm:p-2.5 rounded-2xl border transition-all duration-300 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-white border-slate-200 shadow-xs dark:bg-[#131d35] dark:border-slate-700/60 dark:hover:bg-[#162340]"
         onClick={() => setShowPartnersModal?.(true)}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
@@ -24,7 +24,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
         tabIndex={0}
         role="button"
       >
-        <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
           <PartnerLogo partner={partner} theme={theme} />
         </div>
       </div>
@@ -76,7 +76,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
         </div>
 
         {/* Action Buttons with real actions */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <Reveal delay={0.15} className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <button 
             type="button"
             onClick={() => setShowPartnersModal?.(true)}
@@ -101,7 +101,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
             <Download className="w-4 h-4 text-cyan-400 shrink-0" />
             <span>{isRtl ? 'تحميل الملف التعريفي للشركة (PDF)' : 'Download Company Profile (PDF)'}</span>
           </a>
-        </div> 
+        </Reveal> 
 
       </div>
     </section>

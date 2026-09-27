@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  ChevronLeft, 
-  ChevronRight, 
   Maximize2, 
   X, 
   CheckCircle2, 
@@ -29,10 +27,37 @@ export default function AppScreenGallery({
   isFullscreenModalOpen,
   setIsFullscreenModalOpen
 }) {
+  const touchStartXRef = useRef(null);
+
+  const handleTouchStart = (e) => {
+    if (e.touches && e.touches[0]) {
+      touchStartXRef.current = e.touches[0].clientX;
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartXRef.current === null) return;
+    if (e.changedTouches && e.changedTouches[0]) {
+      const deltaX = touchStartXRef.current - e.changedTouches[0].clientX;
+      if (Math.abs(deltaX) > 40) {
+        if (deltaX > 0) {
+          nextScreen?.();
+        } else {
+          prevScreen?.();
+        }
+      }
+    }
+    touchStartXRef.current = null;
+  };
+
   return (
     <>
       {/* 1. In-Phone Screenshot Viewport */}
-      <div className="relative w-full h-full overflow-hidden bg-slate-950 flex items-center justify-center">
+      <div 
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="relative w-full h-full overflow-hidden bg-slate-950 flex items-center justify-center select-none"
+      >
         {/* The Real Application Screenshot */}
         <AnimatePresence mode="wait">
           <motion.div
@@ -68,7 +93,7 @@ export default function AppScreenGallery({
               e.stopPropagation();
               setIsFullscreenModalOpen(true);
             }}
-            className="w-6 h-6 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white border border-white/20 flex items-center justify-center transition-transform active:scale-90 pointer-events-auto cursor-pointer"
+            className="gallery-expand-btn pointer-events-auto cursor-pointer"
             title={lang === 'ar' ? 'عرض ملء الشاشة' : 'Fullscreen'}
             aria-label="Expand image"
           >
@@ -76,31 +101,10 @@ export default function AppScreenGallery({
           </button>
         </div>
 
-        {/* Navigation Arrows on Screen */}
-        <button
-          type="button"
-          onClick={prevScreen}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md text-white border border-white/20 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-lg opacity-80 hover:opacity-100"
-          aria-label="Previous screenshot"
-          title={lang === 'ar' ? 'الشاشة السابقة' : 'Previous screen'}
-        >
-          <ChevronLeft className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
-        </button>
-
-        <button
-          type="button"
-          onClick={nextScreen}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md text-white border border-white/20 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-lg opacity-80 hover:opacity-100"
-          aria-label="Next screenshot"
-          title={lang === 'ar' ? 'الشاشة التالية' : 'Next screen'}
-        >
-          <ChevronRight className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
-        </button>
-
-        {/* Bottom Clean Dots Indicator (نقط نظيفة وخفيفة بدون كبسولة ضخمة) */}
+        {/* Bottom Clean Dots Indicator (نقط شاشة أصلية صغيرة وخفيفة بدون أي كبسولة ضخمة) */}
         <div className="absolute bottom-2.5 left-0 right-0 z-20 flex justify-center items-center pointer-events-none">
           <div 
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-xs pointer-events-auto"
+            className="screen-dots-container pointer-events-auto"
             role="group" 
             aria-label={lang === 'ar' ? 'اختيار شاشة التطبيق' : 'Choose app screenshot'}
           >
@@ -110,15 +114,12 @@ export default function AppScreenGallery({
                 <button
                   key={sc.id}
                   type="button"
+                  data-dot="true"
                   onClick={(e) => {
                     e.stopPropagation();
                     setActiveScreenIndex(sIdx);
                   }}
-                  className={`transition-all duration-200 cursor-pointer rounded-full p-0 border-0 ${
-                    isCur
-                      ? 'w-2 h-2 bg-[#1a85ea] ring-1 ring-white/70 shadow-xs'
-                      : 'w-1.5 h-1.5 bg-white/45 hover:bg-white/80'
-                  }`}
+                  className={`screen-dot ${isCur ? 'active' : ''}`}
                   aria-current={isCur ? 'true' : undefined}
                   title={lang === 'ar' ? sc.titleAr : sc.titleEn}
                   aria-label={`Go to ${sc.titleAr}`}

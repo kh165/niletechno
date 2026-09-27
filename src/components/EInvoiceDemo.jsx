@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { generateQRCodeDataUrl } from '../utils/qrGenerator';
 import { TRANSLATIONS } from '../data';
+import { Reveal } from './site/ScrollExperience';
 import { 
   FileCode, 
   Calendar, 
@@ -135,7 +136,7 @@ export default function EInvoiceDemo({ lang, theme }) {
       
       {/* Title & Simulator Disclaimer */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-slate-200 dark:border-slate-800 pb-5">
-        <div>
+        <Reveal>
           <div className="flex items-center gap-2 justify-start">
             <span className="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-500 shrink-0">
               <FileCode className="w-5 h-5" />
@@ -149,7 +150,7 @@ export default function EInvoiceDemo({ lang, theme }) {
               ? 'محاكاة تفاعلية لتكوين وتركيب حقول الفاتورة ونظام الـ TLV المشفر محلياً دون إرسال بياناتك لخوادم خارجية.'
               : 'Interactive tool demonstrating how TLV binary tags and Base64 payloads are formatted in accordance with digital invoice standards.'}
           </p>
-        </div>
+        </Reveal>
 
         {/* Explain toggle */}
         <button

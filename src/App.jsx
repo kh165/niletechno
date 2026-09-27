@@ -522,8 +522,8 @@ Thank you for your prompt assistance and cooperation.`;
             ? (scrolled ? 'bg-white/90 border-slate-200/80 text-slate-800 shadow-md py-0' : 'bg-white/95 border-slate-200 text-slate-800 shadow-xs py-1')
             : (scrolled ? 'bg-[#0f172a]/90 border-slate-800 text-white shadow-xl shadow-black/40 py-0' : 'bg-[#0f172a]/95 border-slate-800/80 text-white py-1')
         } backdrop-blur-md border-b transition-all duration-300 ease-out`}>
-          <div className="max-w-[1440px] 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className={`flex min-w-0 justify-between items-center gap-2 transition-all duration-300 ease-out ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
+          <div className="max-w-[1440px] 2xl:max-w-[1536px] mx-auto px-2.5 xs:px-4 sm:px-6 lg:px-8">
+            <div className={`flex min-w-0 justify-between items-center gap-1.5 sm:gap-2 transition-all duration-300 ease-out ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
             
               {/* Theme Toggle, Language Switcher, WhatsApp Contact, and Drawer Trigger */}
               <div className="flex shrink-0 items-center gap-1 sm:gap-2 order-1 lg:order-3">
@@ -551,7 +551,7 @@ Thank you for your prompt assistance and cooperation.`;
                 {/* Language Switch button */}
                 <button 
                   onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
-                  className={`min-h-[36px] flex items-center justify-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all cursor-pointer shrink-0 ${
+                  className={`min-h-[36px] flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-full border text-[10px] sm:text-[11px] font-bold transition-all cursor-pointer shrink-0 ${
                     theme === 'light'
                       ? 'border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200'
                       : 'border-slate-700/80 bg-[#0d1527] text-slate-300 hover:border-cyan-500 hover:text-cyan-400'
@@ -566,7 +566,7 @@ Thank you for your prompt assistance and cooperation.`;
                 <a
                   href="#contact"
                   onClick={(e) => handleNavClick(e, '#contact')}
-                  className={`min-h-[36px] flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all duration-200 cursor-pointer select-none shrink-0 ${
+                  className={`min-h-[36px] flex items-center justify-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all duration-200 cursor-pointer select-none shrink-0 ${
                     theme === 'light'
                       ? 'border-emerald-700/20 bg-emerald-50/70 text-emerald-800 hover:bg-emerald-100/80 hover:border-emerald-700/35 hover:text-emerald-900 shadow-2xs'
                       : 'border-emerald-500/25 bg-emerald-950/30 text-emerald-300 hover:bg-emerald-950/50 hover:border-emerald-500/40 hover:text-emerald-200 shadow-2xs'
@@ -608,7 +608,7 @@ Thank you for your prompt assistance and cooperation.`;
               </div>
 
               {/* Corporate Logo Emblem using high-performance vector component */}
-              <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="min-w-0 max-w-[42vw] sm:max-w-none cursor-pointer flex items-center shrink-0 group order-2 lg:order-1">
+              <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="min-w-0 max-w-[34vw] xs:max-w-[42vw] sm:max-w-none cursor-pointer flex items-center shrink-0 group order-2 lg:order-1">
                 <NileTechnoLogo 
                   theme={theme} 
                   lang={lang} 
@@ -846,7 +846,7 @@ Thank you for your prompt assistance and cooperation.`;
 
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-3xl mx-auto mb-10">
+          <Reveal className="text-center max-w-3xl mx-auto mb-10">
             <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-4 uppercase tracking-wider font-cairo ${
               theme === 'light' ? 'bg-emerald-50 text-emerald-700' : 'bg-emerald-950 text-emerald-400'
             }`}>
@@ -862,12 +862,12 @@ Thank you for your prompt assistance and cooperation.`;
             }`}>
               {t.einvoiceSub}
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-4">
             
             {/* Left parameters explanations & restored detailed compliance specifications */}
-            <div className="lg:col-span-5 space-y-6">
+            <Reveal className="lg:col-span-5 space-y-6">
               
               {/* Dynamic compliance imagery at the top as requested - perfectly visual and fully customizable */}
               <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-2 pb-4">
@@ -968,7 +968,7 @@ Thank you for your prompt assistance and cooperation.`;
                 </div>
               </div>
 
-            </div>
+            </Reveal>
 
             {/* Right: embedded interactive e-invoicing simulator */}
             <div className="lg:col-span-7">
@@ -1041,7 +1041,7 @@ Thank you for your prompt assistance and cooperation.`;
         <div className="absolute top-1/2 left-10 w-80 h-80 bg-blue-500/5 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-10">
+          <Reveal className="text-center max-w-3xl mx-auto mb-10">
             <div className={`inline-flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 px-4 py-2 rounded-2xl text-xs font-bold mb-4 font-cairo transition-all duration-300 shadow-sm ${
               theme === 'light'
                 ? 'bg-gradient-to-r from-blue-50/90 via-sky-50/90 to-cyan-50/90 border border-blue-200/80 text-slate-800'
@@ -1075,7 +1075,7 @@ Thank you for your prompt assistance and cooperation.`;
             }`}>
               {lang === 'ar' ? 'تطبيقات هواتف متكاملة، تتزامن بكفاءة تامة مع قاعدة البيانات الرئيسية وتدعم طباعة الفواتير بالبلوتوث وتحديد خطوط السير بالـ GPS.' : 'Handheld solutions coordinating on-field operations, with direct Bluetooth ticket printing, offline storage caching and GPS tracking.'}
             </p>
-          </div>
+          </Reveal>
 
           <ModernMobileShowcase
             lang={lang}
@@ -1095,7 +1095,7 @@ Thank you for your prompt assistance and cooperation.`;
       }`}>
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-3xl mx-auto mb-5">
+          <Reveal className="text-center max-w-3xl mx-auto mb-5">
             <h2 className={`text-2xl sm:text-3.5xl font-extrabold font-cairo mb-3 uppercase tracking-wide ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
             }`}>
@@ -1106,7 +1106,7 @@ Thank you for your prompt assistance and cooperation.`;
             }`}>
               {lang === 'ar' ? 'حدد نشاطك وحجم منشأتك للاطلاع على الأنظمة التي تناسب احتياجاتك.' : 'Choose your industry and business size to view matching systems.'}
             </p>
-          </div>
+          </Reveal>
 
           {/* Unified Elegant Collapsible Container */}
           <div className="max-w-5xl mx-auto">
@@ -1834,7 +1834,7 @@ Thank you for your prompt assistance and cooperation.`;
       </div>
 
       {/* 12. Floating Ultra-Premium Stacked WhatsApp Capsule Dock */}
-      <div className="fixed bottom-6 left-6 z-[100] font-cairo select-none flex flex-col gap-2.5 items-start">
+      <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-3 sm:bottom-6 sm:left-6 z-[100] font-cairo select-none flex flex-col gap-2 sm:gap-2.5 items-start">
         {/* Egypt Sales Capsule - Prioritized */}
         <motion.a
           href={`https://wa.me/+201000082722?text=${encodeURIComponent(
@@ -1849,7 +1849,7 @@ Thank you for your prompt assistance and cooperation.`;
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.96 }}
-          className={`group flex items-center justify-between w-[136px] sm:w-[144px] min-h-[44px] h-[44px] px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
+          className={`group flex items-center justify-between w-[126px] xs:w-[136px] sm:w-[144px] min-h-[40px] sm:min-h-[44px] h-[40px] sm:h-[44px] px-2.5 sm:px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
             theme === 'light'
               ? 'bg-white/95 border-emerald-100 shadow-emerald-500/5 hover:border-emerald-400 text-slate-800'
               : 'bg-slate-950/90 border-slate-900 shadow-black/80 hover:border-emerald-500/30 text-white'
@@ -1890,7 +1890,7 @@ Thank you for your prompt assistance and cooperation.`;
           transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.96 }}
-          className={`group flex items-center justify-between w-[136px] sm:w-[144px] min-h-[44px] h-[44px] px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
+          className={`group flex items-center justify-between w-[126px] xs:w-[136px] sm:w-[144px] min-h-[40px] sm:min-h-[44px] h-[40px] sm:h-[44px] px-2.5 sm:px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
             theme === 'light'
               ? 'bg-white/95 border-emerald-100 shadow-emerald-500/5 hover:border-emerald-400 text-slate-800'
               : 'bg-slate-950/90 border-slate-900 shadow-black/80 hover:border-emerald-500/30 text-white'

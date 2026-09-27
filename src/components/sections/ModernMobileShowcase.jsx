@@ -339,7 +339,7 @@ export function ModernMobileShowcase({
 
           {/* Interactive Screen Selector Pills (for Sales Rep App) */}
           {isSalesRepActive && (
-            <div className="w-full max-w-[280px] xs:max-w-[295px] sm:max-w-[310px] mt-3 space-y-2">
+            <div className="w-full max-w-[290px] xs:max-w-[310px] sm:max-w-[330px] md:max-w-[270px] lg:max-w-[290px] xl:max-w-[310px] mt-3 space-y-2">
               {/* Screen Title & Description */}
               <div className="p-2.5 rounded-xl border text-center transition-all bg-white border-slate-200 shadow-2xs dark:bg-slate-900/70 dark:border-slate-800">
                 <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-[#1a85ea] dark:text-[#38bdf8] mb-0.5">

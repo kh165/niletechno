@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, LayoutGrid, Landmark, ShoppingBag, PackageCheck,
 import FlagshipHighlight from './FlagshipHighlight';
 import SystemsFilterBar from './SystemsFilterBar';
 import SystemCard from './SystemCard';
+import { Reveal } from '../site/ScrollExperience';
 import useScrollLockedTabs from '../../hooks/useScrollLockedTabs';
 
 export function ModernSystemsShowcase({ 
@@ -145,18 +146,20 @@ export function ModernSystemsShowcase({
       />
 
       {/* 2. Search & Category Navigation */}
-      <SystemsFilterBar
-        lang={lang}
-        theme={theme}
-        t={t}
-        searchInput={searchInput}
-        setSearchInput={setSearchInput}
-        activeTab={activeTab}
-        handleTabSelect={handleTabSelect}
-        categoryCounts={categoryCounts}
-        categoryIcons={categoryIcons}
-        categoryColorStyles={categoryColorStyles}
-      />
+      <Reveal delay={0.08}>
+        <SystemsFilterBar
+          lang={lang}
+          theme={theme}
+          t={t}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+          activeTab={activeTab}
+          handleTabSelect={handleTabSelect}
+          categoryCounts={categoryCounts}
+          categoryIcons={categoryIcons}
+          categoryColorStyles={categoryColorStyles}
+        />
+      </Reveal>
 
       {/* 3. Systems Grid */}
       <div className="systems-list-wrap min-h-[580px]" style={{ overflowAnchor: 'none' }}>
@@ -192,20 +195,21 @@ export function ModernSystemsShowcase({
               role="region" 
               aria-label={lang === 'ar' ? 'برامج الشركة، اسحب أفقياً لاستعراضها' : 'Software systems, swipe horizontally to browse'}
             >
-              {filteredModules.map((sys) => (
-                <SystemCard
-                  key={sys.id}
-                  sys={sys}
-                  lang={lang}
-                  theme={theme}
-                  t={t}
-                  isInterested={formData?.interestedModules?.includes(sys.id)}
-                  isExpanded={expandedSystemId === sys.id}
-                  toggleExpand={toggleExpand}
-                  handleOpenVideo={handleOpenVideo}
-                  handleRequestQuote={handleRequestQuote}
-                  handleCardMouseMove={handleCardMouseMove}
-                />
+              {filteredModules.map((sys, index) => (
+                <Reveal key={sys.id} delay={index * 0.07} className="h-full">
+                  <SystemCard
+                    sys={sys}
+                    lang={lang}
+                    theme={theme}
+                    t={t}
+                    isInterested={formData?.interestedModules?.includes(sys.id)}
+                    isExpanded={expandedSystemId === sys.id}
+                    toggleExpand={toggleExpand}
+                    handleOpenVideo={handleOpenVideo}
+                    handleRequestQuote={handleRequestQuote}
+                    handleCardMouseMove={handleCardMouseMove}
+                  />
+                </Reveal>
               ))}
             </div>
           </>

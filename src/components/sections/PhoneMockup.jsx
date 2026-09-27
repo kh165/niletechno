@@ -14,7 +14,7 @@ export default function PhoneMockup({
     <div 
       onMouseEnter={() => setIsHovered?.(true)}
       onMouseLeave={() => setIsHovered?.(false)}
-      className={`mobile-phone-frame feature-block-lift relative w-full max-w-[225px] xs:max-w-[235px] sm:max-w-[245px] md:max-w-[240px] lg:max-w-[280px] xl:max-w-[295px] rounded-[36px] sm:rounded-[42px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-750 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_28px_60px_-10px_rgba(26,133,234,0.3)] select-none transition-all duration-300 group ${className}`.trim()}
+      className={`mobile-phone-frame feature-block-lift relative w-full max-w-[290px] xs:max-w-[310px] sm:max-w-[330px] md:max-w-[270px] lg:max-w-[290px] xl:max-w-[310px] rounded-[36px] sm:rounded-[42px] p-1.5 sm:p-2.5 bg-gradient-to-b from-slate-750 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_28px_60px_-10px_rgba(26,133,234,0.3)] select-none transition-all duration-300 group ${className}`.trim()}
     >
       {/* Top Speaker & Punch-hole Camera */}
       <div className="absolute top-2.5 sm:top-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-none">

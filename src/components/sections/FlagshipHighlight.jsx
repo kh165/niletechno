@@ -68,7 +68,7 @@ export default function FlagshipHighlight({
         </div>
 
         {/* Action CTAs */}
-        <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
+        <div className="lg:col-span-4 grid grid-cols-2 sm:flex sm:flex-row lg:flex-col gap-2 sm:gap-3 justify-center w-full">
           <button
             type="button"
             onClick={(e) => {
@@ -76,23 +76,23 @@ export default function FlagshipHighlight({
               e.stopPropagation();
               handleOpenVideo(flagshipModule?.youtubeUrl, lang === 'ar' ? flagshipModule?.titleAr : flagshipModule?.titleEn);
             }}
-            className="min-h-[42px] px-4 sm:px-5 py-2.5 rounded-xl bg-[#1a85ea] hover:bg-[#1470c7] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#1a85ea]/25 hover:shadow-lg active:scale-98 flex-1 sm:flex-1 lg:flex-initial text-center"
+            className="min-h-[38px] px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#1a85ea] hover:bg-[#1470c7] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer transition-all shadow-md shadow-[#1a85ea]/25 hover:shadow-lg active:scale-98 text-center leading-tight"
           >
-            <Play className="w-4 h-4 fill-current shrink-0" />
-            <span>{lang === 'ar' ? 'مشاهدة فيديو المنظومة' : 'Watch System Demo'}</span>
+            <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current shrink-0" />
+            <span className="truncate">{lang === 'ar' ? 'فيديو المنظومة' : 'Watch Demo'}</span>
           </button>
 
           <button
             type="button"
             onClick={(e) => handleRequestQuote(e, flagshipModule?.id)}
-            className={`min-h-[42px] px-4 sm:px-5 py-2.5 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 flex-1 sm:flex-1 lg:flex-initial text-center ${
+            className={`min-h-[38px] px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer transition-all active:scale-98 text-center leading-tight ${
               isFlagshipInterested
                 ? 'bg-blue-50 dark:bg-blue-950/40 border-[#1a85ea] text-[#1a85ea] dark:text-[#38bdf8]'
                 : 'bg-white border-slate-300 text-slate-800 hover:border-[#1a85ea] hover:bg-slate-50 dark:bg-slate-900/90 dark:border-slate-700 dark:text-slate-200 dark:hover:border-[#1a85ea] dark:hover:bg-slate-800'
             }`}
           >
-            <ArrowDown className="w-4 h-4 text-[#1a85ea] shrink-0" />
-            <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة ⬇️' : 'Request Official Quote ⬇️'}</span>
+            <ArrowDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1a85ea] shrink-0" />
+            <span className="truncate">{lang === 'ar' ? 'طلب عرض السعر ⬇️' : 'Request Quote ⬇️'}</span>
           </button>
         </div>
 

@@ -5,6 +5,7 @@ import { Calculator, CheckCircle2, MessageSquare, Award } from 'lucide-react';
 import { COMPANY_CONFIG, createWhatsAppUrl } from '../constants/config';
 import WhatsAppIcon from './site/WhatsAppIcon';
 import { getLeadCalculatorMessage } from '../utils/whatsapp';
+import { Reveal } from './site/ScrollExperience';
 
 import retailImg from '../assets/images/photo3.webp';
 import erpImg from '../assets/images/photo2.webp'; 
@@ -77,21 +78,23 @@ export default function LeadCalculator({ lang, theme }) {
 
           {/* Header */}
           <div className="flex flex-col gap-4 flex-1">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <span className="p-2 rounded-lg bg-cyan-500/10 text-cyan-500 shrink-0">
-                  <Calculator className="w-6 h-6" />
-                </span>
-                <h3 className={`text-xl md:text-2xl font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                  {lang === 'ar' ? 'الحاسبة التفاعلية' : 'Solution & Package Finder'}
-                </h3>
+            <Reveal>
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="p-2 rounded-lg bg-cyan-500/10 text-cyan-500 shrink-0">
+                    <Calculator className="w-6 h-6" />
+                  </span>
+                  <h3 className={`text-xl md:text-2xl font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                    {lang === 'ar' ? 'الحاسبة التفاعلية' : 'Solution & Package Finder'}
+                  </h3>
+                </div>
+                <p className={`text-sm font-cairo text-justify leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+                  {lang === 'ar'
+                    ? 'حدد طبيعة عملك وحجم منشأتك لعرض الأنظمة التي تناسب احتياجاتك.'
+                    : 'Specify your business sector and branch scale to identify recommended modules and receive a dedicated advisory plan.'}
+                </p>
               </div>
-              <p className={`text-sm font-cairo text-justify leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
-                {lang === 'ar'
-                  ? 'حدد طبيعة عملك وحجم منشأتك لعرض الأنظمة التي تناسب احتياجاتك.'
-                  : 'Specify your business sector and branch scale to identify recommended modules and receive a dedicated advisory plan.'}
-              </p>
-            </div>
+            </Reveal>
 
             {/* صورة السكشن */}
             <div className="calc-sector-img-wrap flex-1">
@@ -214,126 +217,130 @@ export default function LeadCalculator({ lang, theme }) {
         </div>
 
         {/* ══ عمود الأنظمة المقترحة ══ */}
-        <div className={`lg:col-span-5 rounded-2xl border p-6 flex flex-col justify-start gap-6 transition-all duration-300 ${
-          theme === 'light' ? 'bg-slate-50 border-slate-200/90 shadow-sm' : 'bg-slate-950/60 border-slate-800/80'
-        }`}>
-          <div className="h-full flex flex-col">
-            <div className="flex items-center gap-1.5 text-xs text-cyan-600 dark:text-cyan-400 font-bold tracking-wider mb-4 font-cairo">
-              <Award className="w-4 h-4" />
-              <span>{lang === 'ar' ? 'أنظمة تناسب اختيارك' : 'Systems Matching Your Selection'}</span>
-            </div>
+        <Reveal className="lg:col-span-5 h-full" delay={0.1}>
+          <div className={`rounded-2xl border p-6 flex flex-col justify-start gap-6 transition-all duration-300 ${
+            theme === 'light' ? 'bg-slate-50 border-slate-200/90 shadow-sm' : 'bg-slate-950/60 border-slate-800/80'
+          }`}>
+            <div className="h-full flex flex-col">
+              <div className="flex items-center gap-1.5 text-xs text-cyan-600 dark:text-cyan-400 font-bold tracking-wider mb-4 font-cairo">
+                <Award className="w-4 h-4" />
+                <span>{lang === 'ar' ? 'أنظمة تناسب اختيارك' : 'Systems Matching Your Selection'}</span>
+              </div>
 
-            <div className="space-y-4" style={{ overflowAnchor: 'none' }}>
-              <AnimatePresence mode="popLayout">
-                {suggestions.map(sys => (
-                  <motion.div
-                    key={sys.id}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className={`service-card-lift p-3.5 rounded-xl border transition-all duration-300 hover:shadow-md ${
-                      theme === 'light' ? 'bg-white border-slate-200 shadow-sm hover:border-cyan-300' : 'bg-slate-900/80 border-slate-800/80 hover:border-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className={`text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-slate-100'}`}>
-                        {lang === 'ar' ? sys.titleAr : sys.titleEn}
-                      </h4>
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase font-mono ${
-                        theme === 'light' ? 'bg-cyan-50 border border-cyan-200 text-cyan-700' : 'bg-cyan-950 text-cyan-400'
-                      }`}>
-                        {lang === 'ar' ? 'موصى به' : 'Suggested'}
+              <div className="space-y-4" style={{ overflowAnchor: 'none' }}>
+                <AnimatePresence mode="popLayout">
+                  {suggestions.map((sys, index) => (
+                    <motion.div
+                      key={sys.id}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -15 }}
+                      transition={{ duration: 0.25, ease: 'easeOut', delay: index * 0.08 }}
+                      className={`service-card-lift p-3.5 rounded-xl border transition-all duration-300 hover:shadow-md ${
+                        theme === 'light' ? 'bg-white border-slate-200 shadow-sm hover:border-cyan-300' : 'bg-slate-900/80 border-slate-800/80 hover:border-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className={`text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-slate-100'}`}>
+                          {lang === 'ar' ? sys.titleAr : sys.titleEn}
+                        </h4>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase font-mono ${
+                          theme === 'light' ? 'bg-cyan-50 border border-cyan-200 text-cyan-700' : 'bg-cyan-950 text-cyan-400'
+                        }`}>
+                          {lang === 'ar' ? 'موصى به' : 'Suggested'}
+                        </span>
+                      </div>
+                      <p className={`text-[11px] line-clamp-2 mb-2 font-cairo ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+                        {lang === 'ar' ? sys.descriptionAr : sys.descriptionEn}
+                      </p>
+                      <div className="grid grid-cols-1 gap-1 text-[10px]">
+                        {(lang === 'ar' ? sys.featuresAr : sys.featuresEn).slice(0, 3).map((feat, idx) => (
+                          <div key={idx} className={`flex items-center gap-1.5 font-cairo ${theme === 'light' ? 'text-slate-700' : 'text-slate-300'}`}>
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                            <span className="truncate">{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+
+                {/* مؤشرات الخدمة */}
+                <div className={`p-3 rounded-xl border flex flex-col gap-1.5 transition-colors ${
+                  theme === 'light' ? 'bg-white border-slate-200' : 'bg-slate-900/40 border-slate-800'
+                }`}>
+                  {[
+                    { ar: 'التثبيت والتدريب', en: 'Installation & Training', val: { ar: 'شامل', en: 'Included' }, color: 'text-emerald-500' },
+                    { ar: 'الدعم الفني ما بعد البيع', en: 'After-sales tech support', val: { ar: 'دعم متواصل', en: 'Continuous' }, color: 'text-emerald-500' },
+                    {
+                      ar: 'جدول التجهيز والمزامنة', en: 'Deployment Timeline',
+                      val: {
+                        ar: scale === 'small' ? 'خلال 4-7 أيام' : 'خلال 10-15 يوماً',
+                        en: scale === 'small' ? '4-7 Business Days' : '10-15 Business Days'
+                      },
+                      color: 'text-cyan-500'
+                    },
+                  ].map((row, i) => (
+                    <div key={i} className="flex justify-between items-center text-xs">
+                      <span className={`font-cairo ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+                        {lang === 'ar' ? row.ar : row.en}
+                      </span>
+                      <span className={`font-bold font-cairo ${row.color}`}>
+                        {lang === 'ar' ? row.val.ar : row.val.en}
                       </span>
                     </div>
-                    <p className={`text-[11px] line-clamp-2 mb-2 font-cairo ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
-                      {lang === 'ar' ? sys.descriptionAr : sys.descriptionEn}
-                    </p>
-                    <div className="grid grid-cols-1 gap-1 text-[10px]">
-                      {(lang === 'ar' ? sys.featuresAr : sys.featuresEn).slice(0, 3).map((feat, idx) => (
-                        <div key={idx} className={`flex items-center gap-1.5 font-cairo ${theme === 'light' ? 'text-slate-700' : 'text-slate-300'}`}>
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                          <span className="truncate">{feat}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-              {/* مؤشرات الخدمة */}
-              <div className={`p-3 rounded-xl border flex flex-col gap-1.5 transition-colors ${
-                theme === 'light' ? 'bg-white border-slate-200' : 'bg-slate-900/40 border-slate-800'
-              }`}>
+            <div className="mt-6 space-y-4">
+              <h5 className={`text-xs font-bold font-cairo px-1 ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
+                {lang === 'ar' ? 'رحلة تشغيل نظامك مع نايل تكنو:' : 'Your Implementation Journey:'}
+              </h5>
+              <div className="grid grid-cols-1 gap-3">
                 {[
-                  { ar: 'التثبيت والتدريب', en: 'Installation & Training', val: { ar: 'شامل', en: 'Included' }, color: 'text-emerald-500' },
-                  { ar: 'الدعم الفني ما بعد البيع', en: 'After-sales tech support', val: { ar: 'دعم متواصل', en: 'Continuous' }, color: 'text-emerald-500' },
-                  {
-                    ar: 'جدول التجهيز والمزامنة', en: 'Deployment Timeline',
-                    val: {
-                      ar: scale === 'small' ? 'خلال 4-7 أيام' : 'خلال 10-15 يوماً',
-                      en: scale === 'small' ? '4-7 Business Days' : '10-15 Business Days'
-                    },
-                    color: 'text-cyan-500'
-                  },
-                ].map((row, i) => (
-                  <div key={i} className="flex justify-between items-center text-xs">
-                    <span className={`font-cairo ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
-                      {lang === 'ar' ? row.ar : row.en}
-                    </span>
-                    <span className={`font-bold font-cairo ${row.color}`}>
-                      {lang === 'ar' ? row.val.ar : row.val.en}
-                    </span>
-                  </div>
+                  { step: '01', ar: 'تحليل المتطلبات', en: 'Needs Analysis', descAr: 'دراسة دقيقة لحجم نشاطك وتحديد المديولات المطلوبة.', descEn: 'Studying your business scale and required modules.' },
+                  { step: '02', ar: 'التجهيز والربط', en: 'Setup & Integration', descAr: 'إعداد السيرفرات السحابية والربط مع منظومة الفاتورة.', descEn: 'Cloud server setup and invoice integration.' },
+                  { step: '03', ar: 'التدريب والدعم', en: 'Training & Support', descAr: 'تدريب فريقك على النظام مع دعم فني متواصل 24/7.', descEn: 'Staff training with 24/7 continuous technical support.' },
+                ].map((item, idx) => (
+                  <Reveal key={idx} delay={idx * 0.07}>
+                    <div className={`flex items-start gap-3 p-3 rounded-xl border transition-all hover:scale-[1.02] duration-300 ${
+                      theme === 'light' ? 'bg-white border-slate-100 shadow-sm' : 'bg-slate-900/40 border-slate-800/50'
+                    }`}>
+                      <span className="text-lg font-black text-cyan-500/20 font-mono leading-none">{item.step}</span>
+                      <div className="flex flex-col text-right">
+                        <span className={`text-[11px] font-bold font-cairo ${theme === 'light' ? 'text-slate-700' : 'text-slate-200'}`}>
+                          {lang === 'ar' ? item.ar : item.en}
+                        </span>
+                        <span className="text-[10px] font-cairo text-slate-500 dark:text-slate-400 leading-relaxed">
+                          {lang === 'ar' ? item.descAr : item.descEn}
+                        </span>
+                      </div>
+                    </div>
+                  </Reveal>
                 ))}
               </div>
             </div>
-          </div>
 
-          <div className="mt-6 space-y-4">
-            <h5 className={`text-xs font-bold font-cairo px-1 ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
-              {lang === 'ar' ? 'رحلة تشغيل نظامك مع نايل تكنو:' : 'Your Implementation Journey:'}
-            </h5>
-            <div className="grid grid-cols-1 gap-3">
-              {[
-                { step: '01', ar: 'تحليل المتطلبات', en: 'Needs Analysis', descAr: 'دراسة دقيقة لحجم نشاطك وتحديد المديولات المطلوبة.', descEn: 'Studying your business scale and required modules.' },
-                { step: '02', ar: 'التجهيز والربط', en: 'Setup & Integration', descAr: 'إعداد السيرفرات السحابية والربط مع منظومة الفاتورة.', descEn: 'Cloud server setup and invoice integration.' },
-                { step: '03', ar: 'التدريب والدعم', en: 'Training & Support', descAr: 'تدريب فريقك على النظام مع دعم فني متواصل 24/7.', descEn: 'Staff training with 24/7 continuous technical support.' },
-              ].map((item, idx) => (
-                <div key={idx} className={`flex items-start gap-3 p-3 rounded-xl border transition-all hover:scale-[1.02] duration-300 ${
-                  theme === 'light' ? 'bg-white border-slate-100 shadow-sm' : 'bg-slate-900/40 border-slate-800/50'
-                }`}>
-                  <span className="text-lg font-black text-cyan-500/20 font-mono leading-none">{item.step}</span>
-                  <div className="flex flex-col text-right">
-                    <span className={`text-[11px] font-bold font-cairo ${theme === 'light' ? 'text-slate-700' : 'text-slate-200'}`}>
-                      {lang === 'ar' ? item.ar : item.en}
-                    </span>
-                    <span className="text-[10px] font-cairo text-slate-500 dark:text-slate-400 leading-relaxed">
-                      {lang === 'ar' ? item.descAr : item.descEn}
-                    </span>
-                  </div>
-                </div>
-              ))}
+            <div className={`mt-6 pt-4 border-t space-y-3 ${theme === 'light' ? 'border-slate-200' : 'border-slate-800'}`}>
+              <p className="text-[10px] text-slate-500 font-cairo text-center leading-normal">
+                {lang === 'ar'
+                  ? '* هذا الاختيار استرشادي، يتم إعداد وتحديد عرض السعر الدقيق بناءً على عدد التراخيص وأجهزة الكاشير المطلوبة.'
+                  : '* This estimate is advisory. Final pricing depends on license count and hardware required.'}
+              </p>
+              <button 
+                type="button"
+                onClick={handleWhatsAppInquiry}
+                className="w-full min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2.5 transition-all duration-300 shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer font-cairo"
+              >
+                <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
+                <span>{lang === 'ar' ? 'تجهيز وإرسال الطلب عبر واتساب' : 'Prepare & Send Inquiry on WhatsApp'}</span>
+              </button>
             </div>
-          </div>
 
-          <div className={`mt-6 pt-4 border-t space-y-3 ${theme === 'light' ? 'border-slate-200' : 'border-slate-800'}`}>
-            <p className="text-[10px] text-slate-500 font-cairo text-center leading-normal">
-              {lang === 'ar'
-                ? '* هذا الاختيار استرشادي، يتم إعداد وتحديد عرض السعر الدقيق بناءً على عدد التراخيص وأجهزة الكاشير المطلوبة.'
-                : '* This estimate is advisory. Final pricing depends on license count and hardware required.'}
-            </p>
-            <button 
-              type="button"
-              onClick={handleWhatsAppInquiry}
-              className="w-full min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2.5 transition-all duration-300 shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer font-cairo"
-            >
-              <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
-              <span>{lang === 'ar' ? 'تجهيز وإرسال الطلب عبر واتساب' : 'Prepare & Send Inquiry on WhatsApp'}</span>
-            </button>
           </div>
-
-        </div>
+        </Reveal>
       </div>
     </div>
   );

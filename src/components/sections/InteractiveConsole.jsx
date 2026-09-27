@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BarChart3, Network, LockKeyhole, TrendingUp } from 'lucide-react';
+import { Reveal } from '../site/ScrollExperience';
 
 function InteractiveConsole({ lang }) {
   const [activeTab, setActiveTab] = useState('sales');
@@ -29,7 +30,7 @@ function InteractiveConsole({ lang }) {
   return (
     <section className="py-14 relative overflow-hidden text-right border-b bg-slate-50/55 border-slate-200 dark:bg-[#0f172a] dark:border-slate-800/80" id="interactive-console">
       <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-10">
+        <Reveal className="text-center max-w-3xl mx-auto mb-10">
           <span className="inline-block px-3.5 py-1 rounded-full text-[10px] font-bold mb-3 uppercase tracking-wider font-cairo bg-cyan-50 text-cyan-700 dark:bg-cyan-950/80 dark:text-cyan-400">
             {lang === 'ar' ? 'لوحة المحاكاة والتحكم التفاعلية لايف' : 'Live Interactive Software Experience'}
           </span>
@@ -41,10 +42,10 @@ function InteractiveConsole({ lang }) {
               ? 'تفاعل مع أزرار لوحة القيادة أدناه لتكتشف في ثوانٍ كيف تقوم برمجياتنا بربط مبيعات الفروع والمستودعات والتحقق الضريبي التلقائي بمرونة لا تضاهى.' 
               : 'Interact with our console switcher below to experience real-time transactions, automated legal regulatory verification, and live fleet syncing.'}
           </p>
-        </div>
+        </Reveal>
 
         {/* Elegant glassmorphic console frame */}
-        <div className="max-w-4xl mx-auto rounded-2xl border overflow-hidden shadow-2xl transition-all duration-300 bg-white border-slate-200/80 shadow-cyan-100/20 dark:bg-[#131d35]/90 dark:border-slate-700/60">
+        <Reveal className="max-w-4xl mx-auto rounded-2xl border overflow-hidden shadow-2xl transition-all duration-300 bg-white border-slate-200/80 shadow-cyan-100/20 dark:bg-[#131d35]/90 dark:border-slate-700/60" delay={0.1}>
           {/* Header bar */}
           <div className="px-4 py-3 border-b flex justify-between items-center bg-slate-100/50 border-slate-205 dark:bg-[#0e1629] dark:border-slate-700/60">
             {/* Window control dots */}
@@ -449,7 +450,7 @@ function InteractiveConsole({ lang }) {
               </AnimatePresence>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -9,6 +9,7 @@ import {
 import { IconComponent } from '../site/BrandVisuals';
 import { getAppWhatsAppLink } from '../../utils/whatsapp';
 import WhatsAppIcon from '../site/WhatsAppIcon';
+import { Reveal } from '../site/ScrollExperience';
 
 export default function AppSelectorGrid({
   lang = 'ar',
@@ -24,7 +25,7 @@ export default function AppSelectorGrid({
   isInterestedInCurrent
 }) {
   return (
-    <div className="lg:col-span-8 space-y-3 sm:space-y-4 order-1 lg:order-2">
+    <Reveal className="lg:col-span-8 space-y-3 sm:space-y-4 order-1 lg:order-2" delay={0.1}>
       {/* Header Note with Mobile Controls */}
       <div className="flex items-center justify-between pb-1">
         <div>
@@ -42,7 +43,7 @@ export default function AppSelectorGrid({
             type="button"
             onClick={() => scrollToAppIndex(currentIdx + 1)}
             disabled={currentIdx >= safeApps.length - 1}
-            className="w-7 h-7 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 disabled:opacity-30 cursor-pointer"
+            className="icon-btn !w-7 !h-7 !min-h-0 !p-0 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 disabled:opacity-30 cursor-pointer"
             aria-label="Next app"
           >
             <ChevronRight className="w-4 h-4" />
@@ -51,7 +52,7 @@ export default function AppSelectorGrid({
             type="button"
             onClick={() => scrollToAppIndex(currentIdx - 1)}
             disabled={currentIdx <= 0}
-            className="w-7 h-7 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 disabled:opacity-30 cursor-pointer"
+            className="icon-btn !w-7 !h-7 !min-h-0 !p-0 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 disabled:opacity-30 cursor-pointer"
             aria-label="Previous app"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -154,17 +155,20 @@ export default function AppSelectorGrid({
       </div>
 
       {/* Mobile Swiper Pagination Dots */}
-      <div className="mobile-app-pagination flex sm:hidden items-center justify-center gap-0.5 pt-1" role="group" aria-label={lang === 'ar' ? 'التنقل بين التطبيقات' : 'Choose a mobile app'}>
-        {safeApps.map((app, idx) => (
-          <button
-            type="button"
-            key={app.id}
-            onClick={() => scrollToAppIndex(idx)}
-            className="app-carousel-dot rounded-full cursor-pointer"
-            aria-current={activeAppId === app.id ? 'true' : undefined}
-            aria-label={`Go to ${app.titleAr}`}
-          />
-        ))}
+      <div className="flex sm:hidden items-center justify-center pt-1.5" role="group" aria-label={lang === 'ar' ? 'التنقل بين التطبيقات' : 'Choose a mobile app'}>
+        <div className="screen-dots-container">
+          {safeApps.map((app, idx) => (
+            <button
+              type="button"
+              key={app.id}
+              data-dot="true"
+              onClick={() => scrollToAppIndex(idx)}
+              className={`screen-dot ${activeAppId === app.id ? 'active' : ''}`}
+              aria-current={activeAppId === app.id ? 'true' : undefined}
+              aria-label={`Go to ${app.titleAr}`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Detailed Features of the Selected App */}
@@ -198,17 +202,17 @@ export default function AppSelectorGrid({
             </span>
           </div>
 
-          <div className="mobile-app-actions flex flex-col sm:flex-row items-center gap-2.5 w-full lg:w-auto justify-end">
+          <div className="mobile-app-actions grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:items-center sm:gap-2.5 w-full lg:w-auto justify-end">
             {/* Primary WhatsApp Order Button with tailored message */}
             <a
               href={getAppWhatsAppLink(currentApp?.id, lang)}
               target="_blank"
               rel="noopener noreferrer"
-              className="mobile-app-action min-h-[38px] min-w-0 px-3 py-1.5 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer w-full sm:w-auto shadow-sm shadow-emerald-600/20 bg-emerald-600 hover:bg-emerald-500 text-white active:scale-95 font-cairo text-center leading-tight"
+              className="mobile-app-action min-h-[36px] min-w-0 px-2.5 sm:px-3 py-1.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm shadow-emerald-600/20 bg-emerald-600 hover:bg-emerald-500 text-white active:scale-95 font-cairo text-center leading-tight"
               title={lang === 'ar' ? 'طلب وشراء هذا التطبيق عبر واتساب' : 'Order via WhatsApp'}
             >
               <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
-              <span className="mobile-app-action-label">
+              <span className="mobile-app-action-label truncate">
                 {lang === 'ar' ? 'واتساب' : 'WhatsApp'}
               </span>
               <ArrowUpRight className="w-3 h-3 shrink-0 opacity-80" />
@@ -218,7 +222,7 @@ export default function AppSelectorGrid({
             <button
               type="button"
               onClick={(e) => currentApp?.id && handleRequestTrial(e, currentApp.id)}
-              className={`mobile-app-action min-h-[38px] min-w-0 px-3 py-1.5 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer w-full sm:w-auto border active:scale-95 font-cairo shadow-xs text-center leading-tight ${
+              className={`mobile-app-action min-h-[36px] min-w-0 px-2.5 sm:px-3 py-1.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer border active:scale-95 font-cairo shadow-xs text-center leading-tight ${
                 justAddedAppId === currentApp?.id || isInterestedInCurrent
                   ? 'bg-[#1a85ea] border-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25'
                   : 'bg-blue-50/80 hover:bg-blue-100 border-[#1a85ea]/30 text-[#1a85ea] dark:bg-[#1a85ea]/15 dark:hover:bg-[#1a85ea]/25 dark:border-[#1a85ea]/40 dark:text-[#38bdf8]'
@@ -226,13 +230,13 @@ export default function AppSelectorGrid({
               title={lang === 'ar' ? 'طلب عرض سعر في النموذج بالأسفل' : 'Request quote in form below'}
             >
               <ArrowDown className="w-3.5 h-3.5 shrink-0" />
-              <span className="mobile-app-action-label">
-                {lang === 'ar' ? 'السعر' : 'Quote'}
+              <span className="mobile-app-action-label truncate">
+                {lang === 'ar' ? 'طلب السعر' : 'Get Quote'}
               </span>
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </Reveal>
   );
 }

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BRANCHES_DATA } from '../../data';
 import { COMPANY_CONFIG } from '../../constants/config';
 import { 
   Building2, 
   MapPin, 
   PhoneCall, 
-  MessageSquare, 
-  ExternalLink,
   Navigation
 } from 'lucide-react';
 import { Reveal } from '../site/ScrollExperience';
+import WhatsAppButton from '../site/WhatsAppButton';
+import { getBranchMessage } from '../../utils/whatsapp';
 
 function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId }) {
   const selectedBranch = BRANCHES_DATA.find((b) => b.id === selectedBranchId) || BRANCHES_DATA[0];
@@ -17,28 +17,18 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
   return (
     <section 
       id="branches" 
-      className={`py-16 sm:py-20 relative transition-colors duration-500 border-t border-b ${
-        theme === 'light' 
-          ? 'bg-gradient-to-b from-blue-50/30 via-sky-50/40 to-slate-50 border-slate-200/50' 
-          : 'bg-gradient-to-b from-[#091226] via-[#0d1a39] to-[#0a1329] border-cyan-500/10'
-      }`}
+      className="py-16 sm:py-20 relative transition-colors duration-500 border-t border-b bg-gradient-to-b from-blue-50/30 via-sky-50/40 to-slate-50 border-slate-200/50 dark:from-[#091226] dark:via-[#0d1a39] dark:to-[#0a1329] dark:border-cyan-500/10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <Reveal className="text-center max-w-3xl mx-auto mb-12">
-          <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 uppercase tracking-wider font-cairo ${
-            theme === 'light' ? 'bg-cyan-50 text-cyan-700' : 'bg-cyan-950/80 text-cyan-400'
-          }`}>
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 uppercase tracking-wider font-cairo bg-cyan-50 text-cyan-700 dark:bg-cyan-950/80 dark:text-cyan-400">
             {lang === 'ar' ? 'تواجدنا الميداني' : 'Our Physical Presence'}
           </span>
-          <h2 className={`text-2xl sm:text-3.5xl font-extrabold font-cairo mb-3 leading-tight ${
-            theme === 'light' ? 'text-slate-900' : 'text-white'
-          }`}>
+          <h2 className="text-2xl sm:text-3.5xl font-extrabold font-cairo mb-3 leading-tight text-slate-900 dark:text-white">
             {lang === 'ar' ? 'فروع شركة نايل تكنو للبرمجيات' : 'Regional Offices & Headquarters'}
           </h2>
-          <p className={`text-xs sm:text-sm font-cairo max-w-2xl mx-auto ${
-            theme === 'light' ? 'text-slate-600' : 'text-slate-400'
-          }`}>
+          <p className="text-xs sm:text-sm font-cairo max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
             {lang === 'ar'
               ? 'فروع متكاملة لتقديم خدمات الدعم الفني، التدريب، والاستشارات البرمجية في مصر والسعودية.'
               : 'Dedicated local branches delivering deployment, staff training, and on-site support across Egypt and KSA.'}
@@ -58,45 +48,48 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
                   onClick={() => setSelectedBranchId(branch.id)}
                   className={`service-card-lift w-full text-right p-4 sm:p-5 rounded-2xl border transition-all duration-300 flex items-start gap-3.5 cursor-pointer ${
                     isSelected
-                      ? theme === 'light'
-                        ? 'bg-white border-[#1a85ea] shadow-md ring-1 ring-[#1a85ea]/20 hover:shadow-xl'
-                        : 'bg-slate-900 border-[#1a85ea] shadow-lg shadow-[#1a85ea]/10 hover:shadow-2xl'
-                      : theme === 'light'
-                        ? 'bg-white/80 border-slate-200 hover:bg-white text-slate-700 hover:border-[#1a85ea]/50 hover:shadow-lg'
-                        : 'bg-slate-900/50 border-slate-800 hover:bg-slate-900 text-slate-300 hover:border-[#1a85ea]/50 hover:shadow-xl'
+                      ? 'bg-white border-[#1a85ea] shadow-md ring-1 ring-[#1a85ea]/20 hover:shadow-xl dark:bg-slate-900 dark:border-[#1a85ea] dark:shadow-lg dark:shadow-[#1a85ea]/10 dark:hover:shadow-2xl'
+                      : 'bg-white/80 border-slate-200 hover:bg-white text-slate-700 hover:border-[#1a85ea]/50 hover:shadow-lg dark:bg-slate-900/50 dark:border-slate-800 dark:hover:bg-slate-900 dark:text-slate-300 dark:hover:border-[#1a85ea]/50 dark:hover:shadow-xl'
                   }`}
                 >
                   <div className={`p-2.5 rounded-xl shrink-0 transition-colors ${
                     isSelected 
                       ? 'bg-[#1a85ea] text-white' 
-                      : theme === 'light' ? 'bg-slate-100 text-slate-600' : 'bg-slate-800 text-slate-400'
+                      : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
                   }`}>
                     <Building2 className="w-5 h-5" />
                   </div>
-
                   <div className="flex-1 min-w-0">
                     <h3 className={`text-sm font-bold font-cairo mb-1 ${
                       isSelected 
                         ? 'text-[#1a85ea] dark:text-[#38bdf8]' 
-                        : theme === 'light' ? 'text-slate-900' : 'text-white'
+                        : 'text-slate-900 dark:text-white'
                     }`}>
                       {lang === 'ar' ? branch.cityAr : branch.cityEn}
                     </h3>
-                    <p className={`text-xs font-cairo leading-relaxed line-clamp-2 ${
-                      theme === 'light' ? 'text-slate-600' : 'text-slate-400'
+                    <p className="text-xs text-slate-500 font-cairo mb-1.5">
+                      {lang === 'ar' ? branch.areaAr : branch.areaEn}
+                    </p>
+                    <p className={`text-[11px] font-cairo line-clamp-1 ${
+                      isSelected 
+                        ? 'text-slate-700 dark:text-slate-300 font-semibold' 
+                        : 'text-slate-500 dark:text-slate-500'
                     }`}>
                       {lang === 'ar' ? branch.addressAr : branch.addressEn}
                     </p>
                   </div>
+                  <div className={`w-2.5 h-2.5 rounded-full mt-2 shrink-0 ${
+                    isSelected 
+                      ? 'bg-[#1a85ea] ring-4 ring-[#1a85ea]/20 animate-pulse' 
+                      : 'bg-slate-300 dark:bg-slate-700'
+                  }`} />
                 </button>
               );
             })}
           </div>
 
           {/* Branch Details & Embedded Map */}
-          <div className={`feature-block-lift lg:col-span-7 rounded-2xl border p-5 sm:p-6 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl ${
-            theme === 'light' ? 'bg-white border-slate-200 shadow-sm hover:border-cyan-300' : 'bg-[#131d35] border-slate-700/60 hover:border-slate-600'
-          }`}>
+          <div className="feature-block-lift lg:col-span-7 rounded-2xl border p-5 sm:p-6 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl bg-white border-slate-200 shadow-sm hover:border-cyan-300 dark:bg-[#131d35] dark:border-slate-700/60 dark:hover:border-slate-600">
             {/* Top Branch Header - Clean without misplaced buttons */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 border-b pb-4 border-slate-200 dark:border-slate-800">
               <div className="flex items-center gap-3">
@@ -104,7 +97,7 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
                   <Building2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className={`text-base sm:text-lg font-extrabold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                  <h3 className="text-base sm:text-lg font-extrabold font-cairo text-slate-900 dark:text-white">
                     {lang === 'ar' ? selectedBranch.cityAr : selectedBranch.cityEn}
                   </h3>
                   <span className="text-xs text-slate-500 font-cairo">
@@ -112,11 +105,10 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
                   </span>
                 </div>
               </div>
-
               {/* Direct Call Link */}
               <a
                 href={`tel:${selectedBranch.id === 'riyadh' ? COMPANY_CONFIG.contact.ksa.phoneRaw : COMPANY_CONFIG.contact.egypt.phoneRaw}`}
-                className={`inline-flex items-center justify-center min-h-[40px] gap-2 px-3.5 py-2 rounded-xl border text-xs font-bold font-cairo transition-colors shadow-sm w-full sm:w-auto ${theme === 'light' ? 'bg-blue-50/80 hover:bg-blue-100 text-[#1470c7] border-[#1a85ea]/25' : 'bg-slate-800 hover:bg-slate-700 text-sky-300 border-slate-700'}`}
+                className="inline-flex items-center justify-center min-h-[40px] gap-2 px-3.5 py-2 rounded-xl border text-xs font-bold font-cairo transition-colors shadow-sm w-full sm:w-auto bg-blue-50/80 hover:bg-blue-100 text-[#1470c7] border-[#1a85ea]/25 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-sky-300 dark:border-slate-700"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-[#1a85ea] shrink-0" />
                 <span dir="ltr">{selectedBranch.id === 'riyadh' ? COMPANY_CONFIG.contact.ksa.phoneDisplay : COMPANY_CONFIG.contact.egypt.phoneDisplay}</span>
@@ -137,7 +129,7 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
               />
             </div>
 
-            {/* Bottom Address & Action Buttons Bar (Exact match to image.png) */}
+            {/* Bottom Address & Action Buttons Bar */}
             <div className="pt-4 mt-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               {/* Right side: Detailed Accurate Address */}
               <div className="min-w-0 flex-1">
@@ -145,9 +137,7 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
                   <MapPin className="w-3.5 h-3.5 text-[#1a85ea] dark:text-[#38bdf8] shrink-0" />
                   <span>{lang === 'ar' ? 'العنوان الدقيق الحالي للفروع' : 'Current active branch location'}</span>
                 </div>
-                <p className={`text-xs sm:text-sm font-bold font-cairo leading-relaxed ${
-                  theme === 'light' ? 'text-slate-850' : 'text-slate-100'
-                }`}>
+                <p className="text-xs sm:text-sm font-bold font-cairo leading-relaxed text-slate-850 dark:text-slate-100">
                   {lang === 'ar' ? selectedBranch.addressAr : selectedBranch.addressEn}
                 </p>
               </div>
@@ -158,38 +148,18 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
                   href={selectedBranch.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`min-h-[40px] px-4 py-2 rounded-xl border text-xs font-bold font-cairo flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex-1 sm:flex-initial ${
-                    theme === 'light'
-                      ? 'bg-blue-50/80 hover:bg-blue-100 border-[#1a85ea]/30 text-[#1a85ea]'
-                      : 'bg-[#1a85ea]/10 hover:bg-[#1a85ea]/20 border-[#1a85ea]/40 text-[#38bdf8]'
-                  }`}
+                  className="min-h-[40px] px-4 py-2 rounded-xl border text-xs font-bold font-cairo flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex-1 sm:flex-initial bg-blue-50/80 hover:bg-blue-100 border-[#1a85ea]/30 text-[#1a85ea] dark:bg-[#1a85ea]/10 dark:hover:bg-[#1a85ea]/20 dark:border-[#1a85ea]/40 dark:text-[#38bdf8]"
                 >
                   <Navigation className="w-4 h-4 text-[#1a85ea] dark:text-[#38bdf8]" />
                   <span>{lang === 'ar' ? 'خرائط Google 🗺️' : 'Google Maps 🗺️'}</span>
                 </a>
 
-                {(() => {
-                  const branchMsg = lang === 'ar'
-                    ? `السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع ${selectedBranch.cityAr}) للاستفسار عن الأنظمة والحلول التقنية المتاحة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
-                    : `Hello Nile Techno Sales Team (${selectedBranch.cityEn} Branch),\n\nI would like to inquire about your enterprise software systems and solutions for our business.\n\nThank you for your prompt assistance.`;
-                  return (
-                    <a
-                      href={`https://wa.me/${selectedBranch.whatsapp}?text=${encodeURIComponent(branchMsg)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="min-h-[40px] px-4 py-2 rounded-xl text-xs font-bold font-cairo flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer shadow-md shadow-emerald-600/25 hover:shadow-emerald-600/35 hover:-translate-y-0.5 active:scale-95 bg-emerald-600 hover:bg-emerald-500 text-white flex-1 sm:flex-initial"
-                    >
-                      <span className="relative flex h-2.5 w-2.5 shrink-0">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80"></span>
-                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
-                      </span>
-                      <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                      </svg>
-                      <span>{lang === 'ar' ? 'تحدث مع الفرع' : 'Chat with Branch'}</span>
-                    </a>
-                  );
-                })()}
+                <WhatsAppButton
+                  phone={selectedBranch.whatsapp}
+                  message={getBranchMessage(selectedBranch, lang)}
+                  label={lang === 'ar' ? 'تحدث مع الفرع' : 'Chat with Branch'}
+                  className="flex-1 sm:flex-initial"
+                />
               </div>
             </div>
           </div>
@@ -202,3 +172,4 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
 }
 
 export { BranchesSection };
+export default BranchesSection;

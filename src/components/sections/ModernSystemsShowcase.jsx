@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Search, Play, Check, CheckCircle2, ChevronDown, ChevronUp, 
-  Layers, Server, Cloud, ShieldCheck, X, FileText, ArrowLeft, ArrowRight,
-  Sparkles, Monitor, Store, Truck, Cpu, Database,
-  LayoutGrid, Landmark, ShoppingBag, PackageCheck, Factory, ArrowDown
-} from 'lucide-react';
-import { IconComponent } from '../site/BrandVisuals';
-import { Reveal } from '../site/ScrollExperience';
+import { ArrowLeft, ArrowRight, LayoutGrid, Landmark, ShoppingBag, PackageCheck, Factory } from 'lucide-react';
+import FlagshipHighlight from './FlagshipHighlight';
+import SystemsFilterBar from './SystemsFilterBar';
+import SystemCard from './SystemCard';
+import useScrollLockedTabs from '../../hooks/useScrollLockedTabs';
 
 export function ModernSystemsShowcase({ 
   lang, 
@@ -24,8 +20,9 @@ export function ModernSystemsShowcase({
   onSelectSystemForQuote
 }) {
   const [expandedSystemId, setExpandedSystemId] = useState(null);
-
   const safeModules = Array.isArray(modules) ? modules : [];
+
+  const { handleTabSelect } = useScrollLockedTabs(setActiveTab);
 
   // Category filtering
   const filteredModules = safeModules.filter(m => {
@@ -59,15 +56,12 @@ export function ModernSystemsShowcase({
             : [...prev.interestedModules, sysId])
           : [sysId]
       }));
+
       const quoteEl = document.getElementById('quote-selection-group') || document.getElementById('contact');
       if (quoteEl) {
         quoteEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
-  };
-
-  const handleToggleInterest = (e, sysId) => {
-    handleRequestQuote(e, sysId);
   };
 
   const toggleExpand = (e, sysId) => {
@@ -99,7 +93,6 @@ export function ModernSystemsShowcase({
     specialized: Factory
   };
 
-  // Uniform brand blue styling across all category tabs for a clean, calm and elegant experience
   const categoryColorStyles = {
     all: {
       activeBg: 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25',
@@ -133,29 +126,6 @@ export function ModernSystemsShowcase({
     }
   };
 
-  // Strictly preserve page scroll position on tab switch to prevent unwanted page jumping
-  const handleTabSelect = (e, tabId) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (e.currentTarget && typeof e.currentTarget.blur === 'function') {
-        e.currentTarget.blur();
-      }
-    }
-    
-    const savedY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
-    setActiveTab(tabId);
-
-    // Lock position across synchronous tick, animation frame, and timeout
-    window.scrollTo({ top: savedY, behavior: 'instant' });
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: savedY, behavior: 'instant' });
-      setTimeout(() => {
-        window.scrollTo({ top: savedY, behavior: 'instant' });
-      }, 15);
-    });
-  };
-
   const handleCardMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
@@ -164,189 +134,34 @@ export function ModernSystemsShowcase({
 
   return (
     <div className="w-full font-cairo">
-      
-      {/* 1. Flagship Core ERP Suite Showcase - Premium Executive Presentation */}
-      <Reveal className={`service-card-lift relative rounded-3xl border p-5 sm:p-6 md:p-7 mb-8 transition-all duration-300 overflow-hidden hover:border-[#1a85ea]/50 group ${
-        theme === 'light'
-          ? 'bg-gradient-to-br from-white via-slate-50 to-[#1a85ea]/5 border-slate-200/90 shadow-lg shadow-slate-200/60 hover:shadow-2xl hover:shadow-[#1a85ea]/15'
-          : 'bg-gradient-to-br from-[#070e22] via-[#09132e] to-[#0a1838] border-slate-800 shadow-xl shadow-black/40 hover:shadow-2xl hover:shadow-[#1a85ea]/25'
-      }`}>
-        {/* Subtle decorative accent glow */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#1a85ea]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+      {/* 1. Flagship Core ERP Suite Showcase */}
+      <FlagshipHighlight
+        lang={lang}
+        theme={theme}
+        flagshipModule={flagshipModule}
+        handleOpenVideo={handleOpenVideo}
+        handleRequestQuote={handleRequestQuote}
+        isFlagshipInterested={isFlagshipInterested}
+      />
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
-          <div className="lg:col-span-8 space-y-4">
-            
-            {/* Metadata Badges */}
-            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold">
-                <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                <span>{lang === 'ar' ? 'معتمد رسمياً للفاتورة الإلكترونية ZATCA & ETA' : 'Certified E-Invoicing (ZATCA & ETA)'}</span>
-              </span>
-              <span className="hidden sm:inline text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#1a85ea]/10 text-[#1a85ea] dark:text-[#38bdf8] font-bold">
-                <Database className="w-3.5 h-3.5" />
-                <span>{lang === 'ar' ? 'المنظومة المركزية الشاملة' : 'Flagship Central ERP'}</span>
-              </span>
-              <span className="hidden sm:inline text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
-              <span className="text-slate-500 dark:text-slate-400">
-                {lang === 'ar' ? 'سحابي عبر السيرفر أو محلي LAN' : 'Cloud Server & On-Premise LAN'}
-              </span>
-            </div>
+      {/* 2. Search & Category Navigation */}
+      <SystemsFilterBar
+        lang={lang}
+        theme={theme}
+        t={t}
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        activeTab={activeTab}
+        handleTabSelect={handleTabSelect}
+        categoryCounts={categoryCounts}
+        categoryIcons={categoryIcons}
+        categoryColorStyles={categoryColorStyles}
+      />
 
-            {/* Main Headline */}
-            <h3 className={`text-2xl sm:text-3xl md:text-3.5xl font-black tracking-tight leading-snug ${
-              theme === 'light' ? 'text-slate-950 font-cairo' : 'text-white font-cairo'
-            }`}>
-              {lang === 'ar' ? 'منظومة الحسابات العامة وإدارة المخازن المتكاملة' : 'General Ledger & Integrated Inventory ERP Suite'}
-            </h3>
-
-            {/* Value Proposition Description */}
-            <p className={`text-xs sm:text-sm leading-relaxed max-w-3xl ${
-              theme === 'light' ? 'text-slate-600 font-medium' : 'text-slate-300'
-            }`}>
-              {lang === 'ar' 
-                ? 'الحل المحاسبي الشامل لكافة الأنشطة التجارية والصناعية؛ شجرة حسابات مرنة متعددة المستويات، مراكز تكلفة دقيقة، تسوية مخزنية آلية، وإصدار الفواتير الإلكترونية المشفرة لحظياً بدون وسيط.'
-                : 'The comprehensive accounting foundation for commercial and industrial businesses; multi-level chart of accounts, cost centers, automated inventory reconciliation, and direct certified e-invoicing.'}
-            </p>
-
-            {/* Architecture capability highlights */}
-            <div className="flex flex-wrap items-center gap-y-2 gap-x-5 pt-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
-              <div className="flex items-center gap-2">
-                <Cloud className="w-4 h-4 text-[#1a85ea]" />
-                <span>{lang === 'ar' ? 'سحابي مع تشفير كامل' : 'Cloud Hosted with Encryption'}</span>
-              </div>
-              <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
-              <div className="flex items-center gap-2">
-                <Server className="w-4 h-4 text-[#1a85ea]" />
-                <span>{lang === 'ar' ? 'قواعد بيانات SQL Server المعتمدة' : 'Enterprise SQL Server DB'}</span>
-              </div>
-              <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
-              <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-[#1a85ea]" />
-                <span>{lang === 'ar' ? 'ربط متعدد الفروع والمخازن' : 'Multi-Branch & Warehouses'}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Action CTAs */}
-          <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleOpenVideo(flagshipModule.youtubeUrl, lang === 'ar' ? flagshipModule.titleAr : flagshipModule.titleEn);
-              }}
-              className="min-h-[42px] px-4 sm:px-5 py-2.5 rounded-xl bg-[#1a85ea] hover:bg-[#1470c7] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#1a85ea]/25 hover:shadow-lg active:scale-98 flex-1 sm:flex-1 lg:flex-initial text-center"
-            >
-              <Play className="w-4 h-4 fill-current shrink-0" />
-              <span>{lang === 'ar' ? 'مشاهدة فيديو المنظومة' : 'Watch System Demo'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={(e) => handleRequestQuote(e, flagshipModule.id)}
-              className={`min-h-[42px] px-4 sm:px-5 py-2.5 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98 flex-1 sm:flex-1 lg:flex-initial text-center ${
-                isFlagshipInterested
-                  ? 'bg-blue-50 dark:bg-blue-950/40 border-[#1a85ea] text-[#1a85ea] dark:text-[#38bdf8]'
-                  : (theme === 'light' 
-                      ? 'bg-white border-slate-300 text-slate-800 hover:border-[#1a85ea] hover:bg-slate-50' 
-                      : 'bg-slate-900/90 border-slate-700 text-slate-200 hover:border-[#1a85ea] hover:bg-slate-800')
-              }`}
-            >
-              <ArrowDown className="w-4 h-4 text-[#1a85ea] shrink-0" />
-              <span>{lang === 'ar' ? 'طلب عرض سعر للمنظومة ⬇️' : 'Request Official Quote ⬇️'}</span>
-            </button>
-          </div>
-
-        </div>
-      </Reveal>
-
-      {/* 2. Search & Refined Category Navigation */}
-      <div className="max-w-4xl mx-auto mb-9 space-y-4">
-        
-        {/* Search Bar */}
-        <div className="relative">
-          <input
-            type="text"
-            placeholder={lang === 'ar' ? 'ابحث باسم النظام أو النشاط (حسابات، نقاط بيع، كاشير، تصنيع، مجوهرات، عيادات...)' : 'Search by software system or industry...'}
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            className={`w-full min-h-[44px] pl-12 pr-12 py-2.5 rounded-2xl border text-xs sm:text-sm transition-all focus:outline-none focus:border-[#1a85ea] focus:ring-2 focus:ring-[#1a85ea]/20 font-cairo ${
-              theme === 'light'
-                ? 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400 shadow-xs'
-                : 'bg-slate-900/80 border-slate-800 placeholder:text-slate-500 text-white shadow-inner'
-            }`}
-          />
-          <Search className={`absolute ${lang === 'ar' ? 'right-4' : 'left-4'} top-4 w-4 h-4 text-slate-400`} />
-          {searchInput && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                setSearchInput('');
-              }}
-              className={`absolute ${lang === 'ar' ? 'left-4' : 'right-4'} top-4 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1`}
-              aria-label="مسح البحث"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
-        </div>
-
-        {/* Clean Pill Segmented Tabs with Category Icons & Counts */}
-        <div className={`p-1.5 sm:p-2 rounded-2xl border flex flex-wrap items-center justify-center gap-2 ${theme === 'light' ? 'bg-slate-50/95 border-slate-200/90 shadow-sm' : 'bg-slate-900/95 border-slate-800 shadow-inner'}`}>
-          {[
-            { id: 'all', label: t.filterAll },
-            { id: 'erp', label: t.filterErp },
-            { id: 'retail', label: t.filterRetail },
-            { id: 'logistics', label: t.filterLogistics },
-            { id: 'specialized', label: t.filterSpecialized }
-          ].map((tab) => {
-            const isActive = activeTab === tab.id;
-            const CatIcon = categoryIcons[tab.id] || LayoutGrid;
-            const count = categoryCounts[tab.id] || 0;
-            const colorStyle = categoryColorStyles[tab.id] || categoryColorStyles.all;
-
-            return (
-              <button
-                type="button"
-                key={tab.id}
-                onClick={(e) => handleTabSelect(e, tab.id)}
-                className={`min-h-[40px] px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer font-cairo flex items-center gap-2.5 active:scale-95 ${
-                  isActive
-                    ? `${colorStyle.activeBg} font-extrabold`
-                    : (theme === 'light' 
-                        ? 'text-slate-700 hover:text-slate-950 hover:bg-white/80 border border-transparent hover:border-slate-200' 
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800/70 border border-transparent hover:border-slate-700/60')
-                }`}
-              >
-                  <div className={`p-1 rounded-lg ${isActive ? 'bg-white/15' : 'bg-cyan-50'}`}>
-                  <CatIcon className={`w-4 h-4 ${isActive ? colorStyle.activeIcon : colorStyle.inactiveIcon}`} />
-                </div>
-                <span>{tab.label}</span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
-                  isActive 
-                    ? colorStyle.activeBadge 
-                    : (theme === 'light' ? 'bg-cyan-50 text-[#1470c7] border border-cyan-100' : 'bg-slate-800 text-slate-400')
-                }`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-      </div>
-
-      {/* 3. Systems Grid - Refined Card Elevation & Smooth Drawer */}
+      {/* 3. Systems Grid */}
       <div className="systems-list-wrap min-h-[580px]" style={{ overflowAnchor: 'none' }}>
         {filteredModules.length === 0 ? (
-          <div className={`text-center py-14 rounded-3xl border max-w-lg mx-auto ${
-            theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-slate-900/40 border-slate-800 text-slate-400'
-          }`}>
+          <div className="text-center py-14 rounded-3xl border max-w-lg mx-auto bg-slate-50 border-slate-200 text-slate-700 dark:bg-slate-900/40 dark:border-slate-800 dark:text-slate-400">
             <p className="text-sm font-semibold mb-3">
               {lang === 'ar' ? 'لا توجد أنظمة مطابقة لمعايير البحث الحالية' : 'No software systems matched your search query.'}
             </p>
@@ -364,160 +179,40 @@ export function ModernSystemsShowcase({
           </div>
         ) : (
           <>
-          <div className={`systems-scroll-hint mb-2 flex items-center gap-1.5 text-[11px] font-semibold ${theme === 'light' ? 'text-slate-600' : 'text-slate-300'}`} aria-hidden="true">
-            <span>{lang === 'ar' ? 'اسحب لليمين أو اليسار لعرض باقي البرامج' : 'Swipe to browse the other systems'}</span>
-            <span className="inline-flex items-center text-[#1a85ea] dark:text-[#38bdf8]" dir="ltr"><ArrowLeft className="h-3 w-3" /><ArrowRight className="h-3 w-3" /></span>
-          </div>
-          <div className="systems-cards-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-stretch" role="region" aria-label={lang === 'ar' ? 'برامج الشركة، اسحب أفقياً لاستعراضها' : 'Software systems, swipe horizontally to browse'}>
-            {filteredModules.map((sys) => {
-              const isInterested = formData.interestedModules.includes(sys.id);
-              const isExpanded = expandedSystemId === sys.id;
+            <div className="systems-scroll-hint mb-2 flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 dark:text-slate-300" aria-hidden="true">
+              <span>{lang === 'ar' ? 'اسحب لليمين أو اليسار لعرض باقي البرامج' : 'Swipe to browse the other systems'}</span>
+              <span className="inline-flex items-center text-[#1a85ea] dark:text-[#38bdf8]" dir="ltr">
+                <ArrowLeft className="h-3 w-3" />
+                <ArrowRight className="h-3 w-3" />
+              </span>
+            </div>
 
-              return (
-                <motion.div 
+            <div 
+              className="systems-cards-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-stretch" 
+              role="region" 
+              aria-label={lang === 'ar' ? 'برامج الشركة، اسحب أفقياً لاستعراضها' : 'Software systems, swipe horizontally to browse'}
+            >
+              {filteredModules.map((sys) => (
+                <SystemCard
                   key={sys.id}
-                  whileHover={{ y: -6, scale: 1.015, transition: { duration: 0.24, ease: [0.16, 1, 0.3, 1] } }}
-                  whileTap={{ scale: 0.99 }}
-                  onMouseMove={handleCardMouseMove}
-                  className={`service-card-spotlight group rounded-2xl border p-5 flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-default ${
-                    theme === 'light'
-                      ? 'bg-gradient-to-b from-white via-white to-slate-50/80 border-slate-200/90 hover:border-[#1a85ea]/50 shadow-sm hover:shadow-xl hover:shadow-[#1a85ea]/15'
-                      : 'bg-gradient-to-b from-[#091124] via-[#091124] to-[#070d1d] border-slate-800 hover:border-[#1a85ea]/60 shadow-md hover:shadow-2xl hover:shadow-[#1a85ea]/25'
-                  }`}
-                >
-                  {/* Subtle top animated neon glow line on hover */}
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#1a85ea] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                  {/* Gentle hover ambient illumination */}
-                  <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#1a85ea]/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                  <div className="relative z-10">
-                    {/* Top Row: Icon Container & Category Tag */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className={`p-2.5 rounded-xl transition-all duration-300 transform group-hover:scale-110 group-hover:-rotate-3 ${
-                        theme === 'light' 
-                          ? 'bg-[#1a85ea]/10 text-[#1a85ea] group-hover:bg-[#1a85ea] group-hover:text-white group-hover:shadow-md group-hover:shadow-[#1a85ea]/30' 
-                          : 'bg-slate-800/80 text-[#38bdf8] group-hover:bg-[#1a85ea] group-hover:text-white group-hover:shadow-lg group-hover:shadow-[#1a85ea]/40'
-                      }`}>
-                        <IconComponent name={sys.iconName} className="w-5 h-5 transition-transform duration-300" />
-                      </div>
-                      <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md border font-sans uppercase tracking-wider whitespace-nowrap transition-colors duration-300 ${
-                        theme === 'light'
-                          ? 'bg-slate-100 border-slate-200 text-slate-600 group-hover:border-[#1a85ea]/30 group-hover:text-[#1a85ea]'
-                          : 'bg-slate-800/60 border-slate-700 text-slate-400 group-hover:border-[#1a85ea]/40 group-hover:text-[#38bdf8]'
-                      }`}>
-                        {sys.category.toUpperCase()}
-                      </span>
-                    </div>
-
-                    {/* Title */}
-                    <h4 className={`text-[15px] sm:text-base font-bold font-cairo mb-2 leading-snug group-hover:text-[#1a85ea] dark:group-hover:text-[#38bdf8] transition-colors duration-200 ${
-                      theme === 'light' ? 'text-slate-900' : 'text-white'
-                    }`}>
-                      {lang === 'ar' ? sys.titleAr : sys.titleEn}
-                    </h4>
-
-                    {/* Description */}
-                    <p className={`text-xs leading-relaxed mb-4 line-clamp-2 transition-colors ${
-                      theme === 'light' ? 'text-slate-600 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'
-                    }`}>
-                      {lang === 'ar' ? sys.descriptionAr : sys.descriptionEn}
-                    </p>
-
-                    {/* Features Preview */}
-                    <div className="space-y-1.5 mb-4">
-                      {(lang === 'ar' ? sys.featuresAr : sys.featuresEn).slice(0, 3).map((feat, fIdx) => (
-                        <div key={fIdx} className="flex items-start gap-2 text-xs transition-transform duration-200 group-hover:translate-x-0.5">
-                          <Check className="w-3.5 h-3.5 text-[#1a85ea] shrink-0 mt-0.5 transition-transform duration-200 group-hover:scale-110" />
-                          <span className={`line-clamp-1 ${theme === 'light' ? 'text-slate-700' : 'text-slate-300'}`}>
-                            {feat}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* In-Place Expandable Technical Specs Drawer (Zero-jump!) */}
-                    <AnimatePresence initial={false}>
-                      {isExpanded && (
-                        <motion.div
-                          key="specs"
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.25, ease: 'easeInOut' }}
-                          className="overflow-hidden border-t border-slate-100 dark:border-slate-800 pt-3 mb-4 space-y-2 text-xs"
-                        >
-                          <div className="font-bold text-slate-900 dark:text-slate-200">
-                            {lang === 'ar' ? 'المزايا الفنية والتقارير:' : 'Technical Specs & Capabilities:'}
-                          </div>
-                          {(lang === 'ar' ? sys.featuresAr : sys.featuresEn).map((feat, idx) => (
-                            <div key={idx} className="flex items-start gap-2 text-[11px] text-slate-600 dark:text-slate-400">
-                              <span className="text-[#1a85ea] font-bold">·</span>
-                              <span>{feat}</span>
-                            </div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Toggle Specs Accordion Link */}
-                    <button
-                      type="button"
-                      onClick={(e) => toggleExpand(e, sys.id)}
-                      className="text-[11px] font-bold text-[#1a85ea] dark:text-[#38bdf8] hover:underline flex items-center gap-1 mb-4 cursor-pointer transition-transform duration-150 hover:translate-x-0.5"
-                    >
-                      <span>
-                        {isExpanded 
-                          ? (lang === 'ar' ? 'إخفاء التفاصيل' : 'Hide details')
-                          : (lang === 'ar' ? 'عرض المواصفات الكاملة' : 'View full specs')}
-                      </span>
-                      {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                    </button>
-                  </div>
-
-                  {/* Actions Footer - Perfectly responsive so buttons never overflow */}
-                  <div className={`pt-3.5 border-t flex flex-col gap-2 mt-auto relative z-10 ${
-                    theme === 'light' ? 'border-slate-100' : 'border-slate-800'
-                  }`}>
-                    <div className="system-card-actions flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-2.5">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          handleOpenVideo(sys.youtubeUrl, lang === 'ar' ? sys.titleAr : sys.titleEn);
-                        }}
-                        className="system-card-video-button min-h-[38px] min-w-0 max-w-full px-3 py-2 rounded-xl text-xs font-bold text-[#0f5aa3] dark:text-[#7dd3fc] hover:text-[#0f5aa3] dark:hover:text-[#7dd3fc] bg-blue-50/90 dark:bg-[#0c263e] hover:bg-blue-100 dark:hover:bg-[#0c3557] border border-blue-200/80 dark:border-blue-700/50 flex items-center justify-center sm:justify-start gap-2 transition-all duration-200 cursor-pointer w-full sm:w-auto"
-                      >
-                        <Play className="w-3.5 h-3.5 text-[#1a85ea] fill-current" />
-                        <span className="system-card-video-label">{t.showDemo}</span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={(e) => handleRequestQuote(e, sys.id)}
-                        className={`min-h-[38px] px-3.5 py-2 rounded-xl border text-xs font-bold transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto whitespace-nowrap active:scale-95 ${
-                          isInterested
-                            ? 'bg-blue-50 dark:bg-blue-950/40 border-[#1a85ea] text-[#1a85ea] dark:text-[#38bdf8] shadow-xs'
-                            : (theme === 'light' 
-                                ? 'bg-slate-50 hover:bg-[#1a85ea] hover:text-white hover:border-[#1a85ea] border-slate-300 text-slate-800 shadow-2xs hover:shadow-md hover:shadow-[#1a85ea]/20' 
-                                : 'bg-slate-900 hover:bg-[#1a85ea] hover:text-white hover:border-[#1a85ea] border-slate-700 text-slate-200 hover:shadow-lg hover:shadow-[#1a85ea]/30')
-                        }`}
-                      >
-                        <ArrowDown className="w-3.5 h-3.5 shrink-0" />
-                        <span>{lang === 'ar' ? 'طلب عرض سعر' : 'Get Quote'}</span>
-                      </button>
-                    </div>
-                  </div>
-
-                </motion.div>
-              );
-            })}
-          </div>
+                  sys={sys}
+                  lang={lang}
+                  theme={theme}
+                  t={t}
+                  isInterested={formData?.interestedModules?.includes(sys.id)}
+                  isExpanded={expandedSystemId === sys.id}
+                  toggleExpand={toggleExpand}
+                  handleOpenVideo={handleOpenVideo}
+                  handleRequestQuote={handleRequestQuote}
+                  handleCardMouseMove={handleCardMouseMove}
+                />
+              ))}
+            </div>
           </>
         )}
       </div>
-
     </div>
   );
 }
+
+export default ModernSystemsShowcase;

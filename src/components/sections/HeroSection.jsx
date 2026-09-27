@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ChevronRight, Cloud, MessageSquare, Monitor, Smartphone, 
-  ShieldCheck, Zap
-} from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { SubtitleRotator } from '../site/BrandVisuals';
 import { AnimatedCounter } from '../site/AnimatedCounter';
+import { HERO_PLATFORMS } from '../../data/heroPlatforms';
 
 export function HeroSection({ 
   lang, 
@@ -44,98 +42,15 @@ export function HeroSection({
     return () => clearInterval(interval);
   }, [activePlatformIndex, setActivePlatformIndex]);
 
-  const platforms = [
-    {
-      id: 0,
-      titleAr: 'برنامج المحاسبة السحابي',
-      titleEn: 'Cloud ERP Portal',
-      mobileTitleAr: 'سحابي',
-      mobileTitleEn: 'Cloud',
-      icon: Cloud,
-      badgeAr: 'سحابي بالكامل 100%',
-      badgeEn: '100% Cloud ERP',
-      headlineAr: 'برنامج المحاسبة السحابي المتكامل',
-      headlineEn: 'Nile Techno Cloud ERP',
-      descAr: 'أدر أعمالك، مبيعاتك، مخازنك، وفواتيرك الإلكترونية المتوافقة مع مصلحة الضرائب المصرية (ETA) وهيئة الزكاة والضريبة والجمارك (ZATCA) مباشرة عبر الويب. حماية عالية، نسخ احتياطي دوري، وسهولة تامة بالوصول من أي متصفح أو جوال.',
-      descEn: 'Manage sales, warehouses, and tax-compliant e-invoicing from any browser. High security, automated backups, and instant cross-device synchronization.',
-      actionTextAr: 'الدخول للخدمة السحابية',
-      actionTextEn: 'Launch Cloud Portal',
-      actionHref: 'https://www.niletechnoerp.com/#/login',
-      isExternal: true,
-      stats: [
-        { labelAr: 'الوصول من أي مكان:', labelEn: 'Global access:', valAr: 'متاح 24/7', valEn: 'Available' },
-        { labelAr: 'تشفير البيانات:', labelEn: 'Security:', valAr: 'مشفر بالكامل SSL', valEn: 'Encrypted' },
-        { labelAr: 'الفاتورة الإلكترونية:', labelEn: 'E-Invoice:', valAr: 'معتمدة ETA / ZATCA', valEn: 'Compliant' },
-        { labelAr: 'النسخ الاحتياطي:', labelEn: 'Backups:', valAr: 'آلي سحابي', valEn: 'Automated' },
-      ]
-    },
-    {
-      id: 1,
-      titleAr: 'أنظمة الديسكتوب والشبكات',
-      titleEn: 'Desktop & LAN Systems',
-      mobileTitleAr: 'ديسكتوب',
-      mobileTitleEn: 'Desktop',
-      icon: Monitor,
-      badgeAr: 'شبكات محلية واستقرار فائق',
-      badgeEn: 'Local Network ERP',
-      headlineAr: 'أنظمة سطح المكتب للمصانع والشركات',
-      headlineEn: 'High-Stability Desktop ERP',
-      descAr: 'أنظمة للمصانع والورش تعمل دون الحاجة إلى اتصال بالإنترنت، مع ربط أجهزة الكاشير ونقاط البيع وقواعد البيانات على الشبكة المحلية.',
-      descEn: 'Enterprise desktop software built for manufacturing, distribution, and heavy POS operations without internet dependency. Robust local database clustering.',
-      actionTextAr: 'تصفح باقات سطح المكتب',
-      actionTextEn: 'Explore Desktop Packages',
-      actionHref: '#services',
-      isExternal: false,
-      stats: [
-        { labelAr: 'العمل بدون إنترنت:', labelEn: 'Offline mode:', valAr: 'مستمر 100%', valEn: 'Uninterrupted' },
-        { labelAr: 'سرعة الاستجابة:', labelEn: 'Speed:', valAr: 'فورية (LAN)', valEn: 'Instant LAN' },
-        { labelAr: 'قواعد البيانات:', labelEn: 'Database:', valAr: 'SQL Server محلية', valEn: 'Local SQL' },
-        { labelAr: 'تعدد المستخدمين:', labelEn: 'Multi-User:', valAr: 'صلاحيات متقدمة', valEn: 'Advanced RBAC' },
-      ]
-    },
-    {
-      id: 2,
-      titleAr: 'تطبيق مبيعات المناديب',
-      titleEn: 'Mobile Field Sales',
-      mobileTitleAr: 'موبايل',
-      mobileTitleEn: 'Mobile',
-      icon: Smartphone,
-      badgeAr: 'أندرويد و GPS ميداني',
-      badgeEn: 'Android Field Companion',
-      headlineAr: 'تطبيق المندوب والتوزيع الميداني',
-      headlineEn: 'Mobile Sales Representative App',
-      descAr: 'تطبيق أندرويد متطور لمندوبي المبيعات وسيارات التوزيع. يتيح إصدار وطباعة الفواتير عبر طابعات البلوتوث المحمولة، تتبع خط سير المندوب بالـ GPS، ومزامنة حركة المبيعات والمخزن مع السيرفر الرئيسي لحظياً.',
-      descEn: 'Dedicated Android mobile app for field reps. Print thermal receipts on Bluetooth printers, track routes via GPS, and sync transactions in real time.',
-      actionTextAr: 'تحميل التطبيق من جوجل بلاي',
-      actionTextEn: 'Download Android App',
-      actionHref: 'https://play.google.com/store/apps/details?id=com.niletechno.salesperson_app',
-      isExternal: true,
-      stats: [
-        { labelAr: 'طباعة الفواتير:', labelEn: 'Printing:', valAr: 'بلوتوث حراري', valEn: 'Thermal BT' },
-        { labelAr: 'تتبع خط السير:', labelEn: 'Route Tracking:', valAr: 'GPS مباشر', valEn: 'Live GPS' },
-        { labelAr: 'المزامنة:', labelEn: 'Sync:', valAr: 'تلقائية مع الـ ERP', valEn: 'Real-time' },
-        { labelAr: 'إدارة العهدة والديون:', labelEn: 'Settlements:', valAr: 'مباشرة من الميدان', valEn: 'Instant' },
-      ]
-    }
-  ];
-
-  const currentPlatform = platforms[activePlatformIndex] || platforms[0];
+  const currentPlatform = HERO_PLATFORMS[activePlatformIndex] || HERO_PLATFORMS[0];
 
   return (
     <section 
       id="home" 
-      className={`relative pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 overflow-hidden transition-colors duration-500 ${
-        theme === 'light'
-          ? 'bg-gradient-to-b from-sky-50/70 via-white to-blue-50/40 text-slate-800'
-          : 'bg-gradient-to-b from-[#0b152e] via-[#0d1a3a] to-[#0a1329] text-white'
-      }`}
+      className="relative pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 overflow-hidden transition-colors duration-500 bg-gradient-to-b from-sky-50/70 via-white to-blue-50/40 text-slate-800 dark:from-[#0b152e] dark:via-[#0d1a3a] dark:to-[#0a1329] dark:text-white"
     >
       {/* Dynamic Animated Background Grid & Ambient Mesh */}
-      <div className={`absolute inset-0 pointer-events-none ${
-        theme === 'light'
-          ? 'bg-[radial-gradient(#0284c718_1px,transparent_1px)] [background-size:28px_28px] opacity-80'
-          : 'bg-[radial-gradient(#38bdf815_1px,transparent_1px)] [background-size:32px_32px] opacity-35'
-      }`} />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(#0284c718_1px,transparent_1px)] [background-size:28px_28px] opacity-80 dark:bg-[radial-gradient(#38bdf815_1px,transparent_1px)] dark:[background-size:32px_32px] dark:opacity-35" />
 
       {/* Multi-Layered Floating Ambient Light Glow with Smooth Easing */}
       <motion.div 
@@ -192,9 +107,7 @@ export function HeroSection({
               ease: 'easeInOut',
               delay: node.delay
             }}
-            className={`absolute ${node.size} rounded-full ${
-              theme === 'light' ? 'bg-[#1a85ea]/60 shadow-[0_0_8px_#1a85ea]' : 'bg-[#38bdf8] shadow-[0_0_12px_#1a85ea]'
-            }`}
+            className={`absolute ${node.size} rounded-full bg-[#1a85ea]/60 shadow-[0_0_8px_#1a85ea] dark:bg-[#38bdf8] dark:shadow-[0_0_12px_#1a85ea]`}
           />
         ))}
       </div>
@@ -206,22 +119,14 @@ export function HeroSection({
         className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
       >
         {/* Main Hero Card - Spacious, comfortable for the eyes */}
-        <div className={`relative w-full rounded-3xl border backdrop-blur-xl overflow-hidden p-4 sm:p-8 md:p-12 mb-8 sm:mb-10 transition-all duration-300 ${
-          theme === 'light'
-            ? 'bg-white/90 border-cyan-200/70 shadow-2xl shadow-cyan-100/40'
-            : 'bg-[#131d35]/90 border-slate-700/60 shadow-xl'
-        }`}>
+        <div className="relative w-full rounded-3xl border backdrop-blur-xl overflow-hidden p-4 sm:p-8 md:p-12 mb-8 sm:mb-10 transition-all duration-300 bg-white/90 border-cyan-200/70 shadow-2xl shadow-cyan-100/40 dark:bg-[#131d35]/90 dark:border-slate-700/60 dark:shadow-xl">
           {/* Subtle Top Accent */}
           <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
 
           {/* Official Tag */}
           <motion.div 
             variants={itemVariants} 
-            className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold mb-4 font-cairo shadow-sm border max-w-full ${
-              theme === 'light'
-                ? 'bg-cyan-50 border-cyan-200 text-cyan-800'
-                : 'bg-cyan-950/50 border-cyan-800/60 text-cyan-300'
-            }`}
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold mb-4 font-cairo shadow-sm border max-w-full bg-cyan-50 border-cyan-200 text-cyan-800 dark:bg-cyan-950/50 dark:border-cyan-800/60 dark:text-cyan-300"
           >
             <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-500 shrink-0" />
             <span className="leading-tight">
@@ -236,7 +141,7 @@ export function HeroSection({
             variants={itemVariants}
             className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 leading-snug sm:leading-tight font-cairo"
           >
-            <span className={theme === 'light' ? 'text-slate-900' : 'text-white'}>
+            <span className="text-slate-900 dark:text-white">
               {lang === 'ar' ? 'دعنا ندير أعمالك بنجاح مع' : 'Let Us Manage Your Business'}
             </span>
             <span className="block mt-2 bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600 bg-clip-text text-transparent">
@@ -252,9 +157,7 @@ export function HeroSection({
           {/* Professional Reassuring Paragraph */}
           <motion.p 
             variants={itemVariants}
-            className={`max-w-2xl mx-auto text-xs sm:text-sm md:text-[15px] leading-relaxed font-cairo font-medium ${
-              theme === 'light' ? 'text-slate-600' : 'text-slate-300'
-            }`}
+            className="max-w-2xl mx-auto text-xs sm:text-sm md:text-[15px] leading-relaxed font-cairo font-medium text-slate-600 dark:text-slate-300"
           >
             {lang === 'ar' 
               ? 'برامج لإدارة الحسابات والمخازن ونقاط البيع وتطبيقات المناديب، مع الربط بالفاتورة الإلكترونية في مصر والمملكة العربية السعودية.'
@@ -266,7 +169,7 @@ export function HeroSection({
         <div className="w-full text-right font-cairo">
           {/* Platform Tab Navigation Buttons */}
           <div className="hero-platform-tabs flex flex-wrap justify-center gap-2 sm:gap-3 mb-4">
-            {platforms.map((tab) => {
+            {HERO_PLATFORMS.map((tab) => {
               const TabIcon = tab.icon;
               const isActive = activePlatformIndex === tab.id;
               return (
@@ -276,9 +179,7 @@ export function HeroSection({
                   className={`hero-platform-tab min-h-[42px] px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer font-cairo relative overflow-hidden flex-1 sm:flex-initial min-w-0 max-w-full ${
                     isActive
                       ? 'bg-[#1a85ea] text-white border-[#1a85ea] shadow-md shadow-[#1a85ea]/25'
-                      : theme === 'light'
-                        ? 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
-                        : 'bg-[#15203b] border-slate-700/60 text-slate-300 hover:border-slate-600 hover:text-white'
+                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 dark:bg-[#15203b] dark:border-slate-700/60 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:text-white'
                   }`}
                 >
                   <TabIcon className="w-3.5 h-3.5 shrink-0" />
@@ -303,17 +204,13 @@ export function HeroSection({
           {/* Platform Active Slide View */}
           <div className="relative overflow-hidden">
             <AnimatePresence mode="wait">
-                <motion.div
+              <motion.div
                 key={currentPlatform.id}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.22 }}
-                className={`feature-block-lift grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 sm:p-7 rounded-2xl border transition-all duration-300 items-center text-right ${
-                  theme === 'light'
-                    ? 'bg-white/95 border-slate-200 shadow-md hover:border-cyan-400/40'
-                    : 'bg-[#131d35]/95 border-slate-700/60 shadow-xl hover:border-cyan-500/40'
-                }`}
+                className="feature-block-lift grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 sm:p-7 rounded-2xl border transition-all duration-300 items-center text-right bg-white/95 border-slate-200 shadow-md hover:border-cyan-400/40 dark:bg-[#131d35]/95 dark:border-slate-700/60 dark:shadow-xl dark:hover:border-cyan-500/40"
               >
                 {/* Platform Description & CTA */}
                 <div className="lg:col-span-7 space-y-3">
@@ -323,11 +220,11 @@ export function HeroSection({
                     </span>
                   </div>
 
-                  <h3 className={`text-base sm:text-lg font-black leading-snug ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                  <h3 className="text-base sm:text-lg font-black leading-snug text-slate-900 dark:text-white">
                     {lang === 'ar' ? currentPlatform.headlineAr : currentPlatform.headlineEn}
                   </h3>
 
-                  <p className={`text-xs sm:text-sm leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+                  <p className="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                     {lang === 'ar' ? currentPlatform.descAr : currentPlatform.descEn}
                   </p>
 
@@ -346,11 +243,7 @@ export function HeroSection({
 
                 {/* Micro Live Status Panel */}
                 <div className="lg:col-span-5">
-                  <div className={`feature-block-lift p-4 sm:p-5 rounded-2xl border text-xs text-right transition-all duration-300 ${
-                    theme === 'light' 
-                      ? 'bg-slate-50 border-slate-200 text-slate-700 shadow-2xs hover:border-cyan-300' 
-                      : 'bg-[#0e1629] border-slate-700/60 text-slate-200 hover:border-slate-600'
-                  }`}>
+                  <div className="feature-block-lift p-4 sm:p-5 rounded-2xl border text-xs text-right transition-all duration-300 bg-slate-50 border-slate-200 text-slate-700 shadow-2xs hover:border-cyan-300 dark:bg-[#0e1629] dark:border-slate-700/60 dark:text-slate-200 dark:hover:border-slate-600">
                     <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-cyan-500/10">
                       <span className="text-xs font-bold text-emerald-500 flex items-center gap-1.5 font-cairo">
                         <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -362,7 +255,7 @@ export function HeroSection({
                     <div className="space-y-2 font-cairo text-xs">
                       {currentPlatform.stats.map((st, sIdx) => (
                         <div key={sIdx} className="hero-platform-stat-row flex justify-between items-center py-1.5 gap-2 border-b border-slate-200/50 dark:border-slate-800/50 last:border-none">
-                          <span className={theme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
+                          <span className="text-slate-500 dark:text-slate-400">
                             {lang === 'ar' ? st.labelAr : st.labelEn}
                           </span>
                           <span className="hero-platform-stat-value font-bold text-cyan-600 dark:text-cyan-400 whitespace-nowrap shrink-0">
@@ -381,9 +274,7 @@ export function HeroSection({
         {/* Compact Clean Metrics Bar */}
         <motion.div 
           variants={itemVariants}
-          className={`grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto mt-6 pt-6 border-t ${
-            theme === 'light' ? 'border-slate-200' : 'border-slate-800/80'
-          }`}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto mt-6 pt-6 border-t border-slate-200 dark:border-slate-800/80"
         >
           {[
             { val: '2010', labelAr: 'تأسيس وخبرة ممتدة', labelEn: 'Established' },
@@ -393,14 +284,12 @@ export function HeroSection({
           ].map((metric, idx) => (
             <div 
               key={idx} 
-              className={`p-2.5 sm:p-4 rounded-xl border transition-all duration-200 flex flex-col justify-center min-h-[68px] sm:min-h-[74px] ${
-                theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-[#131d35]/70 border-slate-700/50'
-              }`}
+              className="p-2.5 sm:p-4 rounded-xl border transition-all duration-200 flex flex-col justify-center min-h-[68px] sm:min-h-[74px] bg-white border-slate-200 shadow-sm dark:bg-[#131d35]/70 dark:border-slate-700/50"
             >
               <div className="text-base sm:text-xl font-black font-mono text-cyan-500 mb-0.5 sm:mb-1 whitespace-nowrap">
                 <AnimatedCounter value={metric.val} />
               </div>
-              <div className={`text-[10px] sm:text-xs font-bold font-cairo leading-snug ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+              <div className="text-[10px] sm:text-xs font-bold font-cairo leading-snug text-slate-600 dark:text-slate-400">
                 {lang === 'ar' ? metric.labelAr : metric.labelEn}
               </div>
             </div>
@@ -410,3 +299,5 @@ export function HeroSection({
     </section>
   );
 }
+
+export default HeroSection;

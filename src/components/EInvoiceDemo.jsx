@@ -436,7 +436,7 @@ export default function EInvoiceDemo({ lang, theme }) {
             <button
                 type="button"
                 onClick={copyToClipboard}
-                className="min-h-[34px] px-3 py-1.5 rounded-xl border border-sky-200 bg-sky-50 hover:bg-sky-100 text-[#1470c7] transition-colors cursor-pointer flex items-center justify-center gap-1.5 font-bold font-cairo shadow-sm text-[11px]"
+                className={`min-h-[34px] px-3 py-1.5 rounded-xl border border-sky-200 bg-sky-50 hover:bg-sky-100 text-[#1470c7] transition-all cursor-pointer flex items-center justify-center gap-1.5 font-bold font-cairo shadow-sm text-[11px] ${copySuccess ? 'copy-pulse-feedback' : ''}`}
                 title="Copy payload"
                 aria-label="Copy payload"
               >

@@ -342,7 +342,7 @@ export function ModernMobileShowcase({
           <div 
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="mobile-phone-frame feature-block-lift relative w-full max-w-[285px] rounded-[38px] sm:rounded-[44px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-750 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_28px_60px_-10px_rgba(26,133,234,0.3)] select-none transition-all duration-300 group hover:-translate-y-1.5"
+            className="mobile-phone-frame feature-block-lift relative w-full max-w-[285px] rounded-[38px] sm:rounded-[44px] p-2 sm:p-2.5 bg-gradient-to-b from-slate-750 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_28px_60px_-10px_rgba(26,133,234,0.3)] select-none transition-all duration-300 group"
           >
             {/* Top Speaker & Punch-hole Camera */}
             <div className="absolute top-2.5 sm:top-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-none">
@@ -701,7 +701,7 @@ export function ModernMobileShowcase({
                     e.preventDefault();
                     setActiveAppId(app.id);
                   }}
-                  className={`service-card-lift snap-center shrink-0 w-[82vw] max-w-[290px] sm:w-auto sm:max-w-none p-4 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between hover:-translate-y-1.5 hover:scale-[1.015] ${
+                  className={`service-card-lift snap-center shrink-0 w-[82vw] max-w-[290px] sm:w-auto sm:max-w-none p-4 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between ${
                     isSelected
                       ? (theme === 'light' 
                           ? 'bg-white border-[#1a85ea] shadow-md ring-2 ring-[#1a85ea]/20 hover:shadow-xl' 
@@ -757,10 +757,12 @@ export function ModernMobileShowcase({
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] border border-emerald-500/20 transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 min-h-[32px] px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 font-bold text-[11px] border border-emerald-500/25 transition-colors cursor-pointer"
                         title={lang === 'ar' ? 'طلب وشراء عبر واتساب مباشرة' : 'Order on WhatsApp'}
                       >
-                        <MessageSquare className="w-3 h-3" />
+                        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
                         <span>{lang === 'ar' ? 'طلب عبر واتساب 💬' : 'Order via WhatsApp'}</span>
                       </a>
                     ) : (
@@ -791,7 +793,7 @@ export function ModernMobileShowcase({
           </div>
 
           {/* Detailed Features of the Selected App */}
-          <div className={`feature-block-lift p-4 sm:p-5 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+          <div className={`feature-block-lift p-4 sm:p-5 rounded-2xl border transition-all duration-300 ${
             theme === 'light' ? 'bg-white border-slate-200 shadow-xs hover:border-[#1a85ea]/40' : 'bg-slate-900/60 border-slate-800 hover:border-[#1a85ea]/40'
           }`}>
             <div className="flex items-center gap-2 mb-3">
@@ -829,10 +831,12 @@ export function ModernMobileShowcase({
                   href={getAppWhatsAppLink(currentApp?.id, lang)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mobile-app-action min-h-[38px] min-w-0 px-3 py-1.5 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer w-full sm:w-auto shadow-sm shadow-emerald-500/20 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white active:scale-95 font-cairo text-center leading-tight"
+                  className="mobile-app-action min-h-[38px] min-w-0 px-3 py-1.5 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer w-full sm:w-auto shadow-sm shadow-emerald-600/20 bg-emerald-600 hover:bg-emerald-500 text-white active:scale-95 font-cairo text-center leading-tight"
                   title={lang === 'ar' ? 'طلب وشراء هذا التطبيق عبر واتساب' : 'Order via WhatsApp'}
                 >
-                  <MessageSquare className="w-3.5 h-3.5 shrink-0 fill-white/20" />
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
                   <span className="mobile-app-action-label">
                     {lang === 'ar' ? 'واتساب' : 'WhatsApp'}
                   </span>

@@ -217,7 +217,7 @@ function InteractiveConsole({ lang, theme }) {
                     </div>
 
                     {/* Quick values summary */}
-                    <div className={`feature-block-lift flex flex-wrap gap-2.5 sm:gap-4 items-center justify-start mt-4 p-3.5 sm:p-4 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
+                    <div className={`feature-block-lift flex flex-wrap gap-2.5 sm:gap-4 items-center justify-start mt-4 p-3.5 sm:p-4 rounded-xl border transition-all duration-300 ${
                       theme === 'light'
                         ? 'bg-cyan-500/5 border-cyan-500/10 hover:border-cyan-300' 
                         : 'bg-cyan-950/20 border-cyan-850/30 hover:border-cyan-500/40'
@@ -336,7 +336,7 @@ function InteractiveConsole({ lang, theme }) {
 
                       {/* Stats Area */}
                       <div className="sm:col-span-5 space-y-2">
-                        <div className={`feature-block-lift p-3 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
+                        <div className={`feature-block-lift p-3 rounded-xl border transition-all duration-300 ${
                           theme === 'light' ? 'bg-slate-100/60 border-slate-200 hover:border-cyan-300' : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
                         }`}>
                           <span className="text-[9px] text-slate-500 block uppercase font-mono tracking-wider">
@@ -347,7 +347,7 @@ function InteractiveConsole({ lang, theme }) {
                           </span>
                         </div>
 
-                        <div className={`feature-block-lift p-3 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
+                        <div className={`feature-block-lift p-3 rounded-xl border transition-all duration-300 ${
                           theme === 'light' ? 'bg-slate-100/60 border-slate-200 hover:border-cyan-300' : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
                         }`}>
                           <span className="text-[9px] text-slate-500 block uppercase font-mono tracking-wider">
@@ -358,7 +358,7 @@ function InteractiveConsole({ lang, theme }) {
                           </span>
                         </div>
 
-                        <div className={`feature-block-lift p-3 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
+                        <div className={`feature-block-lift p-3 rounded-xl border transition-all duration-300 ${
                           theme === 'light' ? 'bg-slate-100/60 border-slate-200 hover:border-cyan-300' : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
                         }`}>
                           <span className="text-[9px] text-slate-500 block uppercase font-mono tracking-wider">
@@ -397,7 +397,7 @@ function InteractiveConsole({ lang, theme }) {
 
                     <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
                       {/* Interactive toggle card */}
-                      <div className={`feature-block-lift sm:col-span-6 p-4 rounded-xl border flex flex-col justify-between gap-3.5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
+                      <div className={`feature-block-lift sm:col-span-6 p-4 rounded-xl border flex flex-col justify-between gap-3.5 transition-all duration-300 ${
                         theme === 'light' ? 'bg-slate-100/50 border-slate-200 hover:border-cyan-300' : 'bg-slate-900/40 border-slate-800 hover:border-slate-700'
                       }`}>
                         <div className="flex justify-between items-center">

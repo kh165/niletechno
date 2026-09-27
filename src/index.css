@@ -667,6 +667,7 @@ html {
 
 /* Existing floating/scrolled navbar: slightly clearer separation without changing its layout. */
 nav.fixed {
+  transition: padding 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1), background-color 300ms ease;
   box-shadow: 0 1px 0 rgba(15, 23, 42, .04), 0 8px 24px rgba(15, 23, 42, .04);
 }
 nav.fixed .nav-link-premium:focus-visible {
@@ -1275,3 +1276,86 @@ nav.fixed .nav-link-premium:focus-visible {
 .system-card-actions { min-width: 0; }
 .system-card-video-button { max-width: 100%; min-width: 0; }
 .system-card-video-label { white-space: normal; overflow-wrap: break-word; line-height: 1.25; }
+
+/* ========================================
+   MICRO-INTERACTIONS & SCROLL REVEAL
+   ======================================== */
+@media (hover: hover) and (pointer: fine) {
+  .service-card-spotlight {
+    position: relative;
+  }
+  .service-card-spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(26, 133, 234, 0.1),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 260ms ease;
+    z-index: 5;
+  }
+  .service-card-spotlight:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  [data-reveal],
+  [data-reveal] * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ========================================
+   COPY PULSE FEEDBACK (E-Invoice Demo)
+   ======================================== */
+@keyframes copyPulseKeyframe {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba(20, 112, 199, 0.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.copy-pulse-feedback {
+  animation: copyPulseKeyframe 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy-pulse-feedback {
+    animation: none !important;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY: ENHANCED FOCUS STATES
+   Scoped with :not() to avoid overriding elements with existing custom focus styles
+   ======================================== */
+input:not([class*="focus:"]):focus-visible,
+select:not([class*="focus:"]):focus-visible,
+textarea:not([class*="focus:"]):focus-visible {
+  outline: 2px solid #0284c7;
+  outline-offset: 2px;
+}
+
+button:not([class*="focus:"]):not([class*="outline-none"]):focus-visible,
+a:not([class*="focus:"]):not([class*="outline-none"]):not(.nav-link-premium):focus-visible {
+  outline: 2px solid #0284c7;
+  outline-offset: 2px;
+}
+
+
+

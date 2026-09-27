@@ -7,6 +7,7 @@ import {
   LayoutGrid, Landmark, ShoppingBag, PackageCheck, Factory, ArrowDown
 } from 'lucide-react';
 import { IconComponent } from '../site/BrandVisuals';
+import { Reveal } from '../site/ScrollExperience';
 
 export function ModernSystemsShowcase({ 
   lang, 
@@ -155,11 +156,17 @@ export function ModernSystemsShowcase({
     });
   };
 
+  const handleCardMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+  };
+
   return (
     <div className="w-full font-cairo">
       
       {/* 1. Flagship Core ERP Suite Showcase - Premium Executive Presentation */}
-      <div className={`service-card-lift relative rounded-3xl border p-5 sm:p-6 md:p-7 mb-8 transition-all duration-300 overflow-hidden hover:border-[#1a85ea]/50 hover:-translate-y-1.5 hover:scale-[1.006] group ${
+      <Reveal className={`service-card-lift relative rounded-3xl border p-5 sm:p-6 md:p-7 mb-8 transition-all duration-300 overflow-hidden hover:border-[#1a85ea]/50 group ${
         theme === 'light'
           ? 'bg-gradient-to-br from-white via-slate-50 to-[#1a85ea]/5 border-slate-200/90 shadow-lg shadow-slate-200/60 hover:shadow-2xl hover:shadow-[#1a85ea]/15'
           : 'bg-gradient-to-br from-[#070e22] via-[#09132e] to-[#0a1838] border-slate-800 shadow-xl shadow-black/40 hover:shadow-2xl hover:shadow-[#1a85ea]/25'
@@ -255,7 +262,7 @@ export function ModernSystemsShowcase({
           </div>
 
         </div>
-      </div>
+      </Reveal>
 
       {/* 2. Search & Refined Category Navigation */}
       <div className="max-w-4xl mx-auto mb-9 space-y-4">
@@ -357,7 +364,7 @@ export function ModernSystemsShowcase({
           </div>
         ) : (
           <>
-          <div className={`systems-scroll-hint mb-2 flex items-center gap-1.5 text-[11px] font-semibold ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`} aria-hidden="true">
+          <div className={`systems-scroll-hint mb-2 flex items-center gap-1.5 text-[11px] font-semibold ${theme === 'light' ? 'text-slate-600' : 'text-slate-300'}`} aria-hidden="true">
             <span>{lang === 'ar' ? 'اسحب لليمين أو اليسار لعرض باقي البرامج' : 'Swipe to browse the other systems'}</span>
             <span className="inline-flex items-center text-[#1a85ea] dark:text-[#38bdf8]" dir="ltr"><ArrowLeft className="h-3 w-3" /><ArrowRight className="h-3 w-3" /></span>
           </div>
@@ -371,7 +378,8 @@ export function ModernSystemsShowcase({
                   key={sys.id}
                   whileHover={{ y: -6, scale: 1.015, transition: { duration: 0.24, ease: [0.16, 1, 0.3, 1] } }}
                   whileTap={{ scale: 0.99 }}
-                  className={`service-card-lift group rounded-2xl border p-5 flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-default ${
+                  onMouseMove={handleCardMouseMove}
+                  className={`service-card-spotlight group rounded-2xl border p-5 flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-default ${
                     theme === 'light'
                       ? 'bg-gradient-to-b from-white via-white to-slate-50/80 border-slate-200/90 hover:border-[#1a85ea]/50 shadow-sm hover:shadow-xl hover:shadow-[#1a85ea]/15'
                       : 'bg-gradient-to-b from-[#091124] via-[#091124] to-[#070d1d] border-slate-800 hover:border-[#1a85ea]/60 shadow-md hover:shadow-2xl hover:shadow-[#1a85ea]/25'

@@ -5,6 +5,7 @@ import {
   ShieldCheck, Zap
 } from 'lucide-react';
 import { SubtitleRotator } from '../site/BrandVisuals';
+import { AnimatedCounter } from '../site/AnimatedCounter';
 
 export function HeroSection({ 
   lang, 
@@ -205,7 +206,7 @@ export function HeroSection({
         className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
       >
         {/* Main Hero Card - Spacious, comfortable for the eyes */}
-        <div className={`relative w-full rounded-3xl border backdrop-blur-xl overflow-hidden p-6 sm:p-10 md:p-12 mb-8 sm:mb-10 transition-all duration-300 ${
+        <div className={`relative w-full rounded-3xl border backdrop-blur-xl overflow-hidden p-4 sm:p-8 md:p-12 mb-8 sm:mb-10 transition-all duration-300 ${
           theme === 'light'
             ? 'bg-white/90 border-cyan-200/70 shadow-2xl shadow-cyan-100/40'
             : 'bg-[#131d35]/90 border-slate-700/60 shadow-xl'
@@ -216,14 +217,14 @@ export function HeroSection({
           {/* Official Tag */}
           <motion.div 
             variants={itemVariants} 
-            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4 font-cairo shadow-sm border ${
+            className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold mb-4 font-cairo shadow-sm border max-w-full ${
               theme === 'light'
                 ? 'bg-cyan-50 border-cyan-200 text-cyan-800'
                 : 'bg-cyan-950/50 border-cyan-800/60 text-cyan-300'
             }`}
           >
-            <ShieldCheck className="w-4 h-4 text-cyan-500 shrink-0" />
-            <span>
+            <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-500 shrink-0" />
+            <span className="leading-tight">
               {lang === 'ar' 
                 ? 'أنظمة إدارة الأعمال والمحاسبة ERP | مصر والسعودية'
                 : 'Enterprise ERP & Certified E-Invoicing | EG & KSA'}
@@ -308,7 +309,7 @@ export function HeroSection({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.22 }}
-                className={`feature-block-lift grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 sm:p-7 rounded-2xl border transition-all duration-300 items-center text-right hover:-translate-y-1 hover:shadow-2xl ${
+                className={`feature-block-lift grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 sm:p-7 rounded-2xl border transition-all duration-300 items-center text-right ${
                   theme === 'light'
                     ? 'bg-white/95 border-slate-200 shadow-md hover:border-cyan-400/40'
                     : 'bg-[#131d35]/95 border-slate-700/60 shadow-xl hover:border-cyan-500/40'
@@ -345,7 +346,7 @@ export function HeroSection({
 
                 {/* Micro Live Status Panel */}
                 <div className="lg:col-span-5">
-                  <div className={`feature-block-lift p-4 sm:p-5 rounded-2xl border text-xs text-right transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
+                  <div className={`feature-block-lift p-4 sm:p-5 rounded-2xl border text-xs text-right transition-all duration-300 ${
                     theme === 'light' 
                       ? 'bg-slate-50 border-slate-200 text-slate-700 shadow-2xs hover:border-cyan-300' 
                       : 'bg-[#0e1629] border-slate-700/60 text-slate-200 hover:border-slate-600'
@@ -392,14 +393,14 @@ export function HeroSection({
           ].map((metric, idx) => (
             <div 
               key={idx} 
-              className={`p-3.5 sm:p-4 rounded-xl border transition-all duration-200 flex flex-col justify-center min-h-[74px] ${
+              className={`p-2.5 sm:p-4 rounded-xl border transition-all duration-200 flex flex-col justify-center min-h-[68px] sm:min-h-[74px] ${
                 theme === 'light' ? 'bg-white border-slate-200 shadow-sm' : 'bg-[#131d35]/70 border-slate-700/50'
               }`}
             >
-              <div className="text-lg sm:text-xl font-black font-mono text-cyan-500 mb-1 whitespace-nowrap">
-                {metric.val}
+              <div className="text-base sm:text-xl font-black font-mono text-cyan-500 mb-0.5 sm:mb-1 whitespace-nowrap">
+                <AnimatedCounter value={metric.val} />
               </div>
-              <div className={`text-[11px] sm:text-xs font-bold font-cairo leading-snug ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+              <div className={`text-[10px] sm:text-xs font-bold font-cairo leading-snug ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
                 {lang === 'ar' ? metric.labelAr : metric.labelEn}
               </div>
             </div>

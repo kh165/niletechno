@@ -19,6 +19,8 @@ import { ModernMobileShowcase, AppleIcon, AndroidIcon } from './components/secti
 import { PartnersSection } from './components/sections/PartnersSection';
 import { BranchesSection } from './components/sections/BranchesSection';
 import PartnersDirectoryModal from './components/modals/PartnersDirectoryModal';
+import { Reveal } from './components/site/ScrollExperience';
+import { ScrollProgressBar } from './components/site/ScrollProgressBar';
 const VideoModal = lazy(() => import('./components/VideoModal.jsx'));
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -503,6 +505,9 @@ Thank you for your prompt assistance and cooperation.`;
             : 'bg-[#0b1329] text-slate-100'
         } selection:bg-cyan-500 selection:text-slate-900 transition-colors duration-300`}
       >
+        {/* Real-time Scroll Progress Bar */}
+        <ScrollProgressBar />
+
         {/* Main Body Canvas - Bounded with clean white/ambient margins on large screens instead of stretching edge-to-edge */}
         <div className={`w-full max-w-[1440px] 2xl:max-w-[1536px] mx-auto min-h-screen relative transition-colors duration-300 ${
           theme === 'light'
@@ -513,11 +518,11 @@ Thank you for your prompt assistance and cooperation.`;
         {/* 1. Header & Navigation Panel */}
         <nav className={`fixed top-0 inset-x-0 z-50 ${
           theme === 'light' 
-            ? (scrolled ? 'bg-white/80 border-slate-200/60 text-slate-800 shadow-xs' : 'bg-white/95 border-slate-200 text-slate-800 shadow-xs')
-            : (scrolled ? 'bg-[#0f172a]/85 border-slate-800/80 text-white shadow-lg' : 'bg-[#0f172a]/95 border-slate-800/80 text-white')
-        } backdrop-blur-md border-b transition-all duration-300`}>
+            ? (scrolled ? 'bg-white/90 border-slate-200/80 text-slate-800 shadow-md py-0' : 'bg-white/95 border-slate-200 text-slate-800 shadow-xs py-1')
+            : (scrolled ? 'bg-[#0f172a]/90 border-slate-800 text-white shadow-xl shadow-black/40 py-0' : 'bg-[#0f172a]/95 border-slate-800/80 text-white py-1')
+        } backdrop-blur-md border-b transition-all duration-300 ease-out`}>
           <div className="max-w-[1440px] 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className={`flex min-w-0 justify-between items-center gap-2 transition-all duration-300 ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
+            <div className={`flex min-w-0 justify-between items-center gap-2 transition-all duration-300 ease-out ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
             
               {/* Theme Toggle, Language Switcher, WhatsApp Contact, and Drawer Trigger */}
               <div className="flex shrink-0 items-center gap-1 sm:gap-2 order-1 lg:order-3">
@@ -639,6 +644,8 @@ Thank you for your prompt assistance and cooperation.`;
                   handleNavClick(e, link.href);
                 }}
                 className={`nav-link-premium min-h-[44px] flex items-center text-sm font-bold py-2.5 px-3 rounded-lg transition-colors ${
+                  activeSection === link.href.slice(1) ? 'nav-link-active' : ''
+                } ${
                   theme === 'light'
                     ? 'text-slate-700 hover:bg-slate-100 hover:text-cyan-600'
                     : 'text-slate-300 hover:bg-slate-900 hover:text-cyan-400'
@@ -990,7 +997,7 @@ Thank you for your prompt assistance and cooperation.`;
         <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-blue-500/5 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-10">
+          <Reveal className="text-center max-w-3xl mx-auto mb-10">
             <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-4 uppercase tracking-wider font-cairo ${
               theme === 'light' ? 'bg-cyan-50 text-cyan-700' : 'bg-cyan-950 text-cyan-400'
             }`}>
@@ -1006,7 +1013,7 @@ Thank you for your prompt assistance and cooperation.`;
             }`}>
               {lang === 'ar' ? 'أنظمة محاسبية وإدارية تناسب الأنشطة المختلفة، وتعمل عبر السحابة أو على خوادم الشركة.' : 'Accounting and business systems for different industries, available on cloud or local servers.'}
             </p>
-          </div>
+          </Reveal>
 
           <ModernSystemsShowcase
             lang={lang}
@@ -1600,9 +1607,11 @@ Thank you for your prompt assistance and cooperation.`;
                   <button
                     type="submit"
                     aria-label={lang === 'ar' ? 'إرسال الطلب عبر واتساب' : 'Send via WhatsApp'}
-                    className="w-full sm:w-auto min-h-[42px] px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 cursor-pointer font-cairo"
+                    className="w-full sm:w-auto min-h-[42px] px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm flex items-center justify-center gap-2.5 shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer font-cairo transition-all"
                   >
-                    <MessageSquare className="w-4 h-4" />
+                    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
                     <span>{lang === 'ar' ? 'إرسال الطلب عبر واتساب' : 'Send Inquiry via WhatsApp'}</span>
                   </button>
                 </div>
@@ -1771,7 +1780,9 @@ Thank you for your prompt assistance and cooperation.`;
                   }`}
                   title="WhatsApp Support"
                 >
-                  <MessageSquare className="w-4 h-4" />
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
                 </a>
                 <a 
                   href="https://www.youtube.com/channel/UCZ76wzqWkF8fW4StPpc9L8A" 

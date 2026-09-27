@@ -348,6 +348,29 @@ export const MOBILE_APPS = [
     imageUrl: 'https://www.niletechno.com/assets/img/mobile/sales.webp',
     accentColor: 'from-blue-600/20 to-blue-500/10'
   },
+  
+  {
+    id: 'mob-medical',
+    titleAr: 'تطبيق المندوب الطبي الدوائي',
+    titleEn: 'Medical & Pharma Rep System',
+    descriptionAr: 'برنامج مخصص لشركات الأدوية لمتابعة نشاط مناديب الدعاية الطبية ومقابلات الأطباء والتوزيع للصيدليات.',
+    descriptionEn: 'Comprehensive companion tool for healthcare sales representatives, detailing clinic logs and pharmacy campaigns.',
+    featuresAr: [
+      'جدولة وتتبع زيارات الأطباء اليومية وكتابة تقرير المقابلات الفورية لجهة عمله',
+      'عرض تفاعلي رائع ومحدث لكتيب المنتجات والمواصفات الطبية والمزايا',
+      'تسجيل عينات الأدوية الموزعة مجاناً والهدايا العينية للعيادات',
+      'تحصيل وتدوين طلبيات الصيدليات وربطها بالمخازن ووكلاء التوزيع'
+    ],
+    featuresEn: [
+      'Schedule physician visits & draft immediate clinical meetup comments',
+      'Demonstrate pharmaceutical digital product brochures with interactive specs',
+      'Log free samples distribution & material aid inventories per clinic',
+      'Collect pharmacy bookings and integrate them directly with warehouse queues'
+    ],
+    iconName: 'HeartPulse',
+    imageUrl: 'public/images/medical_rep/medical_rep_dashboard.png',
+    accentColor: 'from-pink-600/20 to-pink-500/10'
+  },
   {
     id: 'mob-pos',
     titleAr: 'تطبيق نقطة البيع للموبايل (Mobile POS)',
@@ -391,28 +414,6 @@ export const MOBILE_APPS = [
     iconName: 'ChefHat',
     imageUrl: 'https://www.niletechno.com/assets/img/mobile/resturant.png',
     accentColor: 'from-orange-600/20 to-orange-500/10'
-  },
-  {
-    id: 'mob-medical',
-    titleAr: 'تطبيق المندوب الطبي الدوائي',
-    titleEn: 'Medical & Pharma Rep System',
-    descriptionAr: 'برنامج مخصص لشركات الأدوية لمتابعة نشاط مناديب الدعاية الطبية ومقابلات الأطباء والتوزيع للصيدليات.',
-    descriptionEn: 'Comprehensive companion tool for healthcare sales representatives, detailing clinic logs and pharmacy campaigns.',
-    featuresAr: [
-      'جدولة وتتبع زيارات الأطباء اليومية وكتابة تقرير المقابلات الفورية لجهة عمله',
-      'عرض تفاعلي رائع ومحدث لكتيب المنتجات والمواصفات الطبية والمزايا',
-      'تسجيل عينات الأدوية الموزعة مجاناً والهدايا العينية للعيادات',
-      'تحصيل وتدوين طلبيات الصيدليات وربطها بالمخازن ووكلاء التوزيع'
-    ],
-    featuresEn: [
-      'Schedule physician visits & draft immediate clinical meetup comments',
-      'Demonstrate pharmaceutical digital product brochures with interactive specs',
-      'Log free samples distribution & material aid inventories per clinic',
-      'Collect pharmacy bookings and integrate them directly with warehouse queues'
-    ],
-    iconName: 'HeartPulse',
-    imageUrl: 'https://www.niletechno.com/assets/img/mobile/medical_rep.jpg',
-    accentColor: 'from-pink-600/20 to-pink-500/10'
   }
 ];
 

@@ -368,7 +368,7 @@ export const MOBILE_APPS = [
       'Collect pharmacy bookings and integrate them directly with warehouse queues'
     ],
     iconName: 'HeartPulse',
-    imageUrl: 'public/images/medical_rep/medical_rep_dashboard.png',
+    imageUrl: '/images/medical_rep/medical_rep_dashboard.png',
     accentColor: 'from-pink-600/20 to-pink-500/10'
   },
   {

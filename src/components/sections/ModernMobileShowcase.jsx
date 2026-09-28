@@ -217,13 +217,13 @@ export function ModernMobileShowcase({
                   loading="eager"
                   decoding="async"
                 />
-                <span className="absolute top-7 left-3 right-3 z-20 inline-flex items-center justify-center gap-1.5 w-fit px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[9px] font-bold text-emerald-400 border border-emerald-500/30 font-cairo shadow-sm">
+                <span className="absolute top-2.5 left-3 right-3 z-20 inline-flex items-center justify-center gap-1.5 w-fit px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[9px] font-bold text-emerald-400 border border-emerald-500/30 font-cairo shadow-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                   <span>{lang === 'ar' ? 'صورة التطبيق الأصلية' : 'Original App Image'}</span>
                 </span>
               </div>
             ) : (
-              <div className="w-full h-full bg-[#070b14] text-white p-2.5 sm:p-3 pt-5 text-right flex flex-col justify-between">
+              <div className="w-full h-full bg-[#070b14] text-white p-2.5 sm:p-3 pt-3 text-right flex flex-col justify-between">
                 {/* Status Bar */}
                 <div className="flex items-center justify-between text-[10px] text-slate-400 pb-1.5 border-b border-slate-800/80 mb-2">
                   <span className="font-mono font-bold text-slate-200">09:41</span>
@@ -373,17 +373,30 @@ export function ModernMobileShowcase({
                 })}
               </div>
 
-              {/* Official Google Play Store Download Action */}
-              <div className="pt-1.5 flex items-center justify-between text-xs">
+              {/* Official Store Download Actions (Google Play & App Store iPhone) */}
+              <div className="pt-1.5 grid grid-cols-2 gap-2 text-xs">
                 <a
                   href="https://play.google.com/store/apps/details?id=com.niletechno.salesperson_app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full min-h-[42px] py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-95 cursor-pointer font-cairo text-xs text-center"
+                  className="w-full min-h-[42px] py-2 px-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all hover:scale-[1.02] active:scale-95 cursor-pointer font-cairo text-[11px] sm:text-xs text-center"
+                  title={lang === 'ar' ? 'تطبيق المندوب على Google Play (Android)' : 'Get App on Google Play (Android)'}
                 >
                   <AndroidIcon className="w-4 h-4 fill-current shrink-0" />
-                  <span>{lang === 'ar' ? 'تطبيق المندوب على Google Play' : 'Get App on Google Play'}</span>
-                  <ExternalLink className="w-3.5 h-3.5 opacity-80 shrink-0" />
+                  <span className="truncate">{lang === 'ar' ? 'جوجل بلاي' : 'Google Play'}</span>
+                  <ExternalLink className="w-3 h-3 opacity-80 shrink-0" />
+                </a>
+
+                <a
+                  href="https://apps.apple.com/us/app/niletechno-sales/id6802703289"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full min-h-[42px] py-2 px-2 rounded-xl bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 text-white font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all hover:scale-[1.02] active:scale-95 cursor-pointer font-cairo text-[11px] sm:text-xs text-center border border-slate-700/60"
+                  title={lang === 'ar' ? 'تطبيق المندوب على App Store (iPhone)' : 'Get App on App Store (iPhone)'}
+                >
+                  <AppleIcon className="w-4 h-4 fill-current shrink-0" />
+                  <span className="truncate">{lang === 'ar' ? 'آب ستور' : 'App Store'}</span>
+                  <ExternalLink className="w-3 h-3 opacity-80 shrink-0" />
                 </a>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Maximize2, 
@@ -28,6 +28,38 @@ export default function AppScreenGallery({
   setIsFullscreenModalOpen
 }) {
   const touchStartXRef = useRef(null);
+
+  // Lock body scroll and handle keyboard navigation when modal is open
+  useEffect(() => {
+    if (!isFullscreenModalOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsFullscreenModalOpen(false);
+      } else if (e.key === 'ArrowRight') {
+        if (lang === 'ar') {
+          prevScreen?.();
+        } else {
+          nextScreen?.();
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (lang === 'ar') {
+          nextScreen?.();
+        } else {
+          prevScreen?.();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isFullscreenModalOpen, lang, nextScreen, prevScreen, setIsFullscreenModalOpen]);
 
   const handleTouchStart = (e) => {
     if (e.touches && e.touches[0]) {
@@ -81,7 +113,7 @@ export default function AppScreenGallery({
         </AnimatePresence>
 
         {/* Top Badges & Expand Trigger */}
-        <div className="absolute top-7 left-2.5 right-2.5 z-20 flex items-center justify-between pointer-events-none">
+        <div className="absolute top-2.5 left-2.5 right-2.5 z-20 flex items-center justify-between pointer-events-none">
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/65 backdrop-blur-md text-[9px] font-bold text-white border border-white/15 font-cairo shadow-sm">
             <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
             <span>{currentRealScreen.id}/6</span>
@@ -138,30 +170,35 @@ export default function AppScreenGallery({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsFullscreenModalOpen(false)}
-            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 select-none overflow-hidden"
           >
             <div 
-              className="relative max-w-sm sm:max-w-md w-full max-h-[92vh] flex flex-col items-center"
+              className="relative flex flex-col items-center w-fit max-w-[90vw] pt-11"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 type="button"
                 onClick={() => setIsFullscreenModalOpen(false)}
-                className="absolute -top-11 right-0 w-9 h-9 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center cursor-pointer transition-colors"
-                aria-label="Close modal"
+                className="absolute top-0 right-0 w-9 h-9 rounded-full bg-white/10 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center cursor-pointer transition-colors"
+                aria-label={lang === 'ar' ? 'إغلاق' : 'Close modal'}
+                title={lang === 'ar' ? 'إغلاق (Esc)' : 'Close (Esc)'}
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="relative rounded-3xl overflow-hidden border-2 border-white/20 shadow-2xl bg-black">
+              <div 
+                className="relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-white/20 shadow-2xl bg-black"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
                 <img
                   src={currentRealScreen.image}
                   alt={lang === 'ar' ? currentRealScreen.titleAr : currentRealScreen.titleEn}
-                  className="w-full max-h-[80vh] object-contain block"
+                  className="max-h-[60dvh] sm:max-h-[68dvh] w-auto h-auto max-w-[85vw] sm:max-w-xs md:max-w-sm object-contain block select-none"
                 />
               </div>
 
-              <div className="mt-3 text-center text-white space-y-1">
+              <div className="mt-3 text-center text-white space-y-1 max-w-[280px] sm:max-w-sm">
                 <div className="text-sm font-bold font-cairo">
                   {currentRealScreen.id}. {lang === 'ar' ? currentRealScreen.titleAr : currentRealScreen.titleEn}
                 </div>

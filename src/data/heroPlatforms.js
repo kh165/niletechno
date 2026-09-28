@@ -65,6 +65,9 @@ export const HERO_PLATFORMS = [
     actionTextAr: 'تحميل التطبيق من جوجل بلاي',
     actionTextEn: 'Download Android App',
     actionHref: 'https://play.google.com/store/apps/details?id=com.niletechno.salesperson_app',
+    iosActionTextAr: 'تحميل التطبيق من آب ستور (iPhone)',
+    iosActionTextEn: 'Download on App Store (iPhone)',
+    iosActionHref: 'https://apps.apple.com/us/app/niletechno-sales/id6802703289',
     isExternal: true,
     stats: [
       { labelAr: 'طباعة الفواتير:', labelEn: 'Printing:', valAr: 'بلوتوث حراري', valEn: 'Thermal BT' },

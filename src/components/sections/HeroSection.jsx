@@ -5,6 +5,7 @@ import { SubtitleRotator } from '../site/BrandVisuals';
 import { AnimatedCounter } from '../site/AnimatedCounter';
 import { Reveal } from '../site/ScrollExperience';
 import { HERO_PLATFORMS } from '../../data/heroPlatforms';
+import { AppleIcon } from './ModernMobileShowcase';
 
 export function HeroSection({ 
   lang, 
@@ -251,7 +252,7 @@ export function HeroSection({
                     {lang === 'ar' ? currentPlatform.descAr : currentPlatform.descEn}
                   </p>
 
-                  <div className="pt-2">
+                  <div className="pt-2 flex flex-wrap items-center gap-2.5">
                     <a
                       href={currentPlatform.actionHref}
                       target={currentPlatform.isExternal ? '_blank' : '_self'}
@@ -261,6 +262,20 @@ export function HeroSection({
                       <span className="min-w-0 whitespace-normal">{lang === 'ar' ? currentPlatform.actionTextAr : currentPlatform.actionTextEn}</span>
                       <currentPlatform.icon className="w-4 h-4 shrink-0" />
                     </a>
+
+                    {currentPlatform.iosActionHref && (
+                      <a
+                        href={currentPlatform.iosActionHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2 min-h-[44px] min-w-0 max-w-full px-4 sm:px-6 py-2.5 rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 hover:from-slate-800 hover:to-slate-700 text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-slate-900/30 cursor-pointer font-cairo w-full sm:w-auto text-center leading-tight whitespace-normal border border-slate-700/60 hover:scale-105 active:scale-95"
+                      >
+                        <span className="min-w-0 whitespace-normal">
+                          {lang === 'ar' ? currentPlatform.iosActionTextAr : currentPlatform.iosActionTextEn}
+                        </span>
+                        <AppleIcon className="w-4 h-4 shrink-0 fill-current" />
+                      </a>
+                    )}
                   </div>
                 </div>
 

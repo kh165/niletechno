@@ -24,7 +24,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
         tabIndex={0}
         role="button"
       >
-        <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
           <PartnerLogo partner={partner} theme={theme} />
         </div>
       </div>
@@ -95,7 +95,8 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
 
           <a 
             href={COMPANY_CONFIG.pdfProfileUrl}
-            download="NileTechno_Company_Profile.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full sm:w-auto min-h-[40px] px-5 py-2.5 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer font-cairo bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-200"
           >
             <Download className="w-4 h-4 text-cyan-400 shrink-0" />

@@ -502,7 +502,7 @@ nav.fixed .nav-link-premium:focus-visible {
 .partner-marquee-card:focus-visible {
   position: relative;
   z-index: 25;
-  transform: translateY(-6px) scale(1.12);
+  transform: translateY(-3px) scale(1.04);
   filter: blur(0) contrast(1.05);
   opacity: 1;
   border-color: #38bdf8 !important;

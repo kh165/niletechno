@@ -12,7 +12,7 @@ export const COMPANY_CONFIG = {
   establishedYear: 2010,
   websiteUrl: 'https://niletechno.com',
   email: 'info@niletechno.com',
-  pdfProfileUrl: '/company-profile.pdf',
+  pdfProfileUrl: '/Nile%20Techno%20Profile.pdf',
   
   // Direct access phone & whatsapp properties
   // TODO_CONFIRM: Verify correct Riyadh KSA phone and WhatsApp numbers with management (+966535653688 vs +966511351059)

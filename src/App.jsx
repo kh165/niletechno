@@ -1048,7 +1048,7 @@ Thank you for your prompt assistance and cooperation.`;
                 : 'bg-gradient-to-r from-slate-900/95 via-blue-950/40 to-slate-900/95 border border-cyan-500/30 text-slate-100 shadow-cyan-950/20'
             }`}>
               <div className="flex items-center gap-1.5 text-cyan-600 dark:text-cyan-400">
-                <Smartphone className="w-4 h-4 shrink-0" />
+                <Smartphone className="w-4 h-4 shrink-0 hidden xs:block" />
                 <span className="font-extrabold">{lang === 'ar' ? 'حلول وتطبيقات الهواتف' : 'Mobile Applications'}</span>
               </div>
 
@@ -1292,7 +1292,7 @@ Thank you for your prompt assistance and cooperation.`;
                       aria-label={t.formName}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder={lang === 'ar' ? 'خالد ' : 'khalid'}
+                      placeholder={lang === 'ar' ? 'خالد صلاح ' : 'khalid salah'}
                       className={`w-full min-h-[44px] text-xs px-4 py-3 rounded-xl border focus:border-cyan-500 font-cairo transition-all ${
                         theme === 'light' ? 'bg-white border-slate-300 text-slate-800 placeholder:text-slate-400 shadow-inner' : 'bg-slate-950 border border-slate-800 text-white'
                       }`}
@@ -1403,20 +1403,20 @@ Thank you for your prompt assistance and cooperation.`;
                   </div>
 
                   {/* High-visibility Group Tabs: Systems vs Mobile Apps */}
-                  <div id="quote-selection-group" className={`grid grid-cols-2 p-1.5 rounded-2xl border transition-colors ${theme === 'light' ? 'bg-slate-100/95 border-slate-200/90 shadow-sm' : 'bg-slate-900/95 border-slate-800 shadow-inner'}`}>
+                  <div id="quote-selection-group" className={`grid grid-cols-2 gap-1.5 p-1.5 rounded-2xl border transition-colors ${theme === 'light' ? 'bg-slate-100/95 border-slate-200/90 shadow-sm' : 'bg-slate-900/95 border-slate-800 shadow-inner'}`}>
                     {/* Option 1: ERP & Software Systems */}
                     <button
                       type="button"
                       onClick={() => setQuoteGroup('systems')}
-                      className={`min-h-[42px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                      className={`min-h-[46px] rounded-xl font-normal text-[9px] sm:text-sm font-cairo flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 leading-tight text-center transition-all duration-200 cursor-pointer ${
                         quoteGroup === 'systems'
                           ? 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25 scale-[1.01]'
                           : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
                       }`}
                     >
-                      <Monitor className="w-4 h-4 shrink-0" />
+                      <Monitor className="w-4 h-4 shrink-0 hidden xs:block" />
                       <span>{lang === 'ar' ? 'الأنظمة والبرمجيات' : 'ERP & Software Systems'}</span>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-normal shrink-0 ${
                         quoteGroup === 'systems' ? 'bg-white/25 text-white' : 'bg-sky-50 border border-sky-100 text-[#1470c7]'
                       }`}>
                         {SERVICE_MODULES.length}
@@ -1427,15 +1427,15 @@ Thank you for your prompt assistance and cooperation.`;
                     <button
                       type="button"
                       onClick={() => setQuoteGroup('mobile')}
-                      className={`min-h-[42px] rounded-xl font-bold text-xs sm:text-sm font-cairo flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                      className={`min-h-[46px] rounded-xl font-normal text-[9px] sm:text-sm font-cairo flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 leading-tight text-center transition-all duration-200 cursor-pointer ${
                         quoteGroup === 'mobile'
                           ? 'bg-[#1a85ea] text-white shadow-md shadow-[#1a85ea]/25 scale-[1.01]'
                           : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
                       }`}
                     >
-                      <Smartphone className="w-4 h-4 shrink-0" />
+                      <Smartphone className="w-4 h-4 shrink-0 hidden xs:block" />
                       <span>{lang === 'ar' ? 'تطبيقات الموبايل' : 'Smart Mobile Apps'}</span>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-normal shrink-0 ${
                         quoteGroup === 'mobile' ? 'bg-white/25 text-white' : 'bg-sky-50 border border-sky-100 text-[#1470c7]'
                       }`}>
                         {MOBILE_APPS.length}
@@ -1822,7 +1822,7 @@ Thank you for your prompt assistance and cooperation.`;
           <div className={`pt-4 text-center border-t ${
             theme === 'light' ? 'border-slate-200/80' : 'border-slate-800/50'
           }`}>
-            <span className={`text-[11px] font-cairo font-semibold block tracking-wide ${
+            <span className={`text-sm font-cairo font-semibold block tracking-wide ${
               theme === 'light' ? 'text-slate-650' : 'text-slate-400'
             }`}>
               Nile Techno — All rights reserved | 2026 ©
@@ -1834,7 +1834,7 @@ Thank you for your prompt assistance and cooperation.`;
       </div>
 
       {/* 12. Floating Ultra-Premium Stacked WhatsApp Capsule Dock */}
-      <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-3 sm:bottom-6 sm:left-6 z-[100] font-cairo select-none flex flex-col gap-2 sm:gap-2.5 items-start">
+      <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-3 sm:bottom-6 sm:left-6 z-[100] font-cairo select-none flex flex-col gap-1.5 sm:gap-2 items-start">
         {/* Egypt Sales Capsule - Prioritized */}
         <motion.a
           href={`https://wa.me/+201000082722?text=${encodeURIComponent(
@@ -1849,17 +1849,17 @@ Thank you for your prompt assistance and cooperation.`;
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.96 }}
-          className={`group flex items-center justify-between w-[126px] xs:w-[136px] sm:w-[144px] min-h-[40px] sm:min-h-[44px] h-[40px] sm:h-[44px] px-2.5 sm:px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
+          className={`group flex items-center justify-between w-[104px] xs:w-[110px] sm:w-[118px] min-h-[34px] sm:min-h-[36px] h-[34px] sm:h-[36px] px-2 sm:px-2.5 rounded-lg border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
             theme === 'light'
               ? 'bg-white/95 border-emerald-100 shadow-emerald-500/5 hover:border-emerald-400 text-slate-800'
               : 'bg-slate-950/90 border-slate-900 shadow-black/80 hover:border-emerald-500/30 text-white'
           }`}
         >
           {/* Real WhatsApp Icon inside the field */}
-          <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#128c7e] to-[#25d366] flex items-center justify-center text-white shrink-0 group-hover:rotate-12 transition-transform duration-300 shadow-sm shadow-emerald-500/10">
-            <WhatsAppIcon className="w-3 h-3 fill-white" />
+          <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-[#128c7e] to-[#25d366] flex items-center justify-center text-white shrink-0 group-hover:rotate-12 transition-transform duration-300 shadow-sm shadow-emerald-500/10">
+            <WhatsAppIcon className="w-2.5 h-2.5 fill-white" />
           </div>
-          <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 border border-slate-200/20 shadow-inner flex items-center justify-center">
+          <div className="relative w-3.5 h-3.5 rounded-full overflow-hidden shrink-0 border border-slate-200/20 shadow-inner flex items-center justify-center">
             <img 
               src="https://flagcdn.com/w40/eg.png" 
               alt="Egypt" 
@@ -1867,7 +1867,7 @@ Thank you for your prompt assistance and cooperation.`;
               referrerPolicy="no-referrer" 
             />
           </div>
-          <span className="w-14 text-center text-[10px] sm:text-[11px] font-black tracking-wide font-cairo shrink-0">
+          <span className="w-11 text-center text-[10px] font-black tracking-wide font-cairo shrink-0">
             {lang === 'ar' ? 'مصر' : 'Egypt'}
           </span>
           <span className="relative flex h-1.5 w-1.5 select-none shrink-0">
@@ -1890,17 +1890,17 @@ Thank you for your prompt assistance and cooperation.`;
           transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.96 }}
-          className={`group flex items-center justify-between w-[126px] xs:w-[136px] sm:w-[144px] min-h-[40px] sm:min-h-[44px] h-[40px] sm:h-[44px] px-2.5 sm:px-3 rounded-xl border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
+          className={`group flex items-center justify-between w-[104px] xs:w-[110px] sm:w-[118px] min-h-[34px] sm:min-h-[36px] h-[34px] sm:h-[36px] px-2 sm:px-2.5 rounded-lg border shadow-[0_10px_25px_rgba(37,211,102,0.08)] backdrop-blur-xl transition-all duration-300 pointer-events-auto ${
             theme === 'light'
               ? 'bg-white/95 border-emerald-100 shadow-emerald-500/5 hover:border-emerald-400 text-slate-800'
               : 'bg-slate-950/90 border-slate-900 shadow-black/80 hover:border-emerald-500/30 text-white'
           }`}
         >
           {/* Real WhatsApp Icon inside the field */}
-          <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#128c7e] to-[#25d366] flex items-center justify-center text-white shrink-0 group-hover:rotate-12 transition-transform duration-300 shadow-sm shadow-emerald-500/10">
-            <WhatsAppIcon className="w-3 h-3 fill-white" />
+          <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-[#128c7e] to-[#25d366] flex items-center justify-center text-white shrink-0 group-hover:rotate-12 transition-transform duration-300 shadow-sm shadow-emerald-500/10">
+            <WhatsAppIcon className="w-2.5 h-2.5 fill-white" />
           </div>
-          <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 border border-slate-200/20 shadow-inner flex items-center justify-center">
+          <div className="relative w-3.5 h-3.5 rounded-full overflow-hidden shrink-0 border border-slate-200/20 shadow-inner flex items-center justify-center">
             <img 
               src="https://flagcdn.com/w40/sa.png" 
               alt="KSA" 
@@ -1908,7 +1908,7 @@ Thank you for your prompt assistance and cooperation.`;
               referrerPolicy="no-referrer" 
             />
           </div>
-          <span className="w-14 text-center text-[10px] sm:text-[11px] font-black tracking-wide font-cairo shrink-0">
+          <span className="w-11 text-center text-[10px] font-black tracking-wide font-cairo shrink-0">
             {lang === 'ar' ? 'السعودية' : 'KSA'}
           </span>
           <span className="relative flex h-1.5 w-1.5 select-none shrink-0">

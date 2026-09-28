@@ -71,7 +71,7 @@ export default function SystemsFilterBar({
                 <CatIcon className={`w-4 h-4 ${isActive ? colorStyle.activeIcon : colorStyle.inactiveIcon}`} />
               </div>
               <span>{tab.label}</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-normal shrink-0 ${
                 isActive 
                   ? colorStyle.activeBadge 
                   : 'bg-cyan-50 text-[#1470c7] border border-cyan-100 dark:bg-slate-800 dark:text-slate-400'

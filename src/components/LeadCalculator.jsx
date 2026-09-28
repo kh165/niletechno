@@ -102,7 +102,7 @@ export default function LeadCalculator({ lang, theme }) {
                 theme === 'light' ? 'border-slate-200 shadow-sm' : 'border-slate-800 bg-slate-900/50'
               }`}>
                 <img
-                  src={SECTOR_IMAGES[sector]}
+                  src={SECTOR_IMAGES[sector] || retailImg}
                   alt={sector}
                   loading="lazy"
                   decoding="async"

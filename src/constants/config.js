@@ -10,19 +10,26 @@ export const COMPANY_CONFIG = {
   taglineAr: 'شريكك الاستراتيجي في التحول الرقمي وحلول الـ ERP منذ عام 2010',
   taglineEn: 'Your Strategic Digital Transformation & ERP Solutions Partner Since 2010',
   establishedYear: 2010,
-  websiteUrl: 'https://www.niletechno.com',
+  websiteUrl: 'https://niletechno.com',
   email: 'info@niletechno.com',
   pdfProfileUrl: '/company-profile.pdf',
   
-  // Standardized phones and WhatsApp links (No local 0 after country code)
+  // Direct access phone & whatsapp properties
+  // TODO_CONFIRM: Verify correct Riyadh KSA phone and WhatsApp numbers with management (+966535653688 vs +966511351059)
+  whatsappKsa: '966535653688',
+  phoneKsa: '+966535653688',
+  whatsappEgypt: '201000082722',
+  phoneEgypt: '+201000082722',
+
+  // Standardized phones and WhatsApp links
   contact: {
     ksa: {
       countryNameAr: 'المملكة العربية السعودية',
       countryNameEn: 'Saudi Arabia',
-      phoneDisplay: '+966 51 135 1059',
-      phoneRaw: '+966511351059',
-      whatsappNumber: '966511351059', // Clean E.164 for wa.me
-      whatsappUrl: 'https://wa.me/966511351059',
+      phoneDisplay: '+966 53 565 3688',
+      phoneRaw: '+966535653688',
+      whatsappNumber: '966535653688',
+      whatsappUrl: 'https://wa.me/966535653688',
       addressAr: 'طريق أم عمارة، حي بدر، الشفا، الرياض، المملكة العربية السعودية',
       addressEn: 'Am Omara, Badr District, Al-Shifa, Riyadh, Saudi Arabia',
     },
@@ -54,6 +61,8 @@ export const COMPANY_CONFIG = {
 };
 
 export const createWhatsAppUrl = (country = 'ksa', message = '') => {
-  const number = country === 'egy' ? COMPANY_CONFIG.contact.egypt.whatsappNumber : COMPANY_CONFIG.contact.ksa.whatsappNumber;
-  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  const number = country === 'egy' 
+    ? (COMPANY_CONFIG.whatsappEgypt || COMPANY_CONFIG.contact.egypt.whatsappNumber) 
+    : (COMPANY_CONFIG.whatsappKsa || COMPANY_CONFIG.contact.ksa.whatsappNumber);
+  return `https://wa.me/${number}${message ? `?text=${encodeURIComponent(message)}` : ''}`;
 };

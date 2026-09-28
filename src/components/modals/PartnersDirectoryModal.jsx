@@ -4,12 +4,12 @@ import { SUCCESS_PARTNERS } from '../../data';
 import { PartnerLogo } from '../site/BrandVisuals';
 import { COMPANY_CONFIG, createWhatsAppUrl } from '../../constants/config';
 import { AnimatedCounter } from '../site/AnimatedCounter';
-import companyLogo from '../../assets/images/logo.png';
+import companyLogo from '../../assets/images/logo.webp';
 import WhatsAppButton from '../site/WhatsAppButton';
+import Modal from '../common/Modal';
 import { 
   getPartnerInquiryMessage, 
-  getDirectorySalesMessage, 
-  buildWhatsAppUrl 
+  getDirectorySalesMessage
 } from '../../utils/whatsapp';
 
 /**
@@ -32,7 +32,6 @@ export const EGYPT_PARTNER_CATEGORIES = [
 
 export const isEgyptPartner = (partner) => {
   if (!partner) return false;
-  // Explicitly check partner category: if not 'ksa', it is categorized as Egypt
   return partner.category !== 'ksa' || EGYPT_PARTNER_CATEGORIES.includes(partner.category);
 };
 
@@ -50,18 +49,6 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
     }, 100);
     return () => clearTimeout(handler);
   }, [partnerSearchInput]);
-
-  // Handle Escape key to close
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        onClose?.();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
 
   // Categories matching the official Nile Techno portal
   const categories = useMemo(() => [
@@ -100,53 +87,41 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
       const nameEn = String(partner.nameEn || '').toLowerCase();
       const indAr = String(partner.industryAr || '').toLowerCase();
       const indEn = String(partner.industryEn || '').toLowerCase();
+
       return nameAr.includes(q) || nameEn.includes(q) || indAr.includes(q) || indEn.includes(q);
     });
   }, [partnerActiveTab, partnerSearchQuery]);
 
-  // Scroll tabs horizontally
   const scrollTabs = useCallback((direction) => {
-    const el = tabsScrollRef.current;
-    if (!el) return;
-    const step = 260;
-    // In RTL, leftward scrolling is negative scrollLeft in modern browsers
-    if (isRtl) {
-      const delta = direction === 'left' ? -step : step;
-      el.scrollBy({ left: delta, behavior: 'smooth' });
-    } else {
-      const delta = direction === 'right' ? step : -step;
-      el.scrollBy({ left: delta, behavior: 'smooth' });
+    if (tabsScrollRef.current) {
+      const scrollAmount = direction === 'left' ? -200 : 200;
+      tabsScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
-  }, [isRtl]);
+  }, []);
 
   const handlePartnerClick = (partner) => {
-    if (!partner) return;
-    const partnerName = lang === 'ar' ? partner.nameAr : (partner.nameEn || partner.nameAr);
-    const partnerInd = lang === 'ar' ? (partner.industryAr || '') : (partner.industryEn || partner.industryAr || '');
-    const msg = getPartnerInquiryMessage(partnerName, partnerInd, isRtl);
-    window.open(buildWhatsAppUrl(COMPANY_CONFIG.whatsappEgypt || '201000082722', msg), '_blank');
+    const isKsa = partner.category === 'ksa';
+    const partnerName = isRtl ? partner.nameAr : partner.nameEn;
+    const partnerInd = isRtl ? partner.industryAr : partner.industryEn;
+    const waText = getPartnerInquiryMessage(partnerName, partnerInd, isRtl);
+    const country = isKsa ? 'ksa' : 'egy';
+    window.open(createWhatsAppUrl(country, waText), '_blank', 'noopener,noreferrer');
   };
-
-  if (!isOpen) return null;
 
   const waSalesText = getDirectorySalesMessage(isRtl);
 
   return (
-    <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/75 backdrop-blur-xs animate-fade-in"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      dir={isRtl ? 'rtl' : 'ltr'}
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      ariaLabelledBy="partners-modal-title"
+      maxWidth="max-w-5xl"
     >
-      <div 
-        className="w-full max-w-5xl max-h-[92vh] sm:max-h-[88vh] rounded-3xl bg-white border border-slate-200/80 shadow-2xl flex flex-col overflow-hidden text-slate-900 select-none"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[88vh]">
         {/* 1. Modal Header */}
-        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 flex items-center justify-between gap-3 bg-gradient-to-r from-slate-50 via-white to-sky-50/50 shrink-0">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 flex items-center justify-between gap-3 bg-white shrink-0">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-2xl bg-white border border-slate-200/80 shadow-xs flex items-center justify-center p-1.5 shrink-0 overflow-hidden">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-cyan-50 border border-cyan-100 p-1.5 flex items-center justify-center shrink-0">
               <img 
                 src={companyLogo} 
                 alt="Nile Techno" 
@@ -155,11 +130,11 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm sm:text-base md:text-lg font-black font-cairo text-slate-900 leading-tight">
-                  {isRtl ? 'دليل شركاء النجاح المعتمدين' : 'Certified Success Partners Directory'}
+                <h3 id="partners-modal-title" className="text-sm sm:text-base md:text-lg font-black font-cairo text-slate-900 leading-tight">
+                  {isRtl ? 'دليل شركاء النجاح' : 'Success Partners Directory'}
                 </h3>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#1a85ea]/10 text-[#1a85ea] border border-[#1a85ea]/20">
-                  <AnimatedCounter to={Array.isArray(SUCCESS_PARTNERS) ? SUCCESS_PARTNERS.length : 100} duration={1.2} />+ {isRtl ? 'شريك' : 'Partners'}
+                  <AnimatedCounter value={Array.isArray(SUCCESS_PARTNERS) ? SUCCESS_PARTNERS.length : 100} duration={1200} />+ {isRtl ? 'شريك' : 'Partners'}
                 </span>
               </div>
               <p className="text-[11px] sm:text-xs text-slate-500 font-cairo mt-0.5">
@@ -183,31 +158,31 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
         {/* 2. Modal Body (Scrollable) */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-50/50">
           
-          {/* Controls: Search + Categories Carousel */}
+          {/* Controls: Search & Category Tabs */}
           <div className="space-y-3">
-            {/* Search Bar */}
+            {/* Search Input */}
             <div className="relative">
+              <Search className="w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 ltr:left-3 rtl:right-3 pointer-events-none" />
               <input
                 type="text"
                 value={partnerSearchInput}
                 onChange={(e) => setPartnerSearchInput(e.target.value)}
-                placeholder={isRtl ? 'ابحث باسم الشريك أو مجال النشاط أو الدولة...' : 'Search by partner name, activity, or region...'}
-                className="w-full h-11 px-4 ps-10 rounded-2xl bg-white border border-slate-200/90 text-xs sm:text-sm font-cairo text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1a85ea]/20 focus:border-[#1a85ea] transition-all shadow-xs"
+                placeholder={isRtl ? 'ابحث باسم الشركة أو الشريك أو قطاع النشاط...' : 'Search company name or industry sector...'}
+                className="w-full text-xs font-cairo py-2.5 ltr:pl-9 ltr:pr-4 rtl:pr-9 rtl:pl-4 rounded-xl border border-slate-200 bg-white text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-[#1a85ea] transition-all shadow-2xs"
               />
-              <Search className={`w-4 h-4 text-slate-400 absolute top-3.5 ${isRtl ? 'right-3.5' : 'left-3.5'} pointer-events-none`} />
               {partnerSearchInput && (
                 <button
                   type="button"
                   onClick={() => setPartnerSearchInput('')}
-                  className={`absolute top-3 ${isRtl ? 'left-3' : 'right-3'} text-xs text-slate-400 hover:text-slate-600 font-cairo`}
+                  className="absolute top-1/2 -translate-y-1/2 ltr:right-3 rtl:left-3 text-slate-400 hover:text-slate-600 text-xs cursor-pointer"
                 >
-                  {isRtl ? 'مسح' : 'Clear'}
+                  ✕
                 </button>
               )}
             </div>
 
-            {/* Categories Carousel */}
-            <div className="flex-1 min-w-0 flex items-center gap-1.5" dir={isRtl ? 'rtl' : 'ltr'}>
+            {/* Category Navigation Tabs */}
+            <div className="relative flex items-center gap-1.5" role="tablist">
               <button
                 type="button"
                 onClick={() => scrollTabs(isRtl ? 'right' : 'left')}
@@ -218,8 +193,8 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
               </button>
 
               <div 
-                ref={tabsScrollRef}
-                className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1 scroll-smooth"
+                ref={tabsScrollRef} 
+                className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 scroll-smooth flex-1"
               >
                 {categories.map((cat) => {
                   const isActive = partnerActiveTab === cat.id;
@@ -227,11 +202,13 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
                     <button
                       key={cat.id}
                       type="button"
+                      role="tab"
+                      aria-selected={isActive}
                       onClick={() => setPartnerActiveTab(cat.id)}
-                      className={`min-h-[32px] sm:min-h-[34px] px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap cursor-pointer transition-all font-cairo flex items-center justify-center shrink-0 ${
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold font-cairo whitespace-nowrap transition-all duration-200 cursor-pointer shrink-0 ${
                         isActive
-                          ? 'bg-[#1a85ea] text-white shadow-xs font-black'
-                          : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
+                          ? 'bg-[#1a85ea] text-white shadow-sm shadow-[#1a85ea]/30 scale-102'
+                          : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 hover:border-slate-300'
                       }`}
                     >
                       {cat.label}
@@ -257,15 +234,17 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 justify-items-center">
                 {filteredPartners.map((partner) => {
                   return (
-                    <div 
+                    <button 
                       key={partner.id}
+                      type="button"
                       onClick={() => handlePartnerClick(partner)}
+                      aria-label={isRtl ? partner.nameAr : partner.nameEn}
                       className="service-card-lift w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-slate-200 hover:border-[#1a85ea]/70 bg-white shadow-xs hover:shadow-lg hover:-translate-y-1.5 hover:scale-105 transition-all duration-300 flex items-center justify-center p-2 sm:p-2.5 relative overflow-hidden group cursor-pointer"
                     >
                       <div className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                         <PartnerLogo partner={partner} theme={theme} />
                       </div>
-                    </div>
+                    </button>
                   );
                 })}
               </div>
@@ -288,7 +267,7 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
 
         {/* Modal Footer */}
         <div className="px-4 sm:px-6 py-2.5 sm:py-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2.5 shrink-0 bg-white">
-          <span className="text-[10px] sm:text-xs text-slate-600 font-cairo text-center sm:text-right">
+          <span className="text-[10px] sm:text-xs text-slate-600 font-cairo text-center sm:text-start">
             {isRtl 
               ? '* اضغط على أي شريك للاستفسار المباشر عن حلولنا المنفذة لديه، أو تواصل مع المبيعات'
               : '* Click any partner to inquire about deployed software systems, or contact sales'}
@@ -309,6 +288,6 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
           </div>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }

@@ -13,7 +13,7 @@ export class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     // Honest logging without false claims of automatic remote alerting
-    if (process.env.NODE_ENV !== 'production') {
+    if (import.meta.env.DEV) {
       console.error('Unhandled Application Error:', error, errorInfo);
     }
   }

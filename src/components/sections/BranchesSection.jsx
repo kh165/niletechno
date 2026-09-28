@@ -26,7 +26,7 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
           <span className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 uppercase tracking-wider font-cairo bg-cyan-50 text-cyan-700 dark:bg-cyan-950/80 dark:text-cyan-400">
             {lang === 'ar' ? 'تواجدنا الميداني' : 'Our Physical Presence'}
           </span>
-          <h2 className="text-2xl sm:text-3.5xl font-extrabold font-cairo mb-3 leading-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl sm:text-3xl font-extrabold font-cairo mb-3 leading-tight text-slate-900 dark:text-white">
             {lang === 'ar' ? 'فروع شركة نايل تكنو للبرمجيات' : 'Regional Offices & Headquarters'}
           </h2>
           <p className="text-xs sm:text-sm font-cairo max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
@@ -148,7 +148,7 @@ function BranchesSection({ lang, theme, selectedBranchId, setSelectedBranchId })
                       <MapPin className="w-3.5 h-3.5 text-[#1a85ea] dark:text-[#38bdf8] shrink-0" />
                       <span>{lang === 'ar' ? 'العنوان الدقيق الحالي للفروع' : 'Current active branch location'}</span>
                     </div>
-                    <p className="text-xs sm:text-sm font-bold font-cairo leading-relaxed text-slate-850 dark:text-slate-100">
+                    <p className="text-xs sm:text-sm font-bold font-cairo leading-relaxed text-slate-800 dark:text-slate-100">
                       {lang === 'ar' ? selectedBranch.addressAr : selectedBranch.addressEn}
                     </p>
                   </div>

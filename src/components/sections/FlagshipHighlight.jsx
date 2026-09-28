@@ -23,7 +23,8 @@ export default function FlagshipHighlight({
           <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold">
               <ShieldCheck className="w-4 h-4 text-emerald-500" />
-              <span>{lang === 'ar' ? 'معتمد رسمياً للفاتورة الإلكترونية ZATCA & ETA' : 'Certified E-Invoicing (ZATCA & ETA)'}</span>
+              {/* TODO: Update once official accreditation certificate is confirmed */}
+              <span>{lang === 'ar' ? 'متوافق مع متطلبات الفاتورة الإلكترونية (ZATCA & ETA)' : 'Compliant with E-Invoicing Requirements (ZATCA & ETA)'}</span>
             </span>
             <span className="hidden sm:inline text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#1a85ea]/10 text-[#1a85ea] dark:text-[#38bdf8] font-bold">
@@ -37,7 +38,7 @@ export default function FlagshipHighlight({
           </div>
 
           {/* Main Headline */}
-          <h3 className="text-2xl sm:text-3xl md:text-3.5xl font-black tracking-tight leading-snug text-slate-950 font-cairo dark:text-white">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight leading-snug text-slate-950 font-cairo dark:text-white">
             {lang === 'ar' ? 'منظومة الحسابات العامة وإدارة المخازن المتكاملة' : 'General Ledger & Integrated Inventory ERP Suite'}
           </h3>
 

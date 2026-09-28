@@ -34,7 +34,7 @@ function InteractiveConsole({ lang }) {
           <span className="inline-block px-3.5 py-1 rounded-full text-[10px] font-bold mb-3 uppercase tracking-wider font-cairo bg-cyan-50 text-cyan-700 dark:bg-cyan-950/80 dark:text-cyan-400">
             {lang === 'ar' ? 'لوحة المحاكاة والتحكم التفاعلية لايف' : 'Live Interactive Software Experience'}
           </span>
-          <h2 className="text-2.5xl sm:text-3.5xl font-extrabold font-cairo mb-3 leading-tight text-slate-950 dark:text-white">
+          <h2 className="text-2xl sm:text-3xl font-extrabold font-cairo mb-3 leading-tight text-slate-950 dark:text-white">
             {lang === 'ar' ? 'تحكم باللوحة التفاعلية واكتشف قوة النظام' : 'Take Control & Test Nile Techno Capabilities'}
           </h2>
           <p className="text-xs sm:text-sm font-cairo max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
@@ -47,7 +47,7 @@ function InteractiveConsole({ lang }) {
         {/* Elegant glassmorphic console frame */}
         <Reveal className="max-w-4xl mx-auto rounded-2xl border overflow-hidden shadow-2xl transition-all duration-300 bg-white border-slate-200/80 shadow-cyan-100/20 dark:bg-[#131d35]/90 dark:border-slate-700/60" delay={0.1}>
           {/* Header bar */}
-          <div className="px-4 py-3 border-b flex justify-between items-center bg-slate-100/50 border-slate-205 dark:bg-[#0e1629] dark:border-slate-700/60">
+          <div className="px-4 py-3 border-b flex justify-between items-center bg-slate-100/50 border-slate-200 dark:bg-[#0e1629] dark:border-slate-700/60">
             {/* Window control dots */}
             <div className="flex gap-1.5 order-2 sm:order-1">
               <span className="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
@@ -141,7 +141,7 @@ function InteractiveConsole({ lang }) {
                     </div>
 
                     {/* Responsive customized SVG chart representing sales */}
-                    <div className="h-40 w-full relative flex items-end justify-between px-4 pb-2 border-b border-l border-slate-250 dark:border-slate-800">
+                    <div className="h-40 w-full relative flex items-end justify-between px-4 pb-2 border-b border-l border-slate-200 dark:border-slate-800">
                       {/* Grid background lines */}
                       <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
                         <div className="border-t border-slate-400 w-full"></div>
@@ -150,8 +150,8 @@ function InteractiveConsole({ lang }) {
                         <div className="border-t border-slate-400 h-0 w-full"></div>
                       </div>
 
-                      {/* Animated SVG Path Line Chart */}
-                      <svg className="absolute inset-x-0 bottom-2 h-32 w-full overflow-visible" preserveAspectRatio="none">
+                      {/* Animated SVG Path Line Chart with numeric coordinates */}
+                      <svg className="absolute inset-x-0 bottom-2 h-32 w-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
                         <defs>
                           <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stopColor="#1a85ea" stopOpacity="0.4" />
@@ -160,7 +160,7 @@ function InteractiveConsole({ lang }) {
                         </defs>
                         {/* Dynamic Path compilation based on state */}
                         <path
-                          d={`M ${salesData.map((val, idx) => `${(idx / (salesData.length - 1)) * 100}%,${100 - (val / 100) * 100}`).join(' L ')}`}
+                          d={`M ${salesData.map((val, idx) => `${(idx / (salesData.length - 1)) * 100},${100 - (val / 100) * 80}`).join(' L ')}`}
                           fill="none"
                           stroke="#1a85ea"
                           strokeWidth="3.5"
@@ -172,45 +172,48 @@ function InteractiveConsole({ lang }) {
                         />
                         {/* Shaded Area under path */}
                         <path
-                          d={`M 0,100 L ${salesData.map((val, idx) => `${(idx / (salesData.length - 1)) * 100}%,${100 - (val / 100) * 100}`).join(' L ')} L 100,100 Z`}
+                          d={`M 0,100 L ${salesData.map((val, idx) => `${(idx / (salesData.length - 1)) * 100},${100 - (val / 100) * 80}`).join(' L ')} L 100,100 Z`}
                           fill="url(#chartGrad)"
                           className="transition-all duration-500 ease-out"
                         />
                       </svg>
 
                       {/* Display individual pulsing bar columns */}
-                      {salesData.map((val, idx) => (
-                        <div key={idx} className="flex flex-col items-center z-10 w-8 group">
-                          {/* Value tooltip */}
-                          <div className="transition-all duration-200 transform -translate-y-1 mb-1 opacity-0 group-hover:opacity-100 bg-cyan-500 text-white font-mono text-[9px] font-bold px-1.5 py-0.5 rounded shadow absolute top-5 scale-90">
-                            {val}K
+                      {salesData.map((val, idx) => {
+                        const hoursLabels = ['09:00', '11:00', '13:00', '15:00', '17:00', '19:00'];
+                        return (
+                          <div key={idx} className="flex flex-col items-center z-10 w-8 group relative">
+                            {/* Value tooltip */}
+                            <div className="transition-all duration-200 transform -translate-y-1 mb-1 opacity-0 group-hover:opacity-100 bg-cyan-500 text-white font-mono text-[9px] font-bold px-1.5 py-0.5 rounded shadow absolute -top-6 scale-90 pointer-events-none whitespace-nowrap">
+                              {val}K
+                            </div>
+                            
+                            {/* Mini visual column */}
+                            <div 
+                              style={{ height: `${val}%` }} 
+                              className={`w-2 rounded-t bg-cyan-400/20 group-hover:bg-cyan-500/60 transition-all duration-300 ease-out relative overflow-hidden ${
+                                salesAnim && idx === salesData.length - 1 ? 'animate-bounce' : ''
+                              }`}
+                            >
+                              <div className="absolute top-0 bottom-0 left-0 right-0 bg-cyan-400 animate-pulse"></div>
+                            </div>
+                            
+                            {/* Real hour label bottom */}
+                            <span className="text-[8px] font-mono mt-1 font-bold text-slate-500 dark:text-slate-400">
+                              {hoursLabels[idx] || `${idx + 1}:00`}
+                            </span>
                           </div>
-                          
-                          {/* Mini visual column */}
-                          <div 
-                            style={{ height: `${val}%` }} 
-                            className={`w-2 rounded-t bg-cyan-400/20 group-hover:bg-cyan-500/60 transition-all duration-300 ease-out relative overflow-hidden ${
-                              salesAnim && idx === salesData.length - 1 ? 'animate-bounce' : ''
-                            }`}
-                          >
-                            <div className="absolute top-0 bottom-0 left-0 right-0 bg-cyan-400 animate-pulse"></div>
-                          </div>
-                          
-                          {/* Label bottom */}
-                          <span className="text-[8px] font-mono mt-1 font-bold text-slate-500 dark:text-slate-400">
-                            {idx + 1}0:00
-                          </span>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
 
                     {/* Quick values summary */}
-                    <div className="feature-block-lift flex flex-wrap gap-2.5 sm:gap-4 items-center justify-start mt-4 p-3.5 sm:p-4 rounded-xl border transition-all duration-300 bg-cyan-500/5 border-cyan-500/10 hover:border-cyan-300 dark:bg-cyan-950/20 dark:border-cyan-850/30 dark:hover:border-cyan-500/40">
+                    <div className="feature-block-lift flex flex-wrap gap-2.5 sm:gap-4 items-center justify-start mt-4 p-3.5 sm:p-4 rounded-xl border transition-all duration-300 bg-cyan-500/5 border-cyan-500/10 hover:border-cyan-300 dark:bg-cyan-950/20 dark:border-cyan-800/30 dark:hover:border-cyan-500/40">
                       <span className="text-xs font-bold font-cairo text-slate-600 dark:text-slate-400">
                         {lang === 'ar' ? 'ملخص مبيعات اليوم :' : 'Daily Sales Revenue :'}
                       </span>
                       <span className="text-xs font-black font-mono animate-pulse text-cyan-700 dark:text-cyan-400">
-                        {salesData.reduce((a, b) => a + b, 0).toLocaleString()} KSA
+                        {salesData.reduce((a, b) => a + b, 0).toLocaleString()} SAR
                       </span>
                       <span className="text-[11px] font-bold font-cairo px-3 py-1 rounded-full whitespace-nowrap bg-emerald-50 text-emerald-600 border border-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-900/20">
                         {lang === 'ar' ? 'ارتفاع مستمر ↑' : '+14.2% growth ↑'}
@@ -271,7 +274,7 @@ function InteractiveConsole({ lang }) {
                               : 'bg-slate-900/60 text-slate-300 border-slate-800 hover:border-slate-700'
                           }`}
                         >
-                          <span className="text-[9px] font-black font-cairo leading-none">القاهرة</span>
+                          <span className="text-[9px] font-black font-cairo leading-none">{lang === 'ar' ? 'القاهرة' : 'Cairo'}</span>
                         </button>
 
                         {/* Riyadh Node */}
@@ -284,7 +287,7 @@ function InteractiveConsole({ lang }) {
                               : 'bg-slate-900/60 text-slate-300 border-slate-800 hover:border-slate-700'
                           }`}
                         >
-                          <span className="text-[9px] font-black font-cairo leading-none">الرياض</span>
+                          <span className="text-[9px] font-black font-cairo leading-none">{lang === 'ar' ? 'الرياض' : 'Riyadh'}</span>
                         </button>
 
                         {/* Jeddah Node */}
@@ -297,7 +300,7 @@ function InteractiveConsole({ lang }) {
                               : 'bg-slate-900/60 text-slate-300 border-slate-800 hover:border-slate-700'
                           }`}
                         >
-                          <span className="text-[9px] font-black font-cairo leading-none">جدة</span>
+                          <span className="text-[9px] font-black font-cairo leading-none">{lang === 'ar' ? 'جدة' : 'Jeddah'}</span>
                         </button>
 
                         {/* Dammam Node */}
@@ -310,7 +313,7 @@ function InteractiveConsole({ lang }) {
                               : 'bg-slate-900/60 text-slate-300 border-slate-800 hover:border-slate-700'
                           }`}
                         >
-                          <span className="text-[9px] font-black font-cairo leading-none">الدمام</span>
+                          <span className="text-[9px] font-black font-cairo leading-none">{lang === 'ar' ? 'الدمام' : 'Dammam'}</span>
                         </button>
                       </div>
 
@@ -336,7 +339,8 @@ function InteractiveConsole({ lang }) {
 
                         <div className="feature-block-lift p-3 rounded-xl border transition-all duration-300 bg-slate-100/60 border-slate-200 hover:border-cyan-300 dark:bg-slate-900/50 dark:border-slate-800 dark:hover:border-slate-700">
                           <span className="text-[9px] text-slate-500 block uppercase font-mono tracking-wider">
-                            {lang === 'ar' ? 'حالة المناهزة والمطابقة' : 'Cloud Sync Link status'}
+                            {/* REVIEW: حالة المزامنة والمطابقة */}
+                            {lang === 'ar' ? 'حالة المزامنة والمطابقة' : 'Cloud Sync Link status'}
                           </span>
                           <span className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-500 mt-0.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -416,7 +420,7 @@ function InteractiveConsole({ lang }) {
                           )}
 
                           {/* Quick simulated QR graphic canvas */}
-                          <div className="w-12 h-12 bg-slate-950 border border-slate-830 rounded flex items-center justify-center p-1 shrink-0 relative">
+                          <div className="w-12 h-12 bg-slate-950 border border-slate-800 rounded flex items-center justify-center p-1 shrink-0 relative">
                             <div className="grid grid-cols-4 gap-[2px] w-full h-full opacity-95">
                               {[...Array(16)].map((_, i) => (
                                 <div 
@@ -439,7 +443,8 @@ function InteractiveConsole({ lang }) {
                               {lang === 'ar' ? 'الاعتماد والمطابقة والـ Hash' : 'Regulatory Quality Seal'}
                             </span>
                             <span className="text-[11px] font-black font-cairo block leading-none mt-1 text-slate-900 dark:text-white">
-                              {lang === 'ar' ? 'فواتير مطابقة كلياً دافع' : 'Nile Techno Certified'}
+                              {/* REVIEW: فواتير مطابقة كلياً للمتطلبات */}
+                              {lang === 'ar' ? 'فواتير مطابقة كلياً للمتطلبات' : 'Fully Compliant Invoices'}
                             </span>
                           </div>
                         </div>

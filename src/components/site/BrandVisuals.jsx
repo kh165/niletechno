@@ -5,7 +5,6 @@ import {
   CalendarClock, Car, Smartphone, Tablet, ChefHat, HeartPulse, Building2, CircleHelp,
   Globe2, UtensilsCrossed, Wheat, House, Handshake, CarFront, Pill, Leaf, Factory
 } from 'lucide-react';
-import { SUCCESS_PARTNERS } from '../../data';
 import companyLogo from '../../assets/images/logo.webp';
 
 const logoTransparentWebp = companyLogo;
@@ -60,6 +59,8 @@ const getPartnerLogo = (partner) => {
     />
   );
 };
+
+import { SUCCESS_PARTNERS } from '../../data/partners';
 
 // Verified, locally cached partner logo manifests (100% Guaranteed 200 OK)
 const VERIFIED_CATEGORY_LOGOS = {
@@ -160,14 +161,13 @@ const VERIFIED_CATEGORY_LOGOS = {
 
 // Intelligent, lightning-fast client logo renderer with instant display & zero missing logos
 const PartnerLogo = ({ partner, theme }) => {
-  if (!partner) return null;
-
   const [hasError, setHasError] = useState(false);
-  const pCat = partner.category || 'ksa';
+  
+  const pCat = partner?.category || 'ksa';
   const categoryLogos = VERIFIED_CATEGORY_LOGOS[pCat] || VERIFIED_CATEGORY_LOGOS.ksa;
   
   // Find index of partner in its specific category pool safely
-  const partnerIdStr = String(partner.id || '');
+  const partnerIdStr = String(partner?.id || '');
   const catPool = Array.isArray(SUCCESS_PARTNERS) ? SUCCESS_PARTNERS.filter(p => p && p.category === pCat) : [];
   const indexInCat = catPool.findIndex(p => p && String(p.id) === partnerIdStr);
   const catIdx = indexInCat !== -1 ? indexInCat : 0;
@@ -177,6 +177,8 @@ const PartnerLogo = ({ partner, theme }) => {
     setHasError(false);
   }, [partner?.id, partner?.imageUrl]);
   
+  if (!partner) return null;
+
   // Resolve image URL (Prioritize explicit partner imageUrl, then category verified asset)
   let imageUrl = partner.imageUrl;
   if (!imageUrl && categoryLogos && categoryLogos.length > 0) {
@@ -208,12 +210,12 @@ const PartnerLogo = ({ partner, theme }) => {
             }
           }}
           className="w-full h-full object-contain select-none p-0.5 transition-transform duration-200"
-          loading="eager"
+          loading="lazy"
         />
       ) : (
         <div className="w-full h-full rounded-md bg-gradient-to-br from-slate-50 to-cyan-50/50 border border-slate-200/60 flex flex-col items-center justify-center p-0.5 text-center">
           <div className="text-[#00a3c4] opacity-85 scale-75">
-            {getPartnerLogo(partner, 'light')}
+            {getPartnerLogo(partner)}
           </div>
           <span className="text-[9px] font-black text-slate-700 tracking-tight leading-none font-cairo select-none truncate max-w-full px-0.5">
             {initials}
@@ -227,12 +229,12 @@ const PartnerLogo = ({ partner, theme }) => {
 // Premium image-based logo for Nile Techno with dynamic fallback sequence
 const NileTechnoLogo = ({ theme, lang, className }) => {
   return (
-    <div className="flex items-center select-none hover:opacity-95 transition-opacity">
+    <div className="flex items-center shrink-0 select-none hover:opacity-95 transition-opacity max-h-16 overflow-hidden">
       <img
         src={companyLogo}
         alt="Nile Techno Logo"
         decoding="async"
-        className={className || "h-11 sm:h-12 md:h-13 w-auto object-contain transition-all duration-300 hover:scale-[1.02]"}
+        className={className || "h-10 sm:h-12 md:h-13 w-auto max-w-[200px] object-contain transition-all duration-300 hover:scale-[1.02]"}
         onError={(e) => {
           e.target.src = logoTransparentWebp;
         }}
@@ -252,8 +254,8 @@ const SubtitleRotator = ({ lang, theme }) => {
     },
     {
       icon: Building2,
-      ar: 'منظومة الفاتورة الضريبية والمبيعات المعتمدة من هيئة الزكاة والضرائب',
-      en: 'ZATCA & ETA Certified Digital Invoicing & Instant POS Solutions',
+      ar: 'متوافق مع متطلبات هيئة الزكاة والضريبة والجمارك (ZATCA) ومصلحة الضرائب المصرية (ETA)',
+      en: 'Compliant with ZATCA & ETA Digital Invoicing & Instant POS Standards',
       color: 'text-emerald-500'
     },
     {
@@ -289,7 +291,7 @@ const SubtitleRotator = ({ lang, theme }) => {
   const CurrentIcon = current.icon;
 
   return (
-    <div className="h-9 overflow-hidden flex items-center justify-center lg:justify-start font-cairo select-none">
+    <div className="min-h-[40px] flex items-center justify-center lg:justify-start font-cairo select-none py-1">
       <AnimatePresence mode="wait">
         <motion.div 
           key={index} 
@@ -297,14 +299,14 @@ const SubtitleRotator = ({ lang, theme }) => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -12, opacity: 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className={`text-xs font-bold tracking-wide flex items-center gap-2 px-3.5 py-1.5 rounded-full border shadow-sm select-none transition-all duration-300 ${
+          className={`text-xs font-bold tracking-wide flex items-center gap-2 px-3.5 py-1.5 rounded-full border shadow-sm select-none transition-all duration-300 max-w-full ${
             theme === 'light'
               ? 'text-slate-800 bg-white border-slate-200 shadow-sm'
               : 'text-slate-200 bg-slate-900/80 border-slate-800'
           }`}
         >
           <CurrentIcon className={`w-3.5 h-3.5 shrink-0 ${current.color}`} />
-          <span className="truncate">{lang === 'ar' ? current.ar : current.en}</span>
+          <span className="whitespace-normal leading-tight">{lang === 'ar' ? current.ar : current.en}</span>
         </motion.div>
       </AnimatePresence>
     </div>

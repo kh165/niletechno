@@ -612,7 +612,7 @@ Thank you for your prompt assistance and cooperation.`;
                 <NileTechnoLogo 
                   theme={theme} 
                   lang={lang} 
-                  className={scrolled ? "h-9 sm:h-11 md:h-12 lg:h-[52px] w-auto max-w-full object-contain transition-all duration-300" : "h-11 sm:h-14 md:h-16 lg:h-[72px] w-auto max-w-full object-contain transition-all duration-300"}
+                  className={scrolled ? "h-9 sm:h-10 md:h-11 lg:h-12 w-auto max-w-[180px] object-contain transition-all duration-300" : "h-11 sm:h-12 md:h-14 lg:h-16 w-auto max-w-[210px] object-contain transition-all duration-300"}
                 />
               </a>
 
@@ -1096,7 +1096,7 @@ Thank you for your prompt assistance and cooperation.`;
         <div className="max-w-7xl 2xl:max-w-[1360px] 3xl:max-w-[1580px] 4xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8">
           
           <Reveal className="text-center max-w-3xl mx-auto mb-5">
-            <h2 className={`text-2xl sm:text-3.5xl font-extrabold font-cairo mb-3 uppercase tracking-wide ${
+            <h2 className={`text-2xl sm:text-3xl font-extrabold font-cairo mb-3 uppercase tracking-wide ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
             }`}>
               {lang === 'ar' ? 'هل أنت محتار؟ اختر النظام الملائم الآن' : 'Unsure of What Fits Your Business Scale?'}

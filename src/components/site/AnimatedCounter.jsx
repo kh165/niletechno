@@ -1,11 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 
 /**
  * Parses numeric strings with prefixes (+), suffixes (%), thousands commas (,), and decimals.
- * Returns null if the value is non-numeric or complex like "24/7".
+ * Returns null if the value is non-numeric, a year (e.g. 2010), or complex like "24/7".
  */
 function parseCountableValue(raw) {
   if (typeof raw === 'number') {
+    // If it's a fixed founding year like 2010, don't animate from 0
+    if (raw >= 1990 && raw <= 2030) {
+      return null;
+    }
     return {
       target: raw,
       prefix: '',
@@ -21,8 +25,8 @@ function parseCountableValue(raw) {
 
   const str = raw.trim();
 
-  // If it contains a slash, date dash, or multiple non-standard separators (e.g., "24/7"), keep static
-  if (str.includes('/') || (str.includes('-') && !str.startsWith('-'))) {
+  // If it's the established year (2010) or date string, keep static
+  if (str === '2010' || str.includes('2010') || str.includes('/') || (str.includes('-') && !str.startsWith('-'))) {
     return null;
   }
 
@@ -68,31 +72,34 @@ function formatCurrent(val, { prefix, suffix, hasComma, decimals }) {
  * AnimatedCounter: Counts up to the target value when visible in the viewport.
  * Honors prefers-reduced-motion and gracefully falls back for non-numeric content.
  */
-export function AnimatedCounter({ value, duration = 1200, className = '' }) {
+export function AnimatedCounter({ value, to, duration = 1200, className = '' }) {
+  const targetValue = to !== undefined ? to : value;
   const ref = useRef(null);
-  const parsed = parseCountableValue(value);
 
-  // If not countable, render as-is
-  if (!parsed) {
-    return <span className={className}>{value}</span>;
-  }
+  const parsed = useMemo(() => parseCountableValue(targetValue), [targetValue]);
 
-  const [displayValue, setDisplayValue] = useState(() =>
-    formatCurrent(0, parsed)
-  );
+  const [displayValue, setDisplayValue] = useState(() => {
+    if (!parsed) return targetValue;
+    return formatCurrent(0, parsed);
+  });
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
+    if (!parsed) {
+      setDisplayValue(targetValue);
+      return;
+    }
+
     // Check reduced motion
     if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setDisplayValue(value);
+      setDisplayValue(targetValue);
       setHasAnimated(true);
       return;
     }
 
     const element = ref.current;
     if (!element || typeof IntersectionObserver === 'undefined') {
-      setDisplayValue(value);
+      setDisplayValue(targetValue);
       setHasAnimated(true);
       return;
     }
@@ -120,7 +127,7 @@ export function AnimatedCounter({ value, duration = 1200, className = '' }) {
             if (progress < 1) {
               requestAnimationFrame(tick);
             } else {
-              setDisplayValue(value); // guarantee exact final string representation
+              setDisplayValue(targetValue); // guarantee exact final string representation
             }
           };
 
@@ -135,7 +142,12 @@ export function AnimatedCounter({ value, duration = 1200, className = '' }) {
     return () => {
       observer.disconnect();
     };
-  }, [value, duration, hasAnimated, parsed]);
+  }, [targetValue, duration, hasAnimated, parsed]);
+
+  // If not countable, render as-is without breaking hook order
+  if (!parsed) {
+    return <span className={className}>{targetValue}</span>;
+  }
 
   return (
     <span ref={ref} className={className}>

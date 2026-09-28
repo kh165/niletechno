@@ -46,7 +46,7 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
           <span className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 uppercase tracking-wider font-cairo bg-cyan-50 text-cyan-700 dark:bg-cyan-950/80 dark:text-cyan-400">
             {isRtl ? 'شركاء نجاحنا في الشرق الأوسط' : 'Enterprise Trust Across Middle East'}
           </span>
-          <h2 className="text-2xl sm:text-3.5xl font-extrabold font-cairo mb-3 leading-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl sm:text-3xl font-extrabold font-cairo mb-3 leading-tight text-slate-900 dark:text-white">
             {isRtl ? 'سجل فخرنا وشركاء النجاح مع نايل تكنو' : 'Over 16 Years of Client Partnerships'}
           </h2>
           <p className="text-xs sm:text-sm font-cairo max-w-2xl mx-auto text-slate-600 dark:text-slate-400">

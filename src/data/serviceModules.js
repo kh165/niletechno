@@ -8,6 +8,7 @@ export const SERVICE_MODULES = [
     category: 'erp',
     iconName: 'Calculator',
     accentColor: 'from-blue-600 to-cyan-500',
+    youtubeId: 'u_Z48DhHULo', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/u_Z48DhHULo?si=wOAvTkjrPCvAHw01',
     featuresAr: [
       'إنشاء دليل حسابات ودليل مركز تكلفة مرن',
@@ -35,6 +36,7 @@ export const SERVICE_MODULES = [
     category: 'logistics',
     iconName: 'Warehouse',
     accentColor: 'from-emerald-600 to-teal-500',
+    youtubeId: 'HhS52NgxyV8', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/HhS52NgxyV8?si=wEjRYlsUpGm8GfBw',
     featuresAr: [
       'متابعة حركة المخازن المتعددة ومعدلات دوران الأصناف',
@@ -62,6 +64,7 @@ export const SERVICE_MODULES = [
     category: 'logistics',
     iconName: 'TrendingUp',
     accentColor: 'from-cyan-600 to-blue-500',
+    youtubeId: '09w8-IOCgUo', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/09w8-IOCgUo?si=IETm3HI_orq__sq7',
     featuresAr: [
       'متابعة كافة المخازن، السيارات البضائعية والمناديب الميدانيين',
@@ -89,6 +92,7 @@ export const SERVICE_MODULES = [
     category: 'erp',
     iconName: 'Cpu',
     accentColor: 'from-amber-600 to-orange-500',
+    youtubeId: 'mV1-bJBMJwM', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/mV1-bJBMJwM?si=c-LEZ7Zx1a0pJmHA',
     featuresAr: [
       'إمكانية عمل معايرة وهيكل المواد (BOM) لكل منتج على حدة',
@@ -116,6 +120,7 @@ export const SERVICE_MODULES = [
     category: 'erp',
     iconName: 'Users',
     accentColor: 'from-indigo-600 to-purple-500',
+    youtubeId: 'gjjZgYxYV7o', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/gjjZgYxYV7o?si=aphreyeE5vaOerjG',
     featuresAr: [
       'ملفات كاملة للموظفين تشمل كافة المستندات والبيانات القانونية',
@@ -143,6 +148,7 @@ export const SERVICE_MODULES = [
     category: 'retail',
     iconName: 'ShoppingBag',
     accentColor: 'from-pink-600 to-rose-500',
+    youtubeId: 'OmYi3ncF-wc', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/OmYi3ncF-wc?si=gcqGasNsScpcBxbC',
     featuresAr: [
       'واجهات سهلة ومبسطة جداً لتسريع عمليات البيع في الكاشير',
@@ -150,7 +156,7 @@ export const SERVICE_MODULES = [
       'ربط وتكامل فوري مع موازين الباركود الإلكترونية والباركود المدمج',
       'ربط مبيعات كل نقطة بيع تلقائياً بالمخزن المحدد لها لتحديث الأرصدة',
       'متابعة حد الطلب والتنبيه التلقائي بنواقص الأصناف الهامة',
-      'إمكانيات طباعة باركود الأصناف وتولير ملصقات الأسعار من النظام'
+      'إمكانيات طباعة باركود الأصناف وتوليد ملصقات الأسعار من النظام // REVIEW'
     ],
     featuresEn: [
       'Sleek and easy cash-desk viewport to optimize fast transactions',
@@ -170,6 +176,7 @@ export const SERVICE_MODULES = [
     category: 'retail',
     iconName: 'Gem',
     accentColor: 'from-yellow-600 to-amber-500',
+    youtubeId: '7jNv0wpMRQQ', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/7jNv0wpMRQQ?si=dBESTz983MTYi8Fu',
     featuresAr: [
       'تسجيل الأصناف مع تصنيف العيارات (18, 21, 24) والمصنعية',
@@ -197,11 +204,12 @@ export const SERVICE_MODULES = [
     category: 'retail',
     iconName: 'Utensils',
     accentColor: 'from-orange-600 to-red-500',
+    youtubeId: 'vRnWqeNIU4A', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/vRnWqeNIU4A?si=auIICE8Kvwp15kHa',
     featuresAr: [
       'نظام دقيق لإدارة تكوين الوجبات (الريسيبي) وحساب استهلاك المواد خام',
-      'إدارة شاملة للصالات، الطاولات، والتيك أوف، والتسليم المنزلي',
-      'منظومة كابتن أورد (Captain Order) متطورة من أجهزة التابلت والموبايل',
+      'إدارة شاملة للصالات، الطاولات، الطلبات الخارجية (تيك أواي)، والتوصيل المنزلي // REVIEW',
+      'منظومة كابتن أوردر (Captain Order) متطورة من أجهزة التابلت والموبايل // REVIEW',
       'طباعة بونات المطبخ آلياً مقسمة حسب أقسام التجهيز والمشروبات والفيزا',
       'نظام متكامل لخدمة مراكز الاتصال (Call Center) وتحديد فروع التنفيذ',
       'تتبع الطيارين (الدليفري) وحساب العمولات ومدة توصيل الطلبات'
@@ -224,6 +232,7 @@ export const SERVICE_MODULES = [
     category: 'logistics',
     iconName: 'Truck',
     accentColor: 'from-teal-600 to-emerald-500',
+    youtubeId: 'D8tP6AbxKW4', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/D8tP6AbxKW4?si=HLxzBD6b9yXkXu4t',
     featuresAr: [
       'تسجيل الشاحنات، المقطورات، السائقين وبيانات الرخص والتحذيرات',
@@ -251,6 +260,7 @@ export const SERVICE_MODULES = [
     category: 'specialized',
     iconName: 'Wrench',
     accentColor: 'from-sky-600 to-blue-500',
+    youtubeId: 'D8tP6AbxKW4', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/D8tP6AbxKW4?si=d3JKL7BwDkqG4hgv',
     featuresAr: [
       'تسجيل بيانات العملاء وتصنيفهم حسب المنطقة والنوع والفلتر المستخدم',
@@ -278,6 +288,7 @@ export const SERVICE_MODULES = [
     category: 'specialized',
     iconName: 'CalendarClock',
     accentColor: 'from-violet-600 to-fuchsia-500',
+    youtubeId: 'qv2magISJAo', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/qv2magISJAo?si=0JIV7uGADovBPaly',
     featuresAr: [
       'شاشات تقويمية مرنة وسهلة جداً لعرض المواعيد الشاغرة ومحجوزة',
@@ -298,13 +309,14 @@ export const SERVICE_MODULES = [
   },
   {
     id: 'cars',
-    titleAr: 'إدارة معارض معرض السيارات',
+    titleAr: 'إدارة معارض السيارات', // REVIEW
     titleEn: 'Car Showrooms & Installments',
     descriptionAr: 'برنامج لإدارة معارض السيارات وتتبع الشاسيه والموتور وعقود التقسيط والكمبيالات المحصلة.',
     descriptionEn: 'Manage vehicle inventory, match engine/chassis numbers, construct installment agreements, and print promissory notes.',
     category: 'specialized',
     iconName: 'Car',
-    accentColor: 'from-neutral-605 to-slate-500',
+    accentColor: 'from-neutral-600 to-slate-500',
+    youtubeId: 'D8tP6AbxKW4', // TODO: Dedicated video ID
     youtubeUrl: 'https://youtu.be/D8tP6AbxKW4?si=BHeZBYc0ZmgeAKGg',
     featuresAr: [
       'دليل كامل للعملاء والموردين وتصنيف فئات السيارات الفاخرة والاقتصادية',

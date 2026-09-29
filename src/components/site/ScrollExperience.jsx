@@ -68,14 +68,11 @@ export function Reveal({
   }, []);
 
   // Progressive enhancement:
-  // If not mounted yet, render with default styles (opacity 1).
-  // Once mounted, apply the animation state.
+  // Once mounted, smoothly fade in without vertical translation to preserve stable scroll geometry
   const animatedStyle = mounted
     ? {
         opacity: isRevealed ? 1 : 0,
-        transform: isRevealed ? 'translate3d(0, 0, 0)' : `translate3d(0, ${y}px, 0)`,
-        transition: `opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
-        willChange: isRevealed ? 'auto' : 'opacity, transform',
+        transition: `opacity 0.4s ease-out ${delay}s`,
         ...userStyle
       }
     : userStyle;

@@ -99,15 +99,6 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
     }
   }, []);
 
-  const handlePartnerClick = (partner) => {
-    const isKsa = partner.category === 'ksa';
-    const partnerName = isRtl ? partner.nameAr : partner.nameEn;
-    const partnerInd = isRtl ? partner.industryAr : partner.industryEn;
-    const waText = getPartnerInquiryMessage(partnerName, partnerInd, isRtl);
-    const country = isKsa ? 'ksa' : 'egy';
-    window.open(createWhatsAppUrl(country, waText), '_blank', 'noopener,noreferrer');
-  };
-
   const waSalesText = getDirectorySalesMessage(isRtl);
 
   return (
@@ -232,21 +223,16 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
           <div className="pt-2">
             {filteredPartners.length > 0 ? (
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 justify-items-center">
-                {filteredPartners.map((partner) => {
-                  return (
-                    <button 
-                      key={partner.id}
-                      type="button"
-                      onClick={() => handlePartnerClick(partner)}
-                      aria-label={isRtl ? partner.nameAr : partner.nameEn}
-                      className="service-card-lift w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-slate-200 hover:border-[#1a85ea]/70 bg-white shadow-xs hover:shadow-lg hover:-translate-y-1.5 hover:scale-105 transition-all duration-300 flex items-center justify-center p-2 sm:p-2.5 relative overflow-hidden group cursor-pointer"
-                    >
-                      <div className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                        <PartnerLogo partner={partner} theme={theme} />
-                      </div>
-                    </button>
-                  );
-                })}
+                {filteredPartners.map((partner) => (
+                  <div 
+                    key={partner.id}
+                    className="service-card-lift w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-slate-200 hover:border-[#1a85ea]/70 bg-white shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex items-center justify-center p-2 sm:p-2.5 relative overflow-hidden group select-none"
+                  >
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+                      <PartnerLogo partner={partner} theme={theme} />
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : (
               <div className="py-8 text-center space-y-2 font-cairo">
@@ -269,8 +255,8 @@ export default function PartnersDirectoryModal({ isOpen, onClose, lang = 'ar', t
         <div className="px-4 sm:px-6 py-2.5 sm:py-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2.5 shrink-0 bg-white">
           <span className="text-[10px] sm:text-xs text-slate-600 font-cairo text-center sm:text-start">
             {isRtl 
-              ? '* اضغط على أي شريك للاستفسار المباشر عن حلولنا المنفذة لديه، أو تواصل مع المبيعات'
-              : '* Click any partner to inquire about deployed software systems, or contact sales'}
+              ? '* دليل شركاء النجاح وسابقة أعمال نايل تكنو في مختلف القطاعات'
+              : '* Nile Techno success partners directory & enterprise portfolio'}
           </span>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
             <WhatsAppButton

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react';
+import { lazy, Suspense, useState, useEffect, useMemo } from 'react';
 import { 
   SERVICE_MODULES, 
   MOBILE_APPS, 
@@ -22,58 +22,31 @@ import { BranchesSection } from './components/sections/BranchesSection';
 import PartnersDirectoryModal from './components/modals/PartnersDirectoryModal';
 import { Reveal } from './components/site/ScrollExperience';
 import { ScrollProgressBar } from './components/site/ScrollProgressBar';
+import { useActiveSection } from './hooks/useActiveSection';
 const VideoModal = lazy(() => import('./components/VideoModal.jsx'));
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Award, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Facebook, Globe, Linkedin, Mail,
   Menu, MessageSquare, Monitor, Phone, Play, Search, Send, ShieldCheck, Smartphone, Target, Calculator, Users,
-  X, Youtube, Sun, Moon, AlertTriangle
+  X, Youtube, Sun, Moon
 } from 'lucide-react';
-import companyLogo from './assets/images/logo.png';
-
-const logoTransparentWebp = companyLogo;
 
 // Import E-Invoicing Section Images
 import zatcaImage from './assets/images/modalLogo.png';
 import etaImage from './assets/images/699.webp';
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.error("ErrorBoundary caught an error:", error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-[#070b13] text-white p-6 font-cairo text-center">
-          <div className="max-w-md w-full p-8 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl">
-            <div className="w-16 h-16 bg-red-500/10 text-red-500 border border-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <AlertTriangle className="w-8 h-8 text-red-500" />
-            </div>
-            <h2 className="text-xl font-black mb-2">عذراً، حدث خطأ غير متوقع</h2>
-            <p className="text-sm text-slate-400 mb-6 font-semibold font-cairo">An unexpected application error has occurred. Our systems have been alerted.</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-6 py-2.5 rounded-xl bg-[#00c272] text-white font-bold hover:bg-emerald-500 transition-colors cursor-pointer"
-            >
-              إعادة تحميل الصفحة
-            </button>
-          </div>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
+// Single source of truth for the navbar: each id must match a section id in the page.
+const NAV_SECTIONS = [
+  { id: 'home', labelKey: 'navHome' },
+  { id: 'about', labelKey: 'navAbout' },
+  { id: 'einvoicing', labelKey: 'navEinvoice' },
+  { id: 'services', labelKey: 'navServices' },
+  { id: 'mobile-apps', labelKey: 'navMobile' },
+  { id: 'consulting', labelKey: 'navGuide' },
+  { id: 'customers', labelKey: 'navCustomers' },
+  { id: 'contact', labelKey: 'navContact' },
+];
+const NAV_SECTION_IDS = NAV_SECTIONS.map(({ id }) => id);
 
 function SectionDivider({ theme }) {
   return (
@@ -128,7 +101,7 @@ export default function App() {
   const [whatsappPanelOpen, setWhatsappPanelOpen] = useState(false);
 
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const { activeSection, scrollToSection } = useActiveSection(NAV_SECTION_IDS);
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -137,43 +110,16 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const ids = ['home', 'about', 'services', 'mobile-apps', 'einvoicing', 'customers', 'contact'];
-    const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible?.target?.id) setActiveSection(visible.target.id);
-    }, { rootMargin: '-24% 0px -58% 0px', threshold: [0.05, 0.2, 0.5] });
-    sections.forEach(section => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
-
-  const handleNavClick = (e, href) => {
-    if (href === '#customers') {
-      e.preventDefault();
+  const handleNavClick = (e, id) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (id === 'customers') {
       setShowPartnersModal(true);
-      if (mobileMenuOpen) setMobileMenuOpen(false);
       return;
     }
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      const targetId = href.substring(1);
-      const element = document.getElementById(targetId);
-      if (element) {
-        // Precise offset to align beautifully under the fixed header with ample margin
-        const headerOffset = scrolled ? 68 : 80;
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-        
-        window.history.pushState(null, '', href);
-      }
-      if (mobileMenuOpen) setMobileMenuOpen(false);
-    }
+    if (id === 'consulting') setIsCalculatorOpen(true);
+    scrollToSection(id);
+    window.history.pushState(null, '', `#${id}`);
   };
 
   const [hasInteractedWithPlatforms, setHasInteractedWithPlatforms] = useState(false);
@@ -194,6 +140,7 @@ export default function App() {
     message: '',
     interestedModules: []
   });
+  const [guideData, setGuideData] = useState(null);
   const [quoteGroup, setQuoteGroup] = useState('systems'); // 'systems' | 'mobile'
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
@@ -220,6 +167,31 @@ export default function App() {
         ? prev.interestedModules
         : [...prev.interestedModules, sysId]
     }));
+    const targetEl = document.getElementById('quote-selection-group') || document.getElementById('contact');
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  const handleSendSuggestionsToContact = (selectionData) => {
+    let sysIds = [];
+    if (selectionData && Array.isArray(selectionData.suggestions)) {
+      sysIds = selectionData.suggestions.map(s => s.id);
+      setGuideData(selectionData);
+    } else if (selectionData && Array.isArray(selectionData.suggestedIds)) {
+      sysIds = selectionData.suggestedIds;
+      setGuideData(selectionData);
+    } else if (Array.isArray(selectionData)) {
+      sysIds = selectionData;
+      setGuideData(null);
+    }
+
+    setQuoteGroup('systems');
+    setFormData(prev => ({
+      ...prev,
+      interestedModules: Array.from(new Set([...prev.interestedModules, ...sysIds]))
+    }));
+
     const targetEl = document.getElementById('quote-selection-group') || document.getElementById('contact');
     if (targetEl) {
       targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -401,17 +373,12 @@ export default function App() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     
-    // Simple HTML and tag stripper for client robustness (Sanitizer)
+    // Plain text sanitizer for WhatsApp payload (strip tags and control characters, no HTML encoding)
     const clean = (val) => {
       if (!val) return '';
       return String(val)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#x27;')
-        .replace(/\//g, '&#x2F;')
-        .replace(/<[^>]*>?/gm, '') // Strip tags completely
+        .replace(/<[^>]*>?/gm, '')
+        .replace(/[\u0000-\u0008\u000B-\u001F\u007F-\u009F]/g, '')
         .trim();
     };
 
@@ -428,55 +395,181 @@ export default function App() {
     const selectedSystems = SERVICE_MODULES.filter(m => formData.interestedModules.includes(m.id));
     const selectedApps = MOBILE_APPS.filter(a => formData.interestedModules.includes(a.id));
 
-    let solutionsLines = [];
-    if (selectedSystems.length > 0) {
-      solutionsLines.push(lang === 'ar' ? '💻 الأنظمة والبرمجيات المحاسبية:' : '💻 ERP & Software Systems:');
-      selectedSystems.forEach(s => {
-        solutionsLines.push(`• ${lang === 'ar' ? s.titleAr : s.titleEn}`);
-      });
-    }
-    if (selectedApps.length > 0) {
-      if (solutionsLines.length > 0) solutionsLines.push('');
-      solutionsLines.push(lang === 'ar' ? '📱 تطبيقات الموبايل الميدانية:' : '📱 Mobile Field Apps:');
-      selectedApps.forEach(a => {
-        solutionsLines.push(`• ${lang === 'ar' ? a.titleAr : a.titleEn}`);
-      });
-    }
-    if (solutionsLines.length === 0) {
-      solutionsLines.push(lang === 'ar' ? '• استشارة عامة لتحديد النظام البرمجي الأنسب لنشاطنا' : '• General Software Advisory');
-    }
+    let messageText = '';
 
-    const solutionsBlock = solutionsLines.join('\n');
+    if (lang === 'ar') {
+      if (guideData) {
+        const secLabel = guideData.sectorLabel?.ar || guideData.sector;
+        const sclLabel = guideData.scaleLabel?.ar || guideData.scale;
+        const cntryLabel = guideData.countryLabel?.ar || (guideData.country === 'ksa' ? 'المملكة العربية السعودية' : 'جمهورية مصر العربية');
+        const suggestedIds = (guideData.suggestions || []).map(s => s.id);
+        
+        let solutionsLines = [];
+        if (selectedSystems.length > 0) {
+          solutionsLines.push('الأنظمة والبرامج المحاسبية المعتمدة في هذا الطلب:');
+          selectedSystems.forEach(s => {
+            const isExtra = !suggestedIds.includes(s.id);
+            solutionsLines.push(`- ${s.titleAr}${isExtra ? ' (إضافة إضافية محددة من العميل)' : ''}`);
+          });
+        }
+        if (selectedApps.length > 0) {
+          if (solutionsLines.length > 0) solutionsLines.push('');
+          solutionsLines.push('تطبيقات الهواتف الذكية الميدانية:');
+          selectedApps.forEach(a => {
+            solutionsLines.push(`- ${a.titleAr}`);
+          });
+        }
+        if (solutionsLines.length === 0) {
+          solutionsLines.push('- استشارة فنية متخصصة لتحديد النظام الأنسب لنشاطنا');
+        }
 
-    const messageText = lang === 'ar'
-      ? `السلام عليكم ورحمة الله وبركاته،
+        const suggestedLines = (guideData.suggestions || []).map(s => `  - ${s.titleAr}`).join('\n');
 
-أود طلب عرض سعر رسمي واستشارة بخصوص حلول وأنظمة شركة نايل تكنو للبرمجيات.
+        messageText = `السلام عليكم ورحمة الله وبركاته،
 
-📋 بيانات التواصل:
-• الاسم: ${cleanName}
-• رقم الهاتف: ${cleanPhone}${cleanCompanyName ? `\n• اسم المنشأة / الشركة: ${cleanCompanyName}` : ''}${cleanEmail ? `\n• البريد الإلكتروني: ${cleanEmail}` : ''}
+أود طلب عرض سعر رسمي واستشارة فنية متكاملة بخصوص حلول وأنظمة شركة نايل تكنو للبرمجيات، وفقاً للمواصفات ومخرجات دليل اختيار النظام المحددة لنشاطنا:
 
-🎯 الحلول والأنظمة المختارة:
-${solutionsBlock}${cleanMessage ? `\n\n📝 ملاحظات وتفاصيل إضافية:\n${cleanMessage}` : ''}
+*بيانات المنشأة والتواصل:*
+- الاسم الكريم: ${cleanName}
+- رقم الهاتف: ${cleanPhone}${cleanCompanyName ? `\n- اسم المنشأة / الشركة: ${cleanCompanyName}` : ''}${cleanEmail ? `\n- البريد الإلكتروني: ${cleanEmail}` : ''}
+- الدولة ونطاق العمل: ${cntryLabel}
 
-أرجو التكرم بتزويدنا بعرض السعر المعتمد والمواصفات الفنية وجدول التنفيذ.
+*المواصفات المستهدفة (دليل اختيار النظام):*
+- قطاع ونوع النشاط: ${secLabel}
+- حجم ونطاق الفروع: ${sclLabel}
+- المتطلبات التشغيلية الإضافية:
+  - تطبيقات الموبايل الميدانية للمناديب: ${guideData.needMobile ? 'مطلوبة ومضمنة بالدراسة' : 'غير مطلوبة حالياً'}
+  - منظومة الفاتورة الإلكترونية والربط الضريبي: ${guideData.needEInvoicing ? 'مطلوبة ومضمنة بالدراسة' : 'غير مطلوبة حالياً'}
+- ترشيحات الدليل المبدئية:
+${suggestedLines}
 
-شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
-      : `Hello Nile Techno Sales Team,
+*الأنظمة والتطبيقات المحددة والمعتمدة نهائياً في الطلب:*
+${solutionsLines.join('\n')}${cleanMessage ? `\n\n*ملاحظات ومتطلبات إضافية خاصة بالطلب:*\n${cleanMessage}` : ''}
 
-I would like to request an official quotation and consultation regarding Nile Techno software solutions and enterprise systems.
+أرجو من سيادتكم التكرم بتزويدنا بعرض السعر المعتمد، متضمناً المواصفات الفنية وجدول التوريد والتدريب.
 
-📋 Contact Information:
-• Name: ${cleanName}
-• Phone: ${cleanPhone}${cleanCompanyName ? `\n• Company / Organization: ${cleanCompanyName}` : ''}${cleanEmail ? `\n• Email: ${cleanEmail}` : ''}
+شاكراً ومقدراً لكم حسن تعاونكم واهتمامكم الكريم.`;
+      } else {
+        let solutionsLines = [];
+        if (selectedSystems.length > 0) {
+          solutionsLines.push('*الأنظمة والبرمجيات المحاسبية المطلوبة:*');
+          selectedSystems.forEach(s => {
+            solutionsLines.push(`- ${s.titleAr}`);
+          });
+        }
+        if (selectedApps.length > 0) {
+          if (solutionsLines.length > 0) solutionsLines.push('');
+          solutionsLines.push('*تطبيقات الهواتف الذكية الميدانية:*');
+          selectedApps.forEach(a => {
+            solutionsLines.push(`- ${a.titleAr}`);
+          });
+        }
+        if (solutionsLines.length === 0) {
+          solutionsLines.push('- استشارة عامة لتحديد النظام البرمجي والحل الأنسب لنشاطنا');
+        }
 
-🎯 Selected Systems & Applications:
-${solutionsBlock}${cleanMessage ? `\n\n📝 Additional Requirements / Details:\n${cleanMessage}` : ''}
+        messageText = `السلام عليكم ورحمة الله وبركاته،
+
+أود طلب عرض سعر رسمي واستشارة فنية بخصوص حلول وأنظمة شركة نايل تكنو للبرمجيات الموضحة أدناه:
+
+*بيانات المنشأة والتواصل:*
+- الاسم الكريم: ${cleanName}
+- رقم الهاتف: ${cleanPhone}${cleanCompanyName ? `\n- اسم المنشأة / الشركة: ${cleanCompanyName}` : ''}${cleanEmail ? `\n- البريد الإلكتروني: ${cleanEmail}` : ''}
+
+*الحلول والأنظمة المختارة:*
+${solutionsLines.join('\n')}${cleanMessage ? `\n\n*ملاحظات وتفاصيل إضافية خاصة بالطلب:*\n${cleanMessage}` : ''}
+
+أرجو من سيادتكم التكرم بتزويدنا بعرض السعر المعتمد، متضمناً المواصفات الفنية وجدول التوريد والتدريب.
+
+شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`;
+      }
+    } else {
+      if (guideData) {
+        const secLabel = guideData.sectorLabel?.en || guideData.sector;
+        const sclLabel = guideData.scaleLabel?.en || guideData.scale;
+        const cntryLabel = guideData.countryLabel?.en || (guideData.country === 'ksa' ? 'Saudi Arabia' : 'Egypt');
+        const suggestedIds = (guideData.suggestions || []).map(s => s.id);
+
+        let solutionsLines = [];
+        if (selectedSystems.length > 0) {
+          solutionsLines.push('Confirmed ERP & Software Systems:');
+          selectedSystems.forEach(s => {
+            const isExtra = !suggestedIds.includes(s.id);
+            solutionsLines.push(`- ${s.titleEn}${isExtra ? ' (Custom client addition)' : ''}`);
+          });
+        }
+        if (selectedApps.length > 0) {
+          if (solutionsLines.length > 0) solutionsLines.push('');
+          solutionsLines.push('Mobile Companion Applications:');
+          selectedApps.forEach(a => {
+            solutionsLines.push(`- ${a.titleEn}`);
+          });
+        }
+        if (solutionsLines.length === 0) {
+          solutionsLines.push('- General Technical Advisory');
+        }
+
+        const suggestedLines = (guideData.suggestions || []).map(s => `  - ${s.titleEn}`).join('\n');
+
+        messageText = `Hello Nile Techno Sales & Advisory Team,
+
+I would like to request an official quotation and consultation based on our System Selection Guide assessment:
+
+Contact & Enterprise Details:
+- Contact Name: ${cleanName}
+- Phone: ${cleanPhone}${cleanCompanyName ? `\n- Company / Organization: ${cleanCompanyName}` : ''}${cleanEmail ? `\n- Email: ${cleanEmail}` : ''}
+- Country & Operation Scope: ${cntryLabel}
+
+System Guide Specifications:
+- Industry / Sector: ${secLabel}
+- Organization Scale: ${sclLabel}
+- Functional Requirements:
+  - Mobile Sales Representative Apps: ${guideData.needMobile ? 'Required & included' : 'Not required at this stage'}
+  - Tax & E-Invoicing Integration: ${guideData.needEInvoicing ? 'Required & included' : 'Not required at this stage'}
+- Initial Guide Recommendations:
+${suggestedLines}
+
+Confirmed Systems & Applications in Request:
+${solutionsLines.join('\n')}${cleanMessage ? `\n\nAdditional Requirements & Specifications:\n${cleanMessage}` : ''}
+
+Please provide us with the official quotation, technical specifications, and implementation roadmap.
+
+Thank you for your assistance and cooperation.`;
+      } else {
+        let solutionsLines = [];
+        if (selectedSystems.length > 0) {
+          solutionsLines.push('ERP & Software Systems:');
+          selectedSystems.forEach(s => {
+            solutionsLines.push(`- ${s.titleEn}`);
+          });
+        }
+        if (selectedApps.length > 0) {
+          if (solutionsLines.length > 0) solutionsLines.push('');
+          solutionsLines.push('Mobile Field Apps:');
+          selectedApps.forEach(a => {
+            solutionsLines.push(`- ${a.titleEn}`);
+          });
+        }
+        if (solutionsLines.length === 0) {
+          solutionsLines.push('- General Software Advisory');
+        }
+
+        messageText = `Hello Nile Techno Sales Team,
+
+I would like to request an official quotation and consultation regarding Nile Techno software solutions:
+
+Contact Information:
+- Name: ${cleanName}
+- Phone: ${cleanPhone}${cleanCompanyName ? `\n- Company / Organization: ${cleanCompanyName}` : ''}${cleanEmail ? `\n- Email: ${cleanEmail}` : ''}
+
+Selected Systems & Applications:
+${solutionsLines.join('\n')}${cleanMessage ? `\n\nAdditional Requirements / Details:\n${cleanMessage}` : ''}
 
 Please provide us with the official quotation, technical specifications, and implementation roadmap.
 
 Thank you for your prompt assistance and cooperation.`;
+      }
+    }
 
     const whatsappUrl = `https://wa.me/201000082722?text=${encodeURIComponent(messageText)}`;
     
@@ -485,6 +578,7 @@ Thank you for your prompt assistance and cooperation.`;
 
     setTimeout(() => {
       setFormSubmitted(false);
+      setGuideData(null);
       setFormData({
         name: '',
         email: '',
@@ -497,7 +591,6 @@ Thank you for your prompt assistance and cooperation.`;
   };
 
   return (
-    <ErrorBoundary>
       <div 
         dir={lang === 'ar' ? 'rtl' : 'ltr'} 
           className={`site-density min-h-screen ${lang === 'ar' ? 'rtl font-cairo' : 'ltr font-sans'} ${
@@ -517,13 +610,13 @@ Thank you for your prompt assistance and cooperation.`;
         }`}>
 
         {/* 1. Header & Navigation Panel */}
-        <nav className={`fixed top-0 inset-x-0 z-50 ${
+        <nav className={`fixed top-0 inset-x-0 z-50 transition-colors duration-200 ${
           theme === 'light' 
-            ? (scrolled ? 'bg-white/90 border-slate-200/80 text-slate-800 shadow-md py-0' : 'bg-white/95 border-slate-200 text-slate-800 shadow-xs py-1')
-            : (scrolled ? 'bg-[#0f172a]/90 border-slate-800 text-white shadow-xl shadow-black/40 py-0' : 'bg-[#0f172a]/95 border-slate-800/80 text-white py-1')
-        } backdrop-blur-md border-b transition-all duration-300 ease-out`}>
+            ? (scrolled ? 'bg-white/95 border-b border-slate-200/90 text-slate-800 shadow-sm backdrop-blur-md' : 'bg-white/90 border-b border-slate-200/60 text-slate-800 shadow-none backdrop-blur-md')
+            : (scrolled ? 'bg-[#0f172a]/95 border-b border-slate-800 text-white shadow-lg shadow-black/30 backdrop-blur-md' : 'bg-[#0f172a]/90 border-b border-slate-800/60 text-white shadow-none backdrop-blur-md')
+        }`}>
           <div className="max-w-[1440px] 2xl:max-w-[1536px] mx-auto px-2.5 xs:px-4 sm:px-6 lg:px-8">
-            <div className={`flex min-w-0 justify-between items-center gap-1.5 sm:gap-2 transition-all duration-300 ease-out ${scrolled ? 'h-14 sm:h-15 md:h-16' : 'h-16 sm:h-18 md:h-20'}`}>
+            <div className="flex min-w-0 justify-between items-center gap-1.5 sm:gap-2 h-16 sm:h-18">
             
               {/* Theme Toggle, Language Switcher, WhatsApp Contact, and Drawer Trigger */}
               <div className="flex shrink-0 items-center gap-1 sm:gap-2 order-1 lg:order-3">
@@ -565,7 +658,7 @@ Thank you for your prompt assistance and cooperation.`;
                 {/* Calm & Chic WhatsApp Contact Quick Action */}
                 <a
                   href="#contact"
-                  onClick={(e) => handleNavClick(e, '#contact')}
+                  onClick={(e) => handleNavClick(e, 'contact')}
                   className={`min-h-[36px] flex items-center justify-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all duration-200 cursor-pointer select-none shrink-0 ${
                     theme === 'light'
                       ? 'border-emerald-700/20 bg-emerald-50/70 text-emerald-800 hover:bg-emerald-100/80 hover:border-emerald-700/35 hover:text-emerald-900 shadow-2xs'
@@ -580,39 +673,31 @@ Thank you for your prompt assistance and cooperation.`;
               </div>
 
               {/* Desktop Navigation Links */}
-              <div className="hidden lg:flex items-center gap-4 xl:gap-5 lg:order-2">
-                {[
-                  { label: t.navHome, href: '#home' },
-                  { label: t.navAbout, href: '#about' },
-                  { label: t.navEinvoice, href: '#einvoicing' },
-                  { label: t.navServices, href: '#services' },
-                  { label: t.navMobile, href: '#mobile-apps' },
-                  { label: t.navCustomers, href: '#customers' },
-                  { label: t.navContact, href: '#contact' }
-                ].map((link, idx) => (
+              <div className="hidden lg:flex items-center gap-3.5 xl:gap-5 lg:order-2">
+                {NAV_SECTIONS.map((link) => (
                   <a 
-                    key={idx} 
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
+                    key={link.id} 
+                    href={`#${link.id}`}
+                    onClick={(e) => handleNavClick(e, link.id)}
                     className={`nav-link-premium text-[11px] sm:text-xs font-bold font-cairo py-1 px-1.5 transition-colors duration-200 uppercase tracking-wide ${
-                      activeSection === link.href.slice(1) ? 'nav-link-active' : ''
+                      activeSection === link.id ? 'nav-link-active' : ''
                     } ${
                       theme === 'light' 
                         ? 'text-slate-500 hover:text-cyan-600' 
                         : 'text-slate-300 hover:text-cyan-400'
                     }`}
                   >
-                    {link.label}
+                    {t[link.labelKey]}
                   </a>
                 ))}
               </div>
 
               {/* Corporate Logo Emblem using high-performance vector component */}
-              <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="min-w-0 max-w-[34vw] xs:max-w-[42vw] sm:max-w-none cursor-pointer flex items-center shrink-0 group order-2 lg:order-1">
+              <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="min-w-0 max-w-[34vw] xs:max-w-[42vw] sm:max-w-none cursor-pointer flex items-center shrink-0 group order-2 lg:order-1">
                 <NileTechnoLogo 
                   theme={theme} 
                   lang={lang} 
-                  className={scrolled ? "h-9 sm:h-10 md:h-11 lg:h-12 w-auto max-w-[180px] object-contain transition-all duration-300" : "h-11 sm:h-12 md:h-14 lg:h-16 w-auto max-w-[210px] object-contain transition-all duration-300"}
+                  className="h-10 sm:h-11 md:h-12 w-auto max-w-[190px] object-contain transition-opacity duration-200"
                 />
               </a>
 
@@ -626,31 +711,20 @@ Thank you for your prompt assistance and cooperation.`;
               ? 'bg-white border-slate-200 text-slate-800' 
               : 'bg-[#0d1527] border-slate-800 text-white'
           }`}>
-              {[
-                { label: t.navHome, href: '#home' },
-                { label: t.navAbout, href: '#about' },
-                { label: t.navEinvoice, href: '#einvoicing' },
-                { label: t.navServices, href: '#services' },
-                { label: t.navMobile, href: '#mobile-apps' },
-              { label: t.navCustomers, href: '#customers' },
-              { label: t.navContact, href: '#contact' }
-            ].map((link, idx) => (
+            {NAV_SECTIONS.map((link) => (
               <a 
-                key={idx} 
-                href={link.href}
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  handleNavClick(e, link.href);
-                }}
+                key={link.id} 
+                href={`#${link.id}`}
+                onClick={(e) => handleNavClick(e, link.id)}
                 className={`nav-link-premium min-h-[44px] flex items-center text-sm font-bold py-2.5 px-3 rounded-lg transition-colors ${
-                  activeSection === link.href.slice(1) ? 'nav-link-active' : ''
+                  activeSection === link.id ? 'nav-link-active' : ''
                 } ${
                   theme === 'light'
                     ? 'text-slate-700 hover:bg-slate-100 hover:text-cyan-600'
                     : 'text-slate-300 hover:bg-slate-900 hover:text-cyan-400'
                 }`}
               >
-                {link.label}
+                {t[link.labelKey]}
               </a>
             ))}
 
@@ -658,10 +732,7 @@ Thank you for your prompt assistance and cooperation.`;
             <div className="pt-2 border-t border-slate-200/60 dark:border-slate-800/80">
               <a 
                 href="#contact"
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  handleNavClick(e, '#contact');
-                }}
+                onClick={(e) => handleNavClick(e, 'contact')}
                 className={`min-h-[44px] flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border text-xs font-bold font-cairo transition-all cursor-pointer ${
                   theme === 'light'
                     ? 'border-emerald-700/25 bg-emerald-50/80 text-emerald-900 hover:bg-emerald-100 shadow-2xs'
@@ -1052,7 +1123,7 @@ Thank you for your prompt assistance and cooperation.`;
                 <span className="font-extrabold">{lang === 'ar' ? 'حلول وتطبيقات الهواتف' : 'Mobile Applications'}</span>
               </div>
 
-              <span className="text-slate-300 dark:text-slate-700 font-bold hidden sm:inline">•</span>
+              <span className="text-slate-300 dark:text-slate-700 font-bold hidden sm:inline">|</span>
 
               <div className="flex items-center gap-1.5">
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-[11px] font-bold shadow-xs hover:scale-105 transition-transform">
@@ -1133,11 +1204,11 @@ Thank you for your prompt assistance and cooperation.`;
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 flex-wrap">
                   <span className={`text-xs sm:text-sm font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                            {lang === 'ar' ? 'الحاسبة التفاعلية' : 'Interactive Calculator'}
+                            {lang === 'ar' ? 'دليل اختيار نظامك' : 'System Selection Guide'}
                           </span>
                         </div>
                         <p className={`text-[11px] font-cairo mt-0.5 ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
-                          {lang === 'ar' ? 'حدد نشاطك وحجم فروعك بالأسفل ثم انقر زر الاستشارة عبر واتساب' : 'Select your sector and scale below then request an instant advisory'}
+                          {lang === 'ar' ? 'حدد نشاطك وحجم فروعك بالأسفل للاطلاع على الأنظمة ومتابعة طلبك' : 'Select your sector and scale below to view recommended systems and proceed'}
                         </p>
                       </div>
                     </div>
@@ -1151,14 +1222,14 @@ Thank you for your prompt assistance and cooperation.`;
                           : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
                       }`}
                     >
-                      <span>{lang === 'ar' ? 'إغلاق الحاسبة' : 'Close Calculator'}</span>
+                      <span>{lang === 'ar' ? 'إغلاق الدليل' : 'Close Guide'}</span>
                       <ChevronUp className="w-4 h-4 shrink-0" />
                     </button>
                   </div>
 
                   {/* Calculator Body */}
                   <Suspense fallback={<div className="min-h-[520px] rounded-3xl bg-slate-100/50 dark:bg-slate-900/50 animate-pulse" />}>
-                    <LeadCalculator lang={lang} theme={theme} />
+                    <LeadCalculator lang={lang} theme={theme} onSendToContactForm={handleSendSuggestionsToContact} />
                   </Suspense>
 
                 </motion.div>
@@ -1193,7 +1264,7 @@ Thank you for your prompt assistance and cooperation.`;
                       <div className="min-w-0 flex-1">
                         <div className="mb-1">
                           <h3 className={`text-sm sm:text-base font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                            {lang === 'ar' ? 'الحاسبة التفاعلية' : 'Interactive Scope & Pricing Estimator'}
+                            {lang === 'ar' ? 'دليل اختيار نظامك' : 'System Selection Guide'}
                           </h3>
                         </div>
                         <p className={`text-xs sm:text-sm font-cairo leading-relaxed max-w-xl ${theme === 'light' ? 'text-slate-600' : 'text-slate-300'}`}>
@@ -1206,7 +1277,7 @@ Thank you for your prompt assistance and cooperation.`;
 
                     <div className="w-full md:w-auto shrink-0 flex items-center justify-end">
                       <div className="w-full md:w-auto min-h-[38px] px-3.5 py-2 rounded-lg font-bold text-[11px] sm:text-xs font-cairo flex items-center justify-center gap-2 bg-gradient-to-r from-[#1a85ea] to-cyan-500 hover:from-[#1470c7] hover:to-cyan-400 text-white shadow-sm shadow-cyan-500/30 transition-all duration-200">
-                        <span>{lang === 'ar' ? 'فتح الحاسبة' : 'Open calculator'}</span>
+                        <span>{lang === 'ar' ? 'استعراض الدليل' : 'Open guide'}</span>
                         <ChevronDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform duration-200 shrink-0" />
                       </div>
                     </div>
@@ -1755,7 +1826,7 @@ Thank you for your prompt assistance and cooperation.`;
               {/* Sophisticated Compact Social Buttons */}
               <div className="flex gap-2.5 pt-1 justify-center sm:justify-start">
                 <a 
-                  href={`https://wa.me/+201000082722?text=${encodeURIComponent(
+                  href={`https://wa.me/201000082722?text=${encodeURIComponent(
                     lang === 'ar'
                       ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل والاستفسار مع فريق خدمة العملاء والمبيعات بشركة نايل تكنو للبرمجيات بخصوص الحلول والأنظمة المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.'
                       : 'Hello Nile Techno Sales Team,\n\nI would like to inquire about your software solutions, enterprise ERP systems, and services.\n\nThank you for your assistance.'
@@ -1837,7 +1908,7 @@ Thank you for your prompt assistance and cooperation.`;
       <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-3 sm:bottom-6 sm:left-6 z-[100] font-cairo select-none flex flex-col gap-1.5 sm:gap-2 items-start">
         {/* Egypt Sales Capsule - Prioritized */}
         <motion.a
-          href={`https://wa.me/+201000082722?text=${encodeURIComponent(
+          href={`https://wa.me/201000082722?text=${encodeURIComponent(
             lang === 'ar'
               ? 'السلام عليكم ورحمة الله وبركاته،\n\nأود التواصل مع إدارة مبيعات شركة نايل تكنو للبرمجيات (فرع جمهورية مصر العربية) للاستفسار عن الأنظمة والحلول البرمجية المناسبة لنشاطنا.\n\nشاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.'
               : 'Hello Nile Techno Sales Team (Egypt Branch),\n\nI would like to inquire about your software solutions, enterprise ERP systems, and services for our business in Egypt.\n\nThank you for your assistance.'
@@ -1935,6 +2006,5 @@ Thank you for your prompt assistance and cooperation.`;
       </Suspense>
 
     </div>
-    </ErrorBoundary>
   );
 }

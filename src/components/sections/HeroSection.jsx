@@ -173,7 +173,7 @@ export function HeroSection({
                   className={`hero-platform-tab min-h-[42px] px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer font-cairo relative overflow-hidden flex-1 sm:flex-initial min-w-0 max-w-full ${
                     isActive
                       ? 'bg-[#1a85ea] text-white border-[#1a85ea] shadow-md shadow-[#1a85ea]/25'
-                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 dark:bg-[#15203b] dark:border-slate-700/60 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:text-white'
+                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 dark:bg-[#15203b] dark:border-slate-700/60 dark:text-slate-300 dark:hover:bg-[#1b2a4a] dark:hover:border-slate-600 dark:hover:text-white'
                   }`}
                 >
                   <TabIcon className="w-3.5 h-3.5 shrink-0" />

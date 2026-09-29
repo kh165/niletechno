@@ -21,9 +21,9 @@ export const APP_WHATSAPP_MESSAGES = {
 أود الاستفسار وطلب تفاصيل وعرض سعر تطبيق مندوب المبيعات الميداني (Android & iOS) من شركة نايل تكنو للبرمجيات.
 
 المعلومات المطلوبة:
-• تكلفة الترخيص وتفاصيل التفعيل
-• آلية الربط والتزامن اللحظي مع النظام المحاسبي المركزي
-• دعم طباعة الفواتير المحمولة وتتبع خطوط سير المناديب بالـ GPS
+- تكلفة الترخيص وتفاصيل التفعيل
+- آلية الربط والتزامن اللحظي مع النظام المحاسبي المركزي
+- دعم طباعة الفواتير المحمولة وتتبع خطوط سير المناديب بالـ GPS
 
 شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`,
     en: `Hello Nile Techno Sales Team,
@@ -31,9 +31,9 @@ export const APP_WHATSAPP_MESSAGES = {
 I would like to inquire about and request an official quotation for the "Smart Mobile Sales Representative App (Android & iOS)".
 
 Requested Information:
-• Licensing cost and deployment options
-• Real-time synchronization with central ERP & accounting
-• Mobile thermal receipt printing and GPS route tracking
+- Licensing cost and deployment options
+- Real-time synchronization with central ERP & accounting
+- Mobile thermal receipt printing and GPS route tracking
 
 Thank you for your prompt assistance and cooperation.`
   },
@@ -42,9 +42,9 @@ Thank you for your prompt assistance and cooperation.`
 أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق نقطة البيع للمحمول (Mobile POS)" من شركة نايل تكنو للبرمجيات.
 
 المعلومات المطلوبة:
-• تكلفة تفعيل نقاط البيع المحمولة
-• آلية العمل دون اتصال بالإنترنت (Offline Mode)
-• ربط طابعات البلوتوث المحمولة وقارئ الباركود
+- تكلفة تفعيل نقاط البيع المحمولة
+- آلية العمل دون اتصال بالإنترنت (Offline Mode)
+- ربط طابعات البلوتوث المحمولة وقارئ الباركود
 
 شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`,
     en: `Hello Nile Techno Sales Team,
@@ -52,9 +52,9 @@ Thank you for your prompt assistance and cooperation.`
 I would like to inquire about and request an official quotation for the "Mobile POS Terminal App".
 
 Requested Information:
-• Setup and licensing for portable POS devices
-• Offline transaction processing and automated syncing
-• Bluetooth printer and barcode scanner compatibility
+- Setup and licensing for portable POS devices
+- Offline transaction processing and automated syncing
+- Bluetooth printer and barcode scanner compatibility
 
 Thank you for your prompt assistance and cooperation.`
   },
@@ -63,9 +63,9 @@ Thank you for your prompt assistance and cooperation.`
 أود الاستفسار وطلب تفاصيل وعرض سعر تطبيق النادل ومتابعة المطبخ للمطاعم والكافيهات.
 
 المعلومات المطلوبة:
-• أسعار التطبيق وتجهيزه على أجهزة التابلت والموبايل
-• آلية الربط المباشر بشاشات وطابعات المطبخ (KDS)
-• دعم المنيو الرقمي وإدارة شاشات الطاولات والتحويل السريع
+- أسعار التطبيق وتجهيزه على أجهزة التابلت والموبايل
+- آلية الربط المباشر بشاشات وطابعات المطبخ (KDS)
+- دعم المنيو الرقمي وإدارة شاشات الطاولات والتحويل السريع
 
 شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`,
     en: `Hello Nile Techno Sales Team,
@@ -73,9 +73,9 @@ Thank you for your prompt assistance and cooperation.`
 I would like to inquire about and request an official quotation for the "Smart Waiter & Kitchen Display App" for restaurants and cafes.
 
 Requested Information:
-• Pricing and tablet/mobile deployment setup
-• Kitchen Display System (KDS) and direct thermal printer routing
-• Digital menus, table assignments, and fast order dispatch
+- Pricing and tablet/mobile deployment setup
+- Kitchen Display System (KDS) and direct thermal printer routing
+- Digital menus, table assignments, and fast order dispatch
 
 Thank you for your prompt assistance and cooperation.`
   },
@@ -84,9 +84,9 @@ Thank you for your prompt assistance and cooperation.`
 أود الاستفسار وطلب تفاصيل وعرض سعر "تطبيق المندوب الطبي والدوائي (Medical & Pharma Rep)" من شركة نايل تكنو للبرمجيات.
 
 المعلومات المطلوبة:
-• آلية جدولة وتتبع زيارات الأطباء والصيدليات بالـ GPS
-• إدارة عينات الأدوية والهدايا الترويجية ومسح الكود
-• عرض الأسعار وطريقة التكامل مع المنظومة المركزية
+- آلية جدولة وتتبع زيارات الأطباء والصيدليات بالـ GPS
+- إدارة عينات الأدوية والهدايا الترويجية ومسح الكود
+- عرض الأسعار وطريقة التكامل مع المنظومة المركزية
 
 شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`,
     en: `Hello Nile Techno Sales Team,
@@ -94,9 +94,9 @@ Thank you for your prompt assistance and cooperation.`
 I would like to inquire about and request an official quotation for the "Medical & Pharmaceutical Representative System App".
 
 Requested Information:
-• Clinic & pharmacy visit scheduling with GPS audit logs
-• Medical sample tracking and promotional item inventory
-• Licensing quotation and central ERP connectivity
+- Clinic & pharmacy visit scheduling with GPS audit logs
+- Medical sample tracking and promotional item inventory
+- Licensing quotation and central ERP connectivity
 
 Thank you for your prompt assistance and cooperation.`
   }
@@ -148,24 +148,24 @@ export function getLeadCalculatorMessage({ sectorLabel, scaleLabel, selectedSyst
 
 أود طلب استشارة رسمية وعرض سعر بخصوص المنظومة البرمجية المقترحة لنشاطنا من شركة نايل تكنو للبرمجيات:
 
-📋 تفاصيل المتطلبات:
-• مجال النشاط: ${sectorLabel}
-• حجم ونطاق المنشأة: ${scaleLabel}
-• الأنظمة المقترحة: ${selectedSystems}
-• تطبيقات الموبايل الميدانية: ${needMobile ? 'مطلوبة' : 'غير مطلوبة'}
-• الربط مع منظومة الفاتورة الإلكترونية: ${needEInvoicing ? 'مطلوب' : 'غير مطلوب'}
+تفاصيل المتطلبات:
+- مجال النشاط: ${sectorLabel}
+- حجم ونطاق المنشأة: ${scaleLabel}
+- الأنظمة المقترحة: ${selectedSystems}
+- تطبيقات الموبايل الميدانية: ${needMobile ? 'مطلوبة' : 'غير مطلوبة'}
+- الربط مع منظومة الفاتورة الإلكترونية: ${needEInvoicing ? 'مطلوب' : 'غير مطلوب'}
 
 شاكراً لكم حسن تعاونكم ومتابعتكم الكريمة.`
     : `Hello Nile Techno Sales Team,
 
 I would like to request an official quotation and software advisory for our business from Nile Techno:
 
-📋 Requirements Overview:
-• Business Sector: ${sectorLabel}
-• Operational Scale: ${scaleLabel}
-• Suggested Software Systems: ${selectedSystems}
-• Mobile Field Applications: ${needMobile ? 'Required' : 'Not required'}
-• E-Invoicing Integration: ${needEInvoicing ? 'Required' : 'Not required'}
+Requirements Overview:
+- Business Sector: ${sectorLabel}
+- Operational Scale: ${scaleLabel}
+- Suggested Software Systems: ${selectedSystems}
+- Mobile Field Applications: ${needMobile ? 'Required' : 'Not required'}
+- E-Invoicing Integration: ${needEInvoicing ? 'Required' : 'Not required'}
 
 Thank you for your prompt assistance and cooperation.`;
 }

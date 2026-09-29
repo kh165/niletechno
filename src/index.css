@@ -67,11 +67,6 @@ html.dark {
   color: #f8fafc;
 }
 
-section:not(#home) {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 720px;
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0f172a; }

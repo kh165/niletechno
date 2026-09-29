@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { SERVICE_MODULES, TRANSLATIONS } from '../data';
-import { Calculator, CheckCircle2, MessageSquare, Award } from 'lucide-react';
-import { COMPANY_CONFIG, createWhatsAppUrl } from '../constants/config';
-import WhatsAppIcon from './site/WhatsAppIcon';
-import { getLeadCalculatorMessage } from '../utils/whatsapp';
+import { Calculator, CheckCircle2, MessageSquare, Award, ArrowDown } from 'lucide-react';
 import { Reveal } from './site/ScrollExperience';
 
 import retailImg from '../assets/images/photo3.webp';
@@ -19,7 +16,7 @@ const SECTOR_IMAGES = {
   specialized: specializedImg, 
 };
 
-export default function LeadCalculator({ lang, theme }) {
+export default function LeadCalculator({ lang, theme, onSendToContactForm }) {
   const t = TRANSLATIONS[lang];
 
   const [sector, setSector] = useState('retail');
@@ -43,25 +40,68 @@ export default function LeadCalculator({ lang, theme }) {
     }, 200);
   };
 
-  const handleWhatsAppInquiry = () => {
-    const selectedSystems = suggestions.map(s => lang === 'ar' ? s.titleAr : s.titleEn).join('، ');
-    const sectorLabel = lang === 'ar'
-      ? { retail: 'قطاع التجزئة ونقاط البيع والمطاعم', erp: 'قطاع الحسابات العامة والتصنيع والـ HR', logistics: 'المخازن والتوزيع وسلاسل الإمداد', specialized: 'الأنظمة التخصصية والخدمية' }[sector]
-      : { retail: 'Retail & POS', erp: 'ERP & Corporate Accounting', logistics: 'Logistics & Supply Chain', specialized: 'Specialized Custom Services' }[sector];
-    const scaleLabel = lang === 'ar'
-      ? { small: 'منشأة فردية / فرع واحد', medium: 'منشأة متوسطة (2 - 5 فروع)', large: 'شركة كبرى / مجموعة فروع ومصانع' }[scale]
-      : { small: 'Small Business (1 Location)', medium: 'Medium Sized (2-5 branches)', large: 'Enterprise level' }[scale];
-    
-    const messageText = getLeadCalculatorMessage({
-      sectorLabel,
-      scaleLabel,
-      selectedSystems,
+  const handleProceedToContact = () => {
+    const sectorMeta = {
+      retail: {
+        ar: 'قطاع التجزئة والمطاعم والكافيهات ونقاط البيع السريعة',
+        en: 'Retail, Restaurants, Cafes & Fast POS'
+      },
+      erp: {
+        ar: 'قطاع الحسابات العامة والشركات وإدارة الموارد (ERP)',
+        en: 'Corporate ERP, General Ledger & Finance'
+      },
+      logistics: {
+        ar: 'قطاع المستودعات وإدارة سلاسل الإمداد والتوزيع والنقل',
+        en: 'Warehousing, Supply Chain & Logistics'
+      },
+      specialized: {
+        ar: 'الأنظمة الخاصة (محلات الذهب والمجوهرات، العيادات، المقاولات والتصنيع)',
+        en: 'Specialized Systems (Jewelry & Gold, Clinics, Contracting & Manufacturing)'
+      }
+    };
+
+    const scaleMeta = {
+      small: {
+        ar: '1-3 مستخدمين (فردي / فرع واحد)',
+        en: '1-3 users (Single branch)'
+      },
+      medium: {
+        ar: 'فروع متعددة (2 - 5 فروع)',
+        en: '2-5 branches'
+      },
+      large: {
+        ar: 'مجمعات ومصانع (شركات كبرى متكاملة)',
+        en: 'Large Enterprise Complexes'
+      }
+    };
+
+    const countryMeta = country === 'ksa'
+      ? {
+          ar: 'المملكة العربية السعودية (متوافق مع منظومة الفاتورة الإلكترونية لهيئة الزكاة والضريبة ZATCA)',
+          en: 'Saudi Arabia (ZATCA e-Invoicing Phase 2 Compliant)'
+        }
+      : {
+          ar: 'جمهورية مصر العربية (مطابق لمنظومة الفاتورة والإيصال الإلكتروني لمصلحة الضرائب المصرية ETA)',
+          en: 'Egypt (ETA e-Invoicing & e-Receipt Compliant)'
+        };
+
+    const payload = {
+      sector,
+      sectorLabel: sectorMeta[sector] || { ar: sector, en: sector },
+      scale,
+      scaleLabel: scaleMeta[scale] || { ar: scale, en: scale },
+      country,
+      countryLabel: countryMeta,
       needMobile,
       needEInvoicing,
-      lang
-    });
+      suggestions: suggestions.map(s => ({
+        id: s.id,
+        titleAr: s.titleAr,
+        titleEn: s.titleEn
+      }))
+    };
 
-    window.open(createWhatsAppUrl(country, messageText), '_blank', 'noopener,noreferrer');
+    onSendToContactForm?.(payload);
   };
 
   return (
@@ -85,7 +125,7 @@ export default function LeadCalculator({ lang, theme }) {
                     <Calculator className="w-6 h-6" />
                   </span>
                   <h3 className={`text-xl md:text-2xl font-bold font-cairo ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
-                    {lang === 'ar' ? 'الحاسبة التفاعلية' : 'Solution & Package Finder'}
+                    {lang === 'ar' ? 'دليل اختيار نظامك' : 'System Selection Guide'}
                   </h3>
                 </div>
                 <p className={`text-sm font-cairo text-justify leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
@@ -149,7 +189,7 @@ export default function LeadCalculator({ lang, theme }) {
                   { id: 'retail', ar: 'تجزئة ومطاعم', en: 'Retail & Food' },
                   { id: 'erp', ar: 'مالية وصناعة', en: 'Corporate ERP' },
                   { id: 'logistics', ar: 'مستودعات ونقل', en: 'Logistics' },
-                  { id: 'specialized', ar: 'حلول تخصصية', en: 'Special Tech' },
+                  { id: 'specialized', ar: 'أنظمة خاصة', en: 'Special Systems' },
                 ].map(sec => (
                   <button key={sec.id} type="button" onClick={() => handleSectorChange(sec.id)}
                     className={`min-h-[46px] px-3 py-2.5 sm:py-3 rounded-xl border text-xs font-bold text-center flex items-center justify-center transition-all duration-300 font-cairo cursor-pointer leading-normal ${
@@ -323,20 +363,23 @@ export default function LeadCalculator({ lang, theme }) {
               </div>
             </div>
 
-            <div className={`mt-6 pt-4 border-t space-y-3 ${theme === 'light' ? 'border-slate-200' : 'border-slate-800'}`}>
-              <p className="text-[10px] text-slate-500 font-cairo text-center leading-normal">
+            <div className={`mt-5 pt-3.5 border-t space-y-3 ${theme === 'light' ? 'border-slate-200' : 'border-slate-800'}`}>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-cairo text-center leading-normal">
                 {lang === 'ar'
-                  ? '* هذا الاختيار استرشادي، يتم إعداد وتحديد عرض السعر الدقيق بناءً على عدد التراخيص وأجهزة الكاشير المطلوبة.'
-                  : '* This estimate is advisory. Final pricing depends on license count and hardware required.'}
+                  ? '* هذا الاختيار استرشادي؛ لمتابعة طلبك وتحديد أدق التفاصيل اضغط على الزر التالي للانتقال المباشر لنموذج التواصل.'
+                  : '* This selection is advisory. Click below to continue in the contact form with these specifications.'}
               </p>
-              <button 
-                type="button"
-                onClick={handleWhatsAppInquiry}
-                className="w-full min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2.5 transition-all duration-300 shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer font-cairo"
-              >
-                <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
-                <span>{lang === 'ar' ? 'تجهيز وإرسال الطلب عبر واتساب' : 'Prepare & Send Inquiry on WhatsApp'}</span>
-              </button>
+              <div className="flex justify-center">
+                <button 
+                  type="button"
+                  onClick={handleProceedToContact}
+                  className="w-full sm:w-auto min-h-[38px] px-5 py-2 rounded-xl text-xs sm:text-sm font-bold font-cairo bg-gradient-to-r from-[#1a85ea] to-cyan-500 hover:from-[#1470c7] hover:to-cyan-400 text-white shadow-md shadow-cyan-500/20 hover:shadow-cyan-500/35 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 group"
+                >
+                  <MessageSquare className="w-3.5 h-3.5 shrink-0" />
+                  <span>{lang === 'ar' ? 'أكمل في نموذج التواصل وتحديد احتياجاتك' : 'Continue in Contact Form'}</span>
+                  <ArrowDown className="w-3.5 h-3.5 shrink-0 group-hover:translate-y-0.5 transition-transform" />
+                </button>
+              </div>
             </div>
 
           </div>

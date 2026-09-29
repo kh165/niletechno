@@ -11,18 +11,7 @@ export function useScrollLockedTabs(setActiveTab) {
         e.currentTarget.blur();
       }
     }
-    
-    const savedY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
     setActiveTab(tabId);
-    
-    // Lock position across synchronous tick, animation frame, and timeout
-    window.scrollTo({ top: savedY, behavior: 'instant' });
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: savedY, behavior: 'instant' });
-      setTimeout(() => {
-        window.scrollTo({ top: savedY, behavior: 'instant' });
-      }, 15);
-    });
   };
 
   return { handleTabSelect };

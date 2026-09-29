@@ -173,7 +173,7 @@ export const SERVICE_MODULES = [
     titleEn: 'Jewelry & Gold Retail System',
     descriptionAr: 'برنامج متخصص لمحلات الذهب والمجوهرات يتابع الوزن والعيار والذهب الكسر وحركات الخزينة باحترافية.',
     descriptionEn: 'Custom retail suite to track solid metal weight, purities (karats), broken gold exchange, and dual financial records.',
-    category: 'retail',
+    category: 'specialized',
     iconName: 'Gem',
     accentColor: 'from-yellow-600 to-amber-500',
     youtubeId: '7jNv0wpMRQQ', // TODO: Dedicated video ID

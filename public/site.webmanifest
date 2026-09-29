@@ -1,0 +1,11 @@
+{
+  "name": "نايل تكنو للبرمجيات",
+  "short_name": "نايل تكنو",
+  "icons": [
+    { "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/NTLogo3.png", "sizes": "500x500", "type": "image/png" }
+  ],
+  "theme_color": "#0f172a",
+  "background_color": "#0f172a",
+  "display": "standalone"
+}

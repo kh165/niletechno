@@ -3,30 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Real Favicon & Canonical Link -->
-    <link rel="icon" type="image/png" sizes="500x500" href="/NTLogo3.png" />
-    <link rel="shortcut icon" type="image/png" href="/NTLogo3.png" />
-    <link rel="apple-touch-icon" sizes="500x500" href="/NTLogo3.png" />
+
+    <!-- Favicons (المسارات كلها من public/) -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href="https://niletechno.com/" />
-    
+
     <!-- SEO Primary Meta Tags -->
     <title>نايل تكنو للبرمجيات وأنظمة ERP السحابية | Nile Techno Software</title>
     <meta name="description" content="شركة نايل تكنو للبرمجيات - أنظمة سحابية متكاملة لإدارة الحسابات، المخازن، ونقاط البيع، مع ربط ودعم الفاتورة الإلكترونية وتطبيقات المبيعات في مصر والسعودية." />
     <meta name="keywords" content="نايل تكنو, برامج حسابات, نظام ERP, الفاتورة الإلكترونية, نقاط البيع, كاشير, تطبيقات مبيعات, إدارة المخازن, السعودية, مصر" />
     <meta name="author" content="Nile Techno Software" />
-    
+    <meta name="robots" content="index, follow" />
+
     <!-- Theme & Mobile Branding -->
     <meta name="theme-color" content="#0f172a" />
     <meta name="mobile-web-app-capable" content="yes" />
-    
-    <!-- Open Graph / Facebook / WhatsApp (Using real logo image) -->
+
+    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://niletechno.com/" />
     <meta property="og:title" content="نايل تكنو للبرمجيات وأنظمة ERP | شريك التحول الرقمي" />
     <meta property="og:description" content="حلول برمجية ومحاسبية متكاملة لدعم التحول الرقمي للشركات والمصانع. أنظمة نقاط بيع، لوجستيات ومستودعات، وتطبيقات هاتف ميدانية." />
     <meta property="og:image" content="https://niletechno.com/NTLogo3.png" />
     <meta property="og:site_name" content="Nile Techno Software" />
+    <meta property="og:locale" content="ar_AR" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -34,11 +38,23 @@
     <meta name="twitter:description" content="خبرة ممتدة منذ 2010 في تطوير الأنظمة المالية والمحاسبية وإدارة نقاط البيع والتطبيقات الميدانية." />
     <meta name="twitter:image" content="https://niletechno.com/NTLogo3.png" />
 
+    <!-- Structured data: يساعد جوجل يفهم اسم الموقع واللوجو -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "نايل تكنو للبرمجيات",
+      "alternateName": "Nile Techno Software",
+      "url": "https://niletechno.com/",
+      "logo": "https://niletechno.com/favicon-192.png"
+    }
+    </script>
+
     <!-- Preconnect to Google Fonts for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    
+
     <!-- Inline theme initializer script to prevent FOUC / theme flash -->
     <script>
       (function() {

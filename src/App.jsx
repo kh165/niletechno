@@ -1846,7 +1846,7 @@ Thank you for your prompt assistance and cooperation.`;
               </div>
 
               {/* Column 3: Contact & Social */}
-              <div className="col-span-1 lg:col-span-3 space-y-2">
+              <div className="col-span-2 lg:col-span-3 space-y-2">
                 <div className="flex items-center gap-2 pb-2 border-b border-slate-200/80 dark:border-slate-800/50">
                   <span className="w-1.5 h-4 rounded-full bg-[#1a85ea] shrink-0"></span>
                   <h4 className={`text-sm sm:text-base font-black font-cairo ${theme === 'light' ? 'text-slate-800' : 'text-white'}`}>
@@ -1897,7 +1897,7 @@ Thank you for your prompt assistance and cooperation.`;
                     );
                   })}
                 </ul>
-            <div dir="ltr" className="w-full flex flex-wrap gap-1.5 pt-1 justify-end">
+            <div dir="ltr" className="w-full flex flex-wrap gap-1.5 mt-3 pt-2 justify-end border-t border-slate-200/50 dark:border-slate-800/40">
               {/* Social buttons: same brand style for all */}
                   <a
                     href={`https://wa.me/201000082722?text=${encodeURIComponent(
@@ -1949,8 +1949,8 @@ Thank you for your prompt assistance and cooperation.`;
             </div>
 
             {/* Bottom legal bar */}
-            <div className={`pt-4 text-center border-t ${theme === 'light' ? 'border-slate-200/80' : 'border-slate-800/50'}`}>
-              <span className={`text-sm font-cairo font-semibold block tracking-wide ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+            <div className={`pt-3 text-center border-t ${theme === 'light' ? 'border-slate-200/80' : 'border-slate-800/50'}`}>
+              <span className={`font-sans text-[10px] sm:text-[11px] font-medium tracking-wide ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
                 Nile Techno — All rights reserved | 2026 ©
               </span>
             </div>

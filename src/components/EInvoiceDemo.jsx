@@ -17,35 +17,74 @@ import {
   Check
 } from 'lucide-react';
 
+// Format the invoice timestamp (module-level so it is created once)
+const getFormattedNow = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
 export default function EInvoiceDemo({ lang, theme }) {
   const t = TRANSLATIONS[lang];
+  const rootRef = useRef(null);
 
   // Invoice Data inputs
   const [sellerName, setSellerName] = useState('شركة نايل تكنو للبرمجيات');
   const [vatNumber, setVatNumber] = useState('310123456700003');
   const [totalPrice, setTotalPrice] = useState('114.00');
   const [vatRate, setVatRate] = useState(14);
-  
-  // Format fixed invoice timestamp at creation time (Does not tick continuously)
-  const getFormattedNow = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  };
 
   const [invoiceTimestamp, setInvoiceTimestamp] = useState(getFormattedNow);
 
-  // Automatically update invoice timestamp in real-time every second
+  // Live timestamp: ticks every second ONLY while the simulator is on screen
+  // and the browser tab is visible (no hidden QR regeneration in the background).
   useEffect(() => {
-    const timer = setInterval(() => {
-      setInvoiceTimestamp(getFormattedNow());
-    }, 1000);
-    return () => clearInterval(timer);
+    const element = rootRef.current;
+    if (!element) return undefined;
+
+    let timer = null;
+    let visible = false;
+
+    const tick = () => setInvoiceTimestamp(getFormattedNow());
+    const start = () => {
+      if (timer) return;
+      tick();
+      timer = setInterval(tick, 1000);
+    };
+    const stop = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
+    const sync = () => (visible && !document.hidden ? start() : stop());
+
+    let observer = null;
+    if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          visible = entry.isIntersecting;
+          sync();
+        },
+        { rootMargin: '120px' }
+      );
+      observer.observe(element);
+    } else {
+      visible = true;
+      sync();
+    }
+    document.addEventListener('visibilitychange', sync);
+
+    return () => {
+      stop();
+      if (observer) observer.disconnect();
+      document.removeEventListener('visibilitychange', sync);
+    };
   }, []);
 
   const [base64Payload, setBase64Payload] = useState('');
@@ -128,7 +167,7 @@ export default function EInvoiceDemo({ lang, theme }) {
   };
 
   return (
-    <div id="einvoice-simulator" className={`relative rounded-3xl border p-6 md:p-8 transition-colors duration-300 ${
+    <div ref={rootRef} id="einvoice-simulator" className={`relative rounded-3xl border p-6 md:p-8 transition-colors duration-300 ${
       theme === 'light' 
         ? 'bg-slate-50/70 border-slate-200 text-slate-800 shadow-sm' 
         : 'bg-[#060b17] border-slate-800 text-white'

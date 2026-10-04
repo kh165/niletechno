@@ -68,11 +68,16 @@ function formatCurrent(val, { prefix, suffix, hasComma, decimals }) {
   return `${prefix}${formattedNum}${suffix}`;
 }
 
+// Digits keep a fixed width while counting so nothing around the number shifts.
+const TABULAR_STYLE = { fontVariantNumeric: 'tabular-nums' };
+
 /**
- * AnimatedCounter: Counts up to the target value when visible in the viewport.
+ * AnimatedCounter: counts up to the target value only when the number is
+ * actually on screen (at least `startRatio` of it visible), and only after the
+ * page + fonts have finished loading — so it never runs while the page boots.
  * Honors prefers-reduced-motion and gracefully falls back for non-numeric content.
  */
-export function AnimatedCounter({ value, to, duration = 1200, className = '' }) {
+export function AnimatedCounter({ value, to, duration = 1200, className = '', startRatio = 0.6 }) {
   const targetValue = to !== undefined ? to : value;
   const ref = useRef(null);
 
@@ -82,67 +87,84 @@ export function AnimatedCounter({ value, to, duration = 1200, className = '' }) 
     if (!parsed) return targetValue;
     return formatCurrent(0, parsed);
   });
-  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
     if (!parsed) {
       setDisplayValue(targetValue);
-      return;
+      return undefined;
     }
 
-    // Check reduced motion
+    setDisplayValue(formatCurrent(0, parsed));
+
+    // Reduced motion: show the final value immediately
     if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setDisplayValue(targetValue);
-      setHasAnimated(true);
-      return;
+      return undefined;
     }
 
     const element = ref.current;
     if (!element || typeof IntersectionObserver === 'undefined') {
       setDisplayValue(targetValue);
-      setHasAnimated(true);
-      return;
+      return undefined;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry && entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          observer.unobserve(element);
+    let cancelled = false;
+    let observer = null;
+    let frame = 0;
 
-          const startTime = performance.now();
-          const startVal = 0;
-          const endVal = parsed.target;
-
-          const tick = (now) => {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            // Ease out expo: fast start, soft landing
-            const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-            const current = startVal + (endVal - startVal) * easeProgress;
-
-            setDisplayValue(formatCurrent(current, parsed));
-
-            if (progress < 1) {
-              requestAnimationFrame(tick);
-            } else {
-              setDisplayValue(targetValue); // guarantee exact final string representation
-            }
-          };
-
-          requestAnimationFrame(tick);
+    const startCount = () => {
+      const startTime = performance.now();
+      const tick = (now) => {
+        if (cancelled) return;
+        const progress = Math.min((now - startTime) / duration, 1);
+        if (progress < 1) {
+          // Ease out expo: fast start, soft landing
+          const eased = 1 - Math.pow(2, -10 * progress);
+          setDisplayValue(formatCurrent(parsed.target * eased, parsed));
+          frame = requestAnimationFrame(tick);
+        } else {
+          setDisplayValue(targetValue); // guarantee exact final string
         }
-      },
-      { threshold: 0.15 }
-    );
+      };
+      frame = requestAnimationFrame(tick);
+    };
 
-    observer.observe(element);
+    const observe = () => {
+      if (cancelled) return;
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer.disconnect();
+            startCount();
+          }
+        },
+        // Needs to be clearly inside the screen (not just peeking in at the edge)
+        { threshold: startRatio, rootMargin: '0px 0px -8% 0px' }
+      );
+      observer.observe(element);
+    };
+
+    const whenPageReady = () => {
+      const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+      fontsReady.then(() => {
+        if (cancelled) return;
+        if (document.readyState === 'complete') {
+          observe();
+        } else {
+          window.addEventListener('load', observe, { once: true });
+        }
+      });
+    };
+
+    whenPageReady();
 
     return () => {
-      observer.disconnect();
+      cancelled = true;
+      if (observer) observer.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener('load', observe);
     };
-  }, [targetValue, duration, hasAnimated, parsed]);
+  }, [parsed, targetValue, duration, startRatio]);
 
   // If not countable, render as-is without breaking hook order
   if (!parsed) {
@@ -150,7 +172,7 @@ export function AnimatedCounter({ value, to, duration = 1200, className = '' }) 
   }
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={className} style={TABULAR_STYLE}>
       {displayValue}
     </span>
   );

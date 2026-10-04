@@ -6,9 +6,29 @@
   --breakpoint-3xl: 1920px;
   --breakpoint-4xl: 2560px;
 
-  --font-sans: "Plus Jakarta Sans", "Cairo", system-ui, -apple-system, sans-serif;
-  --font-cairo: "Cairo", sans-serif;
+  /* ========================================
+     TYPOGRAPHY — single source of truth
+     One family for Arabic + Latin (IBM Plex Sans Arabic includes Latin glyphs).
+     `font-cairo` is kept as an alias so no component has to be edited.
+     To try another font, change ONLY these two lines + the <link> in index.html.
+     ======================================== */
+  --font-sans: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+  --font-cairo: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+
+  /* Calmer weights: the heaviest utilities used to look shouty in Arabic */
+  --font-weight-bold: 600;
+  --font-weight-extrabold: 700;
+  --font-weight-black: 700;
+
+  /* Tighter, more professional size scale (rem) */
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.1875rem;
+  --text-2xl: 1.375rem;
+  --text-3xl: 1.625rem;
+  --text-4xl: 1.9375rem;
+  --text-5xl: 2.4375rem;
 
   --text-h2: clamp(1.5rem, 2.5vw, 2.25rem);
 
@@ -50,6 +70,8 @@ html {
   overflow-x: clip;
   text-rendering: optimizeLegibility;
   -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -65,6 +87,27 @@ html:not(.dark) {
 html.dark {
   background-color: #0f172a;
   color: #f8fafc;
+}
+
+/* ========================================
+   TYPOGRAPHY RULES
+   ======================================== */
+/* Arabic script is connected: ANY letter-spacing breaks the joins between letters. */
+html[lang="ar"] *,
+html[lang="ar"] *::before,
+html[lang="ar"] *::after {
+  letter-spacing: normal !important;
+}
+
+/* Headings: no forced UPPERCASE, balanced line breaks */
+h1, h2, h3, h4, h5, h6 {
+  text-transform: none;
+  text-wrap: balance;
+}
+
+/* Comfortable reading rhythm for Arabic paragraphs */
+html[lang="ar"] p {
+  line-height: 1.8;
 }
 
 /* Custom scrollbar */
@@ -263,6 +306,11 @@ button, a, input, select, textarea {
   box-sizing: border-box;
 }
 
+/* Form controls must inherit the site font (browsers default to system fonts) */
+button, input, select, textarea {
+  font-family: inherit;
+}
+
 /* Prevent flex children from overflowing parent card boundaries */
 .flex > button, .flex > a {
   min-width: 0;
@@ -456,7 +504,6 @@ nav.fixed .nav-link-premium:focus-visible {
 
 /* Scoped polishing for the requested Hero and partner marquee only. */
 .hero-title {
-  letter-spacing: -0.035em;
   text-wrap: balance;
   font-feature-settings: "kern" 1, "liga" 1;
 }
@@ -1049,6 +1096,16 @@ nav.fixed .nav-link-premium:focus-visible {
 .system-card-video-button { max-width: 100%; min-width: 0; }
 .system-card-video-label { white-space: normal; overflow-wrap: break-word; line-height: 1.25; }
 
+/* Slim, brand-colored inner scrollbar (used inside cards; overrides the global dark scrollbar) */
+.nt-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 133, 234, .5) transparent;
+}
+.nt-scroll::-webkit-scrollbar { width: 4px; }
+.nt-scroll::-webkit-scrollbar-track { background: transparent; }
+.nt-scroll::-webkit-scrollbar-thumb { background: rgba(26, 133, 234, .5); border-radius: 9999px; }
+.nt-scroll::-webkit-scrollbar-thumb:hover { background: #1a85ea; }
+
 /* ========================================
    MICRO-INTERACTIONS & SCROLL REVEAL
    ======================================== */
@@ -1128,6 +1185,51 @@ a:not([class*="focus:"]):not([class*="outline-none"]):not(.nav-link-premium):foc
   outline: 2px solid #0284c7;
   outline-offset: 2px;
 }
+/* ===== Footer ambient animation ===== */
+.footer-glow {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  will-change: transform;
+}
+.footer-glow-a { animation: footerDriftA 18s ease-in-out infinite alternate; }
+.footer-glow-b { animation: footerDriftB 22s ease-in-out infinite alternate; }
 
+.footer-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  animation: footerShimmer 8s ease-in-out infinite;
+}
 
+.footer-dot {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: #1a85ea;
+  animation: footerFloat 7s ease-in-out infinite;
+}
 
+@keyframes footerDriftA {
+  0%   { transform: translate3d(-4%, -2%, 0) scale(1); }
+  100% { transform: translate3d(8%, 6%, 0) scale(1.12); }
+}
+@keyframes footerDriftB {
+  0%   { transform: translate3d(6%, 4%, 0) scale(1.05); }
+  100% { transform: translate3d(-8%, -5%, 0) scale(0.95); }
+}
+@keyframes footerShimmer {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(320%); }
+}
+@keyframes footerFloat {
+  0%, 100% { transform: translateY(0); opacity: .15; }
+  50%      { transform: translateY(-14px); opacity: .55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-glow, .footer-shimmer, .footer-dot { animation: none !important; }
+}

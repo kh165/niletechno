@@ -61,10 +61,12 @@ export default function SystemsFilterBar({
               type="button"
               key={tab.id}
               onClick={(e) => handleTabSelect(e, tab.id)}
-              className={`min-h-[40px] px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer font-cairo flex items-center gap-2.5 active:scale-95 ${
+              aria-pressed={isActive}
+              // نفس الـ font-weight ونفس الـ border في الحالتين عشان عرض الزرار ميتغيرش وقت الضغط
+              className={`min-h-[40px] px-3 sm:px-3.5 py-1.5 rounded-xl border text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer font-cairo flex items-center gap-2.5 ${
                 isActive
-                  ? `${colorStyle.activeBg} font-extrabold`
-                  : 'text-slate-700 hover:text-slate-950 hover:bg-white/80 border border-transparent hover:border-slate-200 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/70 dark:hover:border-slate-700/60'
+                  ? `${colorStyle.activeBg} border-transparent`
+                  : 'text-slate-700 hover:text-slate-950 hover:bg-white/80 border-transparent hover:border-slate-200 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/70 dark:hover:border-slate-700/60'
               }`}
             >
               <div className={`p-1 rounded-lg ${isActive ? 'bg-white/15' : 'bg-cyan-50'}`}>

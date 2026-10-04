@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Calculator, Warehouse, TrendingUp, Cpu, Users, ShoppingBag, Gem, Utensils, Truck, Wrench,
@@ -6,51 +6,54 @@ import {
   Globe2, UtensilsCrossed, Wheat, House, Handshake, CarFront, Pill, Leaf, Factory
 } from 'lucide-react';
 import companyLogo from '../../assets/images/logo.webp';
+import { SUCCESS_PARTNERS } from '../../data/partners';
 
 const logoTransparentWebp = companyLogo;
 
+const ICONS = {
+  Calculator,
+  Warehouse,
+  TrendingUp,
+  Cpu,
+  Users,
+  ShoppingBag,
+  Gem,
+  Utensils,
+  Truck,
+  Wrench,
+  CalendarClock,
+  Car,
+  Smartphone,
+  Tablet,
+  ChefHat,
+  HeartPulse
+};
+
 const IconComponent = ({ name, className }) => {
-  const icons = {
-    Calculator,
-    Warehouse,
-    TrendingUp,
-    Cpu,
-    Users,
-    ShoppingBag,
-    Gem,
-    Utensils,
-    Truck,
-    Wrench,
-    CalendarClock,
-    Car,
-    Smartphone,
-    Tablet,
-    ChefHat,
-    HeartPulse
-  };
-  const SelectedIcon = icons[name] || CircleHelp;
+  const SelectedIcon = ICONS[name] || CircleHelp;
   return <SelectedIcon aria-hidden="true" strokeWidth={1.8} className={className || "w-5 h-5"} />;
+};
+
+const CATEGORY_ICONS = {
+  ksa: Building2,
+  import_export: Globe2,
+  hospitality: UtensilsCrossed,
+  malls_houseware: ShoppingBag,
+  mills_feed: Wheat,
+  contracting: House,
+  jewelry: Gem,
+  agencies_wholesale: Handshake,
+  car_showrooms: CarFront,
+  pharma: Pill,
+  herbs_spices: Leaf,
+  factories: Factory
 };
 
 // Helper to render beautiful category-based customer logos (representing dynamic brands)
 const getPartnerLogo = (partner) => {
   if (!partner) return null;
-  const categoryIcons = {
-    ksa: Building2,
-    import_export: Globe2,
-    hospitality: UtensilsCrossed,
-    malls_houseware: ShoppingBag,
-    mills_feed: Wheat,
-    contracting: House,
-    jewelry: Gem,
-    agencies_wholesale: Handshake,
-    car_showrooms: CarFront,
-    pharma: Pill,
-    herbs_spices: Leaf,
-    factories: Factory
-  };
   const categoryKey = (partner && partner.category) ? partner.category : 'ksa';
-  const CategoryIcon = categoryIcons[categoryKey] || Building2;
+  const CategoryIcon = CATEGORY_ICONS[categoryKey] || Building2;
   return (
     <CategoryIcon
       aria-hidden="true"
@@ -59,8 +62,6 @@ const getPartnerLogo = (partner) => {
     />
   );
 };
-
-import { SUCCESS_PARTNERS } from '../../data/partners';
 
 // Comprehensive partner logo manifests matching exact category folders from the official portal
 const LOGO_MANIFEST = {
@@ -151,19 +152,30 @@ const categoryFolders = {
   factories: 'factory'
 };
 
+// Position of every partner inside its own category — computed ONCE at load time.
+// (Previously each logo re-filtered the entire partners list on every render.)
+const PARTNER_INDEX_IN_CATEGORY = (() => {
+  const counters = {};
+  const map = {};
+  if (Array.isArray(SUCCESS_PARTNERS)) {
+    SUCCESS_PARTNERS.forEach((p) => {
+      if (!p) return;
+      counters[p.category] = (counters[p.category] ?? -1) + 1;
+      map[String(p.id)] = counters[p.category];
+    });
+  }
+  return map;
+})();
+
 // Intelligent client logo renderer loading official CDN assets with elegant SVG fallback
-const PartnerLogo = ({ partner, theme }) => {
+const PartnerLogo = memo(function PartnerLogo({ partner, theme }) {
   const [hasError, setHasError] = useState(false);
   
   const pCat = partner?.category || 'ksa';
   const folder = categoryFolders[pCat] || 'KSA';
   const manifest = LOGO_MANIFEST[pCat] || LOGO_MANIFEST.ksa;
   
-  // Find index of partner in its specific category pool safely
-  const partnerIdStr = String(partner?.id || '');
-  const catPool = Array.isArray(SUCCESS_PARTNERS) ? SUCCESS_PARTNERS.filter(p => p && p.category === pCat) : [];
-  const indexInCat = catPool.findIndex(p => p && String(p.id) === partnerIdStr);
-  const catIdx = indexInCat !== -1 ? indexInCat : 0;
+  const catIdx = PARTNER_INDEX_IN_CATEGORY[String(partner?.id || '')] ?? 0;
 
   // Reset error when partner changes
   useEffect(() => {
@@ -194,6 +206,7 @@ const PartnerLogo = ({ partner, theme }) => {
           onError={() => setHasError(true)}
           className="w-full h-full object-contain select-none p-0.5 transition-transform duration-200"
           loading="lazy"
+          decoding="async"
           referrerPolicy="no-referrer"
         />
       ) : (
@@ -208,7 +221,7 @@ const PartnerLogo = ({ partner, theme }) => {
       )}
     </div>
   );
-};
+});
 
 // Premium image-based logo for Nile Techno with dynamic fallback sequence
 const NileTechnoLogo = ({ theme, lang, className }) => {
@@ -227,51 +240,52 @@ const NileTechnoLogo = ({ theme, lang, className }) => {
   );
 };
 
+// Static content (created once instead of on every render)
+const SUBTITLES = [
+  {
+    icon: Calculator,
+    ar: 'برنامج الحسابات العامة المتكامل وحلول الـ ERP الفعالة',
+    en: 'Complete Integrated ERP Software & Financial Ecosystems',
+    color: 'text-cyan-500'
+  },
+  {
+    icon: Building2,
+    ar: 'متوافق مع متطلبات هيئة الزكاة والضريبة والجمارك (ZATCA) ومصلحة الضرائب المصرية (ETA)',
+    en: 'Compliant with ZATCA & ETA Digital Invoicing & Instant POS Standards',
+    color: 'text-emerald-500'
+  },
+  {
+    icon: Warehouse,
+    ar: 'إدارة المستودعات والمخازن بالباركود متعدد الفروع',
+    en: 'Intelligent Warehouse Tracking & Multi-Store Barcode Management',
+    color: 'text-blue-500'
+  },
+  {
+    icon: Smartphone,
+    ar: 'تطبيقات الهاتف لمناديب المبيعات والطباعة الحرارية',
+    en: 'Advanced Mobile Companion Apps for Salesmen & Thermal Printing',
+    color: 'text-indigo-500'
+  },
+  {
+    icon: Cpu,
+    ar: 'أسرع استجابة دعم فني ميداني وسحابي مع تحديثات دورية',
+    en: 'High-Speed SLA Technical Support with Automated Updates',
+    color: 'text-amber-500'
+  }
+];
+
 // Subtitle Rotator for the Hero Header Section (Enterprise Feature)
 const SubtitleRotator = ({ lang, theme }) => {
-  const subtitles = [
-    {
-      icon: Calculator,
-      ar: 'برنامج الحسابات العامة المتكامل وحلول الـ ERP الفعالة',
-      en: 'Complete Integrated ERP Software & Financial Ecosystems',
-      color: 'text-cyan-500'
-    },
-    {
-      icon: Building2,
-      ar: 'متوافق مع متطلبات هيئة الزكاة والضريبة والجمارك (ZATCA) ومصلحة الضرائب المصرية (ETA)',
-      en: 'Compliant with ZATCA & ETA Digital Invoicing & Instant POS Standards',
-      color: 'text-emerald-500'
-    },
-    {
-      icon: Warehouse,
-      ar: 'إدارة المستودعات والمخازن بالباركود متعدد الفروع',
-      en: 'Intelligent Warehouse Tracking & Multi-Store Barcode Management',
-      color: 'text-blue-500'
-    },
-    {
-      icon: Smartphone,
-      ar: 'تطبيقات الهاتف لمناديب المبيعات والطباعة الحرارية',
-      en: 'Advanced Mobile Companion Apps for Salesmen & Thermal Printing',
-      color: 'text-indigo-500'
-    },
-    {
-      icon: Cpu,
-      ar: 'أسرع استجابة دعم فني ميداني وسحابي مع تحديثات دورية',
-      en: 'High-Speed SLA Technical Support with Automated Updates',
-      color: 'text-amber-500'
-    }
-  ];
-
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((p) => (p + 1) % subtitles.length);
+      setIndex((p) => (p + 1) % SUBTITLES.length);
     }, 4500);
     return () => clearInterval(interval);
-  }, [subtitles.length]);
+  }, []);
 
-  const current = subtitles[index];
+  const current = SUBTITLES[index];
   const CurrentIcon = current.icon;
 
   return (

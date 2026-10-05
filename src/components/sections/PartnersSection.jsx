@@ -77,14 +77,15 @@ function PartnersSection({ lang = 'ar', theme = 'dark', setShowPartnersModal }) 
 
         {/* Action Buttons with real actions */}
         <Reveal delay={0.15} className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-          <button 
-            type="button"
-            onClick={() => setShowPartnersModal?.(true)}
+          <a
+            href={`/?page=partners&lang=${lang}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full sm:w-auto min-h-[42px] px-6 py-2.5 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-3 transition-all duration-300 cursor-pointer font-cairo shadow-lg shadow-[#1a85ea]/25 hover:shadow-[#1a85ea]/40 hover:-translate-y-0.5 active:scale-95 bg-[#1a85ea] hover:bg-[#1470c7] text-white"
           >
             <span>{isRtl ? 'تصفح دليل شركاء النجاح وسابقة الأعمال' : 'Open Complete Client Directory'}</span>
             <Award className="w-4 h-4 text-white shrink-0" />
-          </button> 
+          </a>
 
           <WhatsAppButton
             href={createWhatsAppUrl('egy', partnerWhatsAppText)}

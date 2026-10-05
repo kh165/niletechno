@@ -148,10 +148,6 @@ export default function App() {
   const handleNavClick = (e, id) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    if (id === 'customers') {
-      setShowPartnersModal(true);
-      return;
-    }
     if (id === 'consulting') {
       setIsCalculatorOpen(true);
       // wait for the guide to render so the scroll target is stable

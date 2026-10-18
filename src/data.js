@@ -368,7 +368,7 @@ export const MOBILE_APPS = [
       'Collect pharmacy bookings and integrate them directly with warehouse queues'
     ],
     iconName: 'HeartPulse',
-    imageUrl: '/images/medical_rep/medical_rep_dashboard.png',
+    imageUrl: './images/medical_rep/medical_rep_dashboard.png',
     accentColor: 'from-pink-600/20 to-pink-500/10'
   },
   {
@@ -468,7 +468,7 @@ export const SUCCESS_PARTNERS = [
     industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
     industryEn: 'Commercial Agencies & Distribution',
     logoText: 'YG',
-    imageUrl: '/yg_trading_agencies_logo.png'
+    imageUrl: './yg_trading_agencies_logo.png'
   },
   {
     id: 'sp_malizia',
@@ -478,7 +478,7 @@ export const SUCCESS_PARTNERS = [
     industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
     industryEn: 'Commercial Agencies & Distribution',
     logoText: 'EM',
-    imageUrl: '/el_malizia_logo.png'
+    imageUrl: './el_malizia_logo.png'
   },
   {
     id: 'sp_skyhold',
@@ -488,7 +488,7 @@ export const SUCCESS_PARTNERS = [
     industryAr: 'المقاولات العامة وأنظمة السقالات المعدنية',
     industryEn: 'Scaffolding Systems & Contracting',
     logoText: 'SH',
-    imageUrl: '/sky_hold_logo.svg'
+    imageUrl: './sky_hold_logo.svg'
   },
   // ================= 1. المملكة العربية السعودية (ksa) =================
   { id: 'ksa1', category: 'ksa', nameAr: 'شركة اسدام الفنية للزجاج', nameEn: 'Asdam Technical Glass Company', industryAr: 'الزجاج والمقاولات المتخصصة', industryEn: 'Glass & Special Contracting', logoText: 'AS' },
@@ -759,7 +759,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'YG for Trading Agencies',
     industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
     industryEn: 'Commercial Agencies & Distribution',
-    imageUrl: '/yg_trading_agencies_logo.png'
+    imageUrl: './yg_trading_agencies_logo.png'
   },
   {
     id: 'hp_malizia',
@@ -767,7 +767,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Egyptian Malaysian Co. S.A.E',
     industryAr: 'التوكيلات التجارية وتوزيع السلع والزيوت',
     industryEn: 'Commercial Agencies & Distribution',
-    imageUrl: '/el_malizia_logo.png'
+    imageUrl: './el_malizia_logo.png'
   },
   {
     id: 'hp_skyhold',
@@ -775,7 +775,7 @@ export const HOMEPAGE_SLIDER_PARTNERS = [
     nameEn: 'Sky Hold Scaffolding Service',
     industryAr: 'المقاولات العامة وأنظمة السقالات المعدنية',
     industryEn: 'Scaffolding Systems & Contracting',
-    imageUrl: '/sky_hold_logo.svg'
+    imageUrl: './sky_hold_logo.svg'
   },
   {
     id: 'hp1',

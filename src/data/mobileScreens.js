@@ -7,7 +7,7 @@ export const REAL_SALES_APP_SCREENS = [
     shortEn: 'Dashboard',
     descAr: 'إجمالي المبيعات، التحصيلات، وسرعة الوصول لكافة العمليات اليومية',
     descEn: 'Real-time sales KPIs, instant collection figures, and fast-action shortcuts',
-    image: '/images/sales_rep/screen_1.png'
+    image: './images/sales_rep/screen_1.png'
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const REAL_SALES_APP_SCREENS = [
     shortEn: 'Invoicing',
     descAr: 'بناء الفواتير الميدانية، إدراج الأصناف والخصومات، والطباعة الحرارية الفورية',
     descEn: 'Field invoices, price tiers, discounts & instant Bluetooth receipt printing',
-    image: '/images/sales_rep/screen_2.png'
+    image: './images/sales_rep/screen_2.png'
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ export const REAL_SALES_APP_SCREENS = [
     shortEn: 'Receipts',
     descAr: 'تسجيل المقبوضات النقدية والشيكات وتحديث حساب العميل لحظياً مع السيرفر',
     descEn: 'Instant cash & check vouchers with automatic real-time ledger balancing',
-    image: '/images/sales_rep/screen_3.png'
+    image: './images/sales_rep/screen_3.png'
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ export const REAL_SALES_APP_SCREENS = [
     shortEn: 'Customers',
     descAr: 'استعراض كشوفات الحساب، المديونيات المتبقية، وسجل الحركات السابقة',
     descEn: 'Customer statements, age-debt analysis, contact info & transaction history',
-    image: '/images/sales_rep/screen_6.png'
+    image: './images/sales_rep/screen_6.png'
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ export const REAL_SALES_APP_SCREENS = [
     shortEn: 'Follow-up',
     descAr: 'قائمة العملاء وبيانات التواصل لمراجعة آخر الزيارات ومتابعة كل عميل.',
     descEn: 'Customer list and contact details for reviewing recent visits and follow-ups.',
-    image: '/images/sales_rep/screen_5.png'
+    image: './images/sales_rep/screen_5.png'
   },
   {
     id: 6,
@@ -57,7 +57,7 @@ export const REAL_SALES_APP_SCREENS = [
     shortEn: 'Products',
     descAr: 'استعراض الأصناف، أسعار الجملة والقطاعي، والرصيد الفعلي بالمخزن الرئيسي',
     descEn: 'Live stock balances, wholesale and retail tiers, and fast barcode search',
-    image: '/images/sales_rep/screen_4.png'
+    image: './images/sales_rep/screen_4.png'
   }
 ];
 

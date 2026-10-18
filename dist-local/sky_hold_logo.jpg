@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <!-- Clean Pure White Background -->
+  <rect width="1000" height="1000" fill="#ffffff" />
+
+  <!-- Orange ISI Block at Top Right -->
+  <g id="isi_badge">
+    <rect x="770" y="45" width="195" height="300" fill="#cf5a26" rx="2" />
+    <text 
+      x="867" 
+      y="225" 
+      text-anchor="middle" 
+      font-family="'Impact', 'Arial Black', sans-serif" 
+      font-weight="900" 
+      font-size="160" 
+      fill="#ffffff"
+      letter-spacing="1"
+    >
+      ISI
+    </text>
+  </g>
+
+  <!-- SKY Text -->
+  <text 
+    x="65" 
+    y="310" 
+    font-family="'Impact', 'Arial Black', 'Montserrat', sans-serif" 
+    font-weight="900" 
+    font-size="320" 
+    fill="#000000" 
+    letter-spacing="4"
+  >
+    SKY
+  </text>
+
+  <!-- HOLD Text -->
+  <text 
+    x="65" 
+    y="650" 
+    font-family="'Impact', 'Arial Black', 'Montserrat', sans-serif" 
+    font-weight="900" 
+    font-size="320" 
+    fill="#000000" 
+    letter-spacing="4"
+  >
+    HOLD
+  </text>
+
+  <!-- SCAFFOLDING SERIVCE Text (Matching exact logo wording) -->
+  <text 
+    x="55" 
+    y="775" 
+    font-family="'Segoe UI', 'Montserrat', 'Arial', sans-serif" 
+    font-weight="800" 
+    font-size="58" 
+    fill="#000000" 
+    letter-spacing="9"
+  >
+    SCAFFOLDING SERIVCE
+  </text>
+</svg>

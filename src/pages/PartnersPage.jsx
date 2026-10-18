@@ -102,7 +102,7 @@ export default function PartnersPage() {
               </h1>
             </div>
             <div className="flex shrink-0 items-center gap-1.5">
-              <a href="/" aria-label={isRtl ? 'العودة للموقع' : 'Back to site'} className="flex h-8 items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2 text-[10px] font-bold text-slate-600 transition-colors hover:border-[#1a85ea] hover:text-[#1a85ea] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+              <a href="./index.html" aria-label={isRtl ? 'العودة للموقع' : 'Back to site'} className="flex h-8 items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2 text-[10px] font-bold text-slate-600 transition-colors hover:border-[#1a85ea] hover:text-[#1a85ea] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
                 <BackIcon className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">{isRtl ? 'العودة' : 'Back'}</span>
               </a>
